@@ -18,6 +18,7 @@ export const cardSelect = {
   ratingAvg: true,
   ratingCount: true,
   is5G: true,
+  condition: true,
   launchedAt: true,
   brand: { select: { name: true, slug: true } },
   images: { select: { url: true, alt: true, width: true, height: true }, orderBy: { sortOrder: "asc" }, take: 1 },
@@ -50,10 +51,18 @@ function searchWhere(q: string): Prisma.ProductWhereInput {
   };
 }
 
-export function buildWhere(f: ListingFilters, scope: { categoryIds?: string[]; brandId?: string } = {}): Prisma.ProductWhereInput {
+export interface ListingScope {
+  categoryIds?: string[];
+  brandId?: string;
+  condition?: "NEW" | "DEMO";
+}
+
+export function buildWhere(f: ListingFilters, scope: ListingScope = {}): Prisma.ProductWhereInput {
   const and: Prisma.ProductWhereInput[] = [{ isActive: true }];
   if (scope.categoryIds) and.push({ categoryId: { in: scope.categoryIds } });
   if (scope.brandId) and.push({ brandId: scope.brandId });
+  if (scope.condition) and.push({ condition: scope.condition });
+  if (f.condition) and.push({ condition: f.condition === "demo" ? "DEMO" : "NEW" });
   if (f.q) and.push(searchWhere(f.q));
   if (f.brands.length) and.push({ brand: { slug: { in: f.brands } } });
   if (f.only5G) and.push({ is5G: true });
@@ -96,11 +105,11 @@ function orderBy(f: ListingFilters): Prisma.ProductOrderByWithRelationInput[] {
       return [{ ratingCount: "desc" }, { ratingAvg: "desc" }, { isFeatured: "desc" }];
     default:
       // Relevance: featured & in-stock first, then newest.
-      return [{ inStock: "desc" }, { isFeatured: "desc" }, { launchedAt: { sort: "desc", nulls: "last" } }, { id: "asc" }];
+      return [{ inStock: "desc" }, { isFeatured: "desc" }, { images: { _count: "desc" } }, { condition: "asc" }, { discountPct: "desc" }, { id: "asc" }];
   }
 }
 
-export async function listProducts(f: ListingFilters, scope: { categoryIds?: string[]; brandId?: string } = {}) {
+export async function listProducts(f: ListingFilters, scope: ListingScope = {}) {
   const where = buildWhere(f, scope);
   const [total, items] = await Promise.all([
     db.product.count({ where }),
@@ -117,6 +126,7 @@ export async function listProducts(f: ListingFilters, scope: { categoryIds?: str
 
 export interface Facets {
   brands: { slug: string; name: string; count: number }[];
+  hasDemo: boolean;
   ram: number[];
   storage: number[];
   priceMin: number;
@@ -124,21 +134,23 @@ export interface Facets {
 }
 
 /** Facet options for the current scope (category/brand + search), independent of other filters. */
-export async function listingFacets(scope: { categoryIds?: string[]; brandId?: string; q?: string }): Promise<Facets> {
+export async function listingFacets(scope: ListingScope & { q?: string }): Promise<Facets> {
   const where: Prisma.ProductWhereInput = {
     AND: [
       { isActive: true },
       ...(scope.categoryIds ? [{ categoryId: { in: scope.categoryIds } }] : []),
       ...(scope.brandId ? [{ brandId: scope.brandId }] : []),
+      ...(scope.condition ? [{ condition: scope.condition }] : []),
       ...(scope.q ? [searchWhere(scope.q)] : []),
     ],
   };
-  const [brandGroups, variants] = await Promise.all([
+  const [brandGroups, variants, demoCount] = await Promise.all([
     db.product.groupBy({ by: ["brandId"], where, _count: { _all: true } }),
     db.productVariant.findMany({
       where: { isActive: true, product: where },
       select: { ramGb: true, storageGb: true, price: true },
     }),
+    db.product.count({ where: { AND: [where, { condition: "DEMO" }] } }),
   ]);
   const brands = await db.brand.findMany({
     where: { id: { in: brandGroups.map((g) => g.brandId) } },
@@ -150,6 +162,7 @@ export async function listingFacets(scope: { categoryIds?: string[]; brandId?: s
   const prices = variants.map((v) => v.price);
   return {
     brands: brands.map((b) => ({ slug: b.slug, name: b.name, count: counts.get(b.id) ?? 0 })),
+    hasDemo: demoCount > 0,
     ram: uniq(variants.map((v) => v.ramGb)),
     storage: uniq(variants.map((v) => v.storageGb)),
     priceMin: prices.length ? Math.floor(Math.min(...prices) / 100) : 0,
@@ -217,7 +230,9 @@ export async function refreshProductAggregates(productIds: string[], tx: Prisma.
       where: { productId, isActive: true },
       select: { price: true, mrp: true, stock: true },
     });
-    const cheapest = [...variants].sort((a, b) => a.price - b.price)[0];
+    // "From" price reflects what can be bought now; fall back to all variants when sold out.
+    const buyable = variants.filter((v) => v.stock > 0);
+    const cheapest = [...(buyable.length ? buyable : variants)].sort((a, b) => a.price - b.price)[0];
     const discountPct = variants.reduce(
       (max, v) => Math.max(max, v.mrp > v.price ? Math.floor(((v.mrp - v.price) / v.mrp) * 100) : 0),
       0,

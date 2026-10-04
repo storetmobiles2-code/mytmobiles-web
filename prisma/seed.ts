@@ -97,7 +97,8 @@ async function seedCatalog() {
 
   let n = 0;
   for (const p of products) {
-    const cheapest = [...p.variants].sort((a, b) => a.price - b.price)[0];
+    const buyable = p.variants.filter((v) => v.stock > 0);
+    const cheapest = [...(buyable.length ? buyable : p.variants)].sort((a, b) => a.price - b.price)[0];
     const discountPct = p.variants.reduce((m, v) => Math.max(m, v.mrp > v.price ? Math.floor(((v.mrp - v.price) / v.mrp) * 100) : 0), 0);
     await db.product.create({
       data: {
@@ -167,9 +168,9 @@ async function seedBanners() {
   if ((await db.banner.count()) > 0) return;
   const hero = async (slug: string) => (await db.product.findUnique({ where: { slug }, include: { images: { take: 1, orderBy: { sortOrder: "asc" } } } }))?.images[0]?.url ?? null;
   const banners = [
-    { eyebrow: "New arrival", title: "Redmi Note 15 5G", subtitle: "Slim design, curved display. In stock now.", ctaLabel: "Shop Redmi Note 15", href: "/p/redmi-note-15-5g", imageUrl: await hero("redmi-note-15-5g"), imageAlt: "Redmi Note 15 5G", bgFrom: "#0f172a", bgTo: "#1e3a8a", sortOrder: 1 },
-    { eyebrow: "Samsung Galaxy", title: "Galaxy A series, from A07 to A57", subtitle: "Pick the Galaxy that fits your budget.", ctaLabel: "Explore Samsung", href: "/brands/samsung", imageUrl: await hero("samsung-galaxy-a57-5g"), imageAlt: "Samsung Galaxy A57 5G", bgFrom: "#1b1446", bgTo: "#4f2edc", sortOrder: 2 },
-    { eyebrow: "Open-box deals", title: "Demo units at lower prices", subtitle: "Display units from our store — limited pieces.", ctaLabel: "See open-box deals", href: "/open-box", imageUrl: await hero("samsung-galaxy-s26-demo-unit"), imageAlt: "Samsung Galaxy S26 demo unit", bgFrom: "#3b0764", bgTo: "#be185d", sortOrder: 3 },
+    { eyebrow: "New arrival", title: "Redmi Note 15 5G", subtitle: "Slim design, curved display. In stock now.", ctaLabel: "Shop Redmi Note 15", href: "/p/redmi-note-15-5g", imageUrl: await hero("redmi-note-15-5g"), imageAlt: "Redmi Note 15 5G", bgFrom: "#000000", bgTo: "#3a0a20", sortOrder: 1 },
+    { eyebrow: "Samsung Galaxy", title: "Galaxy A series, from A07 to A57", subtitle: "Pick the Galaxy that fits your budget.", ctaLabel: "Explore Samsung", href: "/brands/samsung", imageUrl: await hero("samsung-galaxy-a57-5g"), imageAlt: "Samsung Galaxy A57 5G", bgFrom: "#0a0a0b", bgTo: "#5e0a31", sortOrder: 2 },
+    { eyebrow: "Open-box deals", title: "Demo units at lower prices", subtitle: "Display units from our store — limited pieces.", ctaLabel: "See open-box deals", href: "/open-box", imageUrl: await hero("samsung-galaxy-s26-demo-unit"), imageAlt: "Samsung Galaxy S26 demo unit", bgFrom: "#1a1a1f", bgTo: "#a80d54", sortOrder: 3 },
   ];
   await db.banner.createMany({ data: banners.map((b) => ({ ...b, placement: "HERO" as const })) });
   console.log(`+ ${banners.length} banners`);

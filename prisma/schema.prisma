@@ -406,8 +406,8 @@ model Banner {
   imageUrl    String?
   imageAlt    String?
   /// CSS colours for the background gradient
-  bgFrom      String          @default("#1B1446")
-  bgTo        String          @default("#4F2EDC")
+  bgFrom      String          @default("#0A0A0B")
+  bgTo        String          @default("#5E0A31")
   /// "light" text on dark background or "dark" text on light background
   textTone    String          @default("light")
   sortOrder   Int             @default(0)

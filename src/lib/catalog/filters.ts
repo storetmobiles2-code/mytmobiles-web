@@ -23,6 +23,7 @@ export interface ListingFilters {
   minRating?: number;
   only5G: boolean;
   inStock: boolean;
+  condition?: "new" | "demo";
   sort: SortKey;
   page: number;
 }
@@ -55,6 +56,7 @@ export function parseFilters(sp: SP): ListingFilters {
     minRating: num(sp.rating),
     only5G: first(sp["5g"]) === "1",
     inStock: first(sp.instock) === "1",
+    condition: first(sp.condition) === "demo" ? "demo" : first(sp.condition) === "new" ? "new" : undefined,
     sort: sort && sort in SORTS ? (sort as SortKey) : "relevance",
     page,
   };
@@ -72,6 +74,7 @@ export function filtersToSearchParams(f: Partial<ListingFilters>): URLSearchPara
   if (f.minRating) p.set("rating", String(f.minRating));
   if (f.only5G) p.set("5g", "1");
   if (f.inStock) p.set("instock", "1");
+  if (f.condition) p.set("condition", f.condition);
   if (f.sort && f.sort !== "relevance") p.set("sort", f.sort);
   if (f.page && f.page > 1) p.set("page", String(f.page));
   return p;
@@ -86,7 +89,8 @@ export function activeFilterCount(f: ListingFilters): number {
     (f.minDiscount ? 1 : 0) +
     (f.minRating ? 1 : 0) +
     (f.only5G ? 1 : 0) +
-    (f.inStock ? 1 : 0)
+    (f.inStock ? 1 : 0) +
+    (f.condition ? 1 : 0)
   );
 }
 

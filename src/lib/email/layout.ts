@@ -9,7 +9,7 @@ export function emailLayout(opts: { preheader: string; heading: string; bodyHtml
 <span style="display:none;max-height:0;overflow:hidden">${escapeHtml(opts.preheader)}</span>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f7;padding:24px 12px"><tr><td align="center">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#ffffff;border-radius:16px;overflow:hidden">
-<tr><td style="background:#1b1446;padding:20px 28px;color:#fff;font-size:20px;font-weight:700;letter-spacing:-0.3px">my<span style="color:#a594ff">T</span> Mobiles</td></tr>
+<tr><td style="background:#0a0a0b;padding:20px 28px;color:#fff;font-size:22px;font-weight:800;letter-spacing:-0.3px">my<span style="color:#f8358a">T</span> <span style="font-size:14px;letter-spacing:2px;font-weight:700">MOBILES</span></td></tr>
 <tr><td style="padding:28px">
 <h1 style="margin:0 0 16px;font-size:22px;line-height:1.3">${escapeHtml(opts.heading)}</h1>
 ${opts.bodyHtml}
@@ -19,5 +19,5 @@ ${opts.bodyHtml}
 }
 
 export function button(href: string, label: string) {
-  return `<p style="margin:24px 0"><a href="${escapeHtml(href)}" style="background:#4f2edc;color:#fff;text-decoration:none;padding:12px 22px;border-radius:10px;font-weight:600;display:inline-block">${escapeHtml(label)}</a></p>`;
+  return `<p style="margin:24px 0"><a href="${escapeHtml(href)}" style="background:#d10f68;color:#fff;text-decoration:none;padding:12px 22px;border-radius:10px;font-weight:600;display:inline-block">${escapeHtml(label)}</a></p>`;
 }
