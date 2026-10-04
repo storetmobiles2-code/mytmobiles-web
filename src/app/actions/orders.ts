@@ -118,7 +118,7 @@ export async function verifyPaymentAction(input: unknown): Promise<{ ok: true } 
 export async function reportPaymentFailureAction(input: unknown): Promise<void> {
   const parsed = z.object({ razorpayOrderId: z.string().max(64), reason: z.string().max(500) }).safeParse(input);
   const user = await getCurrentUser();
-  if (parsed.success && user) await recordPaymentFailure(parsed.data.razorpayOrderId, parsed.data.reason);
+  if (parsed.success && user) await recordPaymentFailure(parsed.data.razorpayOrderId, parsed.data.reason, user.id);
 }
 
 export async function cancelOrderAction(_prev: { error?: string; success?: string }, fd: FormData): Promise<{ error?: string; success?: string }> {

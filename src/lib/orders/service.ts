@@ -385,9 +385,10 @@ export async function markOrderPaid(params: { providerOrderId: string; providerP
   return order;
 }
 
-export async function recordPaymentFailure(providerOrderId: string, reason: string) {
+/** Notes why a payment attempt failed. Customer reports are limited to their own orders. */
+export async function recordPaymentFailure(providerOrderId: string, reason: string, userId?: string) {
   await db.payment.updateMany({
-    where: { providerOrderId, status: "PENDING" },
+    where: { providerOrderId, status: "PENDING", ...(userId ? { order: { userId } } : {}) },
     data: { failureReason: reason.slice(0, 500) },
   });
 }

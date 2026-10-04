@@ -9,6 +9,7 @@ import { revalidateStorefront } from "@/lib/admin/revalidate";
 import { storeImageUpload, UploadError } from "@/lib/admin/media";
 import { slugify } from "@/lib/slug";
 import { rupeesToPaise } from "@/lib/money";
+import { parseSpecs } from "@/lib/catalog/specs";
 
 export type AdminResult = { ok?: string; error?: string; fieldErrors?: Record<string, string> };
 
@@ -17,23 +18,6 @@ const lines = (v: FormDataEntryValue | null) =>
     .split("\n")
     .map((l) => l.trim())
     .filter(Boolean);
-
-/** "## Group" headings followed by "Label: Value" lines. */
-export async function parseSpecs(text: string) {
-  const groups: { group: string; items: { label: string; value: string }[] }[] = [];
-  for (const raw of text.split("\n")) {
-    const line = raw.trim();
-    if (!line) continue;
-    if (line.startsWith("##")) groups.push({ group: line.replace(/^#+\s*/, ""), items: [] });
-    else {
-      const i = line.indexOf(":");
-      if (i <= 0) continue;
-      if (!groups.length) groups.push({ group: "Specifications", items: [] });
-      groups[groups.length - 1].items.push({ label: line.slice(0, i).trim(), value: line.slice(i + 1).trim() });
-    }
-  }
-  return groups.filter((g) => g.items.length);
-}
 
 const productSchema = z.object({
   name: z.string().trim().min(3).max(160),
@@ -78,7 +62,7 @@ export async function saveProduct(_prev: AdminResult, fd: FormData): Promise<Adm
     highlights: lines(fd.get("highlights")).slice(0, 12),
     keywords: lines(String(fd.get("keywords") ?? "").replace(/,/g, "\n")).map((k) => k.toLowerCase()).slice(0, 40),
     boxContents: lines(fd.get("boxContents")).slice(0, 20),
-    specs: await parseSpecs(String(fd.get("specs") ?? "")),
+    specs: parseSpecs(String(fd.get("specs") ?? "")),
     is5G: fd.get("is5G") === "on",
     isFeatured: fd.get("isFeatured") === "on",
     isActive: fd.get("isActive") === "on",
