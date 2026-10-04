@@ -1,0 +1,683 @@
+// myT Mobiles — data model
+//
+// Conventions
+// - All money is stored as integer paise (₹1 = 100 paise). Never floats.
+// - Prices are GST-inclusive, as required for Indian B2C retail (MRP rules).
+// - GST rates are stored in basis points (1800 = 18%).
+// - Order rows snapshot everything needed for invoices so later catalogue edits
+//   never change a historical order.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ───────────────────────────── Identity ─────────────────────────────
+
+enum Role {
+  CUSTOMER
+  ADMIN
+}
+
+model User {
+  id              String    @id @default(cuid())
+  email           String    @unique
+  name            String
+  phone           String?
+  passwordHash    String
+  role            Role      @default(CUSTOMER)
+  emailVerifiedAt DateTime?
+  isDisabled      Boolean   @default(false)
+  marketingOptIn  Boolean   @default(false)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  lastLoginAt     DateTime?
+
+  sessions      Session[]
+  authTokens    AuthToken[]
+  addresses     Address[]
+  orders        Order[]
+  cart          Cart?
+  wishlist      WishlistItem[]
+  reviews       Review[]
+  redemptions   CouponRedemption[]
+  orderEvents   OrderEvent[]
+  inventoryLogs InventoryLog[]
+}
+
+/// Server-side session. `id` is the SHA-256 of the random cookie token, so a
+/// database leak does not leak usable session cookies.
+model Session {
+  id        String   @id
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  userAgent String?
+  ipAddress String?
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+enum AuthTokenType {
+  PASSWORD_RESET
+  EMAIL_VERIFICATION
+}
+
+/// Single-use tokens for password reset / email verification. Only the hash is stored.
+model AuthToken {
+  id        String        @id // SHA-256 of the emailed token
+  userId    String
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      AuthTokenType
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime      @default(now())
+
+  @@index([userId, type])
+}
+
+enum AddressType {
+  HOME
+  WORK
+  OTHER
+}
+
+model Address {
+  id        String      @id @default(cuid())
+  userId    String
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fullName  String
+  phone     String
+  line1     String
+  line2     String?
+  landmark  String?
+  city      String
+  state     String
+  pincode   String
+  type      AddressType @default(HOME)
+  isDefault Boolean     @default(false)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  @@index([userId])
+}
+
+// ───────────────────────────── Catalogue ─────────────────────────────
+
+model Brand {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  slug        String    @unique
+  description String?
+  logoUrl     String?
+  isActive    Boolean   @default(true)
+  sortOrder   Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  products    Product[]
+}
+
+model Category {
+  id          String     @id @default(cuid())
+  name        String
+  slug        String     @unique
+  description String?
+  /// Representative image (path under /public or /media/:id)
+  imageUrl    String?
+  parentId    String?
+  parent      Category?  @relation("CategoryTree", fields: [parentId], references: [id], onDelete: SetNull)
+  children    Category[] @relation("CategoryTree")
+  /// Default GST rate & HSN for new products in this category
+  gstRateBps  Int        @default(1800)
+  hsnCode     String?
+  isActive    Boolean    @default(true)
+  sortOrder   Int        @default(0)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  products    Product[]
+}
+
+enum ProductCondition {
+  NEW
+  /// Display / demo unit sold as open-box
+  DEMO
+}
+
+/// Spec sheet shape: [{ group: string, items: [{ label: string, value: string }] }]
+model Product {
+  id               String           @id @default(cuid())
+  slug             String           @unique
+  name             String
+  brandId          String
+  brand            Brand            @relation(fields: [brandId], references: [id], onDelete: Restrict)
+  categoryId       String
+  category         Category         @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  shortDescription String
+  description      String
+  highlights       String[]
+  specs            Json             @default("[]")
+  keywords         String[]
+  boxContents      String[]
+  warranty         String?
+  condition        ProductCondition @default(NEW)
+  /// Legal Metrology (E-Commerce) disclosures
+  manufacturerInfo String?
+  countryOfOrigin  String?
+  hsnCode          String
+  gstRateBps       Int              @default(1800)
+  returnWindowDays Int              @default(7)
+  /// Network capability, used for the "5G" filter.
+  is5G             Boolean          @default(false)
+  isActive         Boolean          @default(true)
+  isFeatured       Boolean          @default(false)
+  launchedAt       DateTime?
+  ratingAvg        Float            @default(0)
+  ratingCount      Int              @default(0)
+  /// Denormalised from active variants by refreshProductAggregates() so
+  /// listings can filter/sort/paginate in SQL.
+  priceFrom        Int              @default(0)
+  mrpFrom          Int              @default(0)
+  discountPct      Int              @default(0)
+  inStock          Boolean          @default(false)
+  seoTitle         String?
+  seoDescription   String?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  variants      ProductVariant[]
+  images        ProductImage[]
+  reviews       Review[]
+  wishlistItems WishlistItem[]
+  orderItems    OrderItem[]
+
+  @@index([categoryId, isActive])
+  @@index([brandId, isActive])
+  @@index([isFeatured])
+  @@index([priceFrom])
+  @@index([condition])
+}
+
+model ProductVariant {
+  id                String   @id @default(cuid())
+  productId         String
+  product           Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  sku               String   @unique
+  color             String?
+  colorHex          String?
+  /// e.g. "256 GB"
+  storage           String?
+  /// Storage in GB, for filtering / sorting
+  storageGb         Int?
+  /// e.g. "12 GB"
+  ram               String?
+  ramGb             Int?
+  /// Maximum retail price (paise, GST-inclusive)
+  mrp               Int
+  /// Selling price (paise, GST-inclusive)
+  price             Int
+  stock             Int      @default(0)
+  lowStockThreshold Int      @default(5)
+  /// Max units per order for this variant (anti-hoarding)
+  maxPerOrder       Int      @default(3)
+  /// Item names used in the store's stock sheet / POS for this variant.
+  /// Stock imports match rows to variants by these names.
+  externalNames     String[]
+  isActive          Boolean  @default(true)
+  sortOrder         Int      @default(0)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  cartItems     CartItem[]
+  orderItems    OrderItem[]
+  inventoryLogs InventoryLog[]
+
+  @@index([productId])
+  @@index([price])
+}
+
+/// Product imagery. `color` scopes an image to the variants of that colour;
+/// null means the image applies to every variant.
+model ProductImage {
+  id          String   @id @default(cuid())
+  productId   String
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  color       String?
+  url         String
+  alt         String
+  width       Int
+  height      Int
+  sortOrder   Int      @default(0)
+  /// Provenance — where the image came from and on what terms.
+  sourceUrl   String?
+  credit      String?
+  license     String?
+  createdAt   DateTime @default(now())
+
+  @@index([productId, color])
+}
+
+/// Uploaded binary media (admin uploads). Stored in Postgres so the app has no
+/// hard dependency on an object store; served immutably from /media/:id.
+model MediaAsset {
+  id        String   @id @default(cuid())
+  sha256    String   @unique
+  filename  String
+  mimeType  String
+  width     Int
+  height    Int
+  size      Int
+  data      Bytes
+  createdAt DateTime @default(now())
+}
+
+model Review {
+  id                 String       @id @default(cuid())
+  productId          String
+  product            Product      @relation(fields: [productId], references: [id], onDelete: Cascade)
+  userId             String
+  user               User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  rating             Int
+  title              String
+  body               String
+  isVerifiedPurchase Boolean      @default(false)
+  status             ReviewStatus @default(PUBLISHED)
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+
+  @@unique([productId, userId])
+  @@index([productId, status])
+}
+
+enum ReviewStatus {
+  PUBLISHED
+  HIDDEN
+}
+
+model WishlistItem {
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@id([userId, productId])
+}
+
+// ───────────────────────────── Cart ─────────────────────────────
+
+/// A cart belongs to either a signed-in user or an anonymous browser (cookie).
+/// Anonymous carts are merged into the user's cart on sign-in.
+model Cart {
+  id         String     @id @default(cuid())
+  userId     String?    @unique
+  user       User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  couponCode String?
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  items      CartItem[]
+
+  @@index([updatedAt])
+}
+
+model CartItem {
+  id        String         @id @default(cuid())
+  cartId    String
+  cart      Cart           @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  variantId String
+  variant   ProductVariant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+  quantity  Int
+  addedAt   DateTime       @default(now())
+
+  @@unique([cartId, variantId])
+}
+
+// ───────────────────────────── Promotions ─────────────────────────────
+
+enum DiscountType {
+  PERCENT
+  FLAT
+}
+
+model Coupon {
+  id                    String       @id @default(cuid())
+  /// Always stored upper-case
+  code                  String       @unique
+  description           String
+  type                  DiscountType
+  /// PERCENT: whole percent (e.g. 10). FLAT: paise.
+  value                 Int
+  /// Cap for PERCENT coupons (paise)
+  maxDiscount           Int?
+  minOrderValue         Int          @default(0)
+  startsAt              DateTime?
+  endsAt                DateTime?
+  usageLimit            Int?
+  perUserLimit          Int          @default(1)
+  usedCount             Int          @default(0)
+  firstOrderOnly        Boolean      @default(false)
+  /// Empty = applies to all
+  applicableCategoryIds String[]
+  applicableBrandIds    String[]
+  isActive              Boolean      @default(true)
+  /// Show on the public offers page
+  isPublic              Boolean      @default(true)
+  createdAt             DateTime     @default(now())
+  updatedAt             DateTime     @updatedAt
+
+  redemptions CouponRedemption[]
+}
+
+model CouponRedemption {
+  id        String   @id @default(cuid())
+  couponId  String
+  coupon    Coupon   @relation(fields: [couponId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orderId   String   @unique
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  amount    Int
+  createdAt DateTime @default(now())
+
+  @@index([couponId, userId])
+}
+
+enum BannerPlacement {
+  HERO
+  PROMO
+  STRIP
+}
+
+/// Merchandising banners. Rendered as composed layouts (gradient + product
+/// cut-out + copy) so new campaigns don't need a designer for every slot.
+model Banner {
+  id          String          @id @default(cuid())
+  placement   BannerPlacement @default(HERO)
+  eyebrow     String?
+  title       String
+  subtitle    String?
+  ctaLabel    String          @default("Shop now")
+  href        String
+  imageUrl    String?
+  imageAlt    String?
+  /// CSS colours for the background gradient
+  bgFrom      String          @default("#1B1446")
+  bgTo        String          @default("#4F2EDC")
+  /// "light" text on dark background or "dark" text on light background
+  textTone    String          @default("light")
+  sortOrder   Int             @default(0)
+  isActive    Boolean         @default(true)
+  startsAt    DateTime?
+  endsAt      DateTime?
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+}
+
+// ───────────────────────────── Orders ─────────────────────────────
+
+enum OrderStatus {
+  PENDING_PAYMENT
+  CONFIRMED
+  PACKED
+  SHIPPED
+  OUT_FOR_DELIVERY
+  DELIVERED
+  CANCELLED
+  RETURN_REQUESTED
+  RETURNED
+}
+
+enum PaymentMethod {
+  COD
+  RAZORPAY
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUND_PENDING
+  REFUNDED
+}
+
+model Order {
+  id            String        @id @default(cuid())
+  orderNumber   String        @unique
+  userId        String
+  user          User          @relation(fields: [userId], references: [id], onDelete: Restrict)
+  status        OrderStatus
+  paymentMethod PaymentMethod
+  paymentStatus PaymentStatus @default(PENDING)
+
+  // Contact & shipping snapshot
+  email        String
+  shipName     String
+  shipPhone    String
+  shipLine1    String
+  shipLine2    String?
+  shipLandmark String?
+  shipCity     String
+  shipState    String
+  shipPincode  String
+  /// Optional buyer GSTIN for business purchases (B2B invoice)
+  buyerGstin   String?
+  buyerCompany String?
+
+  // Money (paise)
+  mrpTotal      Int
+  subtotal      Int
+  couponCode    String?
+  couponDiscount Int     @default(0)
+  shippingFee   Int     @default(0)
+  codFee        Int     @default(0)
+  total         Int
+  taxableValue  Int
+  cgst          Int     @default(0)
+  sgst          Int     @default(0)
+  igst          Int     @default(0)
+  isInterState  Boolean
+
+  estimatedDeliveryFrom DateTime?
+  estimatedDeliveryTo   DateTime?
+
+  courierName    String?
+  trackingNumber String?
+  trackingUrl    String?
+  invoiceNumber  String?   @unique
+  invoicedAt     DateTime?
+
+  cancelReason String?
+  returnReason String?
+  adminNotes   String?
+
+  /// Prevents duplicate orders on double-submit
+  idempotencyKey String? @unique
+  /// Online payments not completed by this time are auto-cancelled and restocked
+  paymentExpiresAt DateTime?
+
+  placedAt    DateTime  @default(now())
+  confirmedAt DateTime?
+  shippedAt   DateTime?
+  deliveredAt DateTime?
+  cancelledAt DateTime?
+  updatedAt   DateTime  @updatedAt
+
+  items      OrderItem[]
+  payments   Payment[]
+  events     OrderEvent[]
+  redemption CouponRedemption?
+
+  @@index([userId, placedAt])
+  @@index([status, placedAt])
+  @@index([paymentStatus, paymentExpiresAt])
+}
+
+model OrderItem {
+  id           String          @id @default(cuid())
+  orderId      String
+  order        Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId    String?
+  product      Product?        @relation(fields: [productId], references: [id], onDelete: SetNull)
+  variantId    String?
+  variant      ProductVariant? @relation(fields: [variantId], references: [id], onDelete: SetNull)
+  productName  String
+  productSlug  String
+  variantLabel String?
+  sku          String
+  imageUrl     String?
+  hsnCode      String
+  gstRateBps   Int
+  mrp          Int
+  unitPrice    Int
+  quantity     Int
+  /// unitPrice * quantity
+  lineTotal    Int
+  /// This line's share of the order-level coupon discount
+  discount     Int             @default(0)
+  /// GST-exclusive value after discount
+  taxableValue Int
+  taxAmount    Int
+
+  @@index([orderId])
+  @@index([productId])
+}
+
+enum PaymentProvider {
+  COD
+  RAZORPAY
+}
+
+model Payment {
+  id                String          @id @default(cuid())
+  orderId           String
+  order             Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  provider          PaymentProvider
+  providerOrderId   String?         @unique
+  providerPaymentId String?         @unique
+  amount            Int
+  status            PaymentStatus   @default(PENDING)
+  method            String?
+  failureReason     String?
+  refundId          String?
+  refundedAmount    Int             @default(0)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+
+  @@index([orderId])
+}
+
+model OrderEvent {
+  id        String       @id @default(cuid())
+  orderId   String
+  order     Order        @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  status    OrderStatus?
+  message   String
+  /// Visible to the customer on the order timeline
+  isPublic  Boolean      @default(true)
+  actorId   String?
+  actor     User?        @relation(fields: [actorId], references: [id], onDelete: SetNull)
+  createdAt DateTime     @default(now())
+
+  @@index([orderId, createdAt])
+}
+
+model InventoryLog {
+  id        String         @id @default(cuid())
+  variantId String
+  variant   ProductVariant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+  delta     Int
+  reason    String
+  orderId   String?
+  actorId   String?
+  actor     User?          @relation(fields: [actorId], references: [id], onDelete: SetNull)
+  createdAt DateTime       @default(now())
+
+  @@index([variantId, createdAt])
+}
+
+/// Atomic named counters (e.g. GST invoice sequence per financial year)
+model Counter {
+  key   String @id
+  value Int    @default(0)
+}
+
+// ───────────────────────────── Store configuration ─────────────────────────────
+
+/// Singleton row (id = "store"). Everything a store manager may need to
+/// change without a deploy.
+model StoreSettings {
+  id                    String   @id @default("store")
+  storeName             String   @default("myT Mobiles")
+  legalName             String   @default("")
+  gstin                 String   @default("")
+  supportEmail          String   @default("")
+  supportPhone          String   @default("")
+  addressLine1          String   @default("")
+  addressLine2          String   @default("")
+  city                  String   @default("")
+  /// State name of the dispatch location — decides CGST+SGST vs IGST
+  state                 String   @default("")
+  pincode               String   @default("")
+  invoicePrefix         String   @default("MYT")
+
+  freeShippingThreshold Int      @default(49900)
+  shippingFee           Int      @default(4900)
+  codEnabled            Boolean  @default(true)
+  codFee                Int      @default(0)
+  codMaxOrderValue      Int      @default(5000000)
+  /// Online payment window before an unpaid order is released
+  paymentWindowMinutes  Int      @default(30)
+
+  /// Delivery-day estimates by distance band
+  deliveryDaysLocal     Int      @default(1)
+  deliveryDaysState     Int      @default(3)
+  deliveryDaysNational  Int      @default(5)
+  deliveryDaysRemote    Int      @default(8)
+  /// Pincode prefixes treated as remote (NE, J&K, Ladakh, A&N, Lakshadweep)
+  remotePincodePrefixes String[] @default(["18", "19", "78", "79", "744", "682555"])
+  /// Exact pincodes we cannot deliver to
+  blockedPincodes       String[] @default([])
+  /// Exact pincodes where COD is not offered
+  codBlockedPincodes    String[] @default([])
+
+  updatedAt DateTime @updatedAt
+}
+
+model PincodeInfo {
+  pincode   String   @id
+  isValid   Boolean
+  district  String?
+  state     String?
+  postOffice String?
+  fetchedAt DateTime @default(now())
+}
+
+// ───────────────────────────── Platform ─────────────────────────────
+
+/// First-party, cookie-less analytics (no PII). Powers the admin funnel.
+model AnalyticsEvent {
+  id        String   @id @default(cuid())
+  name      String
+  sessionId String
+  userId    String?
+  path      String?
+  productId String?
+  value     Int?
+  props     Json?
+  createdAt DateTime @default(now())
+
+  @@index([name, createdAt])
+  @@index([createdAt])
+}
+
+/// Fixed-window rate limiter state, shared across all app instances.
+model RateLimit {
+  key         String   @id
+  count       Int
+  windowStart DateTime
+}
