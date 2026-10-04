@@ -909,6 +909,48 @@
           }
         ]
       }
+    },
+    "SAMSUNG|GALAXY TAB A11": {
+      "brand": "Samsung India Electronics Pvt. Ltd.",
+      "legal": {},
+      "sourcePage": "https://www.samsung.com/in/tablets/galaxy-tab-a11/buy/",
+      "images": {
+        "Silver": [
+          {
+            "url": "https://images.samsung.com/is/image/samsung/assets/in/tablets/galaxy-tab-a11/buy/1600x864-11.jpg",
+            "credit": "© Samsung Electronics",
+            "license": "Official manufacturer product image © Samsung Electronics, from the brand's official India store. Used unmodified (resized/padded only) for product identification by a retailer. Confirm reuse under Samsung Electronics's authorised-reseller brand-asset terms before launch."
+          }
+        ],
+        "Gray": [
+          {
+            "url": "https://images.samsung.com/is/image/samsung/assets/in/tablets/galaxy-tab-a11/buy/1600x864-02.jpg",
+            "credit": "© Samsung Electronics",
+            "license": "Official manufacturer product image © Samsung Electronics, from the brand's official India store. Used unmodified (resized/padded only) for product identification by a retailer. Confirm reuse under Samsung Electronics's authorised-reseller brand-asset terms before launch."
+          }
+        ]
+      }
+    },
+    "SAMSUNG|GALAXY TAB A11+": {
+      "brand": "Samsung India Electronics Pvt. Ltd.",
+      "legal": {},
+      "sourcePage": "https://www.samsung.com/in/tablets/galaxy-tab-a11/buy/",
+      "images": {
+        "Gray": [
+          {
+            "url": "https://images.samsung.com/is/image/samsung/assets/in/Product_Image_1_1600x864_gray.png",
+            "credit": "© Samsung Electronics",
+            "license": "Official manufacturer product image © Samsung Electronics, from the brand's official India store. Used unmodified (resized/padded only) for product identification by a retailer. Confirm reuse under Samsung Electronics's authorised-reseller brand-asset terms before launch."
+          }
+        ],
+        "Silver": [
+          {
+            "url": "https://images.samsung.com/is/image/samsung/assets/in/Product_Image_2_1600x864_white.png",
+            "credit": "© Samsung Electronics",
+            "license": "Official manufacturer product image © Samsung Electronics, from the brand's official India store. Used unmodified (resized/padded only) for product identification by a retailer. Confirm reuse under Samsung Electronics's authorised-reseller brand-asset terms before launch."
+          }
+        ]
+      }
     }
   }
 }
