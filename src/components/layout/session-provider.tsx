@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
 
 export interface ClientSession {
@@ -38,8 +39,12 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       setLoaded(true);
     }
   }, []);
+  const pathname = usePathname();
+  // Re-sync on navigation: sign-in/out and checkout redirects change session state.
   useEffect(() => {
     void refresh();
+  }, [pathname, refresh]);
+  useEffect(() => {
     const onChange = () => void refresh();
     window.addEventListener(SESSION_CHANGED, onChange);
     window.addEventListener("focus", onChange);

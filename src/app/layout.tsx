@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   description:
     "Shop the latest Samsung, Redmi, Apple, OPPO and vivo smartphones, smart TVs and air coolers at myT Mobiles. GST invoice, Cash on Delivery and secure online payments.",
   applicationName: "myT Mobiles",
-  openGraph: { type: "website", siteName: "myT Mobiles", locale: "en_IN" },
+  openGraph: { type: "website", siteName: "myT Mobiles", locale: "en_IN", images: [{ url: "/brand/og-default.png", width: 1200, height: 630, alt: "myT Mobiles" }] },
   twitter: { card: "summary_large_image" },
   formatDetection: { telephone: false },
 };

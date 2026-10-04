@@ -47,3 +47,17 @@ describe("isValidGstin", () => {
     expect(isValidGstin("ABC")).toBe(false);
   });
 });
+
+import { amountInWords, numberToIndianWords } from "@/lib/number-words";
+
+describe("numberToIndianWords", () => {
+  it("uses lakh/crore grouping", () => {
+    expect(numberToIndianWords(12345678)).toBe("One Crore Twenty Three Lakh Forty Five Thousand Six Hundred Seventy Eight");
+    expect(numberToIndianWords(100000)).toBe("One Lakh");
+    expect(numberToIndianWords(29999)).toBe("Twenty Nine Thousand Nine Hundred Ninety Nine");
+  });
+  it("formats rupees and paise", () => {
+    expect(amountInWords(3711872)).toBe("Rupees Thirty Seven Thousand One Hundred Eighteen and Seventy Two Paise Only");
+    expect(amountInWords(1290000)).toBe("Rupees Twelve Thousand Nine Hundred Only");
+  });
+});
