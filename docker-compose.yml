@@ -1,0 +1,54 @@
+# Self-hosting with Docker Compose. First run:
+#
+#   cp .env.example .env            # fill in the values (DATABASE_URL is set below)
+#   docker compose up -d db
+#   docker compose run --rm migrate # migrations + first-time seed
+#   docker compose build app        # pre-renders pages, so it needs the db running
+#   docker compose up -d app
+#
+# The app build reaches the database through the port published on localhost.
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: myt
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+      POSTGRES_DB: mytmobiles
+    ports: ["127.0.0.1:5432:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U myt -d mytmobiles"]
+      interval: 5s
+      retries: 10
+
+  migrate:
+    build: { context: ., target: migrate }
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://myt:${POSTGRES_PASSWORD}@db:5432/mytmobiles
+    depends_on: { db: { condition: service_healthy } }
+    profiles: [tools]
+
+  app:
+    image: mytmobiles:latest
+    build:
+      context: .
+      network: host
+      args:
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:?set NEXT_PUBLIC_SITE_URL}
+        NEXT_PUBLIC_GA_MEASUREMENT_ID: ${NEXT_PUBLIC_GA_MEASUREMENT_ID:-}
+      secrets: [database_url]
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://myt:${POSTGRES_PASSWORD}@db:5432/mytmobiles
+    ports: ["3000:3000"]
+    depends_on: { db: { condition: service_healthy } }
+
+secrets:
+  database_url:
+    environment: BUILD_DATABASE_URL
+
+volumes:
+  pgdata:
