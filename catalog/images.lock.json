@@ -467,6 +467,41 @@
       }
     ]
   },
+  "SAMSUNG|GALAXY A27": {
+    "Light Green": [
+      {
+        "file": "/images/products/samsung-galaxy-a27/light-green-1.webp",
+        "width": 1200,
+        "height": 1200,
+        "sourceUrl": "https://images.samsung.com/is/image/samsung/assets/in/A27_1600-x-864px1600-x-864px_1.jpg",
+        "sourcePage": "https://www.samsung.com/in/smartphones/galaxy-a27/buy/",
+        "credit": "© Samsung Electronics",
+        "license": "Official manufacturer product image © Samsung Electronics, from the brand's official India store. Used unmodified (resized/padded only) for product identification by a retailer. Confirm reuse under Samsung Electronics's authorised-reseller brand-asset terms before launch."
+      }
+    ],
+    "Black": [
+      {
+        "file": "/images/products/samsung-galaxy-a27/black-1.webp",
+        "width": 1200,
+        "height": 1200,
+        "sourceUrl": "https://images.samsung.com/is/image/samsung/assets/in/A27_1600-x-864px1600-x-864px_2.jpg",
+        "sourcePage": "https://www.samsung.com/in/smartphones/galaxy-a27/buy/",
+        "credit": "© Samsung Electronics",
+        "license": "Official manufacturer product image © Samsung Electronics, from the brand's official India store. Used unmodified (resized/padded only) for product identification by a retailer. Confirm reuse under Samsung Electronics's authorised-reseller brand-asset terms before launch."
+      }
+    ],
+    "Light Pink": [
+      {
+        "file": "/images/products/samsung-galaxy-a27/light-pink-1.webp",
+        "width": 1200,
+        "height": 1200,
+        "sourceUrl": "https://images.samsung.com/is/image/samsung/assets/in/A27_1600-x-864px1600-x-864px_3.jpg",
+        "sourcePage": "https://www.samsung.com/in/smartphones/galaxy-a27/buy/",
+        "credit": "© Samsung Electronics",
+        "license": "Official manufacturer product image © Samsung Electronics, from the brand's official India store. Used unmodified (resized/padded only) for product identification by a retailer. Confirm reuse under Samsung Electronics's authorised-reseller brand-asset terms before launch."
+      }
+    ]
+  },
   "SAMSUNG|GALAXY A17": {
     "Black": [
       {
@@ -788,6 +823,170 @@
         "sourcePage": "https://www.apple.com/in/shop/buy-iphone/iphone-17",
         "credit": "© Apple Inc.",
         "license": "Official manufacturer product image © Apple Inc., from the brand's official India store. Used unmodified (resized/padded only) for product identification by a retailer. Confirm reuse under Apple Inc.'s authorised-reseller brand-asset terms before launch."
+      }
+    ]
+  },
+  "APPLE|IPHONE 15": {
+    "Black": [
+      {
+        "file": "/images/products/apple-iphone-15/black-1.webp",
+        "width": 1200,
+        "height": 1200,
+        "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-15-black-select-202309?wid=1200&hei=1200&fmt=png-alpha",
+        "sourcePage": "https://www.apple.com/in/iphone/",
+        "credit": "© Apple Inc.",
+        "license": "Official manufacturer product image © Apple Inc., from the brand's official India store. Used unmodified (resized/padded only) for product identification by a retailer. Confirm reuse under Apple Inc.'s authorised-reseller brand-asset terms before launch."
+      }
+    ],
+    "Blue": [
+      {
+        "file": "/images/products/apple-iphone-15/blue-1.webp",
+        "width": 1200,
+        "height": 1200,
+        "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-15-blue-select-202309?wid=1200&hei=1200&fmt=png-alpha",
+        "sourcePage": "https://www.apple.com/in/iphone/",
+        "credit": "© Apple Inc.",
+        "license": "Official manufacturer product image © Apple Inc., from the brand's official India store. Used unmodified (resized/padded only) for product identification by a retailer. Confirm reuse under Apple Inc.'s authorised-reseller brand-asset terms before launch."
+      }
+    ],
+    "Green": [
+      {
+        "file": "/images/products/apple-iphone-15/green-1.webp",
+        "width": 1200,
+        "height": 1200,
+        "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-15-green-select-202309?wid=1200&hei=1200&fmt=png-alpha",
+        "sourcePage": "https://www.apple.com/in/iphone/",
+        "credit": "© Apple Inc.",
+        "license": "Official manufacturer product image © Apple Inc., from the brand's official India store. Used unmodified (resized/padded only) for product identification by a retailer. Confirm reuse under Apple Inc.'s authorised-reseller brand-asset terms before launch."
+      }
+    ],
+    "Pink": [
+      {
+        "file": "/images/products/apple-iphone-15/pink-1.webp",
+        "width": 1200,
+        "height": 1200,
+        "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-15-pink-select-202309?wid=1200&hei=1200&fmt=png-alpha",
+        "sourcePage": "https://www.apple.com/in/iphone/",
+        "credit": "© Apple Inc.",
+        "license": "Official manufacturer product image © Apple Inc., from the brand's official India store. Used unmodified (resized/padded only) for product identification by a retailer. Confirm reuse under Apple Inc.'s authorised-reseller brand-asset terms before launch."
+      }
+    ]
+  },
+  "APPLE|IPHONE 16": {
+    "Pink": [
+      {
+        "file": "/images/products/apple-iphone-16/pink-1.webp",
+        "width": 1200,
+        "height": 1200,
+        "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-pink-select-202409?wid=1200&hei=1200&fmt=png-alpha",
+        "sourcePage": "https://www.apple.com/in/shop/buy-iphone/iphone-16",
+        "credit": "© Apple Inc.",
+        "license": "Official manufacturer product image © Apple Inc., from the brand's official India store. Used unmodified (resized/padded only) for product identification by a retailer. Confirm reuse under Apple Inc.'s authorised-reseller brand-asset terms before launch."
+      }
+    ],
+    "Teal": [
+      {
+        "file": "/images/products/apple-iphone-16/teal-1.webp",
+        "width": 1200,
+        "height": 1200,
+        "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-teal-select-202409?wid=1200&hei=1200&fmt=png-alpha",
+        "sourcePage": "https://www.apple.com/in/shop/buy-iphone/iphone-16",
+        "credit": "© Apple Inc.",
+        "license": "Official manufacturer product image © Apple Inc., from the brand's official India store. Used unmodified (resized/padded only) for product identification by a retailer. Confirm reuse under Apple Inc.'s authorised-reseller brand-asset terms before launch."
+      }
+    ],
+    "Ultramarine": [
+      {
+        "file": "/images/products/apple-iphone-16/ultramarine-1.webp",
+        "width": 1200,
+        "height": 1200,
+        "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-ultramarine-select-202409?wid=1200&hei=1200&fmt=png-alpha",
+        "sourcePage": "https://www.apple.com/in/shop/buy-iphone/iphone-16",
+        "credit": "© Apple Inc.",
+        "license": "Official manufacturer product image © Apple Inc., from the brand's official India store. Used unmodified (resized/padded only) for product identification by a retailer. Confirm reuse under Apple Inc.'s authorised-reseller brand-asset terms before launch."
+      }
+    ],
+    "White": [
+      {
+        "file": "/images/products/apple-iphone-16/white-1.webp",
+        "width": 1200,
+        "height": 1200,
+        "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-white-select-202409?wid=1200&hei=1200&fmt=png-alpha",
+        "sourcePage": "https://www.apple.com/in/shop/buy-iphone/iphone-16",
+        "credit": "© Apple Inc.",
+        "license": "Official manufacturer product image © Apple Inc., from the brand's official India store. Used unmodified (resized/padded only) for product identification by a retailer. Confirm reuse under Apple Inc.'s authorised-reseller brand-asset terms before launch."
+      }
+    ],
+    "Black": [
+      {
+        "file": "/images/products/apple-iphone-16/black-1.webp",
+        "width": 1200,
+        "height": 1200,
+        "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-black-select-202409?wid=1200&hei=1200&fmt=png-alpha",
+        "sourcePage": "https://www.apple.com/in/shop/buy-iphone/iphone-16",
+        "credit": "© Apple Inc.",
+        "license": "Official manufacturer product image © Apple Inc., from the brand's official India store. Used unmodified (resized/padded only) for product identification by a retailer. Confirm reuse under Apple Inc.'s authorised-reseller brand-asset terms before launch."
+      }
+    ]
+  },
+  "APPLE|AIRPODS 4TH GEN": {
+    "": [
+      {
+        "file": "/images/products/apple-airpods-4th-gen/default-1.webp",
+        "width": 1200,
+        "height": 1200,
+        "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/airpods-4-select-202409?wid=1200&hei=1200&fmt=png-alpha",
+        "sourcePage": "https://www.apple.com/in/airpods/",
+        "credit": "© Apple Inc.",
+        "license": "Official manufacturer product image © Apple Inc., from the brand's official India store. Used unmodified (resized/padded only) for product identification by a retailer. Confirm reuse under Apple Inc.'s authorised-reseller brand-asset terms before launch."
+      },
+      {
+        "file": "/images/products/apple-airpods-4th-gen/default-2.webp",
+        "width": 1200,
+        "height": 1200,
+        "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/airpods-4-hero-select-202409?wid=1200&hei=1200&fmt=png-alpha",
+        "sourcePage": "https://www.apple.com/in/airpods/",
+        "credit": "© Apple Inc.",
+        "license": "Official manufacturer product image © Apple Inc., from the brand's official India store. Used unmodified (resized/padded only) for product identification by a retailer. Confirm reuse under Apple Inc.'s authorised-reseller brand-asset terms before launch."
+      }
+    ]
+  },
+  "APPLE|IPAD (9TH GEN) WI-FI": {
+    "Space Grey": [
+      {
+        "file": "/images/products/apple-ipad-9th-gen-wi-fi/space-grey-1.webp",
+        "width": 1200,
+        "height": 1200,
+        "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-2021-hero-space-wifi-select?wid=1200&hei=1200&fmt=png-alpha",
+        "sourcePage": "https://www.apple.com/in/ipad/",
+        "credit": "© Apple Inc.",
+        "license": "Official manufacturer product image © Apple Inc., from the brand's official India store. Used unmodified (resized/padded only) for product identification by a retailer. Confirm reuse under Apple Inc.'s authorised-reseller brand-asset terms before launch."
+      }
+    ]
+  },
+  "APPLE|IPAD 11 INCH A16 WI-FI": {
+    "Blue": [
+      {
+        "file": "/images/products/apple-ipad-11-inch-a16-wi-fi/blue-1.webp",
+        "width": 1200,
+        "height": 1200,
+        "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-2022-hero-blue-wifi-select?wid=1200&hei=1200&fmt=png-alpha",
+        "sourcePage": "https://www.apple.com/in/shop/buy-ipad/ipad",
+        "credit": "© Apple Inc.",
+        "license": "Official manufacturer product image © Apple Inc., from the brand's official India store. Used unmodified (resized/padded only) for product identification by a retailer. Confirm reuse under Apple Inc.'s authorised-reseller brand-asset terms before launch."
+      }
+    ]
+  },
+  "OPPO|RENO 10": {
+    "Ice Blue": [
+      {
+        "file": "/images/products/oppo-reno-10/ice-blue-1.webp",
+        "width": 1200,
+        "height": 1200,
+        "sourceUrl": "https://www.oppo.com/content/dam/oppo/common/mkt/v2-2/reno10-5g-en/listpage/reno10-5g-427_600-blue.png",
+        "sourcePage": "https://www.oppo.com/in/smartphones/series-reno/reno10/",
+        "credit": "© OPPO",
+        "license": "Official manufacturer product image © OPPO, from the brand's official India website. Used unmodified (resized/padded only) for product identification by a retailer. Confirm reuse under OPPO's authorised-reseller brand-asset terms before launch."
       }
     ]
   }

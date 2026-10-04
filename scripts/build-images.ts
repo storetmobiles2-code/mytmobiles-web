@@ -113,7 +113,7 @@ async function main() {
         try {
           const out = await optimise(await download(img.url));
           n++;
-          const rel = `/images/products/${slug}/${slugify(color)}-${n}.webp`;
+          const rel = `/images/products/${slug}/${slugify(color) || "default"}-${n}.webp`;
           await fs.mkdir(path.join(OUT, slug), { recursive: true });
           await fs.writeFile(path.join(ROOT, "public", rel), out);
           ((lock[familyKey] ??= {})[color] ??= []).push({
