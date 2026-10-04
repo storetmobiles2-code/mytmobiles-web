@@ -34,6 +34,10 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  experimental: {
+    // Admin image uploads (validated to ≤ 8 MB in src/lib/admin/media.ts).
+    serverActions: { bodySizeLimit: "10mb" },
+  },
   output: process.env.NEXT_OUTPUT === "standalone" ? "standalone" : undefined,
   images: {
     formats: ["image/avif", "image/webp"],

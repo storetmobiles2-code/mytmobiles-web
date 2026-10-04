@@ -8,6 +8,14 @@ import { env } from "@/lib/env";
 import { gstinSchema } from "@/lib/validation";
 import { rateLimit } from "@/lib/rate-limit";
 import { trackServer } from "@/lib/analytics";
+import { db } from "@/lib/db";
+
+/** Stock changed — refresh the cached product pages and listings that show it. */
+async function revalidateOrderProducts(orderId: string) {
+  const items = await db.orderItem.findMany({ where: { orderId }, select: { productSlug: true } });
+  for (const i of items) revalidatePath(`/p/${i.productSlug}`);
+  revalidatePath("/");
+}
 
 export interface RazorpayLaunch {
   key: string;
@@ -65,6 +73,7 @@ export async function placeOrderAction(input: unknown): Promise<PlaceOrderResult
       buyerCompany: parsed.data.buyerCompany || undefined,
     });
     revalidatePath("/cart");
+    await revalidateOrderProducts(result.orderId);
     if (result.paymentMethod === "COD") return { ok: true, orderId: result.orderId, next: "confirmation" };
     void trackServer({ name: "add_payment_info", userId: user.id, props: { method: "RAZORPAY" } });
     return { ok: true, orderId: result.orderId, next: "pay", razorpay: await razorpayLaunch(result.orderId, user.id) };
@@ -121,6 +130,7 @@ export async function cancelOrderAction(_prev: { error?: string; success?: strin
   if (!reason.success) return { error: reason.error.issues[0].message };
   try {
     await cancelOrder(id.data, { reason: reason.data, actor: user, byCustomer: true });
+    await revalidateOrderProducts(id.data);
     revalidatePath(`/account/orders/${id.data}`);
     revalidatePath("/account/orders");
     return { success: "Your order has been cancelled." };
