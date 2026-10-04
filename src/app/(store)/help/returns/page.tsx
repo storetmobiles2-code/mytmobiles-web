@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import { getSettings } from "@/lib/settings";
 import { ContactLine, PolicyPage } from "@/components/layout/policy-page";
@@ -25,7 +26,7 @@ export default async function ReturnsPage() {
       </ul>
       <h2>How to request a return</h2>
       <ol className="ml-5 list-decimal space-y-1">
-        <li>Go to <a href="/account/orders">My orders</a>, open the order and choose <em>Request return / replacement</em>.</li>
+        <li>Go to <Link href="/account/orders">My orders</Link>, open the order and choose <em>Request return / replacement</em>.</li>
         <li>Describe the issue. Our team will contact you to arrange pickup and inspection.</li>
         <li>For defects in electronics, the brand&apos;s authorised service centre may need to verify the fault (a DOA certificate) as per brand policy.</li>
       </ol>
@@ -36,7 +37,7 @@ export default async function ReturnsPage() {
         <li><strong>Cancelled before dispatch:</strong> prepaid amounts are refunded automatically.</li>
       </ul>
       <h2>Cancellations</h2>
-      <p>You can cancel an order from <a href="/account/orders">My orders</a> any time before it is shipped. Once shipped, you can refuse the delivery or request a return as above.</p>
+      <p>You can cancel an order from <Link href="/account/orders">My orders</Link> any time before it is shipped. Once shipped, you can refuse the delivery or request a return as above.</p>
       <h2>Warranty</h2>
       <p>Products carry the manufacturer&apos;s warranty. Warranty claims are handled at the brand&apos;s authorised service centres; keep your tax invoice as proof of purchase.</p>
       <h2>Need help?</h2>

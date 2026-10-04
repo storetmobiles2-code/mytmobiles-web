@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { requireUser } from "@/lib/auth/guards";
+import { getCurrentUser } from "@/lib/auth/session";
 import { logout } from "@/app/actions/auth";
 
 const links = [
@@ -11,7 +11,10 @@ const links = [
 ];
 
 export default async function AccountLayout({ children }: { children: React.ReactNode }) {
-  const user = await requireUser("/account");
+  // Each page calls requireUser() with its own path so sign-in returns the shopper to it;
+  // a redirect here would always win and send them back to /account instead.
+  const user = await getCurrentUser();
+  if (!user) return children;
   return (
     <div className="container-page py-6">
       <div className="grid gap-6 lg:grid-cols-[220px_1fr]">

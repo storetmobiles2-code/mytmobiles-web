@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { db } from "@/lib/db";
+import { daysAgo } from "@/lib/time";
 import { formatINR } from "@/lib/money";
 import { AdminPage, Panel, Stat } from "@/components/admin/ui";
 
@@ -7,7 +8,7 @@ export const metadata = { title: "Analytics" };
 
 export default async function AnalyticsPage(props: PageProps<"/admin/analytics">) {
   const days = [7, 30, 90].includes(Number((await props.searchParams).days)) ? Number((await props.searchParams).days) : 30;
-  const since = new Date(Date.now() - days * 86400_000);
+  const since = daysAgo(days);
   const [sessions, views, topViewed, topSold, searches, revenue] = await Promise.all([
     db.analyticsEvent.findMany({ where: { createdAt: { gte: since }, name: "page_view" }, distinct: ["sessionId"], select: { sessionId: true } }).then((r) => r.length),
     db.analyticsEvent.count({ where: { createdAt: { gte: since }, name: "page_view" } }),

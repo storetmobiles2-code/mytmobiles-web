@@ -50,11 +50,12 @@ export function PincodeChecker({ compact = false }: { compact?: boolean }) {
     try {
       const saved = localStorage.getItem(KEY);
       if (saved) {
+        // Restoring the last pincode from localStorage can only happen after hydration.
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setPin(saved);
         void check(saved);
       }
     } catch {}
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

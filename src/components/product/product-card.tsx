@@ -9,7 +9,7 @@ export function ProductCard({ product, priority = false }: { product: ProductCar
   const colors = [...new Map(product.variants.filter((v) => v.color).map((v) => [v.color, v.colorHex])).keys()];
   const variantPrices = new Set(product.variants.map((v) => v.price));
   return (
-    <article className="group card relative flex flex-col overflow-hidden transition-shadow hover:shadow-[var(--shadow-pop)]">
+    <article data-price={product.priceFrom} className="group card relative flex flex-col overflow-hidden transition-shadow hover:shadow-[var(--shadow-pop)]">
       <div className="absolute top-3 right-3 z-10">
         <WishlistButton productId={product.id} productName={product.name} />
       </div>

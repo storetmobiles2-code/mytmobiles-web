@@ -15,6 +15,11 @@ import { JsonLd } from "@/components/seo/json-ld";
 
 export const revalidate = 120;
 
+// Pages are rendered on first request and then cached (ISR) rather than built up front.
+export async function generateStaticParams() {
+  return [];
+}
+
 type SpecGroup = { group: string; items: { label: string; value: string }[] };
 
 export async function generateMetadata(props: PageProps<"/p/[slug]">): Promise<Metadata> {

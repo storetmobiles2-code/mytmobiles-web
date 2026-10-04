@@ -16,7 +16,9 @@ export function SearchBox({ className = "" }: { className?: string }) {
   const router = useRouter();
   const params = useSearchParams();
   const [q, setQ] = useState(params.get("q") ?? "");
-  const [items, setItems] = useState<Suggestion[]>([]);
+  const [fetched, setFetched] = useState<Suggestion[]>([]);
+  // Suggestions only apply to a 2+ character query; derived so clearing the box hides them at once.
+  const items = q.trim().length >= 2 ? fetched : [];
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(-1);
   const listId = useId();
@@ -24,16 +26,13 @@ export function SearchBox({ className = "" }: { className?: string }) {
 
   useEffect(() => {
     const term = q.trim();
-    if (term.length < 2) {
-      setItems([]);
-      return;
-    }
+    if (term.length < 2) return;
     const t = setTimeout(async () => {
       abort.current?.abort();
       abort.current = new AbortController();
       try {
         const res = await fetch(`/api/search/suggest?q=${encodeURIComponent(term)}`, { signal: abort.current.signal });
-        if (res.ok) setItems((await res.json()).items);
+        if (res.ok) setFetched((await res.json()).items);
       } catch {
         /* aborted or offline — suggestions are optional */
       }

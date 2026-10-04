@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import { getSettings } from "@/lib/settings";
 import { formatINR } from "@/lib/money";
@@ -28,7 +29,7 @@ export default async function ShippingPage() {
       </ul>
       <p>Orders placed after 2 PM are dispatched the next working day. Sundays and public holidays are not counted. Estimates are shown at checkout and in your order details.</p>
       <h2>Tracking your order</h2>
-      <p>Once your order ships, we email you the courier name and tracking number. You can also see live status in <a href="/account/orders">My orders</a>.</p>
+      <p>Once your order ships, we email you the courier name and tracking number. You can also see live status in <Link href="/account/orders">My orders</Link>.</p>
       <h2>At delivery</h2>
       <ul>
         <li>Please check that the package is sealed and undamaged before accepting it. If it looks tampered with, refuse delivery and contact us.</li>

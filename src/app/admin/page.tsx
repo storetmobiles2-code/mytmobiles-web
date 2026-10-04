@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { AlertTriangle } from "lucide-react";
 import { db } from "@/lib/db";
+import { daysAgo } from "@/lib/time";
 import { getSettings, setupGaps } from "@/lib/settings";
 import { razorpayConfigured, smtpConfigured } from "@/lib/env";
 import { formatINR } from "@/lib/money";
@@ -9,7 +10,7 @@ import { AdminPage, Panel, Stat, Table, td, th } from "@/components/admin/ui";
 import { Badge } from "@/components/ui/misc";
 
 export default async function AdminDashboard() {
-  const since30 = new Date(Date.now() - 30 * 86400_000);
+  const since30 = daysAgo(30);
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const countedStatuses = { notIn: ["CANCELLED", "PENDING_PAYMENT"] as ("CANCELLED" | "PENDING_PAYMENT")[] };

@@ -40,12 +40,17 @@ export function PurchasePanel({ productId, name, variants, images, header, foote
     return bySku ?? variants.find((v) => v.stock > 0) ?? variants[0];
   }, [variants, params]);
   const [selected, setSelected] = useState(initial);
+  // Follow ?variant= changes (e.g. back/forward navigation) by adjusting state during render.
+  const [prevInitial, setPrevInitial] = useState(initial);
+  if (prevInitial !== initial) {
+    setPrevInitial(initial);
+    setSelected(initial);
+  }
   const [qty, setQty] = useState(1);
   const [pending, start] = useTransition();
   const [message, setMessage] = useState<{ ok: boolean; text: string } | null>(null);
   const [activeImage, setActiveImage] = useState(0);
 
-  useEffect(() => setSelected(initial), [initial]);
   useEffect(() => {
     track("view_item", { productId, value: initial.price });
   }, [productId, initial.price]);

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { getSettings } from "@/lib/settings";
@@ -17,7 +18,7 @@ export default async function ContactPage() {
         {s.supportEmail && <li className="flex items-center gap-3"><Mail className="h-5 w-5 text-brand-600" aria-hidden="true" /><a href={`mailto:${s.supportEmail}`}>{s.supportEmail}</a></li>}
         {address && <li className="flex items-start gap-3"><MapPin className="mt-1 h-5 w-5 text-brand-600" aria-hidden="true" /><span>{s.legalName || s.storeName}<br />{address}</span></li>}
       </ul>
-      {!s.supportPhone && !s.supportEmail && !address && <p>Our contact details are being updated. For order help, open your order in <a href="/account/orders">My orders</a>.</p>}
+      {!s.supportPhone && !s.supportEmail && !address && <p>Our contact details are being updated. For order help, open your order in <Link href="/account/orders">My orders</Link>.</p>}
       <p>For order-related queries, please keep your order number (e.g. MYT-261004-XXXXXX) handy.</p>
     </PolicyPage>
   );
