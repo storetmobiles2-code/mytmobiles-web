@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState, useTransition, type ReactNode } from "react";
 import { Check, Minus, Plus, ShoppingBag, Zap } from "lucide-react";
 import { addToCart } from "@/app/actions/cart";
@@ -34,18 +34,17 @@ const memKey = (v: PanelVariant) => [v.ram, v.storage].filter(Boolean).join(" + 
 
 export function PurchasePanel({ productId, name, variants, images, header, footer }: { productId: string; name: string; variants: PanelVariant[]; images: PanelImage[]; header?: ReactNode; footer?: ReactNode }) {
   const router = useRouter();
-  const params = useSearchParams();
-  const initial = useMemo(() => {
-    const bySku = variants.find((v) => v.sku === params.get("variant"));
-    return bySku ?? variants.find((v) => v.stock > 0) ?? variants[0];
-  }, [variants, params]);
+  // The page is statically cached (ISR), so the server renders the default variant and a
+  // ?variant= deep link (from cart, wishlist or a shared URL) is applied after hydration.
+  // Reading it via useSearchParams would push the whole panel out of the server HTML.
+  const initial = useMemo(() => variants.find((v) => v.stock > 0) ?? variants[0], [variants]);
   const [selected, setSelected] = useState(initial);
-  // Follow ?variant= changes (e.g. back/forward navigation) by adjusting state during render.
-  const [prevInitial, setPrevInitial] = useState(initial);
-  if (prevInitial !== initial) {
-    setPrevInitial(initial);
-    setSelected(initial);
-  }
+  useEffect(() => {
+    const sku = new URLSearchParams(location.search).get("variant");
+    const linked = sku ? variants.find((v) => v.sku === sku) : undefined;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- syncing from the URL after hydration
+    if (linked) setSelected(linked);
+  }, [variants]);
   const [qty, setQty] = useState(1);
   const [pending, start] = useTransition();
   const [message, setMessage] = useState<{ ok: boolean; text: string } | null>(null);
@@ -131,7 +130,7 @@ export function PurchasePanel({ productId, name, variants, images, header, foote
               {colors.map((c) => {
                 const any = forColor(c).some((v) => v.stock > 0);
                 return (
-                  <button key={c} type="button" onClick={() => pickColor(c)} aria-pressed={selected.color === c} className={cn("rounded-xl border-2 px-3 py-2 text-sm font-medium", selected.color === c ? "border-brand-600 bg-brand-50 text-brand-800" : "border-ink-200 bg-white hover:border-ink-400", !any && "text-ink-400 line-through decoration-ink-300")}>
+                  <button key={c} type="button" onClick={() => pickColor(c)} aria-pressed={selected.color === c} className={cn("rounded-xl border-2 px-3 py-2 text-sm font-medium", selected.color === c ? "border-brand-600 bg-brand-50 text-brand-800" : "border-ink-200 bg-white hover:border-ink-400", !any && "text-ink-500 line-through decoration-ink-300")}>
                     {c}
                   </button>
                 );
@@ -183,7 +182,7 @@ export function PurchasePanel({ productId, name, variants, images, header, foote
         )}
 
         <div className="grid grid-cols-[1fr_1fr_auto] gap-2 sm:gap-3">
-          <button type="button" disabled={!inStock || pending} onClick={() => submit(false)} className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border-2 border-brand-600 bg-white font-bold text-brand-700 hover:bg-brand-50 disabled:cursor-not-allowed disabled:border-ink-200 disabled:text-ink-400">
+          <button type="button" disabled={!inStock || pending} onClick={() => submit(false)} className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border-2 border-brand-600 bg-white font-bold text-brand-700 hover:bg-brand-50 disabled:cursor-not-allowed disabled:border-ink-200 disabled:text-ink-500">
             <ShoppingBag className="h-5 w-5 shrink-0" aria-hidden="true" /> <span className="whitespace-nowrap">Add to cart</span>
           </button>
           <button type="button" disabled={!inStock || pending} onClick={() => submit(true)} className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-brand-600 font-bold text-white hover:bg-brand-700 disabled:cursor-not-allowed disabled:bg-ink-300">

@@ -74,7 +74,8 @@ export async function ListingView({
             <FiltersForm mode="desktop" filters={filters} facets={facets} showBrand={showBrandFilter} showCondition={showConditionFilter} />
           </div>
         </aside>
-        <section aria-label="Products">
+        <section aria-labelledby="products-heading">
+          <h2 id="products-heading" className="sr-only">Products</h2>
           {items.length ? (
             <>
               <ProductGrid products={items} priorityCount={4} />

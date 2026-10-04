@@ -17,7 +17,7 @@ export function OrderRow({ order }: { order: { id: string; orderNumber: string; 
           <p className="text-sm text-ink-500">{order.orderNumber} · {order.placedAt.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}</p>
           <div className="mt-1 flex items-center gap-2"><Badge tone={statusTone(order.status)}>{ORDER_STATUS_LABEL[order.status]}</Badge><span className="text-sm font-semibold">{formatINR(order.total)}</span></div>
         </div>
-        <ChevronRight className="h-5 w-5 text-ink-400" aria-hidden="true" />
+        <ChevronRight className="h-5 w-5 text-ink-500" aria-hidden="true" />
       </Link>
     </li>
   );

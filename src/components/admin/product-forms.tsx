@@ -181,7 +181,7 @@ export function VariantTable({ productId, variants }: { productId: string; varia
                   <td className="text-right">{inr(v.price)}</td>
                   <td className="text-right text-ink-500">{inr(v.mrp)}</td>
                   <td className={`text-right font-semibold ${v.stock <= v.lowStockThreshold ? "text-danger-700" : ""}`}>{v.stock}</td>
-                  <td>{v.isActive ? "Active" : <span className="text-ink-400">Inactive</span>}</td>
+                  <td>{v.isActive ? "Active" : <span className="text-ink-500">Inactive</span>}</td>
                   <td className="text-right whitespace-nowrap">
                     <button type="button" onClick={() => setEditing(v.id)} className="mr-3 font-semibold text-brand-700">Edit</button>
                     <button type="button" disabled={pending} onClick={() => { if (confirm("Delete this variant?")) start(async () => { const r = await deleteVariant(v.id); setMsg(r.ok ?? r.error ?? null); router.refresh(); }); }} className="font-semibold text-danger-700">Delete</button>

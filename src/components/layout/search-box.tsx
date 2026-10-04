@@ -60,7 +60,7 @@ export function SearchBox({ className = "" }: { className?: string }) {
       <label htmlFor={`${listId}-input`} className="sr-only">
         Search products
       </label>
-      <Search className="pointer-events-none absolute top-1/2 left-3.5 h-5 w-5 -translate-y-1/2 text-ink-400" aria-hidden="true" />
+      <Search className="pointer-events-none absolute top-1/2 left-3.5 h-5 w-5 -translate-y-1/2 text-ink-500" aria-hidden="true" />
       <input
         id={`${listId}-input`}
         type="search"
@@ -88,10 +88,10 @@ export function SearchBox({ className = "" }: { className?: string }) {
         aria-expanded={open && items.length > 0}
         aria-controls={listId}
         aria-activedescendant={active >= 0 ? `${listId}-${active}` : undefined}
-        className="h-11 w-full rounded-xl border border-transparent bg-white pr-10 pl-11 text-ink-900 placeholder:text-ink-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/40 focus:outline-none [&::-webkit-search-cancel-button]:hidden"
+        className="h-11 w-full rounded-xl border border-transparent bg-white pr-10 pl-11 text-ink-900 placeholder:text-ink-500 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/40 focus:outline-none [&::-webkit-search-cancel-button]:hidden"
       />
       {q && (
-        <button type="button" onClick={() => setQ("")} className="absolute top-1/2 right-2 -translate-y-1/2 rounded-lg p-1.5 text-ink-400 hover:text-ink-700" aria-label="Clear search">
+        <button type="button" onClick={() => setQ("")} className="absolute top-1/2 right-2 -translate-y-1/2 rounded-lg p-1.5 text-ink-500 hover:text-ink-700" aria-label="Clear search">
           <X className="h-4 w-4" />
         </button>
       )}

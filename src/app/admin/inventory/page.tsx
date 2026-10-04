@@ -41,7 +41,7 @@ export default async function InventoryPage(props: PageProps<"/admin/inventory">
           {variants.map((v) => (
             <tr key={v.id}>
               <td className={`${td} font-mono text-xs`}>{v.sku}</td>
-              <td className={td}><Link href={`/admin/products/${v.product.id}`} className="hover:text-brand-700">{v.product.name}</Link>{!v.product.isActive && <span className="ml-1 text-xs text-ink-400">(hidden)</span>}<span className="block text-xs text-ink-500">{[v.ram, v.storage, v.color].filter(Boolean).join(" · ")}</span></td>
+              <td className={td}><Link href={`/admin/products/${v.product.id}`} className="hover:text-brand-700">{v.product.name}</Link>{!v.product.isActive && <span className="ml-1 text-xs text-ink-500">(hidden)</span>}<span className="block text-xs text-ink-500">{[v.ram, v.storage, v.color].filter(Boolean).join(" · ")}</span></td>
               <td className={td}>{formatINR(v.price)}</td>
               <td className={`${td} font-bold ${v.stock <= v.lowStockThreshold ? "text-danger-700" : ""}`}>{v.stock}</td>
               <td className={td}><AdjustStockForm variantId={v.id} stock={v.stock} /></td>

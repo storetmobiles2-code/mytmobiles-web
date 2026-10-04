@@ -57,14 +57,14 @@ export function FiltersForm({ filters, facets, mode, showBrand = true, showCondi
       {showBrand && facets.brands.length > 1 && (
         <Group title="Brand">
           {facets.brands.map((b) => (
-            <Check key={b.slug} name="brand" value={b.slug} checked={filters.brands.includes(b.slug)} label={<>{b.name} <span className="text-ink-400">({b.count})</span></>} />
+            <Check key={b.slug} name="brand" value={b.slug} checked={filters.brands.includes(b.slug)} label={<>{b.name} <span className="text-ink-500">({b.count})</span></>} />
           ))}
         </Group>
       )}
       <Group title="Price (₹)">
         <div className="flex items-center gap-2">
           <input name="min" type="number" inputMode="numeric" min={0} placeholder={`Min ${facets.priceMin || ""}`} defaultValue={filters.minPrice ?? ""} aria-label="Minimum price" className="w-full rounded-lg border border-ink-300 px-2.5 py-1.5 text-sm" />
-          <span className="text-ink-400">–</span>
+          <span className="text-ink-500">–</span>
           <input name="max" type="number" inputMode="numeric" min={0} placeholder={`Max ${facets.priceMax || ""}`} defaultValue={filters.maxPrice ?? ""} aria-label="Maximum price" className="w-full rounded-lg border border-ink-300 px-2.5 py-1.5 text-sm" />
         </div>
       </Group>

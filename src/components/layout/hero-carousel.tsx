@@ -73,7 +73,7 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
                   <div className="relative mx-auto hidden aspect-square w-full max-w-[300px] sm:block lg:max-w-[340px]">
                     <div className="absolute inset-4 rounded-full bg-white/10 blur-2xl" />
                     <div className="relative h-full w-full overflow-hidden rounded-[2rem] bg-white p-4 shadow-2xl">
-                      <Image src={s.imageUrl} alt={s.imageAlt ?? ""} fill sizes="340px" priority={i === 0} className="object-contain p-3" />
+                      <Image src={s.imageUrl} alt={s.imageAlt ?? ""} fill sizes="340px" loading={i === 0 ? "eager" : "lazy"} fetchPriority={i === 0 ? "high" : undefined} className="object-contain p-3" />
                     </div>
                   </div>
                 )}
@@ -90,9 +90,11 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
           <button type="button" onClick={() => go(index + 1)} aria-label="Next slide" className="absolute top-1/2 right-3 hidden -translate-y-1/2 rounded-full bg-white/90 p-2 shadow hover:bg-white sm:block">
             <ChevronRight className="h-5 w-5" />
           </button>
-          <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2">
+          <div className="absolute bottom-2 left-1/2 flex -translate-x-1/2">
             {slides.map((s, i) => (
-              <button key={s.id} type="button" onClick={() => go(i)} aria-label={`Go to slide ${i + 1}`} aria-current={i === index} className={`h-2 rounded-full transition-all ${i === index ? "w-6 bg-white" : "w-2 bg-white/50"}`} />
+              <button key={s.id} type="button" onClick={() => go(i)} aria-label={`Go to slide ${i + 1}`} aria-current={i === index} className="flex h-6 min-w-6 items-center justify-center px-1">
+                <span className={`block h-2 rounded-full transition-all ${i === index ? "w-6 bg-white" : "w-2 bg-white/50"}`} />
+              </button>
             ))}
           </div>
         </>

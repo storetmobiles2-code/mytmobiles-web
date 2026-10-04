@@ -2,7 +2,7 @@ import { forwardRef, useId, type InputHTMLAttributes, type ReactNode, type Selec
 import { cn } from "@/lib/cn";
 
 const control =
-  "block w-full rounded-xl border bg-white px-3.5 py-2.5 text-ink-900 placeholder:text-ink-400 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500/30 disabled:bg-ink-100";
+  "block w-full rounded-xl border bg-white px-3.5 py-2.5 text-ink-900 placeholder:text-ink-500 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500/30 disabled:bg-ink-100";
 
 interface FieldProps {
   label: ReactNode;
@@ -16,7 +16,7 @@ function Wrapper({ id, label, error, hint, optional, children }: FieldProps & { 
     <div className="space-y-1.5">
       <label htmlFor={id} className="block text-sm font-medium text-ink-700">
         {label}
-        {optional && <span className="ml-1 font-normal text-ink-400">(optional)</span>}
+        {optional && <span className="ml-1 font-normal text-ink-500">(optional)</span>}
       </label>
       {children}
       {error ? (

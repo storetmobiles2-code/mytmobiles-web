@@ -88,7 +88,7 @@ export default async function HomePage() {
         {deals.length > 0 && (
           <section>
             <SectionHeading title="Top deals" subtitle="Biggest savings on MRP right now" href="/search?sort=discount" />
-            <ProductRail products={deals} />
+            <ProductRail products={deals} priorityCount={2} />
           </section>
         )}
 

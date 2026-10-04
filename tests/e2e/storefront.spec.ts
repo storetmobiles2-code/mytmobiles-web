@@ -16,7 +16,7 @@ test.describe("storefront", () => {
     await box.press("Enter");
     await page.waitForURL(/\/search\?q=redmi/);
     await expect(page.getByRole("heading", { level: 1 })).toContainText(/redmi/i);
-    await expect(page.locator('section[aria-label="Products"] a[href^="/p/"]').first()).toBeVisible();
+    await expect(page.locator('section[aria-labelledby="products-heading"] a[href^="/p/"]').first()).toBeVisible();
   });
 
   test("search with no results shows an empty state", async ({ page }) => {
@@ -28,7 +28,7 @@ test.describe("storefront", () => {
     await page.goto("/c/smartphones?sort=price-asc");
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
     const prices = await page
-      .locator('section[aria-label="Products"] [data-price]')
+      .locator('section[aria-labelledby="products-heading"] [data-price]')
       .evaluateAll((els) => els.map((e) => Number(e.getAttribute("data-price"))));
     expect(prices.length).toBeGreaterThan(1);
     expect([...prices].sort((a, b) => a - b)).toEqual(prices);
@@ -43,6 +43,20 @@ test.describe("storefront", () => {
     const product = ld.map((t) => JSON.parse(t)).flat().find((j) => j["@type"] === "Product");
     expect(product?.offers).toBeTruthy();
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", new RegExp(`/p/${PRODUCT_SLUG}$`));
+  });
+
+  test("?variant= deep link selects that variant", async ({ page }) => {
+    await page.goto(`/p/${PRODUCT_SLUG}`);
+    const pressed = () => page.locator('button[aria-pressed="true"]').allTextContents();
+    const other = page.locator('button[aria-pressed="false"]').first();
+    test.skip((await other.count()) === 0, "product has a single variant");
+    const before = await pressed();
+    await other.click();
+    await expect(page).toHaveURL(/variant=/);
+    const chosen = await pressed();
+    expect(chosen).not.toEqual(before);
+    await page.goto(page.url());
+    await expect.poll(pressed).toEqual(chosen);
   });
 
   test("unknown product returns a real 404", async ({ page, browserErrors }) => {

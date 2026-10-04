@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
 import { BadgeCheck, FileText, RotateCcw, ShieldCheck } from "lucide-react";
 import { db } from "@/lib/db";
 import { getProductBySlug, getRelatedProducts } from "@/lib/catalog/queries";
@@ -88,8 +87,7 @@ export default async function ProductPage(props: PageProps<"/p/[slug]">) {
       />
       <Breadcrumbs items={crumbs} />
       <div className="mt-4">
-        <Suspense>
-          <PurchasePanel
+        <PurchasePanel
             productId={product.id}
             name={product.name}
             variants={product.variants.map((v) => ({ id: v.id, sku: v.sku, color: v.color, storage: v.storage, ram: v.ram, price: v.price, mrp: v.mrp, stock: v.stock, maxPerOrder: v.maxPerOrder }))}
@@ -131,7 +129,6 @@ export default async function ProductPage(props: PageProps<"/p/[slug]">) {
               </>
             }
           />
-        </Suspense>
       </div>
 
       <div className="mt-10 grid gap-6 lg:grid-cols-[1.4fr_1fr]">

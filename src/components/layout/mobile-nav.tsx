@@ -52,7 +52,7 @@ export function MobileNav({ categories, brands, hasOpenBox }: { categories: { na
               Admin dashboard
             </Link>
           )}
-          <p className="mt-3 px-3 text-xs font-semibold tracking-wide text-ink-400 uppercase">Shop by category</p>
+          <p className="mt-3 px-3 text-xs font-semibold tracking-wide text-ink-500 uppercase">Shop by category</p>
           {categories.map((c) => (
             <Link key={c.slug} href={`/c/${c.slug}`} className="block rounded-lg px-3 py-2.5 hover:bg-ink-50">
               {c.name}
@@ -66,7 +66,7 @@ export function MobileNav({ categories, brands, hasOpenBox }: { categories: { na
           <Link href="/offers" className="block rounded-lg px-3 py-2.5 hover:bg-ink-50">
             Offers & coupons
           </Link>
-          <p className="mt-3 px-3 text-xs font-semibold tracking-wide text-ink-400 uppercase">Brands</p>
+          <p className="mt-3 px-3 text-xs font-semibold tracking-wide text-ink-500 uppercase">Brands</p>
           <div className="flex flex-wrap gap-2 px-3 py-2">
             {brands.map((b) => (
               <Link key={b.slug} href={`/brands/${b.slug}`} className="rounded-full border border-ink-200 px-3 py-1 text-sm hover:border-brand-400">
@@ -74,7 +74,7 @@ export function MobileNav({ categories, brands, hasOpenBox }: { categories: { na
               </Link>
             ))}
           </div>
-          <p className="mt-3 px-3 text-xs font-semibold tracking-wide text-ink-400 uppercase">Help</p>
+          <p className="mt-3 px-3 text-xs font-semibold tracking-wide text-ink-500 uppercase">Help</p>
           <Link href="/account/orders" className="block rounded-lg px-3 py-2.5 hover:bg-ink-50">Track orders</Link>
           <Link href="/wishlist" className="block rounded-lg px-3 py-2.5 hover:bg-ink-50">Wishlist</Link>
           <Link href="/help/shipping" className="block rounded-lg px-3 py-2.5 hover:bg-ink-50">Shipping & delivery</Link>

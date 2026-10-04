@@ -82,7 +82,7 @@ export function Pagination({ page, pages, hrefFor }: { page: number; pages: numb
       )}
       {window.map((p, i) => (
         <span key={p} className="flex items-center gap-1.5">
-          {i > 0 && p - window[i - 1] > 1 && <span className="px-1 text-ink-400">…</span>}
+          {i > 0 && p - window[i - 1] > 1 && <span className="px-1 text-ink-500">…</span>}
           {p === page ? (
             <span aria-current="page" className={cn(cls, "bg-brand-600 text-white")}>
               {p}

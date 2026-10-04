@@ -10,7 +10,7 @@ export function Logo({ className = "", height = 44, priority = true }: { classNa
   const width = Math.round((logo.width / logo.height) * height);
   return (
     <Link href="/" className={`inline-flex shrink-0 items-center ${className}`} aria-label="myT Mobiles — home">
-      <Image src={logo} alt="myT Mobiles" width={width} height={height} priority={priority} className="h-auto" style={{ height, width }} />
+      <Image src={logo} alt="myT Mobiles" width={width} height={height} loading={priority ? "eager" : "lazy"} fetchPriority={priority ? "high" : undefined} className="h-auto" style={{ height, width }} />
     </Link>
   );
 }

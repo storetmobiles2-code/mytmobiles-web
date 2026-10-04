@@ -59,7 +59,7 @@ export function FilterTabs({ items, active }: { items: { label: string; href: st
       {items.map((i) => (
         <Link key={i.key} href={i.href} aria-current={i.key === active ? "page" : undefined} className={cn("rounded-lg px-3 py-1.5 text-sm font-semibold whitespace-nowrap", i.key === active ? "bg-ink-900 text-white" : "text-ink-700 hover:bg-ink-100")}>
           {i.label}
-          {i.count !== undefined && <span className={cn("ml-1.5 text-xs", i.key === active ? "text-white/70" : "text-ink-400")}>{i.count}</span>}
+          {i.count !== undefined && <span className={cn("ml-1.5 text-xs", i.key === active ? "text-white/70" : "text-ink-500")}>{i.count}</span>}
         </Link>
       ))}
     </nav>

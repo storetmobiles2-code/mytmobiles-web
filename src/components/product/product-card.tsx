@@ -55,12 +55,12 @@ export function ProductGrid({ products, priorityCount = 0 }: { products: Product
   );
 }
 
-export function ProductRail({ products }: { products: ProductCardData[] }) {
+export function ProductRail({ products, priorityCount = 0 }: { products: ProductCardData[]; priorityCount?: number }) {
   return (
     <ul className="no-scrollbar -mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
-      {products.map((p) => (
+      {products.map((p, i) => (
         <li key={p.id} className="w-[46%] shrink-0 snap-start sm:w-[30%] lg:w-[22%] xl:w-[18.5%]">
-          <ProductCard product={p} />
+          <ProductCard product={p} priority={i < priorityCount} />
         </li>
       ))}
     </ul>
