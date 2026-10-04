@@ -1,0 +1,125 @@
+@import "tailwindcss";
+
+/*
+ * myT Mobiles design tokens — from the official logo: neon pink "T" (#F8358A)
+ * with white lettering on black.
+ * brand-500 is the logo pink (accents, large type). Buttons use brand-600 and
+ * links brand-700 so white-on-pink and pink-on-white text meet WCAG AA (≥ 4.5:1).
+ * Ink = neutral greys/black, Mint = delivery & savings, Deal = discount badges.
+ */
+@theme {
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --color-brand-50: #fff0f6;
+  --color-brand-100: #ffe0ee;
+  --color-brand-200: #ffc2dd;
+  --color-brand-300: #ff94c2;
+  --color-brand-400: #ff5ea3;
+  --color-brand-500: #f8358a;
+  --color-brand-600: #d10f68;
+  --color-brand-700: #a80d54;
+  --color-brand-800: #870c45;
+  --color-brand-900: #5e0a31;
+  --color-brand-950: #000000;
+
+  --color-ink-900: #121214;
+  --color-ink-700: #3a3a42;
+  --color-ink-500: #63636e;
+  --color-ink-400: #8a8a95;
+  --color-ink-300: #c6c6ce;
+  --color-ink-200: #e4e4e9;
+  --color-ink-100: #f1f1f4;
+  --color-ink-50: #f7f7f9;
+
+  --color-deal-50: #fff7ed;
+  --color-deal-600: #c2410c;
+  --color-deal-700: #9a3412;
+
+  --color-mint-50: #ecfdf5;
+  --color-mint-600: #047857;
+  --color-mint-700: #065f46;
+
+  --color-danger-50: #fef2f2;
+  --color-danger-600: #dc2626;
+  --color-danger-700: #b91c1c;
+
+  --radius-card: 1rem;
+  --shadow-card: 0 1px 2px rgb(18 18 20 / 0.04), 0 4px 16px rgb(18 18 20 / 0.06);
+  --shadow-pop: 0 10px 40px rgb(18 18 20 / 0.16);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 8rem;
+  }
+  body {
+    @apply bg-ink-50 text-ink-900 antialiased;
+    font-feature-settings: "ss01", "cv11";
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-brand-600);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  ::selection {
+    @apply bg-brand-200 text-ink-900;
+  }
+  input,
+  select,
+  textarea {
+    font-size: 16px; /* prevents iOS zoom on focus */
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+  .card {
+    @apply rounded-[var(--radius-card)] bg-white shadow-[var(--shadow-card)];
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .skeleton {
+    @apply animate-pulse rounded-md bg-ink-200/70;
+  }
+  .prose-policy h2 {
+    @apply mt-8 mb-3 text-xl font-bold text-ink-900;
+  }
+  .prose-policy h3 {
+    @apply mt-6 mb-2 text-base font-semibold text-ink-900;
+  }
+  .prose-policy p,
+  .prose-policy li {
+    @apply leading-7 text-ink-700;
+  }
+  .prose-policy ul {
+    @apply ml-5 list-disc space-y-1;
+  }
+  .prose-policy a {
+    @apply font-medium text-brand-700 underline underline-offset-2;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+  }
+}

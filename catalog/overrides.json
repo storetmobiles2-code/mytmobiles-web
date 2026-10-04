@@ -1,0 +1,30 @@
+{
+  "_comment": "Curated display names / facts for stock-sheet families whose sheet names are not customer-friendly. Keys are family keys from src/lib/catalog/stock-parse.ts. 'mergeInto' folds another sheet spelling of the same product into this family.",
+  "families": {
+    "APPLE|AIRPODS 4TH GEN": { "name": "Apple AirPods 4", "specs": { "Type": "True wireless earbuds", "Generation": "4th generation" } },
+    "APPLE|IPAD (9TH GEN) WI-FI": { "name": "Apple iPad (9th generation) Wi-Fi", "colorAliases": { "Space Gray": "Space Grey" } },
+    "APPLE|IPAD 11 INCH A16 WI-FI": { "name": "Apple iPad 11-inch (A16) Wi-Fi" },
+    "CELLECOR|43\"P INCHES FULL HD FRAMELESS SMART TV": { "name": "Cellecor 109 cm (43 inch) Full HD Frameless Smart LED TV", "specs": { "Screen size": "109 cm (43 inch)", "Resolution": "Full HD" } },
+    "CELLECOR|LED S-43\" ULTRA HD 4K SMART TV": { "name": "Cellecor S-43 109 cm (43 inch) Ultra HD 4K Smart LED TV", "specs": { "Screen size": "109 cm (43 inch)", "Resolution": "4K Ultra HD" } },
+    "CROMPTON|MARVEL NEO 40L AIR COOLER": { "name": "Crompton Marvel Neo 40 L Air Cooler", "specs": { "Tank capacity": "40 L" } },
+    "CROMPTON|SUPREMUS 70L DESERT AIR COOLER": { "name": "Crompton Supremus 70 L Desert Air Cooler", "specs": { "Tank capacity": "70 L", "Type": "Desert cooler" } },
+    "CROMPTON|ZELUS DAC43 COOLER": { "name": "Crompton Zelus DAC43 Air Cooler" },
+    "KENSTAR|DOUBLECOOL DX WW 60L": { "name": "Kenstar Doublecool DX 60 L Air Cooler", "specs": { "Tank capacity": "60 L" } },
+    "ONEPLUS|TV U SERIES 65U1S 4K LED": { "name": "OnePlus U Series 65U1S 164 cm (65 inch) 4K LED Smart TV", "specs": { "Screen size": "164 cm (65 inch)", "Resolution": "4K Ultra HD", "Model": "65U1S" } },
+    "ORIENT ELECTRIC|TORNADO 52L COOLER (D GREY)": { "name": "Orient Electric Tornado 52 L Air Cooler", "color": "Dark Grey", "specs": { "Tank capacity": "52 L" } },
+    "ORIENT ELECTRIC|TORNADO 88L (DARK GREY)": { "name": "Orient Electric Tornado 88 L Air Cooler", "color": "Dark Grey", "specs": { "Tank capacity": "88 L" } },
+    "ORIENT ELECTRIC|ULTIMO 88L AIRCOOLER": { "name": "Orient Electric Ultimo 88 L Air Cooler", "specs": { "Tank capacity": "88 L" } },
+    "SAMSUNG|NEW D SERIES BRIGHTER CRYSTAL 4K VIVID SERIES (2024 EDITION) 108 CM (43 INCH) ULTRA HD (4K) LED SMART TV": { "name": "Samsung Crystal 4K Vivid 108 cm (43 inch) Ultra HD LED Smart TV (2024)", "specs": { "Screen size": "108 cm (43 inch)", "Resolution": "4K Ultra HD", "Model year": "2024" } },
+    "TCL|S5500 (32 INCH) FULL HD LED SMART GOOGLE TV 2024 EDITION": { "name": "TCL S5500 80 cm (32 inch) Full HD LED Smart Google TV (2024)", "specs": { "Screen size": "80 cm (32 inch)", "Resolution": "Full HD", "Platform": "Google TV", "Model year": "2024" } },
+    "VOLTAS|COOLER GRAND 52E": { "name": "Voltas Grand 52E Desert Air Cooler", "mergeInto": ["VOLTAS|GRAND 52E DESERT AIR COOLER"], "specs": { "Type": "Desert cooler" } },
+    "VOLTAS|COOLER JETMAX 70 T": { "name": "Voltas Jetmax 70T Air Cooler" },
+    "VOLTAS|GRAND 72 DESERT COOLER": { "name": "Voltas Grand 72 Desert Air Cooler", "specs": { "Type": "Desert cooler" } },
+    "XIAOMI|A PRO 32 INCHES MAGIQLED GOOGLE TV": { "name": "Xiaomi A Pro 80 cm (32 inch) MagiQLED Google TV", "specs": { "Screen size": "80 cm (32 inch)", "Platform": "Google TV" } },
+    "XIAOMI|SMART TV 5A 32 INCHES": { "name": "Xiaomi Smart TV 5A 80 cm (32 inch)", "specs": { "Screen size": "80 cm (32 inch)" } },
+    "XIAOMI|SMART TV A SERIES 32 INCHES GOOGLE TV": { "name": "Xiaomi Smart TV A Series 80 cm (32 inch) Google TV", "specs": { "Screen size": "80 cm (32 inch)", "Platform": "Google TV" } },
+    "XIAOMI|X SERIES 43 INCHES ULTRA HD 4K SMART ANDROID TV 2023 EDITION": { "name": "Xiaomi X Series 108 cm (43 inch) 4K Ultra HD Smart Android TV (2023)", "specs": { "Screen size": "108 cm (43 inch)", "Resolution": "4K Ultra HD", "Model year": "2023" } },
+    "FASTRACK|REVOLT FS1 BT CALLING SMART WATCH": { "name": "Fastrack Revolt FS1 Bluetooth Calling Smartwatch", "specs": { "Calling": "Bluetooth calling" } },
+    "SAMSUNG|GALAXY TAB A11": { "name": "Samsung Galaxy Tab A11 (LTE)" },
+    "SAMSUNG|GALAXY TAB A11+": { "name": "Samsung Galaxy Tab A11+ 5G" }
+  }
+}
