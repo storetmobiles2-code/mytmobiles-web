@@ -60,6 +60,9 @@ The hero (first image) should show the single device. If the brand's only clean 
 | Apple | apple.com/in store buy pages: `…-finish-select-…_AV1`, `_AV2`, … are the different views. |
 | vivo | shop.vivo.com/in pages embed per-SKU `imageUrls`. vivo pages sometimes disagree on colour names, so match by exact model and colour or skip. |
 | Appliance brands | (Crompton, Orient, Voltas, Kenstar) Their own stores (Shopify-based) list per-variant galleries. Pick only the images listed for the exact variant (capacity and model code). |
+| OPPO, OnePlus, Philips | oppo.com/in (or oppo.com/en for models removed from India with the same model code and colours), oneplus.in overview pages, philips.co.in by part number (e.g. CTS7221BKA/94). OnePlus serves several pages from oddly named CMS folders, so check that the image is actually used on the model's own page. |
+
+The brand's India pages often hold only one clean image per colour. Its other official regional stores (e.g. mi.com/de, /uk) may be used **only** when the model and the colour name match India exactly. Say so in `license`. A brand's interactive 3D model or "360° video" is not a frame sequence: don't turn it into a spin.
 
 For JavaScript-rendered pages, use Playwright with Chromium at /opt/pw-browsers.
 
