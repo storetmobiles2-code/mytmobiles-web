@@ -42,6 +42,14 @@ Built with Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS 4, Prisma
 
 ---
 
+## Maintenance and operations
+
+- **[docs/agents.md](docs/agents.md)**: the Claude Code agents that maintain the store (new products, product changes, photos, stock-sheet review, daily ops brief, site audit, releases), how to give them work, and how their changes reach production through reviewed pull requests.
+- **[docs/production-guide.md](docs/production-guide.md)**: what it takes to set up, run and maintain the store in production in India: services and costs, go-live checklist, daily to yearly routines, legal and tax requirements, security, backups and incident runbook.
+- Product data: `catalog/products/` (see its README) and `npm run catalog -- help`.
+
+---
+
 ## Quick start (local)
 
 Requirements: Node.js 20.9+ (22 recommended) and PostgreSQL 14+.
@@ -69,6 +77,9 @@ The seed imports the catalogue from `catalog/stock-sheet.csv` **only into an emp
 | `npm run test:e2e` | Playwright end-to-end and accessibility tests (see **Testing**) |
 | `npm run db:migrate` | Create a new migration in development |
 | `npm run images:build` | Download, verify and optimise product images listed in `catalog/reference.json` |
+| `npm run catalog -- <command>` | Product files: `new`, `export`, `images`, `validate`, `apply`, `report`, `stock-plan` (see docs/agents.md) |
+| `npm run ops -- report` | Daily operations brief (read-only) |
+| `npm run demo:build` | Build the static preview for GitHub Pages into `demo-site/` (see **Static preview**) |
 | `npm run images:sync` | Apply `catalog/images.lock.json` to an existing database (dry run; add `-- --apply`) |
 
 ---
@@ -120,6 +131,26 @@ docker compose up -d app          # http://localhost:3000
 `BUILD_DATABASE_URL` is the database as seen from the build, normally `postgresql://myt:<password>@localhost:5432/mytmobiles`. It is passed as a BuildKit secret and is not stored in the image.
 
 The Prisma CLI in the `migrate` image logs an "OpenSSL version" warning. It is harmless: migrations and the seed run correctly.
+
+### Static preview (GitHub Pages)
+
+A browsable preview of the storefront is published at **https://storetmobiles2-code.github.io/mytmobiles-web/**. It is the real UI, built in demo mode and exported as static pages:
+
+- Every page shows a "This is a preview" banner and is marked `noindex`, so it never competes with the real store in search results.
+- The cart and wishlist are kept in the visitor's browser. Search, filters and sorting run client-side. The pincode check calls India Post directly.
+- Checkout and sign-in **don't take orders or accounts**. They explain that online ordering opens soon and how to buy in the meantime.
+- Prices and stock are a snapshot taken when the preview was built.
+
+To rebuild it, seed a fresh database from the stock sheet (so test orders don't affect stock), then export:
+
+```bash
+createdb mytmobiles_demo
+DATABASE_URL=postgresql://…/mytmobiles_demo npx prisma migrate deploy
+DATABASE_URL=postgresql://…/mytmobiles_demo npx prisma db seed
+DATABASE_URL=postgresql://…/mytmobiles_demo npm run demo:build   # → demo-site/
+```
+
+Publish `demo-site/` as the root of the `gh-pages` branch. Pages must be set to deploy from that branch, under Settings → Pages. `DEMO_BASE_PATH` and `DEMO_SITE_URL` override the `/mytmobiles-web` path and URL for another repository or domain.
 
 ### Scaling notes
 

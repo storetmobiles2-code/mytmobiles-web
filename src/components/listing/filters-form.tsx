@@ -6,6 +6,7 @@ import { SlidersHorizontal, X } from "lucide-react";
 import type { Facets } from "@/lib/catalog/queries";
 import type { ListingFilters } from "@/lib/catalog/filters";
 import { formatStorage, SORTS } from "@/lib/catalog/filters";
+import { DEMO, demoNavigate } from "@/lib/demo";
 
 function toQuery(form: HTMLFormElement): string {
   const fd = new FormData(form);
@@ -48,7 +49,14 @@ export function FiltersForm({ filters, facets, mode, showBrand = true, showCondi
   const mobileDialog = useRef<HTMLDialogElement>(null);
   const [pending, start] = useTransition();
 
-  const apply = (form: HTMLFormElement) => start(() => router.push(`${pathname}?${toQuery(form)}`, { scroll: false }));
+  const apply = (form: HTMLFormElement) => {
+    if (DEMO) {
+      demoNavigate(toQuery(form));
+      mobileDialog.current?.close();
+      return;
+    }
+    start(() => router.push(`${pathname}?${toQuery(form)}`, { scroll: false }));
+  };
 
   const fields = (
     <>
@@ -154,7 +162,8 @@ export function SortSelect({ value }: { value: string }) {
           if (e.target.value === "relevance") p.delete("sort");
           else p.set("sort", e.target.value);
           p.delete("page");
-          router.push(`${pathname}?${p.toString()}`, { scroll: false });
+          if (DEMO) demoNavigate(p.toString());
+          else router.push(`${pathname}?${p.toString()}`, { scroll: false });
         }}
         className="h-10 rounded-xl border border-ink-300 bg-white px-3 text-sm font-semibold text-ink-900"
         aria-label="Sort products"

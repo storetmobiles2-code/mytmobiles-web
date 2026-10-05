@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { SessionProvider } from "@/components/layout/session-provider";
 import { Analytics } from "@/components/layout/analytics";
+import { DemoBanner } from "@/components/demo/demo-pages";
+import { DEMO } from "@/lib/demo";
 import "./globals.css";
 
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-jakarta", display: "swap" });
@@ -17,6 +19,8 @@ export const metadata: Metadata = {
   openGraph: { type: "website", siteName: "myT Mobiles", locale: "en_IN", images: [{ url: "/brand/og-default.png", width: 1200, height: 630, alt: "myT Mobiles" }] },
   twitter: { card: "summary_large_image" },
   formatDetection: { telephone: false },
+  // The static preview must not compete with the real store in search results.
+  ...(DEMO ? { robots: { index: false, follow: false } } : {}),
 };
 
 export const viewport: Viewport = {
@@ -32,6 +36,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <a href="#main" className="sr-only z-50 rounded-lg bg-white px-4 py-2 font-semibold focus:not-sr-only focus:fixed focus:top-3 focus:left-3">
           Skip to content
         </a>
+        {DEMO && <DemoBanner />}
         <SessionProvider>
           {children}
           <Analytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />

@@ -14,18 +14,28 @@
  */
 import fs from "node:fs/promises";
 import path from "node:path";
-import crypto from "node:crypto";
-import sharp from "sharp";
 import { slugify } from "../src/lib/slug";
+import { contactSheet, download, optimise, optimiseSpinFrame, pool, SIZE, SPIN_SIZE } from "./lib/image-pipeline";
 
-interface RefImage { url: string; credit: string; license: string }
-interface RefFamily { brand: string; sourcePage: string; images: Record<string, RefImage[]>; skip?: Record<string, string> }
+export interface LockedSpin {
+  frames: string[];
+  width: number;
+  height: number;
+  sourcePage: string;
+  credit: string;
+  license: string;
+}
+
+interface RefImage { url: string; view?: string; sourcePage?: string; credit: string; license: string }
+interface RefSpin { frames: string[]; sourcePage?: string; credit: string; license: string }
+interface RefFamily { brand: string; sourcePage: string; images: Record<string, RefImage[]>; spins?: Record<string, RefSpin>; skip?: Record<string, string> }
 interface Reference { families: Record<string, RefFamily> }
 
 export interface LockedImage {
   file: string;
   width: number;
   height: number;
+  view?: string | null;
   sourceUrl: string;
   sourcePage: string;
   credit: string;
@@ -33,110 +43,74 @@ export interface LockedImage {
 }
 
 const ROOT = process.cwd();
-const CACHE = path.join(ROOT, ".cache/images");
 const OUT = path.join(ROOT, "public/images/products");
-const SIZE = 1200;
-const INNER = 1080;
-const UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0 Safari/537.36";
 
 export function familySlug(familyKey: string): string {
   const [brand, model] = familyKey.split("|");
   return slugify(`${brand} ${model}`);
 }
 
-async function download(url: string): Promise<Buffer> {
-  const key = crypto.createHash("sha1").update(url).digest("hex");
-  const file = path.join(CACHE, key);
-  try {
-    return await fs.readFile(file);
-  } catch {
-    const res = await fetch(url, { headers: { "user-agent": UA, accept: "image/avif,image/webp,image/png,image/*" } });
-    if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
-    const buf = Buffer.from(await res.arrayBuffer());
-    await fs.mkdir(CACHE, { recursive: true });
-    await fs.writeFile(file, buf);
-    return buf;
-  }
-}
-
-async function optimise(input: Buffer): Promise<Buffer> {
-  const flat = await sharp(input).flatten({ background: "#ffffff" }).toBuffer();
-  const trimmed = await sharp(flat).trim({ background: "#ffffff", threshold: 12 }).toBuffer();
-  return sharp(trimmed)
-    .resize(INNER, INNER, { fit: "inside", withoutEnlargement: false })
-    .extend({ top: 0, bottom: 0, left: 0, right: 0, background: "#ffffff" })
-    .toBuffer()
-    .then((b) =>
-      sharp({ create: { width: SIZE, height: SIZE, channels: 3, background: "#ffffff" } })
-        .composite([{ input: b, gravity: "centre" }])
-        .webp({ quality: 82, effort: 5 })
-        .toBuffer(),
-    );
-}
-
-async function contactSheet(familyKey: string, entries: { color: string; file: string }[]) {
-  const cell = 320;
-  const cols = Math.min(4, entries.length);
-  const rows = Math.ceil(entries.length / cols);
-  const tiles = await Promise.all(
-    entries.map(async (e, i) => {
-      const img = await sharp(path.join(ROOT, "public", e.file)).resize(cell - 20, cell - 50).toBuffer();
-      const label = Buffer.from(
-        `<svg width="${cell}" height="30"><text x="10" y="20" font-size="15" font-family="sans-serif" fill="#111">${(e.color || "—").replace(/&/g, "&amp;")} #${i + 1}</text></svg>`,
-      );
-      return [
-        { input: img, left: (i % cols) * cell + 10, top: Math.floor(i / cols) * cell + 10 },
-        { input: label, left: (i % cols) * cell, top: Math.floor(i / cols) * cell + cell - 36 },
-      ];
-    }),
-  );
-  await fs.mkdir(path.join(ROOT, ".cache/sheets"), { recursive: true });
-  await sharp({ create: { width: cols * cell, height: rows * cell, channels: 3, background: "#e5e7eb" } })
-    .composite(tiles.flat())
-    .png()
-    .toFile(path.join(ROOT, ".cache/sheets", `${familySlug(familyKey)}.png`));
-}
-
 async function main() {
   const withSheets = process.argv.includes("--sheets");
   const ref: Reference = JSON.parse(await fs.readFile(path.join(ROOT, "catalog/reference.json"), "utf8"));
   const lock: Record<string, Record<string, LockedImage[]>> = {};
+  const spinLock: Record<string, Record<string, LockedSpin>> = {};
   let ok = 0;
+  let frames = 0;
   let failed = 0;
+  // Rebuilt from the (cached) downloads every time, so removed images don't linger.
+  await fs.rm(OUT, { recursive: true, force: true });
   for (const [familyKey, fam] of Object.entries(ref.families)) {
     const slug = familySlug(familyKey);
     const sheet: { color: string; file: string }[] = [];
+    await fs.mkdir(path.join(OUT, slug), { recursive: true });
     for (const [color, images] of Object.entries(fam.images)) {
       if (color.startsWith("?")) continue; // unverified colour assignment — excluded until mapped
-      let n = 0;
-      for (const img of images) {
+      const results = await pool(images, 6, async (img, i) => {
         try {
           const out = await optimise(await download(img.url));
-          n++;
-          const rel = `/images/products/${slug}/${slugify(color) || "default"}-${n}.webp`;
-          await fs.mkdir(path.join(OUT, slug), { recursive: true });
+          const rel = `/images/products/${slug}/${slugify(color) || "default"}-${i + 1}.webp`;
           await fs.writeFile(path.join(ROOT, "public", rel), out);
-          ((lock[familyKey] ??= {})[color] ??= []).push({
-            file: rel,
-            width: SIZE,
-            height: SIZE,
-            sourceUrl: img.url,
-            sourcePage: fam.sourcePage,
-            credit: img.credit,
-            license: img.license,
-          });
-          sheet.push({ color, file: rel });
-          ok++;
+          return { file: rel, width: SIZE, height: SIZE, view: img.view ?? null, sourceUrl: img.url, sourcePage: img.sourcePage ?? fam.sourcePage, credit: img.credit, license: img.license } satisfies LockedImage;
         } catch (err) {
-          failed++;
-          console.error(`✗ ${familyKey} / ${color}: ${(err as Error).message}`);
+          console.error(`✗ ${familyKey} / ${color} #${i + 1}: ${(err as Error).message}`);
+          return null;
         }
+      });
+      for (const r of results) {
+        if (!r) {
+          failed++;
+          continue;
+        }
+        ((lock[familyKey] ??= {})[color] ??= []).push(r);
+        sheet.push({ color: `${color}${r.view ? ` · ${r.view}` : ""}`, file: r.file });
+        ok++;
       }
     }
-    if (withSheets && sheet.length) await contactSheet(familyKey, sheet);
+    for (const [color, spin] of Object.entries(fam.spins ?? {})) {
+      const dir = `/images/products/${slug}/360/${slugify(color) || "default"}`;
+      await fs.mkdir(path.join(ROOT, "public", dir), { recursive: true });
+      const files = await pool(spin.frames, 8, async (url, i) => {
+        const rel = `${dir}/${String(i + 1).padStart(3, "0")}.webp`;
+        await fs.writeFile(path.join(ROOT, "public", rel), await optimiseSpinFrame(await download(url)));
+        return rel;
+      }).catch((err) => {
+        console.error(`✗ ${familyKey} / ${color} 360: ${(err as Error).message}`);
+        return null;
+      });
+      if (!files) {
+        failed++;
+        continue;
+      }
+      (spinLock[familyKey] ??= {})[color] = { frames: files, width: SPIN_SIZE, height: SPIN_SIZE, sourcePage: spin.sourcePage ?? fam.sourcePage, credit: spin.credit, license: spin.license };
+      frames += files.length;
+      sheet.push({ color: `${color} · 360 (${files.length} frames)`, file: files[0] });
+    }
+    if (withSheets && sheet.length) await contactSheet(familySlug(familyKey), sheet);
   }
   await fs.writeFile(path.join(ROOT, "catalog/images.lock.json"), JSON.stringify(lock, null, 2) + "\n");
-  console.log(`✓ ${ok} images written, ${failed} failed`);
+  await fs.writeFile(path.join(ROOT, "catalog/spins.lock.json"), JSON.stringify(spinLock, null, 2) + "\n");
+  console.log(`✓ ${ok} images and ${frames} 360° frames written, ${failed} failed`);
   if (failed) process.exitCode = 1;
 }
 

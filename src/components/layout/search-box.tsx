@@ -1,9 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 import { Search, X } from "lucide-react";
 import { formatINR } from "@/lib/money";
+import { DEMO, loadDemoData, matchesQuery } from "@/lib/demo";
 
 interface Suggestion {
   slug: string;
@@ -15,7 +17,8 @@ interface Suggestion {
 export function SearchBox({ className = "" }: { className?: string }) {
   const router = useRouter();
   const params = useSearchParams();
-  const [q, setQ] = useState(params.get("q") ?? "");
+  // The static preview's HTML was rendered without a query, so start empty there to hydrate cleanly.
+  const [q, setQ] = useState(DEMO ? "" : (params.get("q") ?? ""));
   const [fetched, setFetched] = useState<Suggestion[]>([]);
   // Suggestions only apply to a 2+ character query; derived so clearing the box hides them at once.
   const items = q.trim().length >= 2 ? fetched : [];
@@ -31,6 +34,11 @@ export function SearchBox({ className = "" }: { className?: string }) {
       abort.current?.abort();
       abort.current = new AbortController();
       try {
+        if (DEMO) {
+          const { products } = await loadDemoData();
+          setFetched(products.filter((p) => matchesQuery(p, term)).slice(0, 6).map((p) => ({ slug: p.slug, name: p.name, priceFrom: p.priceFrom, image: p.images[0]?.url ?? null })));
+          return;
+        }
         const res = await fetch(`/api/search/suggest?q=${encodeURIComponent(term)}`, { signal: abort.current.signal });
         if (res.ok) setFetched((await res.json()).items);
       } catch {
@@ -112,8 +120,7 @@ export function SearchBox({ className = "" }: { className?: string }) {
               className={`flex cursor-pointer items-center gap-3 px-3 py-2 ${i === active ? "bg-brand-50" : ""}`}
             >
               {it.image ? (
-                // eslint-disable-next-line @next/next/no-img-element -- tiny thumbnail served pre-sized by /_next/image
-                <img src={`/_next/image?url=${encodeURIComponent(it.image)}&w=64&q=75`} alt="" width={40} height={40} className="h-10 w-10 rounded-md object-contain" />
+                <Image src={it.image} alt="" width={40} height={40} sizes="40px" className="h-10 w-10 rounded-md object-contain" />
               ) : (
                 <span className="h-10 w-10 rounded-md bg-ink-100" />
               )}

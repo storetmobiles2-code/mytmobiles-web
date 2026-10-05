@@ -150,7 +150,12 @@ export async function applyStockImport(rows: StockRow[], opts: ApplyOptions, act
       const touched = [...new Set(plan.updates.map((u) => u.productId))];
       await refreshProductAggregates(touched, tx);
       if (opts.activateRestocked) {
-        await tx.product.updateMany({ where: { id: { in: touched }, isActive: false, inStock: true }, data: { isActive: true } });
+        // Only products ready to sell go live automatically: a photo and the Legal Metrology
+        // declarations. Others stay hidden until their product file is completed.
+        await tx.product.updateMany({
+          where: { id: { in: touched }, isActive: false, inStock: true, images: { some: {} }, manufacturerInfo: { not: null }, countryOfOrigin: { not: null } },
+          data: { isActive: true },
+        });
       }
     },
     { timeout: 60_000 },

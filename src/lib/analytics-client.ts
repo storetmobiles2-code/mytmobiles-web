@@ -1,5 +1,7 @@
 "use client";
 
+import { DEMO } from "@/lib/demo";
+
 /** First-party analytics: cookie-less, per-tab session id, no PII. Mirrors key events to GA4 when configured. */
 type Props = Record<string, string | number | boolean | undefined>;
 
@@ -23,6 +25,7 @@ function sessionId(): string {
 }
 
 export function track(name: string, props: Props & { productId?: string; value?: number } = {}) {
+  if (DEMO) return;
   const { productId, value, ...rest } = props;
   const body = JSON.stringify({ name, sessionId: sessionId(), path: location.pathname, productId, value, props: rest });
   try {

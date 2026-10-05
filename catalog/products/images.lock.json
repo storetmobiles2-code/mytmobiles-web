@@ -1,0 +1,24 @@
+{
+  "samsung-galaxy-s25": [
+    {
+      "file": "/images/catalog/samsung-galaxy-s25/navy-1.webp",
+      "width": 1200,
+      "height": 1200,
+      "color": "Navy",
+      "sourceUrl": "https://images.samsung.com/in/smartphones/galaxy-s25/buy/product_color_navy_PC.png",
+      "sourcePage": "https://www.samsung.com/in/smartphones/galaxy-s25/buy/",
+      "credit": "© Samsung Electronics",
+      "license": "Official manufacturer product image © Samsung, from the brand's official India website (Galaxy S25 buy page, SM-S931BDBC Navy option gallery). Used unmodified (resized/padded only) for product identification by a retailer."
+    },
+    {
+      "file": "/images/catalog/samsung-galaxy-s25/navy-2.webp",
+      "width": 1200,
+      "height": 1200,
+      "color": "Navy",
+      "sourceUrl": "https://images.samsung.com/is/image/samsung/p6pim/uk/2501/gallery/uk-galaxy-s25-s931-534000-sm-s931bdbdeub-544938716",
+      "sourcePage": "https://www.samsung.com/uk/smartphones/galaxy-s25/buy/",
+      "credit": "© Samsung Electronics",
+      "license": "Official manufacturer product image © Samsung, from the brand's official UK website (same model SM-S931B/DS, Navy). Used unmodified (resized/padded only) for product identification by a retailer."
+    }
+  ]
+}

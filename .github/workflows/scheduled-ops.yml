@@ -1,0 +1,56 @@
+# Scheduled jobs that don't need an AI model.
+#
+# Setup: repository variable SITE_URL; secrets CRON_SECRET and OPS_DATABASE_URL
+# (a read-only database user is enough for the brief). Enable each job with
+# the variables named in its `if:`.
+name: Scheduled operations
+
+on:
+  schedule:
+    - cron: "*/10 * * * *" # release stock held by abandoned online payments
+    - cron: "15 2 * * *" # 07:45 IST daily operations brief
+  workflow_dispatch:
+
+jobs:
+  expire-orders:
+    if: vars.CRON_VIA_GITHUB == 'true' && (github.event.schedule == '*/10 * * * *' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Call the cron endpoint
+        run: |
+          curl -fsS --max-time 60 -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" "${{ vars.SITE_URL }}/api/cron/expire-orders"
+
+  ops-brief:
+    if: vars.OPS_BRIEF_ENABLED == 'true' && (github.event.schedule == '15 2 * * *' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      issues: write
+    env:
+      DATABASE_URL: ${{ secrets.OPS_DATABASE_URL }}
+      NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Operations brief
+        id: brief
+        run: |
+          set +e
+          npm run -s ops -- report > brief.txt
+          code=$?
+          cat brief.txt
+          { echo '```'; cat brief.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          echo "urgent=$([ $code -eq 2 ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+          [ $code -eq 1 ] && exit 1 || exit 0
+      - name: Open an issue when something is urgent
+        if: steps.brief.outputs.urgent == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          { echo "The daily brief found items that need action now:"; echo; echo '```'; cat brief.txt; echo '```'; } > body.md
+          gh issue create --title "Needs action: daily operations brief $(date -u +%F)" --body-file body.md

@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
+import { DEMO, demoCart, demoWishlist } from "@/lib/demo";
 
 export interface ClientSession {
   user: { name: string; role: "CUSTOMER" | "ADMIN" } | null;
@@ -24,6 +25,16 @@ export function notifySessionChanged() {
   window.dispatchEvent(new Event(SESSION_CHANGED));
 }
 
+async function fetchSession(): Promise<ClientSession | null> {
+  const res = await fetch("/api/session", { cache: "no-store", credentials: "same-origin" });
+  return res.ok ? res.json() : null;
+}
+
+/** Static preview: the cart and wishlist live in localStorage. */
+async function readDemoSession(): Promise<ClientSession> {
+  return { user: null, cartCount: demoCart().reduce((n, l) => n + l.qty, 0), wishlist: demoWishlist(), razorpayEnabled: false };
+}
+
 /**
  * Personalised header state is fetched client-side so catalogue pages stay
  * fully cacheable (no cookies read during server rendering).
@@ -33,8 +44,8 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const [loaded, setLoaded] = useState(false);
   const refresh = useCallback(async () => {
     try {
-      const res = await fetch("/api/session", { cache: "no-store", credentials: "same-origin" });
-      if (res.ok) setSession(await res.json());
+      const next = DEMO ? await readDemoSession() : await fetchSession();
+      if (next) setSession(next);
     } finally {
       setLoaded(true);
     }

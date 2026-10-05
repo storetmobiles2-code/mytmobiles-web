@@ -6,6 +6,7 @@ import { Heart } from "lucide-react";
 import { toggleWishlist } from "@/app/actions/wishlist";
 import { notifySessionChanged, useSession } from "@/components/layout/session-provider";
 import { cn } from "@/lib/cn";
+import { DEMO, demoToggleWishlist } from "@/lib/demo";
 
 export function WishlistButton({ productId, productName, variant = "icon" }: { productId: string; productName: string; variant?: "icon" | "button" }) {
   const { session } = useSession();
@@ -16,6 +17,11 @@ export function WishlistButton({ productId, productName, variant = "icon" }: { p
   const onClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    if (DEMO) {
+      demoToggleWishlist(productId);
+      notifySessionChanged();
+      return;
+    }
     start(async () => {
       const res = await toggleWishlist(productId);
       if (!res.ok && res.reason === "auth") router.push(`/login?next=${encodeURIComponent(location.pathname)}`);

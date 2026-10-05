@@ -6,11 +6,14 @@ import { cardSelect } from "@/lib/catalog/queries";
 import { ProductGrid } from "@/components/product/product-card";
 import { EmptyState } from "@/components/ui/misc";
 import { ButtonLink } from "@/components/ui/button";
+import { DemoWishlist } from "@/components/demo/demo-pages";
+import { DEMO } from "@/lib/demo";
 
 export const metadata: Metadata = { title: "Wishlist", robots: { index: false } };
 export const dynamic = "force-dynamic";
 
 export default async function WishlistPage() {
+  if (DEMO) return <DemoWishlist />;
   const user = await requireUser("/wishlist");
   const items = await db.wishlistItem.findMany({ where: { userId: user.id, product: { isActive: true } }, orderBy: { createdAt: "desc" }, include: { product: { select: cardSelect } } });
   return (

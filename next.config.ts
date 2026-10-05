@@ -32,8 +32,14 @@ const securityHeaders = [
   ...(isDev ? [] : [{ key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" }]),
 ];
 
+/** Static preview build for GitHub Pages (see src/lib/demo.ts and scripts/build-demo.ts). */
+const isDemoBuild = process.env.NEXT_PUBLIC_DEMO === "1";
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || undefined;
+
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  basePath,
+  ...(isDemoBuild ? { distDir: ".next-demo" } : {}),
   experimental: {
     // Admin image uploads (validated to ≤ 8 MB in src/lib/admin/media.ts).
     serverActions: { bodySizeLimit: "10mb" },
@@ -45,6 +51,8 @@ const nextConfig: NextConfig = {
     imageSizes: [32, 48, 64, 96, 128, 160, 240, 320],
     minimumCacheTTL: 60 * 60 * 24 * 30,
     localPatterns: [{ pathname: "/images/**" }, { pathname: "/media/**" }],
+    // No image optimiser on static hosting: serve the pre-optimised WebP files directly.
+    ...(isDemoBuild ? { loader: "custom" as const, loaderFile: "./src/lib/demo-image-loader.ts" } : {}),
   },
   async headers() {
     return [

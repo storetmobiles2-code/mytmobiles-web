@@ -5,11 +5,18 @@ import { useActionState } from "react";
 import { login, register, requestPasswordReset, resetPassword, type FormState } from "@/app/actions/auth";
 import { FormError, FormSuccess, TextField } from "@/components/ui/field";
 import { SubmitButton } from "./submit-button";
+import { DEMO } from "@/lib/demo";
+
+/** Static preview: forms render normally but explain that accounts open at launch. */
+async function previewAction(_prev: FormState, fd: FormData): Promise<FormState> {
+  const values = Object.fromEntries([...fd.entries()].filter(([k]) => !k.toLowerCase().includes("password")).map(([k, v]) => [k, String(v)]));
+  return { error: "Customer accounts open when the online store launches. This is a preview.", values };
+}
 
 const initial: FormState = {};
 
 export function LoginForm({ next }: { next?: string }) {
-  const [state, action] = useActionState(login, initial);
+  const [state, action] = useActionState(DEMO ? previewAction : login, initial);
   return (
     <form action={action} className="space-y-4" noValidate>
       <input type="hidden" name="next" value={next ?? ""} />
@@ -25,7 +32,7 @@ export function LoginForm({ next }: { next?: string }) {
 }
 
 export function RegisterForm({ next }: { next?: string }) {
-  const [state, action] = useActionState(register, initial);
+  const [state, action] = useActionState(DEMO ? previewAction : register, initial);
   return (
     <form action={action} className="space-y-4" noValidate>
       <input type="hidden" name="next" value={next ?? ""} />
@@ -51,7 +58,7 @@ export function RegisterForm({ next }: { next?: string }) {
 }
 
 export function ForgotForm() {
-  const [state, action] = useActionState(requestPasswordReset, initial);
+  const [state, action] = useActionState(DEMO ? previewAction : requestPasswordReset, initial);
   if (state.success) return <FormSuccess message={state.success} />;
   return (
     <form action={action} className="space-y-4" noValidate>
@@ -63,7 +70,7 @@ export function ForgotForm() {
 }
 
 export function ResetForm({ token }: { token: string }) {
-  const [state, action] = useActionState(resetPassword, initial);
+  const [state, action] = useActionState(DEMO ? previewAction : resetPassword, initial);
   return (
     <form action={action} className="space-y-4" noValidate>
       <input type="hidden" name="token" value={token} />

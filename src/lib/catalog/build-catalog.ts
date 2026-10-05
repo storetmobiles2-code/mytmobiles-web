@@ -21,6 +21,7 @@ export interface LockedImage {
   file: string;
   width: number;
   height: number;
+  view?: string | null;
   sourceUrl: string;
   sourcePage: string;
   credit: string;
@@ -39,7 +40,22 @@ export interface CatalogInputs {
   rows: StockRow[];
   reference: Record<string, ReferenceFamily>;
   images: Record<string, Record<string, LockedImage[]>>;
+  /** 360° frame sets per family and colour (catalog/spins.lock.json). */
+  spins?: Record<string, Record<string, LockedSpin>>;
   overrides: Record<string, Override>;
+}
+
+export interface LockedSpin {
+  frames: string[];
+  width: number;
+  height: number;
+  sourcePage: string;
+  credit: string;
+  license: string;
+}
+
+export interface CatalogSpin extends LockedSpin {
+  color: string | null;
 }
 
 export interface CatalogVariant {
@@ -82,6 +98,7 @@ export interface CatalogProduct {
   countryOfOrigin: string | null;
   variants: CatalogVariant[];
   images: CatalogImage[];
+  spins: CatalogSpin[];
 }
 
 export const KIND_META: Record<CatalogKind, { category: string; hsn: string; returnDays: number; noun: string }> = {
@@ -135,6 +152,18 @@ function imagesFor(images: CatalogInputs["images"], familyKey: string, colors: (
     );
   }
   return out;
+}
+
+/** 360° spins for the colours this product stocks (or colourless spins). */
+function spinsFor(spins: NonNullable<CatalogInputs["spins"]>, familyKey: string, colors: (string | null)[]): CatalogSpin[] {
+  const set = spins[familyKey];
+  if (!set) return [];
+  const wanted = colors.filter(Boolean) as string[];
+  return Object.entries(set).flatMap(([color, spin]) => {
+    const match = wanted.find((w) => w.toLowerCase() === color.toLowerCase());
+    if (wanted.length && !match) return [];
+    return [{ ...spin, color: match ?? null }];
+  });
 }
 
 export function buildCatalog(input: CatalogInputs): { products: CatalogProduct[]; unparsed: StockRow[] } {
@@ -213,6 +242,7 @@ export function buildCatalog(input: CatalogInputs): { products: CatalogProduct[]
     const meta = KIND_META[parsed.kind];
     const colors = [...new Set(variants.map((v) => v.color))];
     const images = imagesFor(input.images, familyKey, colors, baseName);
+    const spins = spinsFor(input.spins ?? {}, familyKey, colors);
     const totalStock = variants.reduce((s, v) => s + v.stock, 0);
     const rams = [...new Set(variants.map((v) => v.ram).filter(Boolean))];
     const storages = [...new Set(variants.map((v) => v.storage).filter(Boolean))];
@@ -270,6 +300,7 @@ export function buildCatalog(input: CatalogInputs): { products: CatalogProduct[]
       countryOfOrigin: ref?.legal?.countryOfOrigin || null,
       variants,
       images,
+      spins,
     });
   }
   return { products: products.sort((a, b) => a.slug.localeCompare(b.slug)), unparsed };

@@ -192,6 +192,7 @@ model Product {
 
   variants      ProductVariant[]
   images        ProductImage[]
+  spins         ProductSpin[]
   reviews       Review[]
   wishlistItems WishlistItem[]
   orderItems    OrderItem[]
@@ -253,11 +254,32 @@ model ProductImage {
   width       Int
   height      Int
   sortOrder   Int      @default(0)
+  /// Which view this shows: front, back, front-back, side, angle, detail, lifestyle, box.
+  view        String?
   /// Provenance — where the image came from and on what terms.
   sourceUrl   String?
   credit      String?
   license     String?
   createdAt   DateTime @default(now())
+
+  @@index([productId, color])
+}
+
+/// A 360° spin: an ordered sequence of frames photographed around the product.
+/// Only real frame sequences (official, or shot in store) — never interpolated.
+model ProductSpin {
+  id        String   @id @default(cuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  color     String?
+  /// Frame image URLs in rotation order.
+  frames    String[]
+  width     Int
+  height    Int
+  sourceUrl String?
+  credit    String?
+  license   String?
+  createdAt DateTime @default(now())
 
   @@index([productId, color])
 }

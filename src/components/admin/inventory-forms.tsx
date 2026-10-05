@@ -70,7 +70,7 @@ export function StockImport() {
           )}
           <form action={applyAction} className="space-y-3">
             <input type="hidden" name="csv" value={preview.csv} />
-            <label className="flex items-center gap-2 text-sm"><input type="checkbox" name="activateRestocked" defaultChecked className="h-4 w-4 accent-brand-600" /> Publish hidden products that come back in stock</label>
+            <label className="flex items-center gap-2 text-sm"><input type="checkbox" name="activateRestocked" defaultChecked className="h-4 w-4 accent-brand-600" /> Publish hidden products that come back in stock (only those with photos and manufacturer / country-of-origin details)</label>
             <label className="flex items-center gap-2 text-sm"><input type="checkbox" name="createUnmatched" defaultChecked={plan.newProducts.length > 0} className="h-4 w-4 accent-brand-600" /> Create new products for unmatched rows (created hidden, for review)</label>
             <SubmitButton className="w-auto" pendingText="Applying…">Apply import</SubmitButton>
           </form>

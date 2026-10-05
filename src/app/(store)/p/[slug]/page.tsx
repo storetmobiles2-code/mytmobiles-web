@@ -91,7 +91,8 @@ export default async function ProductPage(props: PageProps<"/p/[slug]">) {
             productId={product.id}
             name={product.name}
             variants={product.variants.map((v) => ({ id: v.id, sku: v.sku, color: v.color, storage: v.storage, ram: v.ram, price: v.price, mrp: v.mrp, stock: v.stock, maxPerOrder: v.maxPerOrder }))}
-            images={product.images.map((i) => ({ url: i.url, alt: i.alt, color: i.color }))}
+            images={product.images.map((i) => ({ url: i.url, alt: i.alt, color: i.color, view: i.view }))}
+            spins={product.spins.map((s) => ({ color: s.color, frames: s.frames }))}
             header={
               <div>
                 <Link href={`/brands/${product.brand.slug}`} className="text-sm font-semibold text-brand-700 hover:underline">{product.brand.name}</Link>

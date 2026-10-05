@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { SearchX } from "lucide-react";
-import { activeFilterCount, filtersToSearchParams, type ListingFilters } from "@/lib/catalog/filters";
-import { listingFacets, listProducts, type ListingScope } from "@/lib/catalog/queries";
+import { activeFilterCount, filtersToSearchParams, parseFilters, type ListingFilters } from "@/lib/catalog/filters";
+import { demoListingMeta, listingFacets, listProducts, type ListingScope } from "@/lib/catalog/queries";
+import { DEMO } from "@/lib/demo";
+import { DemoListing } from "./demo-listing";
 import { ProductGrid } from "@/components/product/product-card";
 import { Breadcrumbs, EmptyState, Pagination, type Crumb } from "@/components/ui/misc";
 import { ButtonLink } from "@/components/ui/button";
@@ -27,6 +29,7 @@ export async function ListingView({
   showBrandFilter?: boolean;
   showConditionFilter?: boolean;
 }) {
+  if (DEMO) return <DemoListingView {...{ title, description, crumbs, basePath, scope, showBrandFilter, showConditionFilter }} />;
   const [{ items, total, pages }, facets] = await Promise.all([listProducts(filters, scope), listingFacets({ ...scope, q: filters.q })]);
   const active = activeFilterCount(filters);
   const hrefFor = (page: number) => {
@@ -88,6 +91,34 @@ export async function ListingView({
           )}
         </section>
       </div>
+    </div>
+  );
+}
+
+/** Static preview: every product in scope, filtered in the browser from the URL. */
+async function DemoListingView({
+  title,
+  description,
+  crumbs,
+  basePath,
+  scope,
+  showBrandFilter,
+  showConditionFilter,
+}: {
+  title: string;
+  description?: string;
+  crumbs: Crumb[];
+  basePath: string;
+  scope: ListingScope;
+  showBrandFilter: boolean;
+  showConditionFilter: boolean;
+}) {
+  const [{ items }, facets] = await Promise.all([listProducts(parseFilters({}), scope), listingFacets(scope)]);
+  const meta = await demoListingMeta(items.map((i) => i.id));
+  return (
+    <div className="container-page py-6">
+      <Breadcrumbs items={crumbs} />
+      <DemoListing title={title} description={description} basePath={basePath} items={items} meta={meta} facets={facets} showBrandFilter={showBrandFilter} showConditionFilter={showConditionFilter} />
     </div>
   );
 }

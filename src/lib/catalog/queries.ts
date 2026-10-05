@@ -3,8 +3,10 @@ import { cache } from "react";
 import { db } from "@/lib/db";
 import type { Prisma } from "@/generated/prisma/client";
 import type { ListingFilters } from "./filters";
+import { DEMO } from "@/lib/demo";
 
-export const PAGE_SIZE = 24;
+// The static preview renders every product in scope and filters in the browser.
+export const PAGE_SIZE = DEMO ? 1000 : 24;
 
 /** Fields needed to render a product card. */
 export const cardSelect = {
@@ -196,6 +198,7 @@ export const getProductBySlug = cache(async (slug: string) =>
       brand: true,
       category: { include: { parent: true } },
       images: { orderBy: { sortOrder: "asc" } },
+      spins: { orderBy: { createdAt: "asc" } },
       variants: { where: { isActive: true }, orderBy: [{ sortOrder: "asc" }, { price: "asc" }] },
     },
   }),
@@ -247,4 +250,13 @@ export async function refreshProductAggregates(productIds: string[], tx: Prisma.
       },
     });
   }
+}
+
+/** Per-product data the static preview needs to filter listings in the browser. */
+export async function demoListingMeta(ids: string[]) {
+  const rows = await db.product.findMany({
+    where: { id: { in: ids } },
+    select: { id: true, keywords: true, variants: { where: { isActive: true }, select: { price: true, ramGb: true, storageGb: true } } },
+  });
+  return Object.fromEntries(rows.map((r) => [r.id, { keywords: r.keywords, variants: r.variants }]));
 }

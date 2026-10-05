@@ -1,0 +1,311 @@
+{
+  "slug": "samsung-galaxy-s25",
+  "name": "Samsung Galaxy S25",
+  "brand": "Samsung",
+  "category": "smartphones",
+  "condition": "NEW",
+  "status": "draft",
+  "featured": false,
+  "is5G": true,
+  "launchedAt": "2025-01-22",
+  "shortDescription": "Samsung Galaxy S25 5G with a 15.64 cm (6.2 inch) 120 Hz AMOLED display, Snapdragon 8 Elite for Galaxy, 12 GB RAM and 256 GB storage, in Navy.",
+  "description": "The Samsung Galaxy S25 has a 15.64 cm (6.2 inch) FHD+ Dynamic AMOLED 2X display with a refresh rate of up to 120 Hz, and runs on the Snapdragon 8 Elite for Galaxy processor with 12 GB RAM and 256 GB storage.\n\nOn the back are three cameras: 50 MP, 10 MP with 3x optical zoom, and 12 MP. The front camera is 12 MP. The phone records video in up to 8K at 30 fps.\n\nThe frame is Armor Aluminum, with Corning Gorilla Glass Victus 2 on the front and back, and the phone is IP68 rated for dust and water resistance. It has a 4,000 mAh battery (typical), dual SIM with eSIM support, 5G, Wi-Fi 7 and NFC. It weighs 162 g and is 7.2 mm thin.\n\nThe Galaxy S25 runs Android with Samsung's One UI and Galaxy AI features. Samsung lists security updates for this model until 31 January 2032. A charger is not included in the box.",
+  "highlights": [
+    "15.64 cm (6.2 inch) FHD+ Dynamic AMOLED 2X display, up to 120 Hz",
+    "Snapdragon 8 Elite for Galaxy processor",
+    "50 MP + 10 MP (3x optical zoom) + 12 MP rear cameras, 12 MP front camera",
+    "12 GB RAM · 256 GB storage",
+    "4,000 mAh battery (typical)",
+    "IP68 dust and water resistance, Gorilla Glass Victus 2 front and back",
+    "Security updates until 31 January 2032 (per Samsung)",
+    "GST invoice with every order"
+  ],
+  "specs": [
+    {
+      "group": "Display",
+      "items": [
+        {
+          "label": "Size",
+          "value": "15.64 cm (6.2 inch) full rectangle / 15.23 cm with rounded corners"
+        },
+        {
+          "label": "Resolution",
+          "value": "2340 x 1080 (FHD+)"
+        },
+        {
+          "label": "Type",
+          "value": "Dynamic AMOLED 2X"
+        },
+        {
+          "label": "Refresh rate",
+          "value": "Up to 120 Hz"
+        },
+        {
+          "label": "Colour depth",
+          "value": "16M"
+        },
+        {
+          "label": "Protection",
+          "value": "Corning Gorilla Glass Victus 2 (front and back)"
+        }
+      ]
+    },
+    {
+      "group": "Performance",
+      "items": [
+        {
+          "label": "Processor",
+          "value": "Snapdragon 8 Elite for Galaxy"
+        },
+        {
+          "label": "CPU",
+          "value": "Octa-core, 4.47 GHz + 3.5 GHz"
+        },
+        {
+          "label": "RAM",
+          "value": "12 GB"
+        },
+        {
+          "label": "Storage",
+          "value": "256 GB (about 223.5 GB available)"
+        },
+        {
+          "label": "Operating system",
+          "value": "Android with One UI (One UI 7 at launch)"
+        },
+        {
+          "label": "Security updates",
+          "value": "Until 31 January 2032"
+        }
+      ]
+    },
+    {
+      "group": "Camera",
+      "items": [
+        {
+          "label": "Rear cameras",
+          "value": "50 MP (F1.8) + 10 MP (F2.4) + 12 MP (F2.2)"
+        },
+        {
+          "label": "Zoom",
+          "value": "3x optical, 2x optical-quality, digital up to 30x"
+        },
+        {
+          "label": "Stabilisation",
+          "value": "OIS"
+        },
+        {
+          "label": "Front camera",
+          "value": "12 MP (F2.2), autofocus"
+        },
+        {
+          "label": "Video recording",
+          "value": "Up to 8K (7680 x 4320) at 30 fps"
+        },
+        {
+          "label": "Slow motion",
+          "value": "240 fps at FHD, 120 fps at FHD and UHD"
+        }
+      ]
+    },
+    {
+      "group": "Battery",
+      "items": [
+        {
+          "label": "Capacity",
+          "value": "4,000 mAh (typical)"
+        },
+        {
+          "label": "Video playback",
+          "value": "Up to 29 hours"
+        },
+        {
+          "label": "Removable",
+          "value": "No"
+        }
+      ]
+    },
+    {
+      "group": "Network and connectivity",
+      "items": [
+        {
+          "label": "Network",
+          "value": "5G, 4G LTE, 3G, 2G"
+        },
+        {
+          "label": "SIM",
+          "value": "Dual SIM: Nano-SIM + Nano-SIM, Nano-SIM + eSIM, or dual eSIM"
+        },
+        {
+          "label": "Wi-Fi",
+          "value": "Wi-Fi 7 (802.11 a/b/g/n/ac/ax/be), 2.4/5/6 GHz"
+        },
+        {
+          "label": "Bluetooth",
+          "value": "v5.4"
+        },
+        {
+          "label": "NFC",
+          "value": "Yes"
+        },
+        {
+          "label": "USB",
+          "value": "USB Type-C, USB 3.2 Gen 1"
+        },
+        {
+          "label": "Headphone jack",
+          "value": "No (USB Type-C audio)"
+        },
+        {
+          "label": "Location",
+          "value": "GPS, GLONASS, BeiDou, Galileo, QZSS"
+        }
+      ]
+    },
+    {
+      "group": "Design",
+      "items": [
+        {
+          "label": "Dimensions",
+          "value": "146.9 x 70.5 x 7.2 mm"
+        },
+        {
+          "label": "Weight",
+          "value": "162 g"
+        },
+        {
+          "label": "Frame",
+          "value": "Armor Aluminum"
+        },
+        {
+          "label": "Water and dust resistance",
+          "value": "IP68"
+        },
+        {
+          "label": "Colour",
+          "value": "Navy"
+        },
+        {
+          "label": "Sensors",
+          "value": "Accelerometer, barometer, fingerprint, gyro, geomagnetic, Hall, light, proximity"
+        }
+      ]
+    },
+    {
+      "group": "Model",
+      "items": [
+        {
+          "label": "Brand",
+          "value": "Samsung"
+        },
+        {
+          "label": "Model",
+          "value": "Galaxy S25"
+        },
+        {
+          "label": "Model number",
+          "value": "SM-S931B/DS (SM-S931BDBC, 256 GB Navy)"
+        }
+      ]
+    }
+  ],
+  "boxContents": [
+    "Galaxy S25 phone",
+    "USB Type-C to Type-C data cable",
+    "SIM ejection pin"
+  ],
+  "keywords": [
+    "samsung",
+    "galaxy",
+    "s25",
+    "galaxy s25",
+    "smartphone",
+    "5g",
+    "navy",
+    "sm-s931b",
+    "snapdragon 8 elite"
+  ],
+  "warranty": "Samsung India manufacturer warranty: 12 months on the phone (battery 12 months) and 6 months on in-box accessories such as the data cable, from the date of purchase. Service at Samsung authorised service centres.",
+  "manufacturerInfo": "Manufactured by Samsung India Electronics Pvt. Ltd., Registered Office: 6th Floor, DLF Centre, Sansad Marg, New Delhi – 110001",
+  "countryOfOrigin": "India",
+  "hsnCode": "85171300",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": "Samsung Galaxy S25 5G (12 GB, 256 GB, Navy) | myT Mobiles",
+  "seoDescription": "Buy the Samsung Galaxy S25 5G, 12 GB RAM, 256 GB, Navy. 6.2 inch 120 Hz AMOLED, Snapdragon 8 Elite for Galaxy, 50 MP camera. GST invoice included.",
+  "variants": [
+    {
+      "sku": "SAMSUNG-GALAXY-S25-12-256-NAVY",
+      "color": "Navy",
+      "colorHex": null,
+      "ramGb": 12,
+      "storageGb": 256,
+      "mrp": 94999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY S25 12/256 NAVY"
+      ]
+    }
+  ],
+  "images": [
+    {
+      "color": "Navy",
+      "url": "https://images.samsung.com/in/smartphones/galaxy-s25/buy/product_color_navy_PC.png",
+      "sourcePage": "https://www.samsung.com/in/smartphones/galaxy-s25/buy/",
+      "credit": "© Samsung Electronics",
+      "license": "Official manufacturer product image © Samsung, from the brand's official India website (Galaxy S25 buy page, SM-S931BDBC Navy option gallery). Used unmodified (resized/padded only) for product identification by a retailer."
+    },
+    {
+      "color": "Navy",
+      "url": "https://images.samsung.com/is/image/samsung/p6pim/uk/2501/gallery/uk-galaxy-s25-s931-534000-sm-s931bdbdeub-544938716",
+      "sourcePage": "https://www.samsung.com/uk/smartphones/galaxy-s25/buy/",
+      "credit": "© Samsung Electronics",
+      "license": "Official manufacturer product image © Samsung, from the brand's official UK website (same model SM-S931B/DS, Navy). Used unmodified (resized/padded only) for product identification by a retailer."
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-s/galaxy-s25-navy-256gb-sm-s931bdbcins/",
+      "usedFor": [
+        "details",
+        "specs",
+        "mrp",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-05"
+    },
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-s25/buy/",
+      "usedFor": [
+        "mrp",
+        "details",
+        "images",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-05"
+    },
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-s25/",
+      "usedFor": [
+        "details",
+        "specs"
+      ],
+      "retrievedAt": "2026-10-05"
+    },
+    {
+      "url": "https://www.samsung.com/in/support/warranty/",
+      "usedFor": [
+        "details"
+      ],
+      "retrievedAt": "2026-10-05"
+    },
+    {
+      "url": "https://www.samsung.com/uk/smartphones/galaxy-s25/buy/",
+      "usedFor": [
+        "images",
+        "specs"
+      ],
+      "retrievedAt": "2026-10-05"
+    }
+  ]
+}
