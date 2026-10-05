@@ -1,0 +1,1 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,24969,t=>{"use strict";var n=t.i(43476);t.s(["PrintButton",0,function(){return(0,n.jsx)("button",{type:"button",onClick:()=>window.print(),className:"rounded-xl bg-brand-600 px-4 py-2 font-semibold text-white hover:bg-brand-700",children:"Print / Save as PDF"})}])}]);
