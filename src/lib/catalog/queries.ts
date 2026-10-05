@@ -198,6 +198,7 @@ export const getProductBySlug = cache(async (slug: string) =>
       brand: true,
       category: { include: { parent: true } },
       images: { orderBy: { sortOrder: "asc" } },
+      spins: { orderBy: { createdAt: "asc" } },
       variants: { where: { isActive: true }, orderBy: [{ sortOrder: "asc" }, { price: "asc" }] },
     },
   }),

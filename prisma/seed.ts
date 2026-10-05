@@ -84,6 +84,7 @@ async function seedCatalog() {
     rows,
     reference: readJson("catalog/reference.json").families,
     images: readJson("catalog/images.lock.json"),
+    spins: fs.existsSync(path.join(ROOT, "catalog/spins.lock.json")) ? readJson("catalog/spins.lock.json") : {},
     overrides: readJson("catalog/overrides.json").families,
   });
   if (unparsed.length) console.warn(`! ${unparsed.length} rows not recognised:`, unparsed.map((u) => u.name));
@@ -149,10 +150,14 @@ async function seedCatalog() {
             width: img.width,
             height: img.height,
             sortOrder: i,
+            view: img.view ?? null,
             sourceUrl: img.sourceUrl,
             credit: img.credit,
             license: img.license,
           })),
+        },
+        spins: {
+          create: p.spins.map((s) => ({ color: s.color, frames: s.frames, width: s.width, height: s.height, sourceUrl: s.sourcePage, credit: s.credit, license: s.license })),
         },
       },
     });

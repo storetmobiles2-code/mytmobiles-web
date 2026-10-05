@@ -44,9 +44,13 @@ export const variantSpecSchema = z.object({
   stockSheetNames: z.array(z.string().trim().min(3)).default([]),
 });
 
+export const IMAGE_VIEWS = ["front", "back", "front-back", "side", "angle", "detail", "lifestyle", "box"] as const;
+
 export const imageSpecSchema = z.object({
   /** Colour this image shows; must match a variant colour. null = applies to all colours. */
   color: z.string().trim().min(1).nullable().default(null),
+  /** What the image shows. Galleries are ordered hero → back → sides → angles → details. */
+  view: z.enum(IMAGE_VIEWS).nullable().default(null),
   /** Direct image URL on the manufacturer's (or an authorised) site. */
   url,
   /** Page the image was found on. */
@@ -55,9 +59,19 @@ export const imageSpecSchema = z.object({
   license: z.string().trim().min(10).max(500),
 });
 
+/** A real 360° frame sequence (official, or shot in store on a turntable) — never interpolated. */
+export const spinSpecSchema = z.object({
+  color: z.string().trim().min(1).nullable().default(null),
+  /** Frame URLs in rotation order (typically 24–72). */
+  frames: z.array(url).min(12, "A 360° spin needs at least 12 frames").max(120),
+  sourcePage: url,
+  credit: z.string().trim().min(2).max(120),
+  license: z.string().trim().min(10).max(500),
+});
+
 export const sourceSpecSchema = z.object({
   url,
-  usedFor: z.array(z.enum(["details", "specs", "mrp", "images", "legal", "price"])).min(1),
+  usedFor: z.array(z.enum(["details", "specs", "mrp", "images", "legal", "price", "warranty", "box"])).min(1),
   retrievedAt: z.iso.date(),
 });
 
@@ -94,6 +108,8 @@ export const productSpecSchema = z.object({
   variants: z.array(variantSpecSchema).min(1),
   /** Omit to leave the product's current images untouched. */
   images: z.array(imageSpecSchema).optional(),
+  /** Omit to leave the product's current 360° spins untouched. */
+  spins: z.array(spinSpecSchema).optional(),
   sources: z.array(sourceSpecSchema).default([]),
 });
 
@@ -132,6 +148,9 @@ export function checkSpec(raw: unknown, fileSlug?: string): { spec: ProductSpec 
   if (fileSlug && fileSlug !== spec.slug) err("slug", `File is named ${fileSlug}.json but slug is "${spec.slug}"`);
   const todo = JSON.stringify(spec).match(/[^"]{0,30}TODO[^"]{0,30}/g);
   if (todo) err("", `Unfinished placeholders: ${todo.slice(0, 3).map((t) => `"${t}"`).join(", ")}`);
+  // Generic text left over from the automatic stock-sheet import.
+  const boilerplate = JSON.stringify(spec).match(/[^"]{0,30}(As per model|as per brand policy|Brand-new [^"]{0,40} with GST invoice from myT Mobiles)[^"]{0,20}/gi);
+  if (boilerplate) (spec.status === "live" ? err : warn)("", `Replace the generic import text with researched details: ${boilerplate.slice(0, 3).map((t) => `"${t}"`).join(", ")}`);
 
   const skus = new Set<string>();
   const names = new Set<string>();
@@ -157,6 +176,16 @@ export function checkSpec(raw: unknown, fileSlug?: string): { spec: ProductSpec 
     if (img.color && !colours.has(img.color)) err(`images.${i}.color`, `"${img.color}" is not a variant colour (${[...colours].join(", ") || "none"})`);
     if (isBannedSource(img.url) || isBannedSource(img.sourcePage)) err(`images.${i}`, `Retailer/marketplace images are not allowed (${hostOf(img.url)}). Use the manufacturer's site.`);
   });
+  (spec.spins ?? []).forEach((sp, i) => {
+    if (sp.color && !colours.has(sp.color)) err(`spins.${i}.color`, `"${sp.color}" is not a variant colour`);
+    if (sp.frames.some(isBannedSource) || isBannedSource(sp.sourcePage)) err(`spins.${i}`, "Retailer/marketplace 360° frames are not allowed");
+  });
+  if (spec.images?.length) {
+    for (const c of colours.size ? colours : new Set([null as string | null])) {
+      const n = spec.images.filter((im) => im.color === c || im.color === null).length;
+      if (n > 0 && n < 3) warn("images", `Only ${n} image(s) for ${c ?? "the product"} — aim for front, back and side views (3–8 per colour)`);
+    }
+  }
   spec.sources.forEach((s, i) => {
     if (isBannedSource(s.url) && s.usedFor.some((u) => u !== "price")) err(`sources.${i}`, `Don't source details, MRP or images from retailers (${hostOf(s.url)})`);
   });

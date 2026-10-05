@@ -19,9 +19,28 @@ myT Mobiles is a mobile and electronics shop in India selling its own stock (an 
 | HSN code, GST rate | Accountant | product file → PR |
 | Banners, coupons, store settings | Owner/staff | Admin panel |
 
+When sources disagree, the **box label in the shop wins** for MRP, manufacturer/importer and country of origin. Next is the brand's page for that exact SKU, then other official pages. Record the conflict in the PR, and ask staff to read the box.
+
 Never set a selling price above MRP, and never invent an MRP. If the official MRP can't be found, use the box MRP from the shop (ask staff), or leave MRP equal to the price so no discount is claimed. Record where it came from in `sources`.
 
 ## Photos
+
+**Every colour gets a full gallery**, as on any large store: front, back, both sides and angled views, plus official detail shots (ports, camera, control panel), in that order. Aim for 4–8 images per colour, each labelled with its `view`:
+
+| `view` | Shows |
+|---|---|
+| `front` | the front |
+| `back` | the back |
+| `front-back` | both, in one image |
+| `side` | a side |
+| `angle` | an angled view |
+| `detail` | a close-up |
+| `lifestyle` | the product in use |
+| `box` | box contents |
+
+Add a **360° spin** (`spins`) only when the brand publishes an official frame sequence for that exact model and colour (12+ frames, usually 24–72), or when staff photograph the unit on a turntable in the shop (uploaded in Admin → Products → 360° view). Never build a "spin" from a handful of photos.
+
+The hero (first image) should show the single device. If the brand's only clean image is a composite of several devices of the same model and colour, use it, and say so in the PR.
 
 - Use only the manufacturer's official India site, its global site for the same model, its press/media kit, or an authorised distributor that clearly permits reuse.
 - **Never** use Amazon, Flipkart, Croma, Reliance Digital, Vijay Sales, Tata CLiQ, marketplaces, review sites (GSMArena, 91mobiles, Smartprix…) or Google Images results. `catalog validate` rejects known retailer domains, but the rule applies to any site.
@@ -30,6 +49,19 @@ Never set a selling price above MRP, and never invent an MRP. If the official MR
 - After `npm run catalog -- images <slug>`, open `.cache/sheets/catalog-<slug>.png` with the Read tool and check every tile: model, camera layout, colour and labels. If anything is doubtful, remove that image.
 - Record `credit` (e.g. "© Samsung Electronics") and `license`, e.g. "Official manufacturer product image © <Brand>, from the brand's official India website. Used unmodified (resized/padded only) for product identification by a retailer."
 - A clearly labelled "Photo coming soon" placeholder is better than a wrong or unlicensed photo.
+- To preview a proposed set before adding it: `npx tsx scripts/images-preview.ts <proposal.json>` writes labelled contact sheets to `.cache/sheets/preview/`.
+
+### Where official galleries live
+
+| Brand | Where to look |
+|---|---|
+| Samsung | Per-SKU pages (`samsung.com/in/smartphones/galaxy-…/<name>-<sku>ins/`) carry the spec list, MRP and legal block in plain HTML. Gallery images are `images.samsung.com/is/image/samsung/p6pim/in/<sku>/gallery/…` (not the `-thumb-` ones), about 8–10 per colour. Buy pages cover several models at once, so match images by model code. |
+| Xiaomi/Redmi | mi.com/in buy pages. Image arrays are in the page JSON (`i0x.appmifile.com`). |
+| Apple | apple.com/in store buy pages: `…-finish-select-…_AV1`, `_AV2`, … are the different views. |
+| vivo | shop.vivo.com/in pages embed per-SKU `imageUrls`. vivo pages sometimes disagree on colour names, so match by exact model and colour or skip. |
+| Appliance brands | (Crompton, Orient, Voltas, Kenstar) Their own stores (Shopify-based) list per-variant galleries. Pick only the images listed for the exact variant (capacity and model code). |
+
+For JavaScript-rendered pages, use Playwright with Chromium at /opt/pw-browsers.
 
 ## Legal display requirements (India)
 
@@ -42,7 +74,7 @@ Store-level details are set by the owner in Admin → Settings: legal name, addr
 
 ## Copy style
 
-Plain, factual Indian English. Short sentences. No hype or superlatives that aren't the brand's own verifiable claims ("best", "fastest"). Keep marketing names as the brand writes them ("Galaxy A57 5G", "REDMI Note 15"). Units: GB, mAh, inch and cm (TVs show both), ₹ with Indian digit grouping (₹1,29,999). Specs come only from official sources, never guessed.
+Plain, factual Indian English. Short sentences. No hype or superlatives that aren't the brand's own verifiable claims ("best", "fastest"). Keep marketing names as the brand writes them ("Galaxy A57 5G", "REDMI Note 15"). Units: GB, mAh, Hz. Screen sizes: phones and tablets in inches with cm in brackets when the brand gives cm (e.g. "15.64 cm (6.2 inch)"), and TVs in both. Use ₹ with Indian digit grouping (₹1,29,999). Specs come only from official sources, never guessed.
 
 ## Tools
 
@@ -57,6 +89,13 @@ npm run ops -- report                        # today's operations brief (read-on
 ```
 
 Local database: `DATABASE_URL` from `.env`. If Postgres is down locally: `service postgresql start`.
+
+To see a product page locally:
+1. Apply to the **local** DB.
+2. Run `npm run build && npx next start -p 3300`. This writes only to the git-ignored `.next/`.
+3. Open http://localhost:3300/p/<slug>.
+
+Avoid `next dev`, because it rewrites AGENTS.md; if it does, run `git checkout AGENTS.md`.
 
 ## Safety
 

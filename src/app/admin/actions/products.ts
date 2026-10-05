@@ -169,12 +169,14 @@ export async function uploadProductImage(_prev: AdminResult, fd: FormData): Prom
   const credit = String(fd.get("credit") ?? "").trim().slice(0, 120) || null;
   const sourceUrl = String(fd.get("sourceUrl") ?? "").trim().slice(0, 500) || null;
   const license = String(fd.get("license") ?? "").trim().slice(0, 500) || null;
+  const viewRaw = String(fd.get("view") ?? "");
+  const view = VIEWS.includes(viewRaw) ? viewRaw : null;
   try {
     let order = product._count.images;
     for (const f of files.slice(0, 10)) {
       const img = await storeImageUpload(f);
       await db.productImage.create({
-        data: { productId: productId.data, url: img.url, width: img.width, height: img.height, color, alt: `${product.name}${color ? ` in ${color}` : ""}`, sortOrder: order++, credit, sourceUrl, license },
+        data: { productId: productId.data, url: img.url, width: img.width, height: img.height, color, view, alt: `${product.name}${color ? ` in ${color}` : ""}`, sortOrder: order++, credit, sourceUrl, license },
       });
     }
   } catch (err) {
@@ -184,7 +186,9 @@ export async function uploadProductImage(_prev: AdminResult, fd: FormData): Prom
   return { ok: `${files.length} image(s) uploaded.` };
 }
 
-export async function updateImage(imageId: string, patch: { alt?: string; color?: string | null; move?: -1 | 1 }): Promise<AdminResult> {
+const VIEWS = ["front", "back", "front-back", "side", "angle", "detail", "lifestyle", "box"];
+
+export async function updateImage(imageId: string, patch: { alt?: string; color?: string | null; view?: string | null; move?: -1 | 1 }): Promise<AdminResult> {
   await assertAdmin();
   const img = await db.productImage.findUnique({ where: { id: imageId } });
   if (!img) return { error: "Not found" };
@@ -199,7 +203,11 @@ export async function updateImage(imageId: string, patch: { alt?: string; color?
   } else {
     await db.productImage.update({
       where: { id: imageId },
-      data: { ...(patch.alt !== undefined ? { alt: patch.alt.slice(0, 200) } : {}), ...(patch.color !== undefined ? { color: patch.color || null } : {}) },
+      data: {
+        ...(patch.alt !== undefined ? { alt: patch.alt.slice(0, 200) } : {}),
+        ...(patch.color !== undefined ? { color: patch.color || null } : {}),
+        ...(patch.view !== undefined ? { view: patch.view && VIEWS.includes(patch.view) ? patch.view : null } : {}),
+      },
     });
   }
   revalidateStorefront();
@@ -211,4 +219,72 @@ export async function deleteImage(imageId: string): Promise<AdminResult> {
   await db.productImage.deleteMany({ where: { id: imageId } });
   revalidateStorefront();
   return { ok: "Image removed." };
+}
+
+/* ───── 360° spins: frames are sent in small batches so each request stays under the body limit ───── */
+
+const SPIN_FRAME_SIDE = 960;
+
+export async function createSpin(productId: string, meta: { color: string | null; credit: string; sourceUrl: string; license: string }): Promise<AdminResult & { spinId?: string }> {
+  await assertAdmin();
+  const id = z.string().cuid().safeParse(productId);
+  if (!id.success) return { error: "Invalid product." };
+  const spin = await db.productSpin.create({
+    data: {
+      productId: id.data,
+      color: meta.color?.trim() || null,
+      frames: [],
+      width: SPIN_FRAME_SIDE,
+      height: SPIN_FRAME_SIDE,
+      credit: meta.credit.trim().slice(0, 120) || null,
+      sourceUrl: meta.sourceUrl.trim().slice(0, 500) || null,
+      license: meta.license.trim().slice(0, 500) || null,
+    },
+  });
+  return { ok: "Spin created.", spinId: spin.id };
+}
+
+export async function addSpinFrames(spinId: string, fd: FormData): Promise<AdminResult & { frames?: number }> {
+  await assertAdmin();
+  const spin = await db.productSpin.findUnique({ where: { id: z.string().cuid().parse(spinId) } });
+  if (!spin) return { error: "Spin not found." };
+  const files = fd.getAll("files").filter((f): f is File => f instanceof File && f.size > 0);
+  if (!files.length || files.length > 12) return { error: "Send 1–12 frames at a time." };
+  if (spin.frames.length + files.length > 120) return { error: "A 360° spin can have at most 120 frames." };
+  try {
+    const urls: string[] = [];
+    let size: { width: number; height: number } | null = null;
+    for (const f of files) {
+      const img = await storeImageUpload(f, SPIN_FRAME_SIDE);
+      urls.push(img.url);
+      size ??= img;
+    }
+    const updated = await db.productSpin.update({
+      where: { id: spin.id },
+      data: { frames: { push: urls }, ...(spin.frames.length === 0 && size ? { width: size.width, height: size.height } : {}) },
+    });
+    return { ok: "Frames added.", frames: updated.frames.length };
+  } catch (err) {
+    return { error: err instanceof UploadError ? err.message : "Upload failed." };
+  }
+}
+
+/** Publishes a finished upload (or removes it when it has too few frames to be a real 360° view). */
+export async function finishSpin(spinId: string): Promise<AdminResult> {
+  await assertAdmin();
+  const spin = await db.productSpin.findUnique({ where: { id: z.string().cuid().parse(spinId) } });
+  if (!spin) return { error: "Spin not found." };
+  if (spin.frames.length < 12) {
+    await db.productSpin.delete({ where: { id: spin.id } });
+    return { error: "A 360° view needs at least 12 frames (24–72 is typical). The upload was discarded." };
+  }
+  revalidateStorefront();
+  return { ok: `360° view saved with ${spin.frames.length} frames.` };
+}
+
+export async function deleteSpin(spinId: string): Promise<AdminResult> {
+  await assertAdmin();
+  await db.productSpin.deleteMany({ where: { id: spinId } });
+  revalidateStorefront();
+  return { ok: "360° view removed." };
 }

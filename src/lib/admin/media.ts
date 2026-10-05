@@ -12,7 +12,7 @@ export class UploadError extends Error {}
  * Validates and normalises an uploaded image (auto-orient, strip metadata,
  * max 1600px, WebP) and stores it content-addressed in Postgres.
  */
-export async function storeImageUpload(file: File): Promise<{ url: string; width: number; height: number }> {
+export async function storeImageUpload(file: File, maxSide = 1600): Promise<{ url: string; width: number; height: number }> {
   if (!ALLOWED.has(file.type)) throw new UploadError("Upload a JPEG, PNG, WebP or AVIF image.");
   if (file.size > MAX_UPLOAD_BYTES) throw new UploadError("Images must be 8 MB or smaller.");
   const input = Buffer.from(await file.arrayBuffer());
@@ -20,7 +20,7 @@ export async function storeImageUpload(file: File): Promise<{ url: string; width
   try {
     out = await sharp(input, { limitInputPixels: 40_000_000 })
       .rotate()
-      .resize(1600, 1600, { fit: "inside", withoutEnlargement: true })
+      .resize(maxSide, maxSide, { fit: "inside", withoutEnlargement: true })
       .webp({ quality: 84 })
       .toBuffer({ resolveWithObject: true });
   } catch {

@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState, useTransition, type ReactNode } from "react";
 import { Check, Minus, Plus, ShoppingBag, Zap } from "lucide-react";
@@ -11,7 +10,7 @@ import { notifySessionChanged } from "@/components/layout/session-provider";
 import { track } from "@/lib/analytics-client";
 import { Price } from "@/components/ui/price";
 import { cn } from "@/lib/cn";
-import { ProductImage } from "./product-image";
+import { ProductGallery } from "./product-gallery";
 import { WishlistButton } from "./wishlist-button";
 
 export interface PanelVariant {
@@ -30,11 +29,17 @@ export interface PanelImage {
   url: string;
   alt: string;
   color: string | null;
+  view?: string | null;
+}
+
+export interface PanelSpin {
+  color: string | null;
+  frames: string[];
 }
 
 const memKey = (v: PanelVariant) => [v.ram, v.storage].filter(Boolean).join(" + ");
 
-export function PurchasePanel({ productId, name, variants, images, header, footer }: { productId: string; name: string; variants: PanelVariant[]; images: PanelImage[]; header?: ReactNode; footer?: ReactNode }) {
+export function PurchasePanel({ productId, name, variants, images, spins = [], header, footer }: { productId: string; name: string; variants: PanelVariant[]; images: PanelImage[]; spins?: PanelSpin[]; header?: ReactNode; footer?: ReactNode }) {
   const router = useRouter();
   // The page is statically cached (ISR), so the server renders the default variant and a
   // ?variant= deep link (from cart, wishlist or a shared URL) is applied after hydration.
@@ -50,7 +55,6 @@ export function PurchasePanel({ productId, name, variants, images, header, foote
   const [qty, setQty] = useState(1);
   const [pending, start] = useTransition();
   const [message, setMessage] = useState<{ ok: boolean; text: string } | null>(null);
-  const [activeImage, setActiveImage] = useState(0);
 
   useEffect(() => {
     track("view_item", { productId, value: initial.price });
@@ -65,7 +69,6 @@ export function PurchasePanel({ productId, name, variants, images, header, foote
     setSelected(v);
     setQty(1);
     setMessage(null);
-    setActiveImage(0);
     const p = new URLSearchParams(location.search);
     p.set("variant", v.sku);
     history.replaceState(null, "", `${location.pathname}?${p.toString()}`);
@@ -74,6 +77,7 @@ export function PurchasePanel({ productId, name, variants, images, header, foote
   const pickColor = (c: string) => choose(forColor(c).find((v) => memKey(v) === memKey(selected)) ?? forColor(c).find((v) => v.stock > 0) ?? forColor(c)[0]);
   const pickMem = (m: string) => choose(variants.find((v) => memKey(v) === m && v.color === selected.color) ?? variants.find((v) => memKey(v) === m && v.stock > 0) ?? variants.find((v) => memKey(v) === m));
 
+  const spin = useMemo(() => spins.find((s) => s.color === selected.color) ?? spins.find((s) => s.color === null) ?? null, [spins, selected.color]);
   const gallery = useMemo(() => {
     const own = images.filter((i) => i.color === selected.color);
     return own.length ? own : images.filter((i) => !i.color).length ? images.filter((i) => !i.color) : images;
@@ -113,21 +117,10 @@ export function PurchasePanel({ productId, name, variants, images, header, foote
   return (
     <div className="grid gap-6 lg:grid-cols-[1.05fr_1fr] lg:gap-10">
       {/* Gallery */}
-      <div className="lg:sticky lg:top-36 lg:self-start">
-        <div className="card p-3 sm:p-5">
-          <ProductImage image={gallery[activeImage] ?? null} name={name} priority sizes="(min-width:1024px) 45vw, 100vw" />
-        </div>
-        {gallery.length > 1 && (
-          <ul className="no-scrollbar mt-3 flex gap-2 overflow-x-auto" aria-label="Product images">
-            {gallery.map((img, i) => (
-              <li key={img.url}>
-                <button type="button" onClick={() => setActiveImage(i)} aria-label={`Show image ${i + 1}`} aria-current={i === activeImage} className={cn("relative block h-16 w-16 overflow-hidden rounded-xl border-2 bg-white", i === activeImage ? "border-brand-600" : "border-ink-200")}>
-                  <Image src={img.url} alt="" fill sizes="64px" className="object-contain p-1" />
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
+      {/* min-w-0 lets the thumbnail row scroll inside the column instead of widening the page */}
+      <div className="min-w-0 lg:sticky lg:top-36 lg:self-start">
+        {/* Keyed by colour so the gallery starts at the first view when the colour changes */}
+        <ProductGallery key={selected.color ?? ""} images={gallery} spin={spin} name={name} />
       </div>
 
       {/* Buy box */}

@@ -28,7 +28,7 @@ A product name as it appears on the POS stock sheet ("SAMSUNG A57 5G 8/256 NAVY"
 
    Record every page used in `sources` with `usedFor` and today's date. Don't copy marketing paragraphs verbatim. Write a short factual description in your own words.
 3. **Variants.** One entry per colour × memory combination the shop sells. SKUs are upper-case and stable (`BRAND-MODEL-RAM-STORAGE-COLOUR`). Put the exact stock-sheet names in `stockSheetNames`. Leave `price` out when the item is on the stock sheet; set it only for items the POS doesn't carry.
-4. **Images.** For each stocked colour, find the official product image(s): the front+back hero first, then up to 3 more angles. Add them to `images` with `color`, `url` (the direct image file), `sourcePage`, `credit` and `license`. Then:
+4. **Images.** For each stocked colour, collect the brand's **full official gallery**: front, back, sides, angles and details, 4–8 images, each with a `view` (see store-rules). Add an official 360° frame set to `spins` if the brand publishes one for that colour. Add them to `images` with `color`, `view`, `url` (the direct image file), `sourcePage`, `credit` and `license`. Then:
    - run `npm run catalog -- images <slug>`;
    - **Read `.cache/sheets/catalog-<slug>.png` and check every tile** against the research: right model (camera layout, notch, ports), right colour, no other product in frame;
    - remove anything doubtful and rebuild.

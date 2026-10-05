@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useActionState, useState, useTransition } from "react";
 import { ArrowDown, ArrowUp, Trash2 } from "lucide-react";
-import { deleteImage, deleteVariant, saveProduct, saveVariant, setProductActive, updateImage, uploadProductImage, type AdminResult } from "@/app/admin/actions/products";
+import { addSpinFrames, createSpin, deleteImage, deleteSpin, deleteVariant, finishSpin, saveProduct, saveVariant, setProductActive, updateImage, uploadProductImage, type AdminResult } from "@/app/admin/actions/products";
 import { SubmitButton } from "@/components/auth/submit-button";
 import { FormError, FormSuccess, SelectField, TextAreaField, TextField } from "@/components/ui/field";
 
@@ -204,10 +204,22 @@ export interface ImageRow {
   url: string;
   alt: string;
   color: string | null;
+  view: string | null;
   credit: string | null;
   sourceUrl: string | null;
   license: string | null;
 }
+
+const VIEW_OPTIONS = [
+  ["front", "Front"],
+  ["back", "Back"],
+  ["front-back", "Front and back"],
+  ["side", "Side"],
+  ["angle", "Angled"],
+  ["detail", "Detail"],
+  ["lifestyle", "In use"],
+  ["box", "In the box"],
+] as const;
 
 export function ImageManager({ productId, images, colors }: { productId: string; images: ImageRow[]; colors: string[] }) {
   const router = useRouter();
@@ -228,6 +240,10 @@ export function ImageManager({ productId, images, colors }: { productId: string;
               <option value="">All colours</option>
               {colors.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
+            <select defaultValue={img.view ?? ""} onChange={(e) => run(() => updateImage(img.id, { view: e.target.value || null }))} className="mt-1 h-8 w-full rounded-lg border border-ink-300 px-1" aria-label="View shown">
+              <option value="">View: not set</option>
+              {VIEW_OPTIONS.map(([v, label]) => <option key={v} value={v}>{label}</option>)}
+            </select>
             <input defaultValue={img.alt} onBlur={(e) => e.target.value !== img.alt && run(() => updateImage(img.id, { alt: e.target.value }))} className="mt-1 h-8 w-full rounded-lg border border-ink-300 px-2" aria-label="Alt text" />
             {(img.credit || img.sourceUrl) && <p className="mt-1 truncate text-ink-500" title={img.license ?? ""}>{img.credit}{img.sourceUrl && <> · <a href={img.sourceUrl} target="_blank" rel="noopener noreferrer" className="underline">source</a></>}</p>}
             <div className="mt-1 flex justify-between">
@@ -245,6 +261,7 @@ export function ImageManager({ productId, images, colors }: { productId: string;
         <input type="hidden" name="productId" value={productId} />
         <label className="sm:col-span-2">Upload images (JPEG/PNG/WebP, ≤ 8 MB each)<input type="file" name="files" accept="image/jpeg,image/png,image/webp,image/avif" multiple required className="mt-1 block w-full text-sm" /></label>
         <label>Colour<select name="color" className="mt-1 h-9 w-full rounded-lg border border-ink-300 px-2"><option value="">All colours</option>{colors.map((c) => <option key={c}>{c}</option>)}</select></label>
+        <label>View<select name="view" className="mt-1 h-9 w-full rounded-lg border border-ink-300 px-2"><option value="">Not set</option>{VIEW_OPTIONS.map(([v, label]) => <option key={v} value={v}>{label}</option>)}</select></label>
         <label>Credit (e.g. © Samsung)<input name="credit" className="mt-1 h-9 w-full rounded-lg border border-ink-300 px-2" /></label>
         <label>Source URL<input name="sourceUrl" type="url" className="mt-1 h-9 w-full rounded-lg border border-ink-300 px-2" /></label>
         <label>Licence / usage note<input name="license" className="mt-1 h-9 w-full rounded-lg border border-ink-300 px-2" /></label>
@@ -253,6 +270,99 @@ export function ImageManager({ productId, images, colors }: { productId: string;
           <SubmitButton className="h-9 w-auto" pendingText="Uploading…">Upload</SubmitButton>
           {state.error && <span className="text-danger-700" role="alert">{state.error}</span>}
           {state.ok && <span className="text-mint-700" role="status">{state.ok}</span>}
+        </div>
+      </form>
+    </div>
+  );
+}
+
+export interface SpinRow {
+  id: string;
+  color: string | null;
+  frames: string[];
+  credit: string | null;
+}
+
+/**
+ * 360° views: upload a turntable sequence (24–72 photos taken at equal steps around
+ * the product). Files are sorted by name and sent in small batches.
+ */
+export function SpinManager({ productId, spins, colors }: { productId: string; spins: SpinRow[]; colors: string[] }) {
+  const router = useRouter();
+  const [status, setStatus] = useState<{ ok?: string; error?: string; progress?: string }>({});
+  const [busy, setBusy] = useState(false);
+
+  const upload = async (form: HTMLFormElement) => {
+    const fd = new FormData(form);
+    const files = fd.getAll("frames").filter((f): f is File => f instanceof File && f.size > 0)
+      .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+    if (files.length < 12) return setStatus({ error: "Choose at least 12 frames (24–72 is typical)." });
+    setBusy(true);
+    setStatus({ progress: "Starting…" });
+    const created = await createSpin(productId, { color: String(fd.get("color") ?? "") || null, credit: String(fd.get("credit") ?? ""), sourceUrl: String(fd.get("sourceUrl") ?? ""), license: String(fd.get("license") ?? "") });
+    if (!created.spinId) {
+      setBusy(false);
+      return setStatus({ error: created.error ?? "Couldn't start the upload." });
+    }
+    for (let i = 0; i < files.length; i += 6) {
+      const batch = new FormData();
+      for (const f of files.slice(i, i + 6)) batch.append("files", f);
+      setStatus({ progress: `Uploading frames ${i + 1}–${Math.min(i + 6, files.length)} of ${files.length}…` });
+      const r = await addSpinFrames(created.spinId, batch);
+      if (r.error) {
+        await deleteSpin(created.spinId);
+        setBusy(false);
+        return setStatus({ error: `${r.error} The upload was cancelled.` });
+      }
+    }
+    const done = await finishSpin(created.spinId);
+    setBusy(false);
+    setStatus(done.error ? { error: done.error } : { ok: done.ok });
+    form.reset();
+    router.refresh();
+  };
+
+  return (
+    <div className="space-y-4">
+      {spins.length ? (
+        <ul className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {spins.map((s) => (
+            <li key={s.id} className="rounded-xl border border-ink-200 p-2 text-xs">
+              <div className="relative aspect-square overflow-hidden rounded-lg bg-white">
+                {s.frames[0] && <Image src={s.frames[0]} alt="" fill sizes="200px" className="object-contain" />}
+              </div>
+              <p className="mt-2 font-semibold">{s.color ?? "All colours"} · {s.frames.length} frames</p>
+              {s.credit && <p className="truncate text-ink-500">{s.credit}</p>}
+              <button type="button" disabled={busy} onClick={async () => { if (confirm("Remove this 360° view?")) { await deleteSpin(s.id); router.refresh(); } }} className="mt-1 inline-flex items-center gap-1 rounded p-1 text-danger-700 hover:bg-danger-50">
+                <Trash2 className="h-4 w-4" aria-hidden="true" /> Remove
+              </button>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="text-sm text-ink-500">No 360° view. Add one from the brand&apos;s official frame set, or photograph the product on a turntable in the shop.</p>
+      )}
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          void upload(e.currentTarget);
+        }}
+        className="grid gap-2 rounded-xl border border-dashed border-ink-300 p-4 text-sm sm:grid-cols-2"
+      >
+        <label className="sm:col-span-2">
+          360° frames (in order — files are sorted by name, e.g. 01.jpg … 36.jpg)
+          <input type="file" name="frames" accept="image/jpeg,image/png,image/webp" multiple required className="mt-1 block w-full text-sm" />
+        </label>
+        <label>Colour<select name="color" className="mt-1 h-9 w-full rounded-lg border border-ink-300 px-2"><option value="">All colours</option>{colors.map((c) => <option key={c}>{c}</option>)}</select></label>
+        <label>Credit (e.g. “Photographed in store” or © Brand)<input name="credit" className="mt-1 h-9 w-full rounded-lg border border-ink-300 px-2" /></label>
+        <label>Source URL (if from the brand)<input name="sourceUrl" type="url" className="mt-1 h-9 w-full rounded-lg border border-ink-300 px-2" /></label>
+        <label>Licence / usage note<input name="license" className="mt-1 h-9 w-full rounded-lg border border-ink-300 px-2" /></label>
+        <p className="text-xs text-ink-500 sm:col-span-2">Shooting tips: same camera position and lighting for every frame, product centred on a turntable, equal steps (10° for 36 frames), plain white background.</p>
+        <div className="flex items-center gap-3 sm:col-span-2">
+          <button type="submit" disabled={busy} className="inline-flex h-9 items-center rounded-xl bg-brand-600 px-4 font-semibold text-white disabled:opacity-60">{busy ? "Uploading…" : "Upload 360° view"}</button>
+          {status.progress && busy && <span className="text-ink-500" role="status">{status.progress}</span>}
+          {status.error && <span className="text-danger-700" role="alert">{status.error}</span>}
+          {status.ok && !busy && <span className="text-mint-700" role="status">{status.ok}</span>}
         </div>
       </form>
     </div>

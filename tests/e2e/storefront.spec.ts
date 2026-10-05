@@ -59,6 +59,21 @@ test.describe("storefront", () => {
     await expect.poll(pressed).toEqual(chosen);
   });
 
+  test("product gallery: views, swipe-free navigation and full-screen zoom", async ({ page }) => {
+    await page.goto(`/p/${process.env.E2E_GALLERY_SLUG ?? "voltas-jetmax-70t-air-cooler"}`);
+    const views = page.getByRole("list", { name: "Product views" });
+    await expect(views.getByRole("button").nth(2)).toBeVisible();
+    const counter = page.getByText(/^\s*1 \/ \d+$/);
+    await expect(counter).toBeVisible();
+    await views.getByRole("button").nth(1).click();
+    await expect(page.getByText(/^\s*2 \/ \d+$/)).toBeVisible();
+    await page.getByRole("button", { name: /Open full-screen view/ }).click();
+    const dialog = page.getByRole("dialog");
+    await expect(dialog).toBeVisible();
+    await dialog.getByRole("button", { name: "Close" }).click();
+    await expect(dialog).toBeHidden();
+  });
+
   test("unknown product returns a real 404", async ({ page, browserErrors }) => {
     const res = await page.goto("/p/this-product-does-not-exist");
     // The browser logs the 404 document response itself; that one is expected.

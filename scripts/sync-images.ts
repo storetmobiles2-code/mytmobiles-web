@@ -33,6 +33,7 @@ async function main() {
     rows,
     reference: readJson("catalog/reference.json").families,
     images: readJson("catalog/images.lock.json"),
+    spins: fs.existsSync(path.join(ROOT, "catalog/spins.lock.json")) ? readJson("catalog/spins.lock.json") : {},
     overrides: readJson("catalog/overrides.json").families,
   });
 
@@ -51,25 +52,34 @@ async function main() {
     const current = await db.productImage.findMany({ where: { productId }, orderBy: { sortOrder: "asc" } });
     const managed = current.filter((i) => i.url.startsWith(MANAGED));
     const uploaded = current.filter((i) => !i.url.startsWith(MANAGED));
-    const same =
+    const spins = await db.productSpin.findMany({ where: { productId } });
+    const managedSpins = spins.filter((s) => s.frames[0]?.startsWith(MANAGED));
+    const sameImages =
       managed.length === p.images.length &&
-      managed.every((m, i) => m.url === p.images[i].file && m.color === p.images[i].color && m.sourceUrl === p.images[i].sourceUrl);
-    if (same) continue;
+      managed.every((m, i) => m.url === p.images[i].file && m.color === p.images[i].color && m.sourceUrl === p.images[i].sourceUrl && (m.view ?? null) === (p.images[i].view ?? null));
+    const sameSpins = managedSpins.length === p.spins.length && managedSpins.every((m, i) => JSON.stringify(m.frames) === JSON.stringify(p.spins[i].frames) && m.color === p.spins[i].color);
+    if (sameImages && sameSpins) continue;
 
     changed++;
-    console.log(`${apply ? "~" : "would update"} ${p.name}: ${managed.length} → ${p.images.length} catalogue image(s)${uploaded.length ? `, keeping ${uploaded.length} uploaded` : ""}`);
+    console.log(
+      `${apply ? "~" : "would update"} ${p.name}: ${managed.length} → ${p.images.length} catalogue image(s), ${managedSpins.length} → ${p.spins.length} 360° spin(s)${uploaded.length ? `, keeping ${uploaded.length} uploaded` : ""}`,
+    );
     if (!apply) continue;
     await db.$transaction([
       db.productImage.deleteMany({ where: { id: { in: managed.map((m) => m.id) } } }),
       ...p.images.map((img, i) =>
         db.productImage.create({
           data: {
-            productId, url: img.file, alt: img.alt, color: img.color, width: img.width, height: img.height, sortOrder: i,
+            productId, url: img.file, alt: img.alt, color: img.color, width: img.width, height: img.height, sortOrder: i, view: img.view ?? null,
             sourceUrl: img.sourceUrl, credit: img.credit, license: img.license,
           },
         }),
       ),
       ...uploaded.map((u, i) => db.productImage.update({ where: { id: u.id }, data: { sortOrder: p.images.length + i } })),
+      db.productSpin.deleteMany({ where: { id: { in: managedSpins.map((s) => s.id) } } }),
+      ...p.spins.map((s) =>
+        db.productSpin.create({ data: { productId, color: s.color, frames: s.frames, width: s.width, height: s.height, sourceUrl: s.sourcePage, credit: s.credit, license: s.license } }),
+      ),
     ]);
   }
   console.log(`${changed} product(s) ${apply ? "updated" : "to update"}; ${unmatched} catalogue product(s) not in the database.`);

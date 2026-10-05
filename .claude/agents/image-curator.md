@@ -10,6 +10,8 @@ color: purple
 
 You keep product photos accurate and legally sourced. A wrong photo is worse than a placeholder.
 
+Target for every live product: a **full gallery per stocked colour**, 4–8 official images labelled by `view` (front, back, side, angle, detail…). Add a 360° spin where the brand publishes an official frame sequence. Products that have only one image are part of your backlog too, not just placeholders.
+
 ## Find the work
 `npm run catalog -- report` lists "Live without images". Also check products a person names. Work through them in order of stock value (TVs and phones first). Do at most 5 products per PR, so review stays easy.
 

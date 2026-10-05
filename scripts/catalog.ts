@@ -22,11 +22,12 @@ import { refreshProductAggregates } from "@/lib/catalog/queries";
 import { planStockImport } from "@/lib/catalog/stock-import";
 import { parseStockCsv } from "@/lib/catalog/csv";
 import { slugify } from "@/lib/slug";
-import { contactSheet, download, optimise, SIZE } from "./lib/image-pipeline";
+import { contactSheet, download, optimise, optimiseSpinFrame, pool, SIZE, SPIN_SIZE } from "./lib/image-pipeline";
 
 const ROOT = process.cwd();
 const SPEC_DIR = path.join(ROOT, "catalog/products");
 const LOCK_FILE = path.join(SPEC_DIR, "images.lock.json");
+const SPIN_LOCK_FILE = path.join(SPEC_DIR, "spins.lock.json");
 const IMAGE_DIR = "/images/catalog";
 
 interface LockedSpecImage {
@@ -34,6 +35,7 @@ interface LockedSpecImage {
   width: number;
   height: number;
   color: string | null;
+  view?: string | null;
   sourceUrl: string;
   sourcePage: string;
   credit: string;
@@ -63,6 +65,25 @@ const rs = (paise: number) => paise / 100;
 const ps = (rupees: number) => Math.round(rupees * 100);
 const specFile = (slug: string) => path.join(SPEC_DIR, `${slug}.json`);
 const readLock = (): Record<string, LockedSpecImage[]> => (fs.existsSync(LOCK_FILE) ? JSON.parse(fs.readFileSync(LOCK_FILE, "utf8")) : {});
+
+interface LockedSpecSpin {
+  color: string | null;
+  frames: string[];
+  width: number;
+  height: number;
+  sourcePage: string;
+  credit: string;
+  license: string;
+  sourceFrames: string[];
+}
+const readSpinLock = (): Record<string, LockedSpecSpin[]> => (fs.existsSync(SPIN_LOCK_FILE) ? JSON.parse(fs.readFileSync(SPIN_LOCK_FILE, "utf8")) : {});
+const sortedJson = <T,>(o: Record<string, T>) => Object.fromEntries(Object.entries(o).sort(([a], [b]) => a.localeCompare(b)));
+/** True when the built files match the spec's image and spin lists. */
+function builtMatches(spec: ProductSpec) {
+  const imagesOk = !spec.images || (readLock()[spec.slug] ?? []).map((l) => l.sourceUrl).join() === spec.images.map((i) => i.url).join();
+  const spinsOk = !spec.spins || JSON.stringify((readSpinLock()[spec.slug] ?? []).map((s) => s.sourceFrames)) === JSON.stringify(spec.spins.map((s) => s.frames));
+  return imagesOk && spinsOk;
+}
 const writeJson = (file: string, data: unknown) => {
   fs.mkdirSync(path.dirname(file), { recursive: true });
   fs.writeFileSync(file, JSON.stringify(data, null, 2) + "\n");
@@ -177,7 +198,7 @@ async function cmdExport() {
       ? {
           images: p.images
             .filter((i) => i.sourceUrl)
-            .map((i) => ({ color: i.color, url: i.sourceUrl, sourcePage: i.sourceUrl, credit: i.credit ?? "", license: i.license ?? "" })),
+            .map((i) => ({ color: i.color, view: i.view, url: i.sourceUrl, sourcePage: i.sourceUrl, credit: i.credit ?? "", license: i.license ?? "" })),
         }
       : {}),
     sources: [],
@@ -201,9 +222,8 @@ async function cmdValidate() {
   for (const slug of slugs) {
     const { spec, problems } = loadSpec(slug);
     if (spec && !categories.has(spec.category)) problems.push({ level: "error", path: "category", message: `Unknown category "${spec.category}" (${[...categories].join(", ")})` });
-    if (spec?.images?.length) {
-      const locked = readLock()[slug] ?? [];
-      if (locked.map((l) => l.sourceUrl).join() !== spec.images.map((i) => i.url).join())
+    if (spec && (spec.images?.length || spec.spins?.length)) {
+      if (!builtMatches(spec))
         problems.push({ level: spec.status === "live" ? "error" : "warning", path: "images", message: `Images not built yet — run: npm run catalog -- images ${slug}` });
     }
     const e = problems.filter((p) => p.level === "error").length;
@@ -243,17 +263,35 @@ async function cmdImages() {
     const rel = `${IMAGE_DIR}/${slug}/${key}-${counts[key]}.webp`;
     const out = await optimise(await download(img.url));
     fs.writeFileSync(path.join(ROOT, "public", rel), out);
-    entries.push({ file: rel, width: SIZE, height: SIZE, color: img.color, sourceUrl: img.url, sourcePage: img.sourcePage, credit: img.credit, license: img.license });
-    console.log(`  ✓ ${rel}  ←  ${img.url}`);
+    entries.push({ file: rel, width: SIZE, height: SIZE, color: img.color, view: img.view, sourceUrl: img.url, sourcePage: img.sourcePage, credit: img.credit, license: img.license });
+    console.log(`  ✓ ${rel}${img.view ? ` (${img.view})` : ""}  ←  ${img.url}`);
   }
+  const spins: LockedSpecSpin[] = [];
+  for (const sp of spec.spins ?? []) {
+    const sub = `${IMAGE_DIR}/${slug}/360/${slugify(sp.color ?? "") || "default"}`;
+    fs.mkdirSync(path.join(ROOT, "public", sub), { recursive: true });
+    const frames = await pool(sp.frames, 8, async (u, i) => {
+      const rel = `${sub}/${String(i + 1).padStart(3, "0")}.webp`;
+      fs.writeFileSync(path.join(ROOT, "public", rel), await optimiseSpinFrame(await download(u)));
+      return rel;
+    });
+    spins.push({ color: sp.color, frames, width: SPIN_SIZE, height: SPIN_SIZE, sourcePage: sp.sourcePage, credit: sp.credit, license: sp.license, sourceFrames: sp.frames });
+    entries.push({ file: frames[0], width: SPIN_SIZE, height: SPIN_SIZE, color: sp.color, view: `360 (${frames.length} frames)`, sourceUrl: "", sourcePage: sp.sourcePage, credit: sp.credit, license: sp.license });
+    console.log(`  ✓ 360° ${sp.color ?? ""}: ${frames.length} frames`);
+  }
+  const spinLock = readSpinLock();
+  if (spins.length) spinLock[slug] = spins;
+  else delete spinLock[slug];
+  writeJson(SPIN_LOCK_FILE, sortedJson(spinLock));
   const lock = readLock();
-  if (entries.length) lock[slug] = entries;
+  const images = entries.filter((e) => e.sourceUrl);
+  if (images.length) lock[slug] = images;
   else delete lock[slug];
-  writeJson(LOCK_FILE, Object.fromEntries(Object.entries(lock).sort(([a], [b]) => a.localeCompare(b))));
+  writeJson(LOCK_FILE, sortedJson(lock));
   if (entries.length) {
-    const sheet = await contactSheet(`catalog-${slug}`, entries.map((e) => ({ color: e.color ?? "", file: e.file })));
+    const sheet = await contactSheet(`catalog-${slug}`, entries.map((e) => ({ color: `${e.color ?? ""}${e.view ? ` · ${e.view}` : ""}`, file: e.file })));
     console.log(`✓ ${entries.length} image(s). Check them against the exact model and colour: ${path.relative(ROOT, sheet)}`);
-  } else console.log("No images in the spec.");
+  } else console.log("No images or spins in the spec.");
 }
 
 /* ───────────────────────── apply ───────────────────────── */
@@ -279,7 +317,8 @@ async function applyOne(spec: ProductSpec, write: boolean): Promise<{ changes: C
   if (!brand) changes.push(`brand: create "${spec.brand}"`);
 
   const lock = readLock()[spec.slug] ?? [];
-  if (spec.images && lock.map((l) => l.sourceUrl).join() !== spec.images.map((i) => i.url).join()) throw new Error(`Images not built — run: npm run catalog -- images ${spec.slug}`);
+  const spinLock = readSpinLock()[spec.slug] ?? [];
+  if (!builtMatches(spec)) throw new Error(`Images or 360° frames not built — run: npm run catalog -- images ${spec.slug}`);
 
   const fields = {
     slug: spec.slug,
@@ -328,6 +367,7 @@ async function applyOne(spec: ProductSpec, write: boolean): Promise<{ changes: C
       if (match.mrp !== ps(v.mrp)) changes.push(`variant ${label}: MRP ₹${rs(match.mrp)} → ₹${v.mrp}`);
       if (v.price !== undefined && match.price !== ps(v.price)) changes.push(`variant ${label}: price ₹${rs(match.price)} → ₹${v.price}`);
       const effectivePrice = v.price !== undefined ? ps(v.price) : match.price;
+      if (effectivePrice === ps(v.mrp)) changes.push(`note: variant ${label}: MRP equals the selling price, so no discount is shown. Confirm the brand MRP.`);
       if (effectivePrice > ps(v.mrp)) throw new Error(`variant ${label}: stock-sheet price ₹${rs(effectivePrice)} is above the new MRP ₹${v.mrp}`);
       if ((match.color ?? null) !== v.color || (match.ramGb ?? null) !== v.ramGb || (match.storageGb ?? null) !== v.storageGb) changes.push(`variant ${label}: colour/RAM/storage updated`);
       const newNames = v.stockSheetNames.filter((n) => !match.externalNames.includes(n));
@@ -339,8 +379,14 @@ async function applyOne(spec: ProductSpec, write: boolean): Promise<{ changes: C
 
   if (spec.images) {
     const managed = (product?.images ?? []).filter((i) => i.url.startsWith("/images/"));
-    const same = managed.length === lock.length && managed.every((m, i) => m.url === lock[i].file);
+    const same = managed.length === lock.length && managed.every((m, i) => m.url === lock[i].file && (m.view ?? null) === (lock[i].view ?? null));
     if (!same) changes.push(`images: ${managed.length} → ${lock.length} (uploaded /media images are kept)`);
+  }
+  if (spec.spins) {
+    const current = product ? await db.productSpin.findMany({ where: { productId: product.id } }) : [];
+    const managed = current.filter((s) => s.frames[0]?.startsWith("/images/"));
+    const same = managed.length === spinLock.length && managed.every((m, i) => JSON.stringify(m.frames) === JSON.stringify(spinLock[i].frames));
+    if (!same) changes.push(`360° spins: ${managed.length} → ${spinLock.length}`);
   }
 
   const wantActive = spec.status === "live" ? true : spec.status === "hidden" ? false : null;
@@ -384,7 +430,7 @@ async function applyOne(spec: ProductSpec, write: boolean): Promise<{ changes: C
         const n = (counts[img.color ?? ""] = (counts[img.color ?? ""] ?? 0) + 1);
         await tx.productImage.create({
           data: {
-            productId: p.id, url: img.file, width: img.width, height: img.height, color: img.color, sortOrder: i,
+            productId: p.id, url: img.file, width: img.width, height: img.height, color: img.color, view: img.view ?? null, sortOrder: i,
             alt: `${spec.name}${img.color ? ` in ${img.color}` : ""}${n > 1 ? ` — view ${n}` : ""}`,
             sourceUrl: img.sourceUrl, credit: img.credit, license: img.license,
           },
@@ -392,6 +438,13 @@ async function applyOne(spec: ProductSpec, write: boolean): Promise<{ changes: C
       }
       const uploads = current.filter((c) => !c.url.startsWith("/images/"));
       for (const [i, u] of uploads.entries()) await tx.productImage.update({ where: { id: u.id }, data: { sortOrder: lock.length + i } });
+    }
+    if (spec.spins) {
+      const current = await tx.productSpin.findMany({ where: { productId: p.id } });
+      await tx.productSpin.deleteMany({ where: { id: { in: current.filter((s) => s.frames[0]?.startsWith("/images/")).map((s) => s.id) } } });
+      for (const sp of spinLock) {
+        await tx.productSpin.create({ data: { productId: p.id, color: sp.color, frames: sp.frames, width: sp.width, height: sp.height, sourceUrl: sp.sourcePage, credit: sp.credit, license: sp.license } });
+      }
     }
     await refreshProductAggregates([p.id], tx);
     if (wantActive !== null) {
@@ -407,7 +460,7 @@ async function applyOne(spec: ProductSpec, write: boolean): Promise<{ changes: C
 }
 
 const short = (v: unknown) => {
-  const s = typeof v === "string" ? v : JSON.stringify(v);
+  const s = v instanceof Date ? v.toISOString().slice(0, 10) : typeof v === "string" ? v : JSON.stringify(v);
   return s === undefined ? "∅" : s.length > 60 ? `${s.slice(0, 57)}…` : s;
 };
 
@@ -461,7 +514,8 @@ async function cmdDeployed() {
   if (!site) throw new Error("Usage: catalog deployed <slug…|--all> --site https://www.example.com");
   const slugs = flag("all") ? allSlugs() : positional();
   const lock = readLock();
-  const files = slugs.flatMap((s) => (lock[s] ?? []).map((l) => l.file));
+  const spinLock = readSpinLock();
+  const files = slugs.flatMap((s) => [...(lock[s] ?? []).map((l) => l.file), ...(spinLock[s] ?? []).flatMap((sp) => [sp.frames[0], sp.frames[sp.frames.length - 1]])]);
   const deadline = Date.now() + Number(option("timeout") ?? 600) * 1000;
   for (const file of files) {
     for (;;) {
@@ -485,6 +539,7 @@ async function cmdReport() {
   const specSlugs = new Set(allSlugs());
   const sections: { title: string; why: string; items: string[] }[] = [
     { title: "Live without images", why: "Shows a placeholder; source official images (image-curator).", items: live.filter((p) => !p._count.images).map((p) => p.slug) },
+    { title: "Live with fewer than 3 photos", why: "Shoppers expect front, back and side views; add the brand's full gallery (image-curator).", items: live.filter((p) => p._count.images > 0 && p._count.images < 3).map((p) => `${p.slug} (${p._count.images})`) },
     { title: "Live, price above MRP", why: "Illegal to sell above MRP — fix MRP or price now.", items: live.flatMap((p) => p.variants.filter((v) => v.price > v.mrp).map((v) => `${p.slug} ${v.sku} (₹${rs(v.price)} > MRP ₹${rs(v.mrp)})`)) },
     { title: "Live, MRP not researched (MRP = price)", why: "No discount shown; confirm the brand MRP.", items: live.filter((p) => p.variants.length && p.variants.every((v) => v.mrp === v.price)).map((p) => p.slug) },
     { title: "Live, missing Legal Metrology details", why: "Manufacturer and country of origin must be displayed.", items: live.filter((p) => !p.manufacturerInfo || !p.countryOfOrigin).map((p) => p.slug) },
