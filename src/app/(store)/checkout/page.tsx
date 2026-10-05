@@ -12,11 +12,18 @@ import { CheckoutClient } from "@/components/checkout/checkout-client";
 import { PriceSummary } from "@/components/cart/price-summary";
 import { CouponBox } from "@/components/cart/coupon-box";
 import { ProductImage } from "@/components/product/product-image";
+import { DemoCheckout } from "@/components/demo/demo-pages";
+import { DEMO } from "@/lib/demo";
+import { getPublicSettings } from "@/lib/public-data";
 
 export const metadata: Metadata = { title: "Checkout", robots: { index: false } };
 export const dynamic = "force-dynamic";
 
 export default async function CheckoutPage() {
+  if (DEMO) {
+    const s = await getPublicSettings();
+    return <DemoCheckout fees={{ shippingFee: s.shippingFee, freeShippingThreshold: s.freeShippingThreshold, codFee: s.codFee, supportPhone: s.supportPhone, supportEmail: s.supportEmail, address: s.address }} />;
+  }
   const user = await requireUser("/checkout");
   const [cart, addresses, settings] = await Promise.all([
     getCartView(),

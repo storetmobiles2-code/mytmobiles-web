@@ -16,6 +16,7 @@
     "db:seed": "prisma db seed",
     "images:build": "tsx scripts/build-images.ts",
     "images:sync": "tsx scripts/sync-images.ts",
+    "demo:build": "tsx scripts/build-demo.ts",
     "postinstall": "prisma generate"
   },
   "dependencies": {

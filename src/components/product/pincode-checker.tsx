@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { MapPin, Truck } from "lucide-react";
+import { DEMO, demoPincode } from "@/lib/demo";
 
 interface Result {
   pincode: string;
@@ -28,9 +29,14 @@ export function PincodeChecker({ compact = false }: { compact?: boolean }) {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`/api/pincode/${code}`);
-      const body = await res.json();
-      if (!res.ok) {
+      let ok: boolean, body;
+      if (DEMO) ({ ok, body } = await demoPincode(code));
+      else {
+        const res = await fetch(`/api/pincode/${code}`);
+        ok = res.ok;
+        body = await res.json();
+      }
+      if (!ok) {
         setResult(null);
         setError(body.error ?? "Couldn't check this pincode.");
       } else {

@@ -1,10 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState, useTransition, type ReactNode } from "react";
 import { Check, Minus, Plus, ShoppingBag, Zap } from "lucide-react";
 import { addToCart } from "@/app/actions/cart";
+import { DEMO, demoAddToCart } from "@/lib/demo";
 import { notifySessionChanged } from "@/components/layout/session-provider";
 import { track } from "@/lib/analytics-client";
 import { Price } from "@/components/ui/price";
@@ -82,7 +84,22 @@ export function PurchasePanel({ productId, name, variants, images, header, foote
 
   const submit = (buyNow: boolean) =>
     start(async () => {
-      const res = await addToCart(selected.id, qty);
+      const res = DEMO
+        ? demoAddToCart(
+            {
+              variantId: selected.id,
+              productId,
+              slug: location.pathname.split("/p/")[1]?.split("/")[0] ?? "",
+              name,
+              option: [selected.color, memKey(selected)].filter(Boolean).join(" · "),
+              image: gallery[0]?.url ?? null,
+              price: selected.price,
+              mrp: selected.mrp,
+              max: Math.min(selected.stock, selected.maxPerOrder),
+            },
+            qty,
+          )
+        : await addToCart(selected.id, qty);
       if (!res.ok) {
         setMessage({ ok: false, text: res.error });
         return;
@@ -147,7 +164,7 @@ export function PurchasePanel({ productId, name, variants, images, header, foote
                 const v = variants.find((x) => memKey(x) === m && x.color === selected.color);
                 const available = variants.some((x) => memKey(x) === m && x.stock > 0);
                 return (
-                  <button key={m} type="button" onClick={() => pickMem(m)} aria-pressed={memKey(selected) === m} className={cn("rounded-xl border-2 px-3 py-2 text-left text-sm", memKey(selected) === m ? "border-brand-600 bg-brand-50" : "border-ink-200 bg-white hover:border-ink-400", !available && "opacity-60")}>
+                  <button key={m} type="button" onClick={() => pickMem(m)} aria-pressed={memKey(selected) === m} className={cn("rounded-xl border-2 px-3 py-2 text-left text-sm", memKey(selected) === m ? "border-brand-600 bg-brand-50" : "border-ink-200 bg-white hover:border-ink-400", !available && "border-dashed text-ink-500")}>
                     <span className="block font-semibold">{m}</span>
                     {v && <span className="block text-xs text-ink-500">₹{(v.price / 100).toLocaleString("en-IN")}</span>}
                   </button>
@@ -194,7 +211,7 @@ export function PurchasePanel({ productId, name, variants, images, header, foote
           <p role="status" className={cn("flex items-center gap-2 text-sm font-medium", message.ok ? "text-mint-700" : "text-danger-700")}>
             {message.ok && <Check className="h-4 w-4" aria-hidden="true" />}
             {message.text}
-            {message.ok && <a href="/cart" className="ml-1 font-semibold text-brand-700 underline">View cart</a>}
+            {message.ok && <Link href="/cart" className="ml-1 font-semibold text-brand-700 underline">View cart</Link>}
           </p>
         )}
         {footer}

@@ -8,11 +8,18 @@ import { PriceSummary } from "@/components/cart/price-summary";
 import { PincodeChecker } from "@/components/product/pincode-checker";
 import { ButtonLink } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/misc";
+import { DemoCart } from "@/components/demo/demo-pages";
+import { DEMO } from "@/lib/demo";
+import { getPublicSettings } from "@/lib/public-data";
 
 export const metadata: Metadata = { title: "Your cart", robots: { index: false } };
 export const dynamic = "force-dynamic";
 
 export default async function CartPage() {
+  if (DEMO) {
+    const s = await getPublicSettings();
+    return <DemoCart fees={{ shippingFee: s.shippingFee, freeShippingThreshold: s.freeShippingThreshold, codFee: s.codFee, supportPhone: s.supportPhone, supportEmail: s.supportEmail, address: s.address }} />;
+  }
   const [cart, user] = await Promise.all([getCartView(), getCurrentUser()]);
 
   if (cart.lines.length === 0) {

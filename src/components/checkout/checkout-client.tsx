@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo, useState, useTransition } from "react";
 import { Banknote, CreditCard, MapPin, Plus, ShieldCheck } from "lucide-react";
@@ -194,7 +195,7 @@ export function CheckoutClient({
           {pending && <Spinner className="h-5 w-5" />}
           {pending ? "Placing order…" : effectiveMethod === "RAZORPAY" ? `Pay ${formatINR(payable)}` : `Place order · ${formatINR(payable)}`}
         </button>
-        <p className="text-center text-xs text-ink-500">By placing this order you agree to our <a href="/terms" className="underline">Terms</a> and <a href="/help/returns" className="underline">Returns policy</a>.</p>
+        <p className="text-center text-xs text-ink-500">By placing this order you agree to our <Link href="/terms" className="underline">Terms</Link> and <Link href="/help/returns" className="underline">Returns policy</Link>.</p>
       </div>
     </div>
   );

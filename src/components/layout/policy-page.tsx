@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { ReactNode } from "react";
 import { Breadcrumbs } from "@/components/ui/misc";
 
@@ -15,7 +16,7 @@ export function PolicyPage({ title, updated, children }: { title: string; update
 }
 
 export function ContactLine({ email, phone }: { email: string; phone: string }) {
-  if (!email && !phone) return <>through the <a href="/contact">contact page</a></>;
+  if (!email && !phone) return <>through the <Link href="/contact">contact page</Link></>;
   return (
     <>
       {phone && <>by phone at <a href={`tel:${phone.replace(/\s/g, "")}`}>{phone}</a></>}

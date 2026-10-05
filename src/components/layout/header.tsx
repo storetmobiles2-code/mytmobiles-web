@@ -25,7 +25,7 @@ export async function Header() {
       </div>
       <div className="container-page flex h-16 items-center gap-3 lg:h-[72px] lg:gap-6">
         <MobileNav categories={categories} brands={brands} hasOpenBox={hasOpenBox} />
-        <Logo height={40} className="lg:hidden" />
+        <Logo height={40} className="inline-flex lg:hidden" />
         <Logo height={50} className="hidden lg:inline-flex" />
         <Suspense fallback={<div className="hidden h-11 flex-1 md:block" />}>
           <SearchBox className="hidden flex-1 md:block" />
