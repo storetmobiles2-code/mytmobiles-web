@@ -1,0 +1,42 @@
+name: New product
+description: Add a product to the online store (the product-onboarder agent can pick this up)
+title: "New product: "
+labels: ["catalog", "new-product"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Fill in what you know. The agent researches the rest from the brand's official website and opens a pull request for you to check.
+        To hand this to the agent, add a comment: `@claude onboard this product`
+  - type: input
+    id: name
+    attributes:
+      label: Product name
+      placeholder: Samsung Galaxy A57 5G
+    validations:
+      required: true
+  - type: textarea
+    id: stock_names
+    attributes:
+      label: Names on the POS stock sheet (one per line)
+      description: Exactly as they appear in the stock export, so stock and price sync automatically.
+      placeholder: |
+        SAMSUNG A57 5G 8/256 AWESOME NAVY
+        SAMSUNG A57 5G 8/256 AWESOME ICY BLUE
+  - type: input
+    id: link
+    attributes:
+      label: Official product page (if you have it)
+      placeholder: https://www.samsung.com/in/smartphones/galaxy-a57/buy/
+  - type: textarea
+    id: box
+    attributes:
+      label: From the box (optional but very helpful)
+      description: MRP per variant, manufacturer/importer name and address, country of origin.
+  - type: dropdown
+    id: publish
+    attributes:
+      label: Publish when ready?
+      options:
+        - "Yes, publish once photos and details are verified"
+        - "No, keep it hidden for now"

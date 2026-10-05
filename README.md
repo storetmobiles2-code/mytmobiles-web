@@ -42,6 +42,14 @@ Built with Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS 4, Prisma
 
 ---
 
+## Maintenance and operations
+
+- **[docs/agents.md](docs/agents.md)**: the Claude Code agents that maintain the store (new products, product changes, photos, stock-sheet review, daily ops brief, site audit, releases), how to give them work, and how their changes reach production through reviewed pull requests.
+- **[docs/production-guide.md](docs/production-guide.md)**: what it takes to set up, run and maintain the store in production in India: services and costs, go-live checklist, daily to yearly routines, legal and tax requirements, security, backups and incident runbook.
+- Product data: `catalog/products/` (see its README) and `npm run catalog -- help`.
+
+---
+
 ## Quick start (local)
 
 Requirements: Node.js 20.9+ (22 recommended) and PostgreSQL 14+.
@@ -69,6 +77,8 @@ The seed imports the catalogue from `catalog/stock-sheet.csv` **only into an emp
 | `npm run test:e2e` | Playwright end-to-end and accessibility tests (see **Testing**) |
 | `npm run db:migrate` | Create a new migration in development |
 | `npm run images:build` | Download, verify and optimise product images listed in `catalog/reference.json` |
+| `npm run catalog -- <command>` | Product files: `new`, `export`, `images`, `validate`, `apply`, `report`, `stock-plan` (see docs/agents.md) |
+| `npm run ops -- report` | Daily operations brief (read-only) |
 | `npm run demo:build` | Build the static preview for GitHub Pages into `demo-site/` (see **Static preview**) |
 | `npm run images:sync` | Apply `catalog/images.lock.json` to an existing database (dry run; add `-- --apply`) |
 

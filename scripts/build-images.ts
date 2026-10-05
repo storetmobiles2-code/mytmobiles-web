@@ -14,9 +14,8 @@
  */
 import fs from "node:fs/promises";
 import path from "node:path";
-import crypto from "node:crypto";
-import sharp from "sharp";
 import { slugify } from "../src/lib/slug";
+import { contactSheet, download, optimise, SIZE } from "./lib/image-pipeline";
 
 interface RefImage { url: string; credit: string; license: string }
 interface RefFamily { brand: string; sourcePage: string; images: Record<string, RefImage[]>; skip?: Record<string, string> }
@@ -33,68 +32,11 @@ export interface LockedImage {
 }
 
 const ROOT = process.cwd();
-const CACHE = path.join(ROOT, ".cache/images");
 const OUT = path.join(ROOT, "public/images/products");
-const SIZE = 1200;
-const INNER = 1080;
-const UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0 Safari/537.36";
 
 export function familySlug(familyKey: string): string {
   const [brand, model] = familyKey.split("|");
   return slugify(`${brand} ${model}`);
-}
-
-async function download(url: string): Promise<Buffer> {
-  const key = crypto.createHash("sha1").update(url).digest("hex");
-  const file = path.join(CACHE, key);
-  try {
-    return await fs.readFile(file);
-  } catch {
-    const res = await fetch(url, { headers: { "user-agent": UA, accept: "image/avif,image/webp,image/png,image/*" } });
-    if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
-    const buf = Buffer.from(await res.arrayBuffer());
-    await fs.mkdir(CACHE, { recursive: true });
-    await fs.writeFile(file, buf);
-    return buf;
-  }
-}
-
-async function optimise(input: Buffer): Promise<Buffer> {
-  const flat = await sharp(input).flatten({ background: "#ffffff" }).toBuffer();
-  const trimmed = await sharp(flat).trim({ background: "#ffffff", threshold: 12 }).toBuffer();
-  return sharp(trimmed)
-    .resize(INNER, INNER, { fit: "inside", withoutEnlargement: false })
-    .extend({ top: 0, bottom: 0, left: 0, right: 0, background: "#ffffff" })
-    .toBuffer()
-    .then((b) =>
-      sharp({ create: { width: SIZE, height: SIZE, channels: 3, background: "#ffffff" } })
-        .composite([{ input: b, gravity: "centre" }])
-        .webp({ quality: 82, effort: 5 })
-        .toBuffer(),
-    );
-}
-
-async function contactSheet(familyKey: string, entries: { color: string; file: string }[]) {
-  const cell = 320;
-  const cols = Math.min(4, entries.length);
-  const rows = Math.ceil(entries.length / cols);
-  const tiles = await Promise.all(
-    entries.map(async (e, i) => {
-      const img = await sharp(path.join(ROOT, "public", e.file)).resize(cell - 20, cell - 50).toBuffer();
-      const label = Buffer.from(
-        `<svg width="${cell}" height="30"><text x="10" y="20" font-size="15" font-family="sans-serif" fill="#111">${(e.color || "—").replace(/&/g, "&amp;")} #${i + 1}</text></svg>`,
-      );
-      return [
-        { input: img, left: (i % cols) * cell + 10, top: Math.floor(i / cols) * cell + 10 },
-        { input: label, left: (i % cols) * cell, top: Math.floor(i / cols) * cell + cell - 36 },
-      ];
-    }),
-  );
-  await fs.mkdir(path.join(ROOT, ".cache/sheets"), { recursive: true });
-  await sharp({ create: { width: cols * cell, height: rows * cell, channels: 3, background: "#e5e7eb" } })
-    .composite(tiles.flat())
-    .png()
-    .toFile(path.join(ROOT, ".cache/sheets", `${familySlug(familyKey)}.png`));
 }
 
 async function main() {
@@ -133,7 +75,7 @@ async function main() {
         }
       }
     }
-    if (withSheets && sheet.length) await contactSheet(familyKey, sheet);
+    if (withSheets && sheet.length) await contactSheet(familySlug(familyKey), sheet);
   }
   await fs.writeFile(path.join(ROOT, "catalog/images.lock.json"), JSON.stringify(lock, null, 2) + "\n");
   console.log(`✓ ${ok} images written, ${failed} failed`);

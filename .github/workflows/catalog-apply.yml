@@ -1,0 +1,78 @@
+# After a product-file PR is merged, write the changes to the production database.
+#
+# Setup (Settings → Environments → "production"):
+#   - required reviewers: the owner (an extra approval before production changes)
+#   - secrets: PRODUCTION_DATABASE_URL, CRON_SECRET
+#   - variables: SITE_URL (e.g. https://www.mytmobiles.in)
+# Then set the repository variable CATALOG_AUTO_APPLY=true.
+name: Apply product files to production
+
+on:
+  push:
+    branches: [main]
+    paths: ["catalog/products/**"]
+  workflow_dispatch:
+    inputs:
+      slugs:
+        description: "Product slugs separated by spaces, or --all"
+        required: true
+        default: "--all"
+
+concurrency:
+  group: catalog-apply
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    if: vars.CATALOG_AUTO_APPLY == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: production
+    env:
+      DATABASE_URL: ${{ secrets.PRODUCTION_DATABASE_URL }}
+      CRON_SECRET: ${{ secrets.CRON_SECRET }}
+      NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Which products changed
+        id: changed
+        env:
+          INPUT_SLUGS: ${{ github.event.inputs.slugs }}
+        run: |
+          if [ -n "$INPUT_SLUGS" ]; then
+            slugs="$INPUT_SLUGS"
+          else
+            slugs=$(git diff --name-only --diff-filter=AM HEAD~1 HEAD -- 'catalog/products/*.json' \
+              | grep -v 'images.lock.json' | xargs -rn1 basename | sed 's/\.json$//' | tr '\n' ' ')
+          fi
+          # Only slug-shaped words (or --all) get through.
+          slugs=$(for s in $slugs; do [[ "$s" =~ ^([a-z0-9]+(-[a-z0-9]+)*|--all)$ ]] && printf '%s ' "$s"; done)
+          echo "slugs=$slugs" >> "$GITHUB_OUTPUT"
+          echo "Products: ${slugs:-none}"
+      - name: Validate
+        if: steps.changed.outputs.slugs != ''
+        env:
+          SLUGS: ${{ steps.changed.outputs.slugs }}
+        run: npm run catalog -- validate ${SLUGS//--all/}
+      - name: Wait until the new photos are deployed
+        if: steps.changed.outputs.slugs != ''
+        env:
+          SLUGS: ${{ steps.changed.outputs.slugs }}
+        run: npm run catalog -- deployed $SLUGS --site "$NEXT_PUBLIC_SITE_URL" --timeout 1200
+      - name: Show changes
+        if: steps.changed.outputs.slugs != ''
+        env:
+          SLUGS: ${{ steps.changed.outputs.slugs }}
+        run: npm run catalog -- apply $SLUGS | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Apply and refresh the storefront
+        if: steps.changed.outputs.slugs != ''
+        env:
+          SLUGS: ${{ steps.changed.outputs.slugs }}
+        run: npm run catalog -- apply $SLUGS --write --revalidate

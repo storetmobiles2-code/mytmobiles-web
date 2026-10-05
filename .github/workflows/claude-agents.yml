@@ -1,0 +1,89 @@
+# Lets staff hand work to the maintenance agents from GitHub:
+#   - comment "@claude onboard this product" on a "New product" issue
+#   - comment "@claude …" on any issue or pull request
+#   - weekly site audit and monthly dependency check, on a schedule
+#
+# Setup: install the Claude GitHub app (https://github.com/apps/claude), add the
+# repository secret ANTHROPIC_API_KEY, then set the repository variable
+# CLAUDE_AGENTS_ENABLED=true. Agents open pull requests; people merge them.
+name: Claude agents
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  issues:
+    types: [opened, assigned]
+  schedule:
+    - cron: "30 3 * * 1" # Monday 09:00 IST: site audit
+    - cron: "30 4 1 * *" # 1st of the month 10:00 IST: dependency and security check
+  workflow_dispatch:
+    inputs:
+      task:
+        description: "What should the agents do?"
+        required: true
+
+jobs:
+  claude:
+    if: >-
+      vars.CLAUDE_AGENTS_ENABLED == 'true' && (
+        github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' ||
+        (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')) ||
+        (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude')) ||
+        (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')))
+      )
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      id-token: write
+      actions: read
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: myt
+          POSTGRES_PASSWORD: agent_password
+          POSTGRES_DB: mytmobiles
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U myt" --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      # A local, seeded copy of the catalogue for dry runs. Agents never get production write access.
+      DATABASE_URL: postgresql://myt:agent_password@localhost:5432/mytmobiles
+      NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL }}
+      ADMIN_EMAIL: admin@agents.example.com
+      ADMIN_PASSWORD: AgentAdminPass!2026
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx prisma migrate deploy && npx prisma db seed
+      - run: npx playwright install --with-deps chromium
+      - name: Pick the scheduled task
+        id: task
+        env:
+          SCHEDULE: ${{ github.event.schedule }}
+          TASK: ${{ github.event.inputs.task }}
+          SITE: ${{ vars.SITE_URL }}
+        run: |
+          case "$SCHEDULE" in
+            "30 3 * * 1") prompt="Use the site-auditor agent to audit $SITE and open a PR adding the report under docs/audits/." ;;
+            "30 4 1 * *") prompt="Use the release-manager agent to run the monthly dependency and security check and open PRs for safe updates." ;;
+            *) prompt="$TASK" ;;
+          esac
+          { echo "prompt<<__PROMPT__"; echo "$prompt"; echo "__PROMPT__"; } >> "$GITHUB_OUTPUT"
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: ${{ (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && steps.task.outputs.prompt || '' }}
+          claude_args: |
+            --max-turns 80

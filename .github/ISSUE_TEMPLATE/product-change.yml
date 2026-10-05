@@ -1,0 +1,25 @@
+name: Change a product
+description: MRP, specs, description, colours, hide or show a product
+title: "Product change: "
+labels: ["catalog"]
+body:
+  - type: input
+    id: product
+    attributes:
+      label: Product (name or link)
+    validations:
+      required: true
+  - type: textarea
+    id: change
+    attributes:
+      label: What should change?
+      description: Selling prices come from the POS stock sheet. Change them there and re-import.
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source (official page, box photo, brand price circular)
+  - type: markdown
+    attributes:
+      value: "To hand this to the agent, comment: `@claude make this change`"

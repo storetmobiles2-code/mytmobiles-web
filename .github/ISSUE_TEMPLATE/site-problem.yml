@@ -1,0 +1,20 @@
+name: Site problem
+description: Something on the website is broken or wrong
+labels: ["bug"]
+body:
+  - type: input
+    id: url
+    attributes:
+      label: Page link
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Phone or computer, and browser
