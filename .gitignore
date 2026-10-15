@@ -54,3 +54,6 @@ next-env.d.ts
 # static preview build (scripts/build-demo.ts)
 /.next-demo
 /demo-site
+
+# agent worktrees
+/.claude/worktrees/
