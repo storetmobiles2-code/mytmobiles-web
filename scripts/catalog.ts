@@ -21,6 +21,7 @@ import { checkSpec, type ProductSpec, type SpecProblem } from "@/lib/catalog/pro
 import { refreshProductAggregates } from "@/lib/catalog/queries";
 import { planStockImport } from "@/lib/catalog/stock-import";
 import { parseStockCsv } from "@/lib/catalog/csv";
+import { buildCatalog, type CatalogImage } from "@/lib/catalog/build-catalog";
 import { slugify } from "@/lib/slug";
 import { contactSheet, download, optimise, optimiseSpinFrame, pool, SIZE, SPIN_SIZE } from "./lib/image-pipeline";
 
@@ -91,6 +92,26 @@ const writeJson = (file: string, data: unknown) => {
 const allSlugs = () =>
   fs.existsSync(SPEC_DIR) ? fs.readdirSync(SPEC_DIR).filter((f) => f.endsWith(".json") && f !== "images.lock.json" && !f.startsWith("_")).map((f) => f.slice(0, -5)).sort() : [];
 
+let pipeline: Map<string, CatalogImage[]> | null = null;
+/** Photos each product gets from the family pipeline (catalog/reference.json → images.lock.json). */
+function pipelineImages(slug: string): CatalogImage[] {
+  if (!pipeline) {
+    const read = (f: string) => (fs.existsSync(path.join(ROOT, f)) ? JSON.parse(fs.readFileSync(path.join(ROOT, f), "utf8")) : null);
+    const sheet = path.join(ROOT, "catalog/stock-sheet.csv");
+    const { products } = fs.existsSync(sheet)
+      ? buildCatalog({
+          rows: parseStockCsv(fs.readFileSync(sheet, "utf8")).rows,
+          reference: read("catalog/reference.json")?.families ?? {},
+          images: read("catalog/images.lock.json") ?? {},
+          spins: read("catalog/spins.lock.json") ?? {},
+          overrides: read("catalog/overrides.json")?.families ?? {},
+        })
+      : { products: [] };
+    pipeline = new Map(products.map((p) => [p.slug, p.images]));
+  }
+  return pipeline.get(slug) ?? [];
+}
+
 function loadSpec(slug: string): { spec: ProductSpec | null; problems: SpecProblem[] } {
   const file = specFile(slug);
   if (!fs.existsSync(file)) return { spec: null, problems: [{ level: "error", path: "", message: `No file catalog/products/${slug}.json` }] };
@@ -100,7 +121,7 @@ function loadSpec(slug: string): { spec: ProductSpec | null; problems: SpecProbl
   } catch (e) {
     return { spec: null, problems: [{ level: "error", path: "", message: `Invalid JSON: ${(e as Error).message}` }] };
   }
-  return checkSpec(raw, slug);
+  return checkSpec(raw, slug, { pipelineImages: pipelineImages(slug) });
 }
 
 function printProblems(slug: string, problems: SpecProblem[]) {
@@ -204,7 +225,7 @@ async function cmdExport() {
     sources: [],
   };
   writeJson(specFile(slug), spec);
-  const { problems } = checkSpec(spec, slug);
+  const { problems } = checkSpec(spec, slug, { pipelineImages: pipelineImages(slug) });
   console.log(`✓ Wrote catalog/products/${slug}.json`);
   printProblems(slug, problems);
 }
