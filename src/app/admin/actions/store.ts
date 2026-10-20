@@ -10,6 +10,7 @@ import { rupeesToPaise } from "@/lib/money";
 import { slugify } from "@/lib/slug";
 import { isValidGstin } from "@/lib/gst";
 import { STATE_NAMES } from "@/lib/indian-states";
+import { isIndianPhone } from "@/lib/validation";
 import { destroyAllSessions } from "@/lib/auth/session";
 
 export type R = { ok?: string; error?: string };
@@ -185,6 +186,14 @@ export async function saveSettings(_prev: R, fd: FormData): Promise<R> {
   if (o.state && !(STATE_NAMES as readonly string[]).includes(o.state)) return { error: "Choose a valid state." };
   if (o.pincode && !/^[1-9]\d{5}$/.test(o.pincode)) return { error: "Dispatch pincode must be 6 digits." };
   if (o.supportEmail && !z.email().safeParse(o.supportEmail).success) return { error: "Support email is not valid." };
+  const officer = {
+    grievanceOfficerName: (o.grievanceOfficerName ?? "").trim().slice(0, 80),
+    grievanceOfficerDesignation: (o.grievanceOfficerDesignation ?? "").trim().slice(0, 80),
+    grievanceOfficerEmail: (o.grievanceOfficerEmail ?? "").trim().toLowerCase(),
+    grievanceOfficerPhone: (o.grievanceOfficerPhone ?? "").trim().slice(0, 20),
+  };
+  if (officer.grievanceOfficerEmail && !z.email().safeParse(officer.grievanceOfficerEmail).success) return { error: "Grievance officer email is not valid." };
+  if (officer.grievanceOfficerPhone && !isIndianPhone(officer.grievanceOfficerPhone)) return { error: "Grievance officer phone must be an Indian mobile, landline with STD code, or 1800 number." };
   const prefix = (o.invoicePrefix ?? "MYT").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 4) || "MYT";
   const nums = z
     .object({
@@ -216,6 +225,7 @@ export async function saveSettings(_prev: R, fd: FormData): Promise<R> {
       state: o.state ?? "",
       pincode: o.pincode ?? "",
       invoicePrefix: prefix,
+      ...officer,
       ...money,
       ...nums.data,
       codEnabled: fd.get("codEnabled") === "on",

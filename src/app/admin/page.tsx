@@ -3,6 +3,7 @@ import { AlertTriangle } from "lucide-react";
 import { db } from "@/lib/db";
 import { daysAgo } from "@/lib/time";
 import { getSettings, setupGaps } from "@/lib/settings";
+import { grievanceCounts } from "@/lib/grievances/service";
 import { razorpayConfigured, smtpConfigured } from "@/lib/env";
 import { formatINR } from "@/lib/money";
 import { ORDER_STATUS_LABEL, statusTone } from "@/lib/orders/status";
@@ -14,7 +15,7 @@ export default async function AdminDashboard() {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const countedStatuses = { notIn: ["CANCELLED", "PENDING_PAYMENT"] as ("CANCELLED" | "PENDING_PAYMENT")[] };
-  const [settings, rev30, revToday, toPack, toShip, returns, lowStock, recent, funnelRows] = await Promise.all([
+  const [settings, rev30, revToday, toPack, toShip, returns, lowStock, recent, funnelRows, complaints] = await Promise.all([
     getSettings(),
     db.order.aggregate({ where: { placedAt: { gte: since30 }, status: countedStatuses }, _sum: { total: true }, _count: true }),
     db.order.aggregate({ where: { placedAt: { gte: today }, status: countedStatuses }, _sum: { total: true }, _count: true }),
@@ -24,6 +25,7 @@ export default async function AdminDashboard() {
     db.productVariant.count({ where: { isActive: true, product: { isActive: true }, stock: { lte: 2 } } }),
     db.order.findMany({ orderBy: { placedAt: "desc" }, take: 8, select: { id: true, orderNumber: true, shipName: true, total: true, status: true, paymentMethod: true, placedAt: true } }),
     db.analyticsEvent.groupBy({ by: ["name"], where: { createdAt: { gte: since30 }, name: { in: ["view_item", "add_to_cart", "begin_checkout", "purchase"] } }, _count: { _all: true } }),
+    grievanceCounts(),
   ]);
   const gaps = setupGaps(settings);
   if (!razorpayConfigured()) gaps.push("Razorpay keys (RAZORPAY_KEY_ID / RAZORPAY_KEY_SECRET) — online payments are hidden until set");
@@ -47,6 +49,7 @@ export default async function AdminDashboard() {
         <Stat label="To ship" value={toShip} hint="Packed orders" href="/admin/orders?status=PACKED" />
         <Stat label="Return requests" value={returns} href="/admin/orders?status=RETURN_REQUESTED" />
         <Stat label="Low stock variants" value={lowStock} hint="≤ 2 units, live products" href="/admin/inventory?filter=low" />
+        <Stat label="Open complaints" value={complaints.open} hint={complaints.overdue ? `${complaints.overdue} overdue` : "None overdue"} href={complaints.overdue ? "/admin/grievances?status=OVERDUE" : "/admin/grievances"} />
       </div>
       <div className="grid gap-4 xl:grid-cols-[1.5fr_1fr]">
         <Panel title="Recent orders" actions={<Link href="/admin/orders" className="text-sm font-semibold text-brand-700">All orders</Link>}>

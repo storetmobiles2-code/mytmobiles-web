@@ -14,5 +14,13 @@ export function setupGaps(s: StoreSettings): string[] {
   if (!s.gstin) gaps.push("GSTIN — required on tax invoices (Settings → Business)");
   if (!s.state || !s.pincode) gaps.push("Dispatch address state & pincode — needed for GST and delivery estimates");
   if (!s.supportEmail || !s.supportPhone) gaps.push("Customer support email & phone");
+  if (!grievanceOfficerSet(s)) gaps.push("Grievance officer not set — name, designation, email and phone must be published (Settings → Grievance officer)");
   return gaps;
+}
+
+type OfficerFields = Pick<StoreSettings, "grievanceOfficerName" | "grievanceOfficerDesignation" | "grievanceOfficerEmail" | "grievanceOfficerPhone">;
+
+/** Rule 4(4), Consumer Protection (E-Commerce) Rules, 2020: name, designation and contact details. */
+export function grievanceOfficerSet(s: OfficerFields): boolean {
+  return Boolean(s.grievanceOfficerName && s.grievanceOfficerDesignation && s.grievanceOfficerEmail && s.grievanceOfficerPhone);
 }

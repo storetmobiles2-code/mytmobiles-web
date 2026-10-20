@@ -46,6 +46,7 @@ export async function Footer() {
             <li><Link href="/help/returns" className="hover:text-white hover:underline">Returns, replacement & refunds</Link></li>
             <li><Link href="/help/payments" className="hover:text-white hover:underline">Payments & COD</Link></li>
             <li><Link href="/contact" className="hover:text-white hover:underline">Contact us</Link></li>
+            <li><Link href="/help/grievance" className="hover:text-white hover:underline">Complaints & grievances</Link></li>
           </ul>
         </div>
         <div>
@@ -57,6 +58,12 @@ export async function Footer() {
           </ul>
           {s.address && <address className="mt-4 text-sm leading-6 not-italic text-white/60">{s.legalName || s.storeName}<br />{s.address}</address>}
           {s.gstin && <p className="mt-2 text-xs text-white/50">GSTIN: {s.gstin}</p>}
+          {s.grievanceOfficer.name && (
+            <p className="mt-2 text-xs text-white/60">
+              <Link href="/contact#grievance-officer" className="hover:text-white hover:underline">Grievance officer</Link>: {s.grievanceOfficer.name}
+              {s.grievanceOfficer.email && <> · <a href={`mailto:${s.grievanceOfficer.email}`} className="hover:text-white hover:underline">{s.grievanceOfficer.email}</a></>}
+            </p>
+          )}
         </div>
       </div>
       <div className="border-t border-white/10">

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getSettings } from "@/lib/settings";
 import { saveSettings } from "@/app/admin/actions/store";
 import { STATE_NAMES } from "@/lib/indian-states";
@@ -33,6 +34,15 @@ export default async function SettingsPage() {
             <Field label="City"><input name="city" defaultValue={s.city} className={inputCls} /></Field>
             <Field label="State" hint="Decides CGST+SGST (same state) vs IGST"><select name="state" defaultValue={s.state} className={inputCls}><option value="">Select…</option>{STATE_NAMES.map((n) => <option key={n}>{n}</option>)}</select></Field>
             <Field label="Dispatch pincode" hint="Used for delivery-time estimates"><input name="pincode" defaultValue={s.pincode} maxLength={6} className={inputCls} /></Field>
+          </div>
+        </Panel>
+        <Panel title="Grievance officer">
+          <p className="mb-3 text-sm text-ink-500">Shown on the contact page, the terms and the footer, as Rule 4(4) of the Consumer Protection (E-Commerce) Rules, 2020 requires. Complaints must be acknowledged within 48 hours and resolved within one month (<Link href="/admin/grievances" className="font-semibold text-brand-700 underline">Grievances</Link>).</p>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <Field label="Name"><input name="grievanceOfficerName" defaultValue={s.grievanceOfficerName} maxLength={80} className={inputCls} /></Field>
+            <Field label="Designation" hint="e.g. Proprietor, Customer Care Manager"><input name="grievanceOfficerDesignation" defaultValue={s.grievanceOfficerDesignation} maxLength={80} className={inputCls} /></Field>
+            <Field label="Email"><input name="grievanceOfficerEmail" type="email" defaultValue={s.grievanceOfficerEmail} className={inputCls} /></Field>
+            <Field label="Phone" hint="Mobile, landline with STD code, or 1800 number"><input name="grievanceOfficerPhone" type="tel" defaultValue={s.grievanceOfficerPhone} maxLength={20} className={inputCls} /></Field>
           </div>
         </Panel>
         <Panel title="Delivery & payment rules">

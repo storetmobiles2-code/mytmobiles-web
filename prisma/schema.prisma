@@ -647,6 +647,13 @@ model StoreSettings {
   pincode               String   @default("")
   invoicePrefix         String   @default("MYT")
 
+  /// Grievance officer, published on the site as required by Rule 4(4) of the
+  /// Consumer Protection (E-Commerce) Rules, 2020
+  grievanceOfficerName        String @default("")
+  grievanceOfficerDesignation String @default("")
+  grievanceOfficerEmail       String @default("")
+  grievanceOfficerPhone       String @default("")
+
   freeShippingThreshold Int      @default(49900)
   shippingFee           Int      @default(4900)
   codEnabled            Boolean  @default(true)
@@ -668,6 +675,70 @@ model StoreSettings {
   codBlockedPincodes    String[] @default([])
 
   updatedAt DateTime @updatedAt
+}
+
+// ───────────────────────────── Grievances ─────────────────────────────
+
+enum GrievanceStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+enum GrievanceCategory {
+  ORDER
+  DELIVERY
+  REFUND
+  PRODUCT
+  OTHER
+}
+
+/// A consumer complaint, with a ticket number the consumer can track
+/// (Consumer Protection (E-Commerce) Rules, 2020: Rule 4(5) timelines, Rule 7(1)(f) ticket).
+model Grievance {
+  id             String            @id @default(cuid())
+  /// e.g. GRV-2026-000123, from the Counter "grievance:<year>"
+  ticket         String            @unique
+  name           String
+  /// Stored lower-case; tracking matches ticket + email
+  email          String
+  phone          String?
+  orderNumber    String?
+  category       GrievanceCategory
+  message        String
+  status         GrievanceStatus   @default(OPEN)
+  /// Resolution note sent to the consumer
+  resolution     String?
+  /// Account that filed it, if signed in. Not a foreign key, so the record
+  /// is kept if the account is deleted.
+  userId         String?
+  createdAt      DateTime          @default(now())
+  /// First staff response (a status change or an update sent to the consumer)
+  acknowledgedAt DateTime?
+  resolvedAt     DateTime?
+  updatedAt      DateTime          @updatedAt
+
+  events GrievanceEvent[]
+
+  @@index([status, createdAt])
+  @@index([email])
+  @@index([userId])
+}
+
+/// Status history of a grievance. Public events show when the consumer tracks it.
+model GrievanceEvent {
+  id          String           @id @default(cuid())
+  grievanceId String
+  grievance   Grievance        @relation(fields: [grievanceId], references: [id], onDelete: Cascade)
+  status      GrievanceStatus?
+  message     String
+  isPublic    Boolean          @default(true)
+  /// Staff user who made the change (plain id; null for the consumer or the system)
+  actorId     String?
+  createdAt   DateTime         @default(now())
+
+  @@index([grievanceId, createdAt])
 }
 
 model PincodeInfo {
