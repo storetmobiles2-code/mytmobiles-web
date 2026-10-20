@@ -10,7 +10,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     db.category.findMany({ where: { isActive: true, products: { some: { isActive: true } } }, select: { slug: true, updatedAt: true } }),
     db.brand.findMany({ where: { isActive: true, products: { some: { isActive: true } } }, select: { slug: true, updatedAt: true } }),
   ]);
-  const staticPages = ["", "/offers", "/open-box", "/about", "/contact", "/help/shipping", "/help/returns", "/help/payments", "/privacy", "/terms"];
+  const staticPages = ["", "/offers", "/open-box", "/about", "/contact", "/help/shipping", "/help/returns", "/help/payments", "/help/grievance", "/privacy", "/terms"];
   return [
     ...staticPages.map((p) => ({ url: `${site}${p}`, changeFrequency: "weekly" as const, priority: p === "" ? 1 : 0.4 })),
     ...categories.map((c) => ({ url: `${site}/c/${c.slug}`, lastModified: c.updatedAt, changeFrequency: "daily" as const, priority: 0.8 })),
