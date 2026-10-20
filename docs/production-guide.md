@@ -224,7 +224,12 @@ Online card and UPI payments are processed on Razorpay's hosted checkout, so the
 ## 6. Security and reliability baseline
 
 ### 6.1 Access
-- Give every staff member their own admin account. Never share one; remove it when they leave.
+- Give every staff member their own admin account (Admin → Staff). Never share one; disable it the day they leave.
+- Roles:
+  - **Admin (owner):** everything.
+  - **Staff:** dashboard, orders (status, shipping/AWB, notes), invoices and packing slips, cancelling orders with no online payment, reviews, and a view-only look at products and inventory.
+  - Staff can't change prices, MRP, stock, products, images or categories, import stock sheets, manage coupons, banners or settings, issue refunds, receive returns, cancel paid online orders, see customer records or revenue, or manage staff.
+  - The permission map is in `src/lib/auth/permissions.ts`. Nobody can change their own role, and the last active admin can't be demoted or disabled.
 - **Turn on two-factor sign-in** for GitHub, Vercel, the database provider, Razorpay, the domain registrar and email.
 - The store's own admin login has **no 2FA yet** (§9). Use strong unique passwords meanwhile.
 - Database users:
@@ -234,7 +239,13 @@ Online card and UPI payments are processed on Razorpay's hosted checkout, so the
 - Secrets live only in the host's environment settings and GitHub secrets. Never put them in the repository.
 
 ### 6.2 Built in already
-HTTPS with HSTS, Content-Security-Policy, rate limiting on login, sign-up, order placement and pincode lookups, hashed passwords (scrypt), server-side sessions, input validation on every form, and webhook signature checks.
+HTTPS with HSTS, Content-Security-Policy, rate limiting on login, sign-up, order placement and pincode lookups, hashed passwords (scrypt), server-side sessions, input validation on every form, webhook signature checks, staff roles with per-page and per-action permission checks, and an admin audit log.
+
+### 6.2.1 Admin audit log
+- Every admin change is recorded in the `AuditLog` table: who (account and email at the time), what, which order/product/setting, before → after for the changed fields, IP address, browser and time. `npm run catalog -- apply --write` records its changes as "catalog-apply (CLI)".
+- Passwords, tokens and secrets are never recorded.
+- See it in Admin → Activity (owner only), filtered by person, action, item and date, and in the History panel on each order and product.
+- **Retention:** keep audit entries for at least 1 year (CERT-In and DPDP log rules, §9). The app never deletes them. Don't add a clean-up job; if the table ever needs trimming, delete only entries older than the retention period, after an export to the backup storage.
 
 ### 6.3 Backups and recovery
 - The database provider runs daily backups, with point-in-time recovery if available, kept at least 7 days.
@@ -285,8 +296,8 @@ Ranked by importance before launch:
 
 1. **Grievance officer details:** add name, email and phone fields to Store Settings, and show them on Contact, Terms and the footer. Needed for the E-Commerce Rules.
 2. **Legal details for all live products:** fill manufacturer and country of origin (46 products today). Agents can draft them; staff confirm them from the boxes.
-3. **Admin two-factor authentication** (TOTP) and **staff roles** (packing staff shouldn't change settings or prices).
-4. **Admin audit log:** who changed which order, stock or setting, and when.
+3. **Admin two-factor authentication** (TOTP). ~~Staff roles~~ — **done:** Admin → Staff, with Admin (owner) and Staff roles (§6.1).
+4. ~~**Admin audit log**~~ — **done:** Admin → Activity and per-order/product History, kept at least 1 year (§6.2.1).
 5. **GST and sales export:** a monthly CSV of invoices by rate, state and HSN for the accountant (GSTR-1).
 6. **Error tracking:** Sentry or similar, plus log retention set to 180 days or more (CERT-In) and one year (DPDP, from 2027).
 7. **Courier integration:** create labels and pickups, and import tracking (Shiprocket API), instead of copying AWBs by hand.

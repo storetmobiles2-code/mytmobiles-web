@@ -61,7 +61,7 @@ export default async function AdminDashboard() {
         <Stat label="Return requests" value={returns} href="/admin/orders?status=RETURN_REQUESTED" />
         <Stat label="Low stock variants" value={lowStock} hint="≤ 2 units, live products" href="/admin/inventory?filter=low" />
       </div>
-      <div className={showRevenue ? "grid gap-4 xl:grid-cols-[1.5fr_1fr]" : "grid gap-4"}>
+      <div className={showRevenue ? "grid grid-cols-[minmax(0,1fr)] gap-4 xl:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]" : "grid grid-cols-[minmax(0,1fr)] gap-4"}>
         <Panel title="Recent orders" actions={<Link href="/admin/orders" className="text-sm font-semibold text-brand-700">All orders</Link>}>
           <Table>
             <thead><tr><th className={th}>Order</th><th className={th}>Customer</th><th className={th}>Total</th><th className={th}>Status</th></tr></thead>
