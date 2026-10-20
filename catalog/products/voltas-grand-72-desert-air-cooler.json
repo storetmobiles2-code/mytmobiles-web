@@ -1,0 +1,189 @@
+{
+  "slug": "voltas-grand-72-desert-air-cooler",
+  "name": "Voltas Grand 72 Desert Air Cooler",
+  "brand": "Voltas",
+  "category": "air-coolers",
+  "condition": "NEW",
+  "status": "draft",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "Voltas Grand 72-litre desert air cooler with honeycomb pads, 3600 m³/h air flow and a 190 W rating.",
+  "description": "The Voltas Grand 72 (model 4810331) is a desert air cooler for rooms up to 40 sq m. It has honeycomb cooling pads, a 42 cm fan with an air flow of 3600 m³/h and an air throw of 10.7 m.\n\nIt has mechanical controls with three speeds, oscillating swing, a water level indicator and castor wheels, and works on an inverter. It is rated at 190 W. Voltas gives a 1-year warranty on air coolers.",
+  "highlights": [
+    "72-litre water tank",
+    "Honeycomb cooling pads",
+    "Air flow 3600 m³/h, air throw 10.7 m",
+    "For rooms up to 40 sq m",
+    "190 W, works on inverter",
+    "1-year warranty (per Voltas)"
+  ],
+  "specs": [
+    {
+      "group": "Cooling",
+      "items": [
+        {
+          "label": "Type",
+          "value": "Desert air cooler"
+        },
+        {
+          "label": "Tank capacity",
+          "value": "72 litres"
+        },
+        {
+          "label": "Room size",
+          "value": "Up to 40 sq m"
+        },
+        {
+          "label": "Air flow",
+          "value": "3600 m³/h"
+        },
+        {
+          "label": "Air throw",
+          "value": "10.7 m (at 0.5 m/s)"
+        },
+        {
+          "label": "Cooling pads",
+          "value": "Honeycomb"
+        },
+        {
+          "label": "Fan",
+          "value": "42 cm fan"
+        },
+        {
+          "label": "Swing",
+          "value": "Oscillating"
+        }
+      ]
+    },
+    {
+      "group": "Power and controls",
+      "items": [
+        {
+          "label": "Power consumption",
+          "value": "190 W"
+        },
+        {
+          "label": "Power supply",
+          "value": "230 V, 50 Hz, single phase"
+        },
+        {
+          "label": "Operation",
+          "value": "Mechanical"
+        },
+        {
+          "label": "Fan speeds",
+          "value": "3 (high, medium, low)"
+        },
+        {
+          "label": "Remote control",
+          "value": "No"
+        },
+        {
+          "label": "Works on inverter",
+          "value": "Yes"
+        }
+      ]
+    },
+    {
+      "group": "Design",
+      "items": [
+        {
+          "label": "Colour",
+          "value": "White-Grey"
+        },
+        {
+          "label": "Water level indicator",
+          "value": "Yes"
+        },
+        {
+          "label": "Castor wheels",
+          "value": "Yes"
+        },
+        {
+          "label": "Dimensions (W x H x D)",
+          "value": "70.5 x 110 x 47.5 cm"
+        },
+        {
+          "label": "Net weight",
+          "value": "17 kg"
+        }
+      ]
+    },
+    {
+      "group": "General",
+      "items": [
+        {
+          "label": "Brand",
+          "value": "Voltas"
+        },
+        {
+          "label": "Model",
+          "value": "Grand 72 (4810331)"
+        },
+        {
+          "label": "Warranty",
+          "value": "1 year"
+        }
+      ]
+    }
+  ],
+  "boxContents": [],
+  "keywords": [
+    "voltas",
+    "grand 72",
+    "voltas grand",
+    "72 litre",
+    "desert cooler",
+    "air cooler",
+    "honeycomb cooler",
+    "4810331"
+  ],
+  "warranty": "1 year manufacturer warranty (Voltas: free repair or replacement of defective parts for 12 months from the date of purchase)",
+  "manufacturerInfo": "Manufacturer / Importer: Voltas Ltd, Voltas House 'A', Dr. Babasaheb Ambedkar Road, Chinchpokli, Mumbai, Maharashtra - 400033",
+  "countryOfOrigin": "India",
+  "hsnCode": "84796000",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": null,
+  "seoDescription": null,
+  "variants": [
+    {
+      "sku": "VOLTAS-GRAND-72-DESERT-AIR-COOLER",
+      "color": null,
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": null,
+      "mrp": 18190,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "Voltas GRAND 72 Desert Cooler"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.voltas.com/products/4810085-voltas-air-cooler-grand-72",
+      "usedFor": [
+        "details",
+        "mrp",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0578/6845/2026/files/Air_Cooler_2024_Catalogue.pdf?v=1719985289",
+      "usedFor": [
+        "specs"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.voltas.com/pages/terms-conditions-product-warranty",
+      "usedFor": [
+        "warranty"
+      ],
+      "retrievedAt": "2026-10-15"
+    }
+  ]
+}

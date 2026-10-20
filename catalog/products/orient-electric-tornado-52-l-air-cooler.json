@@ -1,0 +1,178 @@
+{
+  "slug": "orient-electric-tornado-52-l-air-cooler",
+  "name": "Orient Electric Tornado 52 L Air Cooler",
+  "brand": "Orient Electric",
+  "category": "air-coolers",
+  "condition": "NEW",
+  "status": "live",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "Orient Electric Tornado 52-litre desert air cooler with 3650 m³/h air delivery, honeycomb pads and an air throw of up to 18.3 m (60 ft).",
+  "description": "The Orient Electric Tornado 52 L (model CD5202H) is a desert air cooler for homes, offices, restaurants and warehouses. Its 16-inch fan delivers 3650 m³/h of air with an air throw of up to 18.3 m (60 ft), through honeycomb cooling pads on three sides.\n\nMotorised vertical louvres and horizontal louvres give 4-way air deflection. It has three speeds, water inlets on both sides, a water level indicator, 360-degree swivel wheels and cord storage, and works on an inverter. It is rated at 190 W. Orient gives a 12-month warranty against manufacturing defects.",
+  "highlights": [
+    "52-litre water tank",
+    "Air delivery 3650 m³/h, air throw up to 18.3 m (60 ft)",
+    "3-side Densenest honeycomb cooling pads",
+    "4-way air deflection with motorised louvres",
+    "190 W, inverter compatible",
+    "12-month warranty (per Orient Electric)"
+  ],
+  "specs": [
+    {
+      "group": "Cooling",
+      "items": [
+        {
+          "label": "Type",
+          "value": "Desert air cooler"
+        },
+        {
+          "label": "Tank capacity",
+          "value": "52 litres"
+        },
+        {
+          "label": "Air delivery",
+          "value": "3650 m³/h"
+        },
+        {
+          "label": "Air throw",
+          "value": "Up to 18.3 m (60 ft)"
+        },
+        {
+          "label": "Cooling pads",
+          "value": "3-side Densenest honeycomb"
+        },
+        {
+          "label": "Air direction",
+          "value": "4-way deflection (motorised vertical louvres, horizontal louvres)"
+        },
+        {
+          "label": "Fan",
+          "value": "16-inch fan, Aerofan technology"
+        }
+      ]
+    },
+    {
+      "group": "Power and controls",
+      "items": [
+        {
+          "label": "Power consumption",
+          "value": "190 W"
+        },
+        {
+          "label": "Voltage",
+          "value": "230–240 V"
+        },
+        {
+          "label": "Fan speeds",
+          "value": "3 (high, medium, low)"
+        },
+        {
+          "label": "Inverter compatible",
+          "value": "Yes"
+        }
+      ]
+    },
+    {
+      "group": "Water tank",
+      "items": [
+        {
+          "label": "Water level indicator",
+          "value": "Yes"
+        },
+        {
+          "label": "Auto fill",
+          "value": "No"
+        },
+        {
+          "label": "Water inlets",
+          "value": "Both sides"
+        }
+      ]
+    },
+    {
+      "group": "Design",
+      "items": [
+        {
+          "label": "Dimensions (L x W x H)",
+          "value": "62 x 40.3 x 112 cm"
+        },
+        {
+          "label": "Weight",
+          "value": "16.6 kg"
+        },
+        {
+          "label": "Wheels",
+          "value": "360-degree swivel wheels"
+        }
+      ]
+    },
+    {
+      "group": "General",
+      "items": [
+        {
+          "label": "Brand",
+          "value": "Orient Electric"
+        },
+        {
+          "label": "Model code",
+          "value": "CD5202H"
+        },
+        {
+          "label": "Warranty",
+          "value": "12 months against manufacturing defects"
+        }
+      ]
+    }
+  ],
+  "boxContents": [
+    "Air cooler",
+    "User manual"
+  ],
+  "keywords": [
+    "orient",
+    "orient electric",
+    "tornado",
+    "tornado 52",
+    "52 litre",
+    "desert cooler",
+    "air cooler",
+    "cd5202h"
+  ],
+  "warranty": "12-month manufacturer warranty against manufacturing defects (per Orient Electric)",
+  "manufacturerInfo": "Manufactured by: M/S. The Supreme Industries Ltd, C30&31, Phase-2, Noida, Gautam Budh, Noida - 201305, Uttar Pradesh; Packed & Marketed by: Orient Electric Pvt Ltd",
+  "countryOfOrigin": "India",
+  "hsnCode": "84796000",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": null,
+  "seoDescription": null,
+  "variants": [
+    {
+      "sku": "ORIENT-ELECTRIC-TORNADO-52-L-AIR-COOLER-DARK-GREY",
+      "color": "Dark Grey",
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": null,
+      "mrp": 15490,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "Orient Tornado 52L Cooler (D Grey)"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://orientelectric.com/products/tornado-desert-air-cooler?variant=44213137047714",
+      "usedFor": [
+        "details",
+        "specs",
+        "mrp",
+        "legal",
+        "warranty",
+        "box"
+      ],
+      "retrievedAt": "2026-10-15"
+    }
+  ]
+}

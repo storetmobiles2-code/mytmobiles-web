@@ -1,0 +1,77 @@
+{
+  "slug": "cellecor-109-cm-43-inch-full-hd-frameless-smart-led-tv",
+  "name": "Cellecor 109 cm (43 inch) Full HD Frameless Smart LED TV",
+  "brand": "Cellecor",
+  "category": "smart-tvs",
+  "condition": "NEW",
+  "status": "draft",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "Brand-new Cellecor 109 cm (43 inch) Full HD Frameless Smart LED TV, with GST invoice from myT Mobiles.",
+  "description": "Buy the Cellecor 109 cm (43 inch) Full HD Frameless Smart LED TV from myT Mobiles. Every order ships with a GST tax invoice, and you can choose Cash on Delivery or pay online. Prices shown include GST.",
+  "highlights": [
+    "Screen size: 109 cm (43 inch)",
+    "Resolution: Full HD",
+    "GST invoice with every order"
+  ],
+  "specs": [
+    {
+      "group": "Key facts",
+      "items": [
+        {
+          "label": "Brand",
+          "value": "Cellecor"
+        },
+        {
+          "label": "Model",
+          "value": "109 cm (43 inch) Full HD Frameless Smart LED TV"
+        },
+        {
+          "label": "Screen size",
+          "value": "109 cm (43 inch)"
+        },
+        {
+          "label": "Resolution",
+          "value": "Full HD"
+        },
+        {
+          "label": "Condition",
+          "value": "Brand new"
+        }
+      ]
+    }
+  ],
+  "boxContents": [],
+  "keywords": [
+    "cellecor",
+    "43 inch",
+    "full hd",
+    "frameless",
+    "smart tv",
+    "led tv"
+  ],
+  "warranty": "Manufacturer warranty as per brand policy.",
+  "manufacturerInfo": null,
+  "countryOfOrigin": null,
+  "hsnCode": "85287217",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": null,
+  "seoDescription": null,
+  "variants": [
+    {
+      "sku": "CELLECOR-109-CM-43-INCH-FULL-HD-FRAMELESS-SMART-LED-TV",
+      "color": null,
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": null,
+      "mrp": 20999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "CELLECOR 43\"P INCHES FULL HD FRAMELESS SMART TV"
+      ]
+    }
+  ],
+  "sources": []
+}

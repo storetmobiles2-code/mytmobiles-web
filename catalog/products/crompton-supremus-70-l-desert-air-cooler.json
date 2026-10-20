@@ -1,0 +1,77 @@
+{
+  "slug": "crompton-supremus-70-l-desert-air-cooler",
+  "name": "Crompton Supremus 70 L Desert Air Cooler",
+  "brand": "Crompton",
+  "category": "air-coolers",
+  "condition": "NEW",
+  "status": "draft",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "Brand-new Crompton Supremus 70 L Desert Air Cooler, with GST invoice from myT Mobiles.",
+  "description": "Buy the Crompton Supremus 70 L Desert Air Cooler from myT Mobiles. Every order ships with a GST tax invoice, and you can choose Cash on Delivery or pay online. Prices shown include GST.",
+  "highlights": [
+    "Tank capacity: 70 L",
+    "Type: Desert cooler",
+    "GST invoice with every order"
+  ],
+  "specs": [
+    {
+      "group": "Key facts",
+      "items": [
+        {
+          "label": "Brand",
+          "value": "Crompton"
+        },
+        {
+          "label": "Model",
+          "value": "Supremus 70 L Desert Air Cooler"
+        },
+        {
+          "label": "Tank capacity",
+          "value": "70 L"
+        },
+        {
+          "label": "Type",
+          "value": "Desert cooler"
+        },
+        {
+          "label": "Condition",
+          "value": "Brand new"
+        }
+      ]
+    }
+  ],
+  "boxContents": [],
+  "keywords": [
+    "crompton",
+    "supremus",
+    "70l",
+    "desert",
+    "air",
+    "cooler"
+  ],
+  "warranty": "Manufacturer warranty as per brand policy.",
+  "manufacturerInfo": null,
+  "countryOfOrigin": null,
+  "hsnCode": "84796000",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": null,
+  "seoDescription": null,
+  "variants": [
+    {
+      "sku": "CROMPTON-SUPREMUS-70-L-DESERT-AIR-COOLER",
+      "color": null,
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": null,
+      "mrp": 11999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "CROMPTON SUPREMUS 70L DESERT AIR COOLER"
+      ]
+    }
+  ],
+  "sources": []
+}

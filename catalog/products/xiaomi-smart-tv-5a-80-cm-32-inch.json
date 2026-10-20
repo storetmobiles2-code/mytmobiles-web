@@ -1,0 +1,241 @@
+{
+  "slug": "xiaomi-smart-tv-5a-80-cm-32-inch",
+  "name": "Xiaomi Smart TV 5A 80 cm (32 inch)",
+  "brand": "Xiaomi",
+  "category": "smart-tvs",
+  "condition": "NEW",
+  "status": "live",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "80 cm (32 inch) HD Ready Android TV with 20W Dolby Audio speakers, PatchWall 4 and dual-band Wi-Fi.",
+  "description": "The Xiaomi Smart TV 5A 32 (2022 model) is an 80 cm (32 inch) HD Ready LED TV (1366 x 768, 60Hz) with Vivid Picture Engine and a metal bezel-less design. It runs Android TV 11 with PatchWall 4, Ok Google, Chromecast built-in and the Play Store. It has two speakers with 20W output and Dolby Audio, 1GB RAM and 8GB storage, and connects over 2 HDMI (ARC), 2 USB, Ethernet, dual-band Wi-Fi and Bluetooth 5.0.",
+  "highlights": [
+    "80 cm (32 inch) HD Ready display (1366 x 768)",
+    "Android TV 11 with PatchWall 4",
+    "Ok Google and Chromecast built-in",
+    "20W speakers with Dolby Audio",
+    "1GB RAM and 8GB storage",
+    "Dual-band Wi-Fi and Bluetooth 5.0"
+  ],
+  "specs": [
+    {
+      "group": "Key facts",
+      "items": [
+        {
+          "label": "Brand",
+          "value": "Xiaomi"
+        },
+        {
+          "label": "Model",
+          "value": "Xiaomi Smart TV 5A 80 cm (32 inch) HD Ready LED Android TV (2022 Model)"
+        },
+        {
+          "label": "Condition",
+          "value": "Brand new"
+        }
+      ]
+    },
+    {
+      "group": "Display",
+      "items": [
+        {
+          "label": "Screen size",
+          "value": "80 cm (32 inch)"
+        },
+        {
+          "label": "Resolution",
+          "value": "HD Ready (1366 x 768)"
+        },
+        {
+          "label": "Refresh rate",
+          "value": "60Hz"
+        },
+        {
+          "label": "Viewing angle",
+          "value": "178°"
+        },
+        {
+          "label": "Picture engine",
+          "value": "Vivid Picture Engine"
+        }
+      ]
+    },
+    {
+      "group": "Smart features",
+      "items": [
+        {
+          "label": "Platform",
+          "value": "Android TV 11 with PatchWall 4"
+        },
+        {
+          "label": "Voice assistant",
+          "value": "Ok Google"
+        },
+        {
+          "label": "Casting",
+          "value": "Chromecast built-in"
+        },
+        {
+          "label": "App store",
+          "value": "Google Play Store"
+        },
+        {
+          "label": "Processor",
+          "value": "Quad-core Cortex-A35"
+        },
+        {
+          "label": "GPU",
+          "value": "Mali-G31 MP2"
+        },
+        {
+          "label": "RAM",
+          "value": "1GB"
+        },
+        {
+          "label": "Storage",
+          "value": "8GB"
+        },
+        {
+          "label": "Gaming",
+          "value": "ALLM (Auto Low Latency Mode)"
+        }
+      ]
+    },
+    {
+      "group": "Audio",
+      "items": [
+        {
+          "label": "Audio output",
+          "value": "20W"
+        },
+        {
+          "label": "Speakers",
+          "value": "2"
+        },
+        {
+          "label": "Sound technology",
+          "value": "Dolby Audio"
+        }
+      ]
+    },
+    {
+      "group": "Ports",
+      "items": [
+        {
+          "label": "HDMI",
+          "value": "2 (ARC, Dolby Atmos pass-through)"
+        },
+        {
+          "label": "USB",
+          "value": "2"
+        },
+        {
+          "label": "Ethernet",
+          "value": "1"
+        },
+        {
+          "label": "AV",
+          "value": "1"
+        },
+        {
+          "label": "3.5 mm",
+          "value": "1"
+        },
+        {
+          "label": "Wi-Fi",
+          "value": "2.4GHz/5GHz 802.11 a/b/g/n/ac (2x2 MIMO)"
+        },
+        {
+          "label": "Bluetooth",
+          "value": "5.0"
+        }
+      ]
+    },
+    {
+      "group": "Power",
+      "items": [
+        {
+          "label": "Power",
+          "value": "50W"
+        },
+        {
+          "label": "Voltage",
+          "value": "100-240V, 50/60Hz"
+        }
+      ]
+    }
+  ],
+  "boxContents": [],
+  "keywords": [
+    "xiaomi",
+    "smart tv 5a",
+    "mi tv 5a",
+    "32 inch",
+    "hd ready",
+    "android tv",
+    "led tv",
+    "smart tv"
+  ],
+  "warranty": "1 year comprehensive warranty on the product plus 1 additional year on the panel (Xiaomi India TV warranty policy).",
+  "manufacturerInfo": "Manufactured For: Xiaomi Technology India Private Limited, Building Orchid, Block E, Embassy Tech Village, Marathahalli-Sarjapur Outer Ring Road, Devarabisanahalli, Bengaluru, Karnataka-560103; Manufactured By: As set out on the MRP label of the Product; Imported By: As set out on the MRP label of the Product",
+  "countryOfOrigin": "India",
+  "hsnCode": "85287217",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": null,
+  "seoDescription": null,
+  "variants": [
+    {
+      "sku": "XIAOMI-SMART-TV-5A-80-CM-32-INCH",
+      "color": null,
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": null,
+      "mrp": 24999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "XIAOMI SMART TV 5A 32 INCHES"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.mi.com/in/product/xiaomi-smart-tv-5a-series/",
+      "usedFor": [
+        "details"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.mi.com/in/product/xiaomi-smart-tv-5a-series/specs/",
+      "usedFor": [
+        "specs"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.mi.com/in/product/xiaomi-smart-tv-5a-series/buy/",
+      "usedFor": [
+        "mrp",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://in-go.buy.mi.com/in/v2/item/productdetail?from=pc&tag=xiaomi-smart-tv-5a-series",
+      "usedFor": [
+        "mrp",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.mi.com/in/support/policy/warranty/",
+      "usedFor": [
+        "warranty"
+      ],
+      "retrievedAt": "2026-10-15"
+    }
+  ]
+}

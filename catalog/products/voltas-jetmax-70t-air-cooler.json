@@ -1,0 +1,189 @@
+{
+  "slug": "voltas-jetmax-70t-air-cooler",
+  "name": "Voltas Jetmax 70T Air Cooler",
+  "brand": "Voltas",
+  "category": "air-coolers",
+  "condition": "NEW",
+  "status": "live",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "Voltas JetMax 70T 70-litre desert air cooler with touch controls, remote, honeycomb pads and 4000 m³/h air flow.",
+  "description": "The Voltas JetMax 70T (model 4810352) is a 70-litre desert air cooler for rooms of about 40–48 sq m. It has honeycomb cooling pads and a 43 cm fan with an air flow of 4000 m³/h and an air throw of 14 m.\n\nIt has electronic touch controls with a remote, three speeds, Eco-Cool mode, pre-soak, oscillating swing, a water level indicator and castor wheels, and works on an inverter. It is rated at 185 W. Voltas gives a 1-year warranty on air coolers.",
+  "highlights": [
+    "70-litre water tank",
+    "Touch controls and remote",
+    "Air flow 4000 m³/h, air throw 14 m",
+    "Honeycomb cooling pads",
+    "185 W, works on inverter",
+    "1-year warranty (per Voltas)"
+  ],
+  "specs": [
+    {
+      "group": "Cooling",
+      "items": [
+        {
+          "label": "Type",
+          "value": "Desert air cooler"
+        },
+        {
+          "label": "Tank capacity",
+          "value": "70 litres"
+        },
+        {
+          "label": "Room size",
+          "value": "40–48 sq m"
+        },
+        {
+          "label": "Air flow",
+          "value": "4000 m³/h"
+        },
+        {
+          "label": "Air throw",
+          "value": "14 m (at 0.5 m/s)"
+        },
+        {
+          "label": "Cooling pads",
+          "value": "Honeycomb"
+        },
+        {
+          "label": "Fan",
+          "value": "43 cm fan"
+        },
+        {
+          "label": "Swing",
+          "value": "Oscillating"
+        }
+      ]
+    },
+    {
+      "group": "Power and controls",
+      "items": [
+        {
+          "label": "Power consumption",
+          "value": "185 W"
+        },
+        {
+          "label": "Power supply",
+          "value": "230 V, 50 Hz, single phase"
+        },
+        {
+          "label": "Operation",
+          "value": "Electronic touch"
+        },
+        {
+          "label": "Remote control",
+          "value": "Yes"
+        },
+        {
+          "label": "Fan speeds",
+          "value": "3 (high, medium, low)"
+        },
+        {
+          "label": "Modes",
+          "value": "Eco-Cool, pre-soak"
+        },
+        {
+          "label": "Works on inverter",
+          "value": "Yes"
+        }
+      ]
+    },
+    {
+      "group": "Design",
+      "items": [
+        {
+          "label": "Water level indicator",
+          "value": "Yes"
+        },
+        {
+          "label": "Castor wheels",
+          "value": "Yes"
+        },
+        {
+          "label": "Dimensions (W x H x D)",
+          "value": "60 x 113.5 x 45 cm"
+        },
+        {
+          "label": "Net weight",
+          "value": "16.5 kg"
+        }
+      ]
+    },
+    {
+      "group": "General",
+      "items": [
+        {
+          "label": "Brand",
+          "value": "Voltas"
+        },
+        {
+          "label": "Model",
+          "value": "JetMax 70T (4810352)"
+        },
+        {
+          "label": "Warranty",
+          "value": "1 year"
+        }
+      ]
+    }
+  ],
+  "boxContents": [],
+  "keywords": [
+    "voltas",
+    "jetmax",
+    "jetmax 70t",
+    "70 litre",
+    "desert cooler",
+    "air cooler",
+    "cooler with remote",
+    "4810352"
+  ],
+  "warranty": "1 year manufacturer warranty (Voltas: free repair or replacement of defective parts for 12 months from the date of purchase)",
+  "manufacturerInfo": "Manufacturer / Importer: Voltas Ltd, Voltas House 'A', Dr. Babasaheb Ambedkar Road, Chinchpokli, Mumbai, Maharashtra - 400033",
+  "countryOfOrigin": "India",
+  "hsnCode": "84796000",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": null,
+  "seoDescription": null,
+  "variants": [
+    {
+      "sku": "VOLTAS-JETMAX-70T-AIR-COOLER",
+      "color": null,
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": null,
+      "mrp": 19790,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "Voltas Cooler Jetmax 70 T"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.voltas.com/products/voltas-desert-air-cooler-jetmax-70t",
+      "usedFor": [
+        "details",
+        "mrp",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0578/6845/2026/files/Air_Cooler_2024_Catalogue.pdf?v=1719985289",
+      "usedFor": [
+        "specs"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.voltas.com/pages/terms-conditions-product-warranty",
+      "usedFor": [
+        "warranty"
+      ],
+      "retrievedAt": "2026-10-15"
+    }
+  ]
+}
