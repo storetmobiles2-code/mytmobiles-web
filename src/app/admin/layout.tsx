@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { BarChart3, Boxes, FolderTree, Image as ImageIcon, LayoutDashboard, MessageSquareText, MessageSquareWarning, Package, Settings, ShoppingCart, TicketPercent, Users } from "lucide-react";
+import { BarChart3, Boxes, FileSpreadsheet, FolderTree, Image as ImageIcon, LayoutDashboard, MessageSquareText, MessageSquareWarning, Package, Settings, ShoppingCart, TicketPercent, Users } from "lucide-react";
 import { requireAdmin } from "@/lib/auth/guards";
 import { logout } from "@/app/actions/auth";
 import { Logo } from "@/components/brand/logo";
@@ -20,6 +20,7 @@ const NAV = [
   { href: "/admin/reviews", label: "Reviews", icon: MessageSquareText },
   { href: "/admin/grievances", label: "Grievances", icon: MessageSquareWarning },
   { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
+  { href: "/admin/reports", label: "Reports", icon: FileSpreadsheet },
   { href: "/admin/settings", label: "Settings", icon: Settings },
 ];
 
