@@ -5,10 +5,12 @@ import { razorpayConfigured, smtpConfigured, siteUrl } from "@/lib/env";
 import { AdminPage, Panel } from "@/components/admin/ui";
 import { ActionForm, Field, inputCls } from "@/components/admin/action-form";
 import { Badge } from "@/components/ui/misc";
+import { requirePermission } from "@/lib/auth/guards";
 
 export const metadata = { title: "Settings" };
 
 export default async function SettingsPage() {
+  await requirePermission("settings.manage");
   const s = await getSettings();
   const r = (p: number) => p / 100;
   return (

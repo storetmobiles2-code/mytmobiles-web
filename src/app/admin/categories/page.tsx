@@ -2,10 +2,12 @@ import { db } from "@/lib/db";
 import { saveBrand, saveCategory } from "@/app/admin/actions/store";
 import { AdminPage, Panel } from "@/components/admin/ui";
 import { ActionForm, inputCls } from "@/components/admin/action-form";
+import { requirePermission } from "@/lib/auth/guards";
 
 export const metadata = { title: "Categories & brands" };
 
 export default async function CategoriesPage() {
+  await requirePermission("categories.manage");
   const [categories, brands] = await Promise.all([
     db.category.findMany({ orderBy: { sortOrder: "asc" }, include: { _count: { select: { products: true } } } }),
     db.brand.findMany({ orderBy: [{ sortOrder: "asc" }, { name: "asc" }], include: { _count: { select: { products: true } } } }),

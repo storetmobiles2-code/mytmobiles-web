@@ -18,9 +18,12 @@ datasource db {
 
 // ───────────────────────────── Identity ─────────────────────────────
 
+/// ADMIN is the owner (full access). STAFF can run day-to-day fulfilment but
+/// not prices, catalogue, settings or money. See src/lib/auth/permissions.ts.
 enum Role {
   CUSTOMER
   ADMIN
+  STAFF
 }
 
 model User {
@@ -47,6 +50,7 @@ model User {
   redemptions   CouponRedemption[]
   orderEvents   OrderEvent[]
   inventoryLogs InventoryLog[]
+  auditLogs     AuditLog[]
 }
 
 /// Server-side session. `id` is the SHA-256 of the random cookie token, so a
@@ -695,6 +699,33 @@ model AnalyticsEvent {
 
   @@index([name, createdAt])
   @@index([createdAt])
+}
+
+/// Who changed what in the admin (and the catalogue CLI), and when. Append-only:
+/// kept at least one year and never deleted by the app.
+model AuditLog {
+  id          String   @id @default(cuid())
+  /// Null for system jobs and the catalogue CLI
+  actorId     String?
+  actor       User?    @relation(fields: [actorId], references: [id], onDelete: SetNull)
+  /// Snapshot, so the entry stays readable if the account changes or goes
+  actorEmail  String
+  /// e.g. order.status_changed, product.price_changed, settings.updated
+  action      String
+  /// e.g. order, product, coupon, settings, user
+  entityType  String
+  entityId    String?
+  summary     String
+  /// { field: { before, after } } for changed fields only. Never secrets.
+  changes     Json?
+  ip          String?
+  userAgent   String?
+  createdAt   DateTime @default(now())
+
+  @@index([entityType, entityId])
+  @@index([createdAt])
+  @@index([actorId, createdAt])
+  @@index([action, createdAt])
 }
 
 /// Fixed-window rate limiter state, shared across all app instances.

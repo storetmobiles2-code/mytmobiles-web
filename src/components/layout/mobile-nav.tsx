@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
+import { canAccessAdmin } from "@/lib/auth/permissions";
 import { useSession } from "./session-provider";
 
 export function MobileNav({ categories, brands, hasOpenBox }: { categories: { name: string; slug: string }[]; brands: { name: string; slug: string }[]; hasOpenBox: boolean }) {
@@ -47,7 +48,7 @@ export function MobileNav({ categories, brands, hasOpenBox }: { categories: { na
           <Link href={session.user ? "/account" : "/login"} className="block rounded-lg px-3 py-2.5 font-semibold text-brand-700 hover:bg-brand-50">
             {session.user ? `Hi, ${session.user.name.split(" ")[0]}` : "Sign in / Create account"}
           </Link>
-          {session.user?.role === "ADMIN" && (
+          {canAccessAdmin(session.user?.role) && (
             <Link href="/admin" className="block rounded-lg px-3 py-2.5 font-semibold hover:bg-ink-50">
               Admin dashboard
             </Link>

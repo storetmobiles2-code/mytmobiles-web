@@ -2,11 +2,13 @@ import Link from "next/link";
 import { db } from "@/lib/db";
 import { AdminPage, Table, td, th } from "@/components/admin/ui";
 import { Badge, Pagination } from "@/components/ui/misc";
+import { requirePermission } from "@/lib/auth/guards";
 
 export const metadata = { title: "Customers" };
 const PER = 40;
 
 export default async function CustomersPage(props: PageProps<"/admin/customers">) {
+  await requirePermission("customers.view");
   const sp = await props.searchParams;
   const q = typeof sp.q === "string" ? sp.q.trim().slice(0, 80) : "";
   const page = Math.max(1, Number(sp.page) || 1);
@@ -23,7 +25,7 @@ export default async function CustomersPage(props: PageProps<"/admin/customers">
         <tbody>
           {users.map((u) => (
             <tr key={u.id}>
-              <td className={td}><Link href={`/admin/customers/${u.id}`} className="font-semibold text-brand-700 hover:underline">{u.name}</Link>{u.role === "ADMIN" && <Badge tone="brand" className="ml-2">Admin</Badge>}</td>
+              <td className={td}><Link href={`/admin/customers/${u.id}`} className="font-semibold text-brand-700 hover:underline">{u.name}</Link>{u.role !== "CUSTOMER" && <Badge tone="brand" className="ml-2">{u.role === "ADMIN" ? "Admin" : "Staff"}</Badge>}</td>
               <td className={td}>{u.email}<span className="block text-xs text-ink-500">{u.phone}</span></td>
               <td className={td}>{u._count.orders}</td>
               <td className={td}>{u.createdAt.toLocaleDateString("en-IN")}</td>

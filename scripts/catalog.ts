@@ -22,6 +22,8 @@ import { refreshProductAggregates } from "@/lib/catalog/queries";
 import { planStockImport } from "@/lib/catalog/stock-import";
 import { parseStockCsv } from "@/lib/catalog/csv";
 import { slugify } from "@/lib/slug";
+import { audit, CATALOG_CLI_ACTOR } from "@/lib/admin/audit";
+import type { AuditChanges } from "@/lib/admin/audit-diff";
 import { contactSheet, download, optimise, optimiseSpinFrame, pool, SIZE, SPIN_SIZE } from "./lib/image-pipeline";
 
 const ROOT = process.cwd();
@@ -298,8 +300,10 @@ async function cmdImages() {
 
 type Change = string;
 
-async function applyOne(spec: ProductSpec, write: boolean): Promise<{ changes: Change[]; productId: string | null }> {
+async function applyOne(spec: ProductSpec, write: boolean): Promise<{ changes: Change[]; productId: string | null; diff: AuditChanges; created: boolean }> {
   const changes: Change[] = [];
+  /** Before/after for the audit log, alongside the human-readable change list. */
+  const diff: AuditChanges = {};
   const allNames = spec.variants.flatMap((v) => v.stockSheetNames);
   let product = await db.product.findUnique({ where: { slug: spec.slug }, include: { variants: true, images: true } });
   if (!product && allNames.length) {
@@ -308,13 +312,17 @@ async function applyOne(spec: ProductSpec, write: boolean): Promise<{ changes: C
     if (viaStock) {
       if (viaStock.isActive) throw new Error(`Live product "${viaStock.slug}" already has these stock-sheet names. Use slug "${viaStock.slug}" (renaming a live URL breaks links).`);
       changes.push(`slug: ${viaStock.slug} → ${spec.slug} (hidden product created by stock import)`);
+      diff.slug = { before: viaStock.slug, after: spec.slug };
       product = viaStock;
     }
   }
   const category = await db.category.findUnique({ where: { slug: spec.category } });
   if (!category) throw new Error(`Unknown category "${spec.category}"`);
   const brand = await db.brand.findUnique({ where: { name: spec.brand } });
-  if (!brand) changes.push(`brand: create "${spec.brand}"`);
+  if (!brand) {
+    changes.push(`brand: create "${spec.brand}"`);
+    diff.brand = { before: null, after: spec.brand };
+  }
 
   const lock = readLock()[spec.slug] ?? [];
   const spinLock = readSpinLock()[spec.slug] ?? [];
@@ -343,15 +351,24 @@ async function applyOne(spec: ProductSpec, write: boolean): Promise<{ changes: C
     seoTitle: spec.seoTitle,
     seoDescription: spec.seoDescription,
   };
-  if (!product) changes.push(`product: create "${spec.name}" (hidden until status is live)`);
+  if (!product) {
+    changes.push(`product: create "${spec.name}" (hidden until status is live)`);
+    diff.product = { before: null, after: spec.name };
+  }
   else {
     for (const [k, v] of Object.entries(fields)) {
       if (k === "slug" && product.slug !== spec.slug) continue; // reported above
       const before = (product as Record<string, unknown>)[k];
       const same = JSON.stringify(before instanceof Date ? before.toISOString().slice(0, 10) : before) === JSON.stringify(v instanceof Date ? v.toISOString().slice(0, 10) : v);
-      if (!same) changes.push(`${k}: ${short(before)} → ${short(v)}`);
+      if (!same) {
+        changes.push(`${k}: ${short(before)} → ${short(v)}`);
+        diff[k] = { before, after: v };
+      }
     }
-    if (brand && brand.id !== product.brandId) changes.push(`brand → ${spec.brand}`);
+    if (brand && brand.id !== product.brandId) {
+      changes.push(`brand → ${spec.brand}`);
+      diff.brand = { before: product.brandId, after: spec.brand };
+    }
   }
 
   // Variants: match by SKU, then by stock-sheet name.
@@ -362,10 +379,19 @@ async function applyOne(spec: ProductSpec, write: boolean): Promise<{ changes: C
   });
   for (const { v, match } of plans) {
     const label = [v.color, v.ramGb && `${v.ramGb}GB`, v.storageGb && `${v.storageGb}GB`].filter(Boolean).join(" ") || v.sku;
-    if (!match) changes.push(`variant ${label}: create (MRP ₹${v.mrp}${v.price ? `, price ₹${v.price}` : ", price from stock sheet"}, stock 0 until the next stock import)`);
-    else {
-      if (match.mrp !== ps(v.mrp)) changes.push(`variant ${label}: MRP ₹${rs(match.mrp)} → ₹${v.mrp}`);
-      if (v.price !== undefined && match.price !== ps(v.price)) changes.push(`variant ${label}: price ₹${rs(match.price)} → ₹${v.price}`);
+    if (!match) {
+      changes.push(`variant ${label}: create (MRP ₹${v.mrp}${v.price ? `, price ₹${v.price}` : ", price from stock sheet"}, stock 0 until the next stock import)`);
+      diff[`${v.sku}.mrp`] = { before: null, after: ps(v.mrp) };
+      diff[`${v.sku}.price`] = { before: null, after: ps(v.price ?? v.mrp) };
+    } else {
+      if (match.mrp !== ps(v.mrp)) {
+        changes.push(`variant ${label}: MRP ₹${rs(match.mrp)} → ₹${v.mrp}`);
+        diff[`${match.sku}.mrp`] = { before: match.mrp, after: ps(v.mrp) };
+      }
+      if (v.price !== undefined && match.price !== ps(v.price)) {
+        changes.push(`variant ${label}: price ₹${rs(match.price)} → ₹${v.price}`);
+        diff[`${match.sku}.price`] = { before: match.price, after: ps(v.price) };
+      }
       const effectivePrice = v.price !== undefined ? ps(v.price) : match.price;
       if (effectivePrice === ps(v.mrp)) changes.push(`note: variant ${label}: MRP equals the selling price, so no discount is shown. Confirm the brand MRP.`);
       if (effectivePrice > ps(v.mrp)) throw new Error(`variant ${label}: stock-sheet price ₹${rs(effectivePrice)} is above the new MRP ₹${v.mrp}`);
@@ -380,19 +406,28 @@ async function applyOne(spec: ProductSpec, write: boolean): Promise<{ changes: C
   if (spec.images) {
     const managed = (product?.images ?? []).filter((i) => i.url.startsWith("/images/"));
     const same = managed.length === lock.length && managed.every((m, i) => m.url === lock[i].file && (m.view ?? null) === (lock[i].view ?? null));
-    if (!same) changes.push(`images: ${managed.length} → ${lock.length} (uploaded /media images are kept)`);
+    if (!same) {
+      changes.push(`images: ${managed.length} → ${lock.length} (uploaded /media images are kept)`);
+      diff.images = { before: managed.length, after: lock.length };
+    }
   }
   if (spec.spins) {
     const current = product ? await db.productSpin.findMany({ where: { productId: product.id } }) : [];
     const managed = current.filter((s) => s.frames[0]?.startsWith("/images/"));
     const same = managed.length === spinLock.length && managed.every((m, i) => JSON.stringify(m.frames) === JSON.stringify(spinLock[i].frames));
-    if (!same) changes.push(`360° spins: ${managed.length} → ${spinLock.length}`);
+    if (!same) {
+      changes.push(`360° spins: ${managed.length} → ${spinLock.length}`);
+      diff.spins = { before: managed.length, after: spinLock.length };
+    }
   }
 
   const wantActive = spec.status === "live" ? true : spec.status === "hidden" ? false : null;
-  if (wantActive !== null && wantActive !== (product?.isActive ?? false)) changes.push(wantActive ? "publish: product goes live" : "unpublish: product is hidden");
+  if (wantActive !== null && wantActive !== (product?.isActive ?? false)) {
+    changes.push(wantActive ? "publish: product goes live" : "unpublish: product is hidden");
+    diff.isActive = { before: product?.isActive ?? false, after: wantActive };
+  }
 
-  if (!write) return { changes, productId: product?.id ?? null };
+  if (!write) return { changes, productId: product?.id ?? null, diff, created: !product };
 
   const productId = await db.$transaction(async (tx) => {
     const b = brand ?? (await tx.brand.create({ data: { name: spec.brand, slug: slugify(spec.brand) } }));
@@ -456,7 +491,7 @@ async function applyOne(spec: ProductSpec, write: boolean): Promise<{ changes: C
     }
     return p.id;
   });
-  return { changes, productId };
+  return { changes, productId, diff, created: !product };
 }
 
 const short = (v: unknown) => {
@@ -480,9 +515,22 @@ async function cmdApply() {
       continue;
     }
     try {
-      const { changes } = await applyOne(spec, write);
+      const { changes, productId, diff, created } = await applyOne(spec, write);
       const real = changes.filter((c) => !c.startsWith("note:"));
       if (real.length) changed++;
+      if (write && real.length && productId) {
+        const run = process.env.GITHUB_RUN_ID ? ` (GitHub Actions run ${process.env.GITHUB_RUN_ID}${process.env.GITHUB_ACTOR ? ` by ${process.env.GITHUB_ACTOR}` : ""})` : "";
+        await audit({
+          actor: CATALOG_CLI_ACTOR,
+          action: created ? "product.created" : "product.catalog_applied",
+          entityType: "product",
+          entityId: productId,
+          summary: `catalog/products/${slug}.json applied${run}: ${real.slice(0, 6).join("; ")}${real.length > 6 ? `; +${real.length - 6} more` : ""}`,
+          changes: diff,
+          ip: null,
+          userAgent: "catalog CLI",
+        });
+      }
       console.log(`${real.length ? (write ? "✓ applied" : "~ would change") : "= no changes"} ${slug}`);
       for (const c of changes) console.log(`    ${c}`);
     } catch (e) {

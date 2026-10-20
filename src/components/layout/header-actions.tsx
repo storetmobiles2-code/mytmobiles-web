@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Heart, ShoppingBag, User } from "lucide-react";
+import { canAccessAdmin } from "@/lib/auth/permissions";
 import { useSession } from "./session-provider";
 
 export function HeaderActions() {
@@ -10,7 +11,7 @@ export function HeaderActions() {
   return (
     <div className="flex items-center gap-1 sm:gap-2">
       <Link
-        href={session.user ? (session.user.role === "ADMIN" ? "/admin" : "/account") : "/login"}
+        href={session.user ? (canAccessAdmin(session.user.role) ? "/admin" : "/account") : "/login"}
         className="hidden items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-white/90 hover:bg-white/10 sm:inline-flex"
       >
         <User className="h-5 w-5" aria-hidden="true" />

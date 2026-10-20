@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { getCurrentUser } from "@/lib/auth/session";
+import { hasPermission } from "@/lib/auth/permissions";
 import { getSettings } from "@/lib/settings";
 import { computeInvoiceTax } from "@/lib/pricing";
 import { formatINRExact } from "@/lib/money";
@@ -17,7 +18,7 @@ export default async function InvoicePage(props: PageProps<"/invoice/[orderId]">
   const { orderId } = await props.params;
   const user = await getCurrentUser();
   if (!user) redirect(`/login?next=/invoice/${orderId}`);
-  const order = await db.order.findFirst({ where: { id: orderId, ...(user.role === "ADMIN" ? {} : { userId: user.id }) }, include: { items: true } });
+  const order = await db.order.findFirst({ where: { id: orderId, ...(hasPermission(user.role, "orders.print") ? {} : { userId: user.id }) }, include: { items: true } });
   if (!order) notFound();
   const s = await getSettings();
 
