@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
+import { requirePermission } from "@/lib/auth/guards";
 import { acknowledgeBy, ageLabel, formatIST, GRIEVANCE_CATEGORY_LABEL, GRIEVANCE_STATUS_LABEL, grievanceFlags, grievanceStatusTone, resolveBy } from "@/lib/grievances/rules";
 import { AdminPage, Panel } from "@/components/admin/ui";
 import { Badge } from "@/components/ui/misc";
@@ -9,6 +10,7 @@ import { GrievanceUpdateForm } from "@/components/admin/grievance-admin-forms";
 export const metadata = { title: "Grievance" };
 
 export default async function AdminGrievanceDetail(props: PageProps<"/admin/grievances/[id]">) {
+  await requirePermission("grievances.manage");
   const { id } = await props.params;
   const g = await db.grievance.findUnique({ where: { id }, include: { events: { orderBy: { createdAt: "desc" } } } });
   if (!g) notFound();

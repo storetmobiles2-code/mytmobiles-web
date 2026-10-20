@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { FileSpreadsheet } from "lucide-react";
 import { AdminPage } from "@/components/admin/ui";
+import { requirePermission } from "@/lib/auth/guards";
 
 export const metadata = { title: "Reports" };
 
@@ -12,7 +13,8 @@ const REPORTS = [
   },
 ];
 
-export default function ReportsPage() {
+export default async function ReportsPage() {
+  await requirePermission("reports.view");
   return (
     <AdminPage title="Reports" description="Read-only reports for the accountant and the owner.">
       <ul className="grid gap-3 md:grid-cols-2">

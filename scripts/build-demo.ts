@@ -31,7 +31,7 @@ const ORIGIN = `http://127.0.0.1:${PORT}`;
 const env = { ...process.env, NEXT_PUBLIC_DEMO: "1", NEXT_PUBLIC_BASE_PATH: BASE, NEXT_PUBLIC_SITE_URL: SITE, NEXT_PUBLIC_GA_MEASUREMENT_ID: "" };
 
 /** Pages that can't work without a server, or aren't part of the shop front. */
-const SKIP = [/^\/admin/, /^\/api\//, /^\/account/, /^\/invoice/, /^\/order-confirmation/, /^\/p\/[^/]+\/review/, /^\/reset-password/, /^\/verify-email/, /^\/media\//, /^\/_next\//];
+const SKIP = [/^\/admin/, /^\/api\//, /^\/account/, /^\/invoice/, /^\/packing-slip/, /^\/order-confirmation/, /^\/p\/[^/]+\/review/, /^\/reset-password/, /^\/verify-email/, /^\/media\//, /^\/_next\//];
 const SEEDS = ["/", "/search", "/cart", "/checkout", "/wishlist", "/login", "/register", "/forgot-password", "/offers", "/open-box", "/about", "/contact", "/privacy", "/terms", "/help/shipping", "/help/returns", "/help/payments", "/help/grievance"];
 const FILES = ["/demo-data.json", "/manifest.webmanifest", "/icon.png", "/apple-icon.png"];
 

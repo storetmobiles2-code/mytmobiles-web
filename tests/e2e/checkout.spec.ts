@@ -92,7 +92,7 @@ test.describe.serial("checkout and fulfilment", () => {
     await page.getByLabel("Password", { exact: true }).fill(ADMIN_PASSWORD);
     await page.getByRole("button", { name: "Sign in" }).click();
     await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
-    for (const path of ["/admin/orders", "/admin/products", "/admin/products/new", "/admin/inventory", "/admin/coupons", "/admin/banners", "/admin/categories", "/admin/customers", "/admin/reviews", "/admin/analytics", "/admin/settings"]) {
+    for (const path of ["/admin/orders", "/admin/products", "/admin/products/new", "/admin/inventory", "/admin/coupons", "/admin/banners", "/admin/categories", "/admin/customers", "/admin/reviews", "/admin/analytics", "/admin/settings", "/admin/staff", "/admin/activity"]) {
       const res = await page.goto(path);
       expect(res?.status(), path).toBe(200);
       await expect(page.locator("h1").first()).toBeVisible();

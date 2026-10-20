@@ -3,15 +3,22 @@
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { db } from "@/lib/db";
-import { assertAdmin } from "@/lib/auth/guards";
+import { assertPermission } from "@/lib/auth/guards";
 import { refreshProductAggregates } from "@/lib/catalog/queries";
 import { revalidateStorefront } from "@/lib/admin/revalidate";
 import { storeImageUpload, UploadError } from "@/lib/admin/media";
 import { slugify } from "@/lib/slug";
 import { rupeesToPaise } from "@/lib/money";
 import { parseSpecs } from "@/lib/catalog/specs";
+import { audit } from "@/lib/admin/audit";
+import { diffChanges, type AuditChanges } from "@/lib/admin/audit-diff";
 
 export type AdminResult = { ok?: string; error?: string; fieldErrors?: Record<string, string> };
+
+/** Variant changes are keyed by SKU so a product's history reads clearly. */
+const bySku = (sku: string, changes: AuditChanges | null): AuditChanges | null =>
+  changes ? Object.fromEntries(Object.entries(changes).map(([k, v]) => [`${sku}.${k}`, v])) : null;
+const rupees = (paise: number) => `₹${(paise / 100).toLocaleString("en-IN")}`;
 
 const lines = (v: FormDataEntryValue | null) =>
   String(v ?? "")
@@ -38,7 +45,7 @@ const productSchema = z.object({
 });
 
 export async function saveProduct(_prev: AdminResult, fd: FormData): Promise<AdminResult> {
-  await assertAdmin();
+  const admin = await assertPermission("products.edit");
   const parsed = productSchema.safeParse(Object.fromEntries(fd));
   if (!parsed.success) {
     const fe: Record<string, string> = {};
@@ -67,18 +74,27 @@ export async function saveProduct(_prev: AdminResult, fd: FormData): Promise<Adm
     isFeatured: fd.get("isFeatured") === "on",
     isActive: fd.get("isActive") === "on",
   };
+  const before = id ? await db.product.findUnique({ where: { id } }) : null;
+  if (id && !before) return { error: "Product not found." };
   const saved = id ? await db.product.update({ where: { id }, data }) : await db.product.create({ data });
+  const changes = id ? diffChanges(before, data) : diffChanges(null, { name: data.name, slug: data.slug, isActive: data.isActive });
+  if (!id || changes) {
+    await audit({ actor: admin, action: id ? "product.updated" : "product.created", entityType: "product", entityId: saved.id, summary: `${id ? "Updated" : "Created"} ${saved.name}${id && changes ? `: ${Object.keys(changes).join(", ")}` : ""}`, changes });
+  }
   revalidateStorefront();
   if (!id) redirect(`/admin/products/${saved.id}?created=1`);
   return { ok: "Product saved." };
 }
 
 export async function setProductActive(productId: string, active: boolean): Promise<AdminResult> {
-  await assertAdmin();
-  const p = await db.product.findUnique({ where: { id: productId }, select: { _count: { select: { variants: true } } } });
+  const admin = await assertPermission("products.edit");
+  const p = await db.product.findUnique({ where: { id: productId }, select: { name: true, isActive: true, _count: { select: { variants: true } } } });
   if (!p) return { error: "Not found" };
   if (active && p._count.variants === 0) return { error: "Add at least one variant before publishing." };
   await db.product.update({ where: { id: productId }, data: { isActive: active } });
+  if (p.isActive !== active) {
+    await audit({ actor: admin, action: "product.status_changed", entityType: "product", entityId: productId, summary: `${p.name} ${active ? "is now live" : "is now hidden"}`, changes: { isActive: { before: p.isActive, after: active } } });
+  }
   revalidateStorefront();
   return { ok: active ? "Product is live." : "Product hidden." };
 }
@@ -98,7 +114,7 @@ const variantSchema = z.object({
 });
 
 export async function saveVariant(_prev: AdminResult, fd: FormData): Promise<AdminResult> {
-  const admin = await assertAdmin();
+  const admin = await assertPermission("products.edit");
   const parsed = variantSchema.safeParse(Object.fromEntries(fd));
   if (!parsed.success) return { error: parsed.error.issues.map((i) => `${String(i.path[0])}: ${i.message}`).join(" · ") };
   const v = parsed.data;
@@ -132,11 +148,33 @@ export async function saveVariant(_prev: AdminResult, fd: FormData): Promise<Adm
     externalNames: lines(fd.get("externalNames")),
   };
   if (v.id) {
+    const before = await db.productVariant.findFirst({ where: { id: v.id, productId: v.productId } });
+    if (!before) return { error: "Variant not found." };
     await db.productVariant.update({ where: { id: v.id }, data });
+    const changes = diffChanges(before, data);
+    if (changes) {
+      const money = (["price", "mrp"] as const).filter((k) => k in changes);
+      await audit({
+        actor: admin,
+        action: money.length ? "product.price_changed" : "product.variant_updated",
+        entityType: "product",
+        entityId: v.productId,
+        summary: `${before.sku}: ${money.length ? money.map((k) => `${k === "mrp" ? "MRP" : "price"} ${rupees(before[k])} → ${rupees(data[k])}`).join(", ") : `updated ${Object.keys(changes).join(", ")}`}`,
+        changes: bySku(before.sku, changes),
+      });
+    }
   } else {
     const initialStock = Math.max(0, Math.floor(Number(fd.get("stock") ?? 0)) || 0);
     const created = await db.productVariant.create({ data: { ...data, productId: v.productId, stock: initialStock } });
     if (initialStock > 0) await db.inventoryLog.create({ data: { variantId: created.id, delta: initialStock, reason: "Opening stock", actorId: admin.id } });
+    await audit({
+      actor: admin,
+      action: "product.variant_created",
+      entityType: "product",
+      entityId: v.productId,
+      summary: `Added variant ${sku} at ${rupees(price)} (MRP ${rupees(mrp)}), opening stock ${initialStock}`,
+      changes: bySku(sku, diffChanges(null, { price, mrp, stock: initialStock, isActive: data.isActive })),
+    });
   }
   await refreshProductAggregates([v.productId]);
   revalidateStorefront();
@@ -144,8 +182,8 @@ export async function saveVariant(_prev: AdminResult, fd: FormData): Promise<Adm
 }
 
 export async function deleteVariant(variantId: string): Promise<AdminResult> {
-  await assertAdmin();
-  const v = await db.productVariant.findUnique({ where: { id: variantId }, select: { productId: true, _count: { select: { orderItems: true } } } });
+  const admin = await assertPermission("products.edit");
+  const v = await db.productVariant.findUnique({ where: { id: variantId }, select: { productId: true, sku: true, isActive: true, _count: { select: { orderItems: true } } } });
   if (!v) return { error: "Not found" };
   if (v._count.orderItems > 0) {
     // Keep history intact: deactivate instead of deleting a variant that has been ordered.
@@ -153,13 +191,22 @@ export async function deleteVariant(variantId: string): Promise<AdminResult> {
   } else {
     await db.productVariant.delete({ where: { id: variantId } });
   }
+  const kept = v._count.orderItems > 0;
+  await audit({
+    actor: admin,
+    action: kept ? "product.variant_deactivated" : "product.variant_deleted",
+    entityType: "product",
+    entityId: v.productId,
+    summary: `${v.sku} ${kept ? "deactivated (it has orders)" : "deleted"}`,
+    changes: kept ? { [`${v.sku}.isActive`]: { before: v.isActive, after: false } } : { [v.sku]: { before: "variant", after: null } },
+  });
   await refreshProductAggregates([v.productId]);
   revalidateStorefront();
   return { ok: v._count.orderItems > 0 ? "Variant has orders, so it was deactivated instead of deleted." : "Variant deleted." };
 }
 
 export async function uploadProductImage(_prev: AdminResult, fd: FormData): Promise<AdminResult> {
-  await assertAdmin();
+  const admin = await assertPermission("products.edit");
   const productId = z.string().cuid().safeParse(fd.get("productId"));
   if (!productId.success) return { error: "Invalid product." };
   const files = fd.getAll("files").filter((f): f is File => f instanceof File && f.size > 0);
@@ -182,6 +229,8 @@ export async function uploadProductImage(_prev: AdminResult, fd: FormData): Prom
   } catch (err) {
     return { error: err instanceof UploadError ? err.message : "Upload failed." };
   }
+  const added = Math.min(files.length, 10);
+  await audit({ actor: admin, action: "product.images_added", entityType: "product", entityId: productId.data, summary: `Uploaded ${added} image(s) to ${product.name}${color ? ` (${color})` : ""}${credit ? ` · credit: ${credit}` : ""}`, changes: { images: { before: product._count.images, after: product._count.images + added } } });
   revalidateStorefront();
   return { ok: `${files.length} image(s) uploaded.` };
 }
@@ -189,7 +238,7 @@ export async function uploadProductImage(_prev: AdminResult, fd: FormData): Prom
 const VIEWS = ["front", "back", "front-back", "side", "angle", "detail", "lifestyle", "box"];
 
 export async function updateImage(imageId: string, patch: { alt?: string; color?: string | null; view?: string | null; move?: -1 | 1 }): Promise<AdminResult> {
-  await assertAdmin();
+  const admin = await assertPermission("products.edit");
   const img = await db.productImage.findUnique({ where: { id: imageId } });
   if (!img) return { error: "Not found" };
   if (patch.move) {
@@ -199,9 +248,10 @@ export async function updateImage(imageId: string, patch: { alt?: string; color?
     if (j >= 0 && j < siblings.length) {
       [siblings[i], siblings[j]] = [siblings[j], siblings[i]];
       await db.$transaction(siblings.map((s, k) => db.productImage.update({ where: { id: s.id }, data: { sortOrder: k } })));
+      await audit({ actor: admin, action: "product.images_reordered", entityType: "product", entityId: img.productId, summary: `Moved image ${i + 1} to position ${j + 1}`, changes: { imagePosition: { before: i + 1, after: j + 1 } } });
     }
   } else {
-    await db.productImage.update({
+    const updated = await db.productImage.update({
       where: { id: imageId },
       data: {
         ...(patch.alt !== undefined ? { alt: patch.alt.slice(0, 200) } : {}),
@@ -209,14 +259,18 @@ export async function updateImage(imageId: string, patch: { alt?: string; color?
         ...(patch.view !== undefined ? { view: patch.view && VIEWS.includes(patch.view) ? patch.view : null } : {}),
       },
     });
+    const changes = diffChanges(img, updated, ["alt", "color", "view"]);
+    if (changes) await audit({ actor: admin, action: "product.image_updated", entityType: "product", entityId: img.productId, summary: `Updated image details: ${Object.keys(changes).join(", ")}`, changes });
   }
   revalidateStorefront();
   return { ok: "Saved" };
 }
 
 export async function deleteImage(imageId: string): Promise<AdminResult> {
-  await assertAdmin();
+  const admin = await assertPermission("products.edit");
+  const img = await db.productImage.findUnique({ where: { id: imageId }, select: { productId: true, url: true, color: true } });
   await db.productImage.deleteMany({ where: { id: imageId } });
+  if (img) await audit({ actor: admin, action: "product.image_deleted", entityType: "product", entityId: img.productId, summary: `Removed image ${img.url}${img.color ? ` (${img.color})` : ""}`, changes: { image: { before: img.url, after: null } } });
   revalidateStorefront();
   return { ok: "Image removed." };
 }
@@ -226,7 +280,7 @@ export async function deleteImage(imageId: string): Promise<AdminResult> {
 const SPIN_FRAME_SIDE = 960;
 
 export async function createSpin(productId: string, meta: { color: string | null; credit: string; sourceUrl: string; license: string }): Promise<AdminResult & { spinId?: string }> {
-  await assertAdmin();
+  const admin = await assertPermission("products.edit");
   const id = z.string().cuid().safeParse(productId);
   if (!id.success) return { error: "Invalid product." };
   const spin = await db.productSpin.create({
@@ -241,11 +295,12 @@ export async function createSpin(productId: string, meta: { color: string | null
       license: meta.license.trim().slice(0, 500) || null,
     },
   });
+  await audit({ actor: admin, action: "product.spin_upload_started", entityType: "product", entityId: id.data, summary: `Started a 360° view upload${spin.color ? ` (${spin.color})` : ""}${spin.credit ? ` · credit: ${spin.credit}` : ""}` });
   return { ok: "Spin created.", spinId: spin.id };
 }
 
 export async function addSpinFrames(spinId: string, fd: FormData): Promise<AdminResult & { frames?: number }> {
-  await assertAdmin();
+  await assertPermission("products.edit");
   const spin = await db.productSpin.findUnique({ where: { id: z.string().cuid().parse(spinId) } });
   if (!spin) return { error: "Spin not found." };
   const files = fd.getAll("files").filter((f): f is File => f instanceof File && f.size > 0);
@@ -271,20 +326,24 @@ export async function addSpinFrames(spinId: string, fd: FormData): Promise<Admin
 
 /** Publishes a finished upload (or removes it when it has too few frames to be a real 360° view). */
 export async function finishSpin(spinId: string): Promise<AdminResult> {
-  await assertAdmin();
+  const admin = await assertPermission("products.edit");
   const spin = await db.productSpin.findUnique({ where: { id: z.string().cuid().parse(spinId) } });
   if (!spin) return { error: "Spin not found." };
   if (spin.frames.length < 12) {
     await db.productSpin.delete({ where: { id: spin.id } });
+    await audit({ actor: admin, action: "product.spin_discarded", entityType: "product", entityId: spin.productId, summary: `360° view upload discarded: only ${spin.frames.length} frames` });
     return { error: "A 360° view needs at least 12 frames (24–72 is typical). The upload was discarded." };
   }
+  await audit({ actor: admin, action: "product.spin_added", entityType: "product", entityId: spin.productId, summary: `Added a 360° view with ${spin.frames.length} frames${spin.color ? ` (${spin.color})` : ""}`, changes: { spinFrames: { before: null, after: spin.frames.length } } });
   revalidateStorefront();
   return { ok: `360° view saved with ${spin.frames.length} frames.` };
 }
 
 export async function deleteSpin(spinId: string): Promise<AdminResult> {
-  await assertAdmin();
+  const admin = await assertPermission("products.edit");
+  const spin = await db.productSpin.findUnique({ where: { id: spinId }, select: { productId: true, color: true, frames: true } });
   await db.productSpin.deleteMany({ where: { id: spinId } });
+  if (spin) await audit({ actor: admin, action: "product.spin_deleted", entityType: "product", entityId: spin.productId, summary: `Removed a 360° view${spin.color ? ` (${spin.color})` : ""}`, changes: { spinFrames: { before: spin.frames.length, after: null } } });
   revalidateStorefront();
   return { ok: "360° view removed." };
 }

@@ -164,5 +164,5 @@ export async function applyStockImport(rows: StockRow[], opts: ApplyOptions, act
   if (opts.createUnmatched && plan.unmatched.length) {
     created = await createFromCatalog(buildCatalog({ rows: plan.unmatched, reference: {}, images: {}, overrides: {} }).products, actorId);
   }
-  return { updated: plan.updates.length, unchanged: plan.unchanged, created, unmatched: plan.unmatched.length };
+  return { updated: plan.updates.length, unchanged: plan.unchanged, created, unmatched: plan.unmatched.length, updates: plan.updates };
 }

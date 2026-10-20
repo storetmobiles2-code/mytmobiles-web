@@ -5,6 +5,7 @@ import { formatINRExact } from "@/lib/money";
 import { formatRate } from "@/lib/gst";
 import { B2CL_THRESHOLD, currentMonth, formatGstDate, parseMonth, type HsnRow } from "@/lib/reports/gstr1";
 import { loadGstr1Report } from "@/lib/reports/gstr1-data";
+import { requirePermission } from "@/lib/auth/guards";
 import { AdminPage, Panel, Stat, td, th } from "@/components/admin/ui";
 import { Badge } from "@/components/ui/misc";
 import { buttonClasses } from "@/components/ui/button";
@@ -51,6 +52,7 @@ function hsnTable(label: string, rows: HsnRow[], empty: string) {
 }
 
 export default async function GstReportPage(props: PageProps<"/admin/reports/gst">) {
+  await requirePermission("reports.view");
   const sp = await props.searchParams;
   const month = parseMonth(sp.month);
   const { report: r } = await loadGstr1Report(month);

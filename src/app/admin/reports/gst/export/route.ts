@@ -1,4 +1,5 @@
-import { assertAdmin, AuthError } from "@/lib/auth/guards";
+import { assertPermission, AuthError } from "@/lib/auth/guards";
+import { audit } from "@/lib/admin/audit";
 import { gstr1Files, gstr1Readme, parseMonth } from "@/lib/reports/gstr1";
 import { loadGstr1Report } from "@/lib/reports/gstr1-data";
 import { createZip } from "@/lib/reports/zip";
@@ -8,8 +9,9 @@ import { createZip } from "@/lib/reports/zip";
  * add `&file=b2cs.csv` (or any other file in the ZIP) for a single CSV.
  */
 export async function GET(req: Request) {
+  let admin;
   try {
-    await assertAdmin();
+    admin = await assertPermission("reports.view");
   } catch (err) {
     if (err instanceof AuthError) return new Response("Not authorised.", { status: 401, headers: { "cache-control": "no-store" } });
     throw err;
@@ -19,6 +21,7 @@ export async function GET(req: Request) {
   const month = parseMonth(url.searchParams.get("month"));
   const { report, store } = await loadGstr1Report(month);
   const files = gstr1Files(report, store);
+  await audit({ actor: admin, action: "report.gst_exported", entityType: "report", entityId: month.key, summary: `GST (GSTR-1) export for ${month.key}${url.searchParams.get("file") ? ` (${url.searchParams.get("file")})` : ""}` });
   const headers = { "cache-control": "private, no-store", "x-content-type-options": "nosniff" };
 
   const wanted = url.searchParams.get("file");

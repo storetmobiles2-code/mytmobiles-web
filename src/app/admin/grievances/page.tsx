@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Prisma } from "@/generated/prisma/client";
 import type { GrievanceStatus } from "@/generated/prisma/enums";
 import { db } from "@/lib/db";
+import { requirePermission } from "@/lib/auth/guards";
 import { overdueCandidatesWhere } from "@/lib/grievances/service";
 import { ageLabel, formatIST, GRIEVANCE_CATEGORY_LABEL, GRIEVANCE_STATUS_LABEL, GRIEVANCE_STATUSES, grievanceFlags, grievanceStatusTone, isOverdue } from "@/lib/grievances/rules";
 import { AdminPage, FilterTabs, Table, td, th } from "@/components/admin/ui";
@@ -13,6 +14,7 @@ type Tab = GrievanceStatus | "ALL" | "OVERDUE";
 const TABS: Tab[] = ["ALL", "OVERDUE", ...GRIEVANCE_STATUSES];
 
 export default async function AdminGrievances(props: PageProps<"/admin/grievances">) {
+  await requirePermission("grievances.manage");
   const sp = await props.searchParams;
   const tab: Tab = TABS.includes(sp.status as Tab) ? (sp.status as Tab) : "ALL";
   const q = typeof sp.q === "string" ? sp.q.trim().slice(0, 60) : "";
