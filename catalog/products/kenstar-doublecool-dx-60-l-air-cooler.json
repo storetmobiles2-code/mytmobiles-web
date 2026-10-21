@@ -1,0 +1,73 @@
+{
+  "slug": "kenstar-doublecool-dx-60-l-air-cooler",
+  "name": "Kenstar Doublecool DX 60 L Air Cooler",
+  "brand": "Kenstar",
+  "category": "air-coolers",
+  "condition": "NEW",
+  "status": "draft",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "Brand-new Kenstar Doublecool DX 60 L Air Cooler, with GST invoice from myT Mobiles.",
+  "description": "Buy the Kenstar Doublecool DX 60 L Air Cooler from myT Mobiles. Every order ships with a GST tax invoice, and you can choose Cash on Delivery or pay online. Prices shown include GST.",
+  "highlights": [
+    "Tank capacity: 60 L",
+    "GST invoice with every order"
+  ],
+  "specs": [
+    {
+      "group": "Key facts",
+      "items": [
+        {
+          "label": "Brand",
+          "value": "Kenstar"
+        },
+        {
+          "label": "Model",
+          "value": "Doublecool DX 60 L Air Cooler"
+        },
+        {
+          "label": "Tank capacity",
+          "value": "60 L"
+        },
+        {
+          "label": "Condition",
+          "value": "Brand new"
+        }
+      ]
+    }
+  ],
+  "boxContents": [],
+  "keywords": [
+    "kenstar",
+    "doublecool",
+    "dx",
+    "ww",
+    "60l",
+    "air",
+    "cooler"
+  ],
+  "warranty": "Manufacturer warranty as per brand policy.",
+  "manufacturerInfo": null,
+  "countryOfOrigin": null,
+  "hsnCode": "84796000",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": null,
+  "seoDescription": null,
+  "variants": [
+    {
+      "sku": "KENSTAR-DOUBLECOOL-DX-60-L-AIR-COOLER",
+      "color": null,
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": null,
+      "mrp": 8990,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "KENSTAR Doublecool DX WW 60L"
+      ]
+    }
+  ],
+  "sources": []
+}

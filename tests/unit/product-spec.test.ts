@@ -48,6 +48,15 @@ describe("product spec rules", () => {
     expect(e).toMatch(/Legal Metrology/);
   });
 
+  it("counts photos from the family pipeline when the spec leaves images out", () => {
+    const noImages = { ...base, status: "live", images: undefined };
+    const live = (pipelineImages: { color: string | null }[]) =>
+      checkSpec(noImages, undefined, { pipelineImages }).problems.filter((p) => p.path === "images").map((p) => `${p.level}: ${p.message}`);
+    expect(live([{ color: "Awesome Navy" }])).toEqual([]);
+    expect(live([])).toEqual([expect.stringMatching(/^error: .*verified official image/)]);
+    expect(live([{ color: "Awesome Lilac" }])).toEqual([expect.stringMatching(/^warning: No image for colour "Awesome Navy"/)]);
+  });
+
   it("only warns about missing pieces while a product is a draft", () => {
     expect(errors({ ...base, images: [], manufacturerInfo: null })).toEqual([]);
   });

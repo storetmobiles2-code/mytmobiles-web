@@ -6,6 +6,7 @@ import { getDummyHash, hashPassword, verifyPassword } from "@/lib/auth/password"
 import { clientIp, createSession, destroyAllSessions, destroySession, getCurrentUser } from "@/lib/auth/session";
 import { generateToken, sha256 } from "@/lib/auth/tokens";
 import { safeNext } from "@/lib/auth/guards";
+import { canAccessAdmin } from "@/lib/auth/permissions";
 import { mergeGuestCart } from "@/lib/cart";
 import { rateLimit } from "@/lib/rate-limit";
 import { emailSchema, fieldErrors, loginSchema, passwordSchema, registerSchema } from "@/lib/validation";
@@ -76,7 +77,7 @@ export async function login(_prev: FormState, fd: FormData): Promise<FormState> 
   await mergeGuestCart(user.id);
   await createSession(user.id);
   void trackServer({ name: "login", userId: user.id });
-  redirect(safeNext(fd.get("next"), user.role === "ADMIN" ? "/admin" : "/account"));
+  redirect(safeNext(fd.get("next"), canAccessAdmin(user.role) ? "/admin" : "/account"));
 }
 
 /** Second step of sign-in: an authenticator code or a recovery code. */

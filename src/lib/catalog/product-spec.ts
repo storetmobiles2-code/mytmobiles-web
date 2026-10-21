@@ -134,8 +134,16 @@ export const isBannedSource = (u: string) => {
   return BANNED_SOURCE_DOMAINS.some((d) => host.includes(d));
 };
 
-/** Parses a spec and applies the store's business rules on top of the schema. */
-export function checkSpec(raw: unknown, fileSlug?: string): { spec: ProductSpec | null; problems: SpecProblem[] } {
+/**
+ * Parses a spec and applies the store's business rules on top of the schema.
+ * `pipelineImages` are the product's photos from the family pipeline
+ * (catalog/reference.json), which count when the spec leaves `images` out.
+ */
+export function checkSpec(
+  raw: unknown,
+  fileSlug?: string,
+  { pipelineImages = [] }: { pipelineImages?: { color: string | null }[] } = {},
+): { spec: ProductSpec | null; problems: SpecProblem[] } {
   const parsed = productSpecSchema.safeParse(raw);
   if (!parsed.success) {
     return { spec: null, problems: parsed.error.issues.map((i) => ({ level: "error", path: i.path.join("."), message: i.message })) };
@@ -198,12 +206,13 @@ export function checkSpec(raw: unknown, fileSlug?: string): { spec: ProductSpec 
 
   const live = spec.status === "live";
   const need = (ok: boolean, path: string, message: string) => (ok ? null : live ? err(path, message) : warn(path, message));
-  need(Boolean(spec.images?.length), "images", "Needs at least one verified official image to go live (or keep status draft)");
+  const shownImages = spec.images ?? pipelineImages;
+  need(shownImages.length > 0, "images", "Needs at least one verified official image to go live (or keep status draft)");
   need(spec.specs.length > 0, "specs", "Add a specifications table before going live");
   need(Boolean(spec.manufacturerInfo), "manufacturerInfo", "Manufacturer/importer name and address is a Legal Metrology declaration");
   need(Boolean(spec.countryOfOrigin), "countryOfOrigin", "Country of origin is a Legal Metrology declaration");
-  if (live && spec.images?.length) {
-    for (const c of colours) if (!spec.images.some((im) => im.color === c || im.color === null)) warn("images", `No image for colour "${c}" — shoppers will see another colour's photo`);
+  if (live && shownImages.length) {
+    for (const c of colours) if (!shownImages.some((im) => im.color === c || im.color === null)) warn("images", `No image for colour "${c}" — shoppers will see another colour's photo`);
   }
   return { spec, problems };
 }

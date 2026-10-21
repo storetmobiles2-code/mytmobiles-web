@@ -44,6 +44,12 @@ export const getPublicSettings = unstable_cache(
       codMaxOrderValue: s.codMaxOrderValue,
       returnWindowDays: 7,
       paymentWindowMinutes: s.paymentWindowMinutes,
+      grievanceOfficer: {
+        name: s.grievanceOfficerName,
+        designation: s.grievanceOfficerDesignation,
+        email: s.grievanceOfficerEmail,
+        phone: s.grievanceOfficerPhone,
+      },
     };
   },
   ["public-settings"],

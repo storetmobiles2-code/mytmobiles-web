@@ -5,7 +5,7 @@ import { createContext, useCallback, useContext, useEffect, useState, type React
 import { DEMO, demoCart, demoWishlist } from "@/lib/demo";
 
 export interface ClientSession {
-  user: { name: string; role: "CUSTOMER" | "ADMIN" } | null;
+  user: { name: string; role: "CUSTOMER" | "ADMIN" | "STAFF" } | null;
   cartCount: number;
   wishlist: string[];
   razorpayEnabled: boolean;

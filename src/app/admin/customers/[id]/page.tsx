@@ -3,14 +3,18 @@ import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
 import { formatINR } from "@/lib/money";
 import { ORDER_STATUS_LABEL, statusTone } from "@/lib/orders/status";
-import { setUserDisabled, setUserRole } from "@/app/admin/actions/store";
+import { setUserDisabled } from "@/app/admin/actions/store";
+import { changeStaffRole } from "@/app/admin/actions/staff";
 import { AdminPage, Panel, Stat } from "@/components/admin/ui";
 import { ActionButton } from "@/components/admin/action-form";
 import { Badge } from "@/components/ui/misc";
+import { requirePermission } from "@/lib/auth/guards";
+import { hasPermission, ROLE_LABEL } from "@/lib/auth/permissions";
 
 export const metadata = { title: "Customer" };
 
 export default async function CustomerPage(props: PageProps<"/admin/customers/[id]">) {
+  const viewer = await requirePermission("customers.view");
   const { id } = await props.params;
   const user = await db.user.findUnique({ where: { id }, include: { orders: { orderBy: { placedAt: "desc" }, take: 50 }, addresses: true } });
   if (!user) notFound();
@@ -21,8 +25,14 @@ export default async function CustomerPage(props: PageProps<"/admin/customers/[i
       description={`${user.email}${user.phone ? ` · ${user.phone}` : ""} · joined ${user.createdAt.toLocaleDateString("en-IN")}`}
       actions={
         <>
-          <ActionButton run={setUserDisabled.bind(null, user.id, !user.isDisabled)} confirmText={user.isDisabled ? "Enable this account?" : "Disable this account and sign it out everywhere?"} className="rounded-lg border border-ink-300 bg-white px-3 py-1.5 text-sm font-semibold">{user.isDisabled ? "Enable account" : "Disable account"}</ActionButton>
-          <ActionButton run={setUserRole.bind(null, user.id, user.role === "ADMIN" ? "CUSTOMER" : "ADMIN")} confirmText={user.role === "ADMIN" ? "Remove admin access?" : "Give this user full admin access?"} className="rounded-lg border border-ink-300 bg-white px-3 py-1.5 text-sm font-semibold">{user.role === "ADMIN" ? "Remove admin" : "Make admin"}</ActionButton>
+          {user.role !== "CUSTOMER" && <Badge tone="brand">{ROLE_LABEL[user.role]}</Badge>}
+          {hasPermission(viewer.role, "customers.manage") && <ActionButton run={setUserDisabled.bind(null, user.id, !user.isDisabled)} confirmText={user.isDisabled ? "Enable this account?" : "Disable this account and sign it out everywhere?"} className="rounded-lg border border-ink-300 bg-white px-3 py-1.5 text-sm font-semibold">{user.isDisabled ? "Enable account" : "Disable account"}</ActionButton>}
+          {hasPermission(viewer.role, "staff.manage") &&
+            (user.role === "CUSTOMER" ? (
+              <ActionButton run={changeStaffRole.bind(null, user.id, "STAFF")} confirmText="Give this person staff access to the admin (orders, packing, reviews)?" className="rounded-lg border border-ink-300 bg-white px-3 py-1.5 text-sm font-semibold">Make staff</ActionButton>
+            ) : (
+              <Link href="/admin/staff" className="rounded-lg border border-ink-300 bg-white px-3 py-1.5 text-sm font-semibold">Manage on Staff page</Link>
+            ))}
         </>
       }
     >

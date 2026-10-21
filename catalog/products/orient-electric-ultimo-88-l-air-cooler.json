@@ -1,0 +1,129 @@
+{
+  "slug": "orient-electric-ultimo-88-l-air-cooler",
+  "name": "Orient Electric Ultimo 88 L Air Cooler",
+  "brand": "Orient Electric",
+  "category": "air-coolers",
+  "condition": "NEW",
+  "status": "draft",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "Orient Electric Ultimo 88-litre desert air cooler with 3650 m³/h air delivery and an air throw of up to 59 ft.",
+  "description": "The Orient Electric Ultimo 88 L (model CD8803H) is a desert air cooler for rooms, halls and commercial spaces. Its Aerofan fan delivers 3650 m³/h of air with an air throw of up to 59 ft.\n\nThe 88-litre tank can be filled from water inlets at the front and back. It has fully collapsible louvres to keep out dust when not in use, a chamber for a mosquito repellent, a cord winder, and works on an inverter.",
+  "highlights": [
+    "88-litre water tank",
+    "Air delivery 3650 m³/h, air throw up to 59 ft",
+    "Water inlets at the front and back",
+    "Fully collapsible louvres",
+    "Inverter compatible"
+  ],
+  "specs": [
+    {
+      "group": "Cooling",
+      "items": [
+        {
+          "label": "Type",
+          "value": "Desert air cooler"
+        },
+        {
+          "label": "Tank capacity",
+          "value": "88 litres"
+        },
+        {
+          "label": "Air delivery",
+          "value": "3650 m³/h"
+        },
+        {
+          "label": "Air throw",
+          "value": "Up to 59 ft"
+        },
+        {
+          "label": "Fan",
+          "value": "Aerofan technology"
+        },
+        {
+          "label": "Louvres",
+          "value": "Fully collapsible"
+        }
+      ]
+    },
+    {
+      "group": "Features",
+      "items": [
+        {
+          "label": "Water inlets",
+          "value": "Front and back"
+        },
+        {
+          "label": "Mosquito repellent chamber",
+          "value": "Yes"
+        },
+        {
+          "label": "Cord winder",
+          "value": "Yes"
+        },
+        {
+          "label": "Inverter compatible",
+          "value": "Yes"
+        }
+      ]
+    },
+    {
+      "group": "General",
+      "items": [
+        {
+          "label": "Brand",
+          "value": "Orient Electric"
+        },
+        {
+          "label": "Model code",
+          "value": "CD8803H"
+        }
+      ]
+    }
+  ],
+  "boxContents": [],
+  "keywords": [
+    "orient",
+    "orient electric",
+    "ultimo",
+    "ultimo 88",
+    "88 litre",
+    "desert cooler",
+    "air cooler",
+    "cd8803h"
+  ],
+  "warranty": null,
+  "manufacturerInfo": null,
+  "countryOfOrigin": null,
+  "hsnCode": "84796000",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": null,
+  "seoDescription": null,
+  "variants": [
+    {
+      "sku": "ORIENT-ELECTRIC-ULTIMO-88-L-AIR-COOLER",
+      "color": null,
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": null,
+      "mrp": 19990,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "Orient Ultimo 88L AirCooler"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://orientelectric.com/products/ultimo-desert-air-cooler?variant=45370974765218",
+      "usedFor": [
+        "details",
+        "specs",
+        "mrp"
+      ],
+      "retrievedAt": "2026-10-15"
+    }
+  ]
+}

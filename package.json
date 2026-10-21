@@ -20,7 +20,8 @@
     "catalog": "node --conditions=react-server --import tsx scripts/catalog.ts",
     "ops": "node --conditions=react-server --import tsx scripts/ops.ts",
     "auth:reset-2fa": "node --conditions=react-server --import tsx scripts/reset-2fa.ts",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "graph": "bash scripts/graph.sh"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.10.0",

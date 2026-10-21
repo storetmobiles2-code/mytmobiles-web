@@ -1,10 +1,12 @@
 import { db } from "@/lib/db";
 import { AdminPage, Panel } from "@/components/admin/ui";
 import { ProductForm } from "@/components/admin/product-forms";
+import { requirePermission } from "@/lib/auth/guards";
 
 export const metadata = { title: "New product" };
 
 export default async function NewProduct() {
+  await requirePermission("products.edit");
   const [brands, categories] = await Promise.all([db.brand.findMany({ orderBy: { name: "asc" }, select: { id: true, name: true } }), db.category.findMany({ orderBy: { sortOrder: "asc" }, select: { id: true, name: true, hsnCode: true } })]);
   return (
     <AdminPage title="New product" description="Create the product, then add variants (colour / memory, price, stock) and images.">

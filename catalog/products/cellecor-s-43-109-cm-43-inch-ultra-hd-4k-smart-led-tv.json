@@ -1,0 +1,87 @@
+{
+  "slug": "cellecor-s-43-109-cm-43-inch-ultra-hd-4k-smart-led-tv",
+  "name": "Cellecor S-43 109 cm (43 inch) Ultra HD 4K Smart LED TV",
+  "brand": "Cellecor",
+  "category": "smart-tvs",
+  "condition": "NEW",
+  "status": "draft",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "Brand-new Cellecor S-43 109 cm (43 inch) Ultra HD 4K Smart LED TV, with GST invoice from myT Mobiles.",
+  "description": "Buy the Cellecor S-43 109 cm (43 inch) Ultra HD 4K Smart LED TV from myT Mobiles. Every order ships with a GST tax invoice, and you can choose Cash on Delivery or pay online. Prices shown include GST.",
+  "highlights": [
+    "Screen size: 109 cm (43 inch)",
+    "Resolution: 4K Ultra HD",
+    "GST invoice with every order"
+  ],
+  "specs": [
+    {
+      "group": "Key facts",
+      "items": [
+        {
+          "label": "Brand",
+          "value": "Cellecor"
+        },
+        {
+          "label": "Model",
+          "value": "S-43 109 cm (43 inch) Ultra HD 4K Smart LED TV"
+        },
+        {
+          "label": "Screen size",
+          "value": "109 cm (43 inch)"
+        },
+        {
+          "label": "Resolution",
+          "value": "4K Ultra HD"
+        },
+        {
+          "label": "Condition",
+          "value": "Brand new"
+        }
+      ]
+    }
+  ],
+  "boxContents": [],
+  "keywords": [
+    "cellecor",
+    "s-43",
+    "43 inch",
+    "4k",
+    "ultra hd",
+    "smart tv",
+    "led tv"
+  ],
+  "warranty": "Manufacturer warranty as per brand policy.",
+  "manufacturerInfo": "Manufactured and Packaged by: Ekkaa Electronics (India) Pvt. Ltd. B-191. Block-B. DSO Road, Industrial Area, Phase-2. Noida. Gautam Buddha Nagar, Uttar pradesh-201305; Marketed by: CELLECOR GADGETS LIMITED",
+  "countryOfOrigin": "India",
+  "hsnCode": "85287217",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": null,
+  "seoDescription": null,
+  "variants": [
+    {
+      "sku": "CELLECOR-S-43-109-CM-43-INCH-ULTRA-HD-4K-SMART-LED-TV",
+      "color": null,
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": null,
+      "mrp": 35999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "CELLECOR LED S-43\" ULTRA HD 4K SMART TV"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://cellecor.com/products/cellecor-smart-tv-s-43-4k-43-inch",
+      "usedFor": [
+        "mrp",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    }
+  ]
+}

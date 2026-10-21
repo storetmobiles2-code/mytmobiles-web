@@ -86,7 +86,7 @@ test.describe.serial("checkout and fulfilment", () => {
     test.skip(!ADMIN_EMAIL || !ADMIN_PASSWORD, "Set ADMIN_EMAIL/ADMIN_PASSWORD (or E2E_ADMIN_*)");
     await signInAsAdmin(page);
     await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
-    for (const path of ["/admin/orders", "/admin/products", "/admin/products/new", "/admin/inventory", "/admin/coupons", "/admin/banners", "/admin/categories", "/admin/customers", "/admin/reviews", "/admin/analytics", "/admin/settings", "/admin/security"]) {
+    for (const path of ["/admin/orders", "/admin/products", "/admin/products/new", "/admin/inventory", "/admin/coupons", "/admin/banners", "/admin/categories", "/admin/customers", "/admin/reviews", "/admin/analytics", "/admin/settings", "/admin/staff", "/admin/activity", "/admin/security"]) {
       const res = await page.goto(path);
       expect(res?.status(), path).toBe(200);
       await expect(page.locator("h1").first()).toBeVisible();

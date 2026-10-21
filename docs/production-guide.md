@@ -113,7 +113,7 @@ Sell online, ship, then bill the sale in the POS, so the next export matches. Un
 ### Monthly
 
 - Merge the release-manager's dependency and security PR after CI passes, then check the live site.
-- Give the accountant the GST data. Until an export exists (§9), use Admin → Orders and the invoices.
+- Give the accountant the GST data: Admin → Reports → GST (GSTR-1), pick the month, and download the ZIP of CSVs (§5.4).
 - Check costs: hosting, database, email, API spend.
 
 ### Quarterly
@@ -199,7 +199,17 @@ The store collects names, phones, emails and addresses only for orders, with opt
 - **e-Invoicing (IRN):** mandatory for **B2B** invoices when aggregate turnover exceeds **₹5 crore** (since August 2023, still the threshold in 2026). B2C sales aren't covered at that level. If B2B sales with the buyer's GSTIN grow and turnover crosses ₹5 crore, B2B invoices need an IRN and QR code from the IRP. The store doesn't do this yet.
 - **Rates:** the September 2025 GST rate rationalisation moved many goods into the 5% and 18% slabs (with 40% for a few). Phones are 18%; TVs and air conditioners moved to 18%. **Have the CA confirm the HSN code and rate for each category.** `catalog validate` warns when a product uses the old 12% or 28% slabs.
 - **TCS under section 52** applies to marketplace operators collecting for other sellers, not to a store selling its own goods **(confirm with CA)**.
-- **Returns:** the accountant needs monthly sales by rate and state for GSTR-1/3B. **Gap:** add an export (§9).
+- **Returns (GSTR-1 export):** Admin → Reports → GST (GSTR-1) shows a month's totals (taxable value, IGST, CGST, SGST, invoice count) and a sales summary, and downloads a ZIP of UTF-8 CSVs for the accountant. Invoices are picked by **invoice date** (IST). The tax figures repeat the invoice maths line by line, so they match the printed invoices to the paisa.
+  - `register.csv`: every invoice in the month, one row per tax rate, including cancelled ones.
+  - `b2b.csv` (Table 4A): invoices where the buyer entered a GSTIN at checkout.
+  - `b2cl.csv` (Table 5): inter-state B2C invoices **above ₹1,00,000**. The threshold was ₹2.5 lakh until July 2024 (Notification 12/2024–Central Tax; GSTN offline tool manual).
+  - `b2cs.csv` (Table 7): all other B2C sales, by place of supply and rate.
+  - `hsn_b2b.csv` and `hsn_b2c.csv` (Table 12): split into B2B and B2C, as the portal has required since the May 2025 return period. UQC is `NOS-NUMBERS`. HSN codes need at least 4 digits up to ₹5 crore turnover and 6 digits above (Notification 78/2020–Central Tax). The report warns about shorter codes.
+  - `docs.csv` (Table 13, mandatory from May 2025): invoice series from/to, total and cancelled. Gaps in the series are counted as cancelled, with a warning.
+  - `refunds.csv`: returns and refunds in the month. `summary.csv` and `README.txt` hold the totals and anything to check before filing.
+
+  The b2b, b2cl, b2cs, hsn and docs files follow the column order in the GSTN Returns Offline Tool user manual. Delivery and COD charges are taxed with the main item (composite supply), so they sit in that item's HSN row. B2CS rows use type `OE` (not through an e-commerce operator). **Confirm with the CA** that this fits, because the store sells through its own website.
+- **Gaps in GST returns:** the store doesn't issue **credit notes** (Table 9B). Returns and refunds are only listed in `refunds.csv`, and the accountant decides whether a credit note is needed or how to adjust the return. If an invoice is cancelled after its month's GSTR-1 is filed, the report warns, and the accountant corrects it in a later return. Nil-rated or exempt sales (Table 8), advances (Table 11) and e-invoicing aren't covered.
 
 ### 5.5 Product photos and trademarks
 
@@ -224,7 +234,12 @@ Online card and UPI payments are processed on Razorpay's hosted checkout, so the
 ## 6. Security and reliability baseline
 
 ### 6.1 Access
-- Give every staff member their own admin account. Never share one; remove it when they leave.
+- Give every staff member their own admin account (Admin → Staff). Never share one; disable it the day they leave.
+- Roles:
+  - **Admin (owner):** everything.
+  - **Staff:** dashboard, orders (status, shipping/AWB, notes), invoices and packing slips, cancelling orders with no online payment, reviews, and a view-only look at products and inventory.
+  - Staff can't change prices, MRP, stock, products, images or categories, import stock sheets, manage coupons, banners or settings, issue refunds, receive returns, cancel paid online orders, see customer records or revenue, or manage staff.
+  - The permission map is in `src/lib/auth/permissions.ts`. Nobody can change their own role, and the last active admin can't be demoted or disabled.
 - **Turn on two-factor sign-in** for GitHub, Vercel, the database provider, Razorpay, the domain registrar and email.
 - The store's own admin login has **no 2FA yet** (§9). Use strong unique passwords meanwhile.
 - Database users:
@@ -234,7 +249,13 @@ Online card and UPI payments are processed on Razorpay's hosted checkout, so the
 - Secrets live only in the host's environment settings and GitHub secrets. Never put them in the repository.
 
 ### 6.2 Built in already
-HTTPS with HSTS, Content-Security-Policy, rate limiting on login, sign-up, order placement and pincode lookups, hashed passwords (scrypt), server-side sessions, input validation on every form, and webhook signature checks.
+HTTPS with HSTS, Content-Security-Policy, rate limiting on login, sign-up, order placement and pincode lookups, hashed passwords (scrypt), server-side sessions, input validation on every form, webhook signature checks, staff roles with per-page and per-action permission checks, and an admin audit log.
+
+### 6.2.1 Admin audit log
+- Every admin change is recorded in the `AuditLog` table: who (account and email at the time), what, which order/product/setting, before → after for the changed fields, IP address, browser and time. `npm run catalog -- apply --write` records its changes as "catalog-apply (CLI)".
+- Passwords, tokens and secrets are never recorded.
+- See it in Admin → Activity (owner only), filtered by person, action, item and date, and in the History panel on each order and product.
+- **Retention:** keep audit entries for at least 1 year (CERT-In and DPDP log rules, §9). The app never deletes them. Don't add a clean-up job; if the table ever needs trimming, delete only entries older than the retention period, after an export to the backup storage.
 
 ### 6.3 Backups and recovery
 - The database provider runs daily backups, with point-in-time recovery if available, kept at least 7 days.
@@ -283,11 +304,11 @@ Schedules: cron (order expiry) · daily ops brief · weekly audit · monthly upd
 
 Ranked by importance before launch:
 
-1. **Grievance officer details:** add name, email and phone fields to Store Settings, and show them on Contact, Terms and the footer. Needed for the E-Commerce Rules.
+1. ~~**Grievance officer details**~~ **Done:** officer name, designation, email and phone in Admin → Settings, shown on Contact, Terms and the footer; complaints get ticket numbers at `/help/grievance` and are handled in Admin → Grievances.
 2. **Legal details for all live products:** fill manufacturer and country of origin (46 products today). Agents can draft them; staff confirm them from the boxes.
-3. **Admin two-factor authentication** (TOTP) and **staff roles** (packing staff shouldn't change settings or prices).
-4. **Admin audit log:** who changed which order, stock or setting, and when.
-5. **GST and sales export:** a monthly CSV of invoices by rate, state and HSN for the accountant (GSTR-1).
+3. **Admin two-factor authentication** (TOTP). ~~Staff roles~~ **Done:** Admin → Staff, with Admin (owner) and Staff roles (§6.1).
+4. ~~**Admin audit log**~~ **Done:** Admin → Activity and per-order/product History, kept at least 1 year (§6.2.1).
+5. ~~**GST and sales export**~~ **Done:** Admin → Reports → GST (GSTR-1) (§5.4). Still open: credit notes for returns and refunds (Table 9B). B2B GSTIN capture at checkout is already in place.
 6. **Error tracking:** Sentry or similar, plus log retention set to 180 days or more (CERT-In) and one year (DPDP, from 2027).
 7. **Courier integration:** create labels and pickups, and import tracking (Shiprocket API), instead of copying AWBs by hand.
 8. **Customer data requests** (DPDP): an export and delete-my-account flow.
@@ -312,6 +333,10 @@ The release-manager agent can take these one PR at a time.
   - https://www.barandbench.com/view-point/meity-notifies-final-digital-personal-data-protection-rules-2025
   - https://www.mondaq.com/india/data-protection/1708164/digital-personal-data-protection-rules-2025-notified
   - https://www.ey.com/content/dam/ey-unified-site/ey-com/en-in/alerts-hub/2025/11/digital-data-protection-act-rules-notified-by-meity.pdf
+- GSTR-1 format, B2CL threshold, HSN and Table 13 rules:
+  - GSTN Returns Offline Tool, FAQs and user manual: https://tutorial.gst.gov.in/downloads/invoiceuploadofflineutility.pdf
+  - GSTN advisory, HSN codes in Table 12 and Table 13 of GSTR-1/1A (Phase 3, from May 2025): https://tutorial.gst.gov.in/downloads/news/updated_advisory_hsn_table12_25042025.pdf
+  - Offline tool download: https://www.gst.gov.in/download/returns
 - GST e-invoicing threshold:
   - https://www.incorpx.io/blog/gst-e-invoice-turnover-limit-2026
   - https://www.vatcalc.com/india/india-b2b-e-invoicing/

@@ -1,0 +1,163 @@
+{
+  "slug": "crompton-zelus-dac43-air-cooler",
+  "name": "Crompton Zelus DAC43 Air Cooler",
+  "brand": "Crompton",
+  "category": "air-coolers",
+  "condition": "NEW",
+  "status": "live",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "Crompton Zelus 43-litre air cooler with honeycomb pads, auto-swing louvres and a 105 W rating.",
+  "description": "The Crompton Zelus 43 L (model ACGC-ZELUSDAC43) is an air cooler for small and medium rooms. It has honeycomb cooling pads and auto-swing louvres with 4-way air deflection.\n\nIt has an ice chamber, Crompton's Everlast pump and a motor overload protector, works on an inverter and is rated at 105 W with three speeds. The grey plastic body measures 52 x 35 x 99.5 cm (D x W x H) and weighs 9.5 kg. Crompton gives a 1-year warranty.",
+  "highlights": [
+    "43-litre water tank",
+    "Honeycomb cooling pads",
+    "Auto-swing louvres with 4-way air deflection",
+    "Ice chamber and Everlast pump",
+    "105 W power rating, inverter compatible",
+    "1-year warranty (per Crompton)"
+  ],
+  "specs": [
+    {
+      "group": "Cooling",
+      "items": [
+        {
+          "label": "Tank capacity",
+          "value": "43 litres"
+        },
+        {
+          "label": "Cooling pads",
+          "value": "Honeycomb"
+        },
+        {
+          "label": "Air direction",
+          "value": "Auto-swing louvres, 4-way air deflection"
+        },
+        {
+          "label": "Ice chamber",
+          "value": "Yes"
+        },
+        {
+          "label": "Pump",
+          "value": "Everlast pump"
+        }
+      ]
+    },
+    {
+      "group": "Power and controls",
+      "items": [
+        {
+          "label": "Power consumption",
+          "value": "105 W"
+        },
+        {
+          "label": "Fan speeds",
+          "value": "3"
+        },
+        {
+          "label": "Inverter compatible",
+          "value": "Yes"
+        },
+        {
+          "label": "Motor protection",
+          "value": "Overload protector"
+        }
+      ]
+    },
+    {
+      "group": "Design",
+      "items": [
+        {
+          "label": "Colour",
+          "value": "Grey"
+        },
+        {
+          "label": "Body material",
+          "value": "Plastic"
+        },
+        {
+          "label": "Dimensions (D x W x H)",
+          "value": "52 x 35 x 99.5 cm"
+        },
+        {
+          "label": "Weight",
+          "value": "9.5 kg"
+        },
+        {
+          "label": "Wheels",
+          "value": "4 push-type wheels"
+        }
+      ]
+    },
+    {
+      "group": "General",
+      "items": [
+        {
+          "label": "Brand",
+          "value": "Crompton"
+        },
+        {
+          "label": "Model code",
+          "value": "ACGC-ZELUSDAC43"
+        },
+        {
+          "label": "Warranty",
+          "value": "1 year"
+        }
+      ]
+    }
+  ],
+  "boxContents": [
+    "Air cooler",
+    "4 push-type wheels",
+    "Warranty card",
+    "Instruction manual"
+  ],
+  "keywords": [
+    "crompton",
+    "zelus",
+    "zelus dac43",
+    "dac43",
+    "43 litre",
+    "air cooler",
+    "honeycomb cooler",
+    "acgc-zelusdac43"
+  ],
+  "warranty": "1 year manufacturer warranty (per Crompton)",
+  "manufacturerInfo": "Manufacturer contact information: Crompton Greaves Consumer Electricals Limited, 05GBD, Godrej Business District, Pirojshanagar, Vikhroli West, Mumbai, Maharashtra 400079",
+  "countryOfOrigin": "India",
+  "hsnCode": "84796000",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": null,
+  "seoDescription": null,
+  "variants": [
+    {
+      "sku": "CROMPTON-ZELUS-DAC43-AIR-COOLER",
+      "color": null,
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": null,
+      "mrp": 9500,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "CROMPTON ZELUS DAC43 Cooler"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.crompton.co.in/products/crompton-zelus-dac?variant=46666860986672",
+      "usedFor": [
+        "details",
+        "specs",
+        "mrp",
+        "legal",
+        "warranty",
+        "box"
+      ],
+      "retrievedAt": "2026-10-15"
+    }
+  ]
+}

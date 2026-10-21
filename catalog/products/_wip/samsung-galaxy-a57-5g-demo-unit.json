@@ -1,0 +1,87 @@
+{
+  "slug": "samsung-galaxy-a57-5g-demo-unit",
+  "name": "Samsung Galaxy A57 5G (Demo Unit)",
+  "brand": "Samsung",
+  "category": "smartphones",
+  "condition": "DEMO",
+  "status": "live",
+  "featured": false,
+  "is5G": true,
+  "launchedAt": null,
+  "shortDescription": "Demo (display) unit of the Samsung Galaxy A57 5G, sold open-box at a lower price.",
+  "description": "This is a demo (display) unit of the Samsung Galaxy A57 5G that was used for in-store demonstration. It may show light signs of handling. Please contact us before ordering if you'd like to know its exact condition, accessories included and remaining manufacturer warranty.",
+  "highlights": [
+    "5G connectivity",
+    "8 GB RAM · 256 GB storage",
+    "Demo unit — priced below new"
+  ],
+  "specs": [
+    {
+      "group": "Key facts",
+      "items": [
+        {
+          "label": "Brand",
+          "value": "Samsung"
+        },
+        {
+          "label": "Model",
+          "value": "Galaxy A57 5G"
+        },
+        {
+          "label": "RAM options",
+          "value": "8 GB"
+        },
+        {
+          "label": "Storage options",
+          "value": "256 GB"
+        },
+        {
+          "label": "Network",
+          "value": "5G"
+        },
+        {
+          "label": "Colours",
+          "value": "Awesome Navy"
+        },
+        {
+          "label": "Condition",
+          "value": "Demo / display unit (open box)"
+        }
+      ]
+    }
+  ],
+  "boxContents": [],
+  "keywords": [
+    "samsung",
+    "galaxy",
+    "a57",
+    "smartphone",
+    "5g",
+    "demo",
+    "open",
+    "box"
+  ],
+  "warranty": "Manufacturer warranty as applicable from the original activation date — ask us for the remaining period.",
+  "manufacturerInfo": null,
+  "countryOfOrigin": null,
+  "hsnCode": "85171300",
+  "gstRatePercent": 18,
+  "returnWindowDays": 0,
+  "seoTitle": null,
+  "seoDescription": null,
+  "variants": [
+    {
+      "sku": "SAMSUNG-GALAXY-A57-5G-DEMO-UNIT-8-256-AWESOME-NAVY",
+      "color": "Awesome Navy",
+      "colorHex": null,
+      "ramGb": 8,
+      "storageGb": 256,
+      "mrp": 77999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY A57 8/256 AWESOME NAVY DEMO UNIT"
+      ]
+    }
+  ],
+  "sources": []
+}

@@ -1,0 +1,96 @@
+{
+  "slug": "oppo-reno-10-5g",
+  "name": "OPPO Reno 10 5G",
+  "brand": "OPPO",
+  "category": "smartphones",
+  "condition": "NEW",
+  "status": "live",
+  "featured": false,
+  "is5G": true,
+  "launchedAt": null,
+  "shortDescription": "Brand-new OPPO Reno 10 5G in 2 colours, with GST invoice from myT Mobiles.",
+  "description": "Buy the OPPO Reno 10 5G from myT Mobiles. Every order ships with a GST tax invoice, and you can choose Cash on Delivery or pay online. Prices shown include GST.",
+  "highlights": [
+    "5G connectivity",
+    "8 GB RAM · 256 GB storage",
+    "GST invoice with every order"
+  ],
+  "specs": [
+    {
+      "group": "Key facts",
+      "items": [
+        {
+          "label": "Brand",
+          "value": "OPPO"
+        },
+        {
+          "label": "Model",
+          "value": "Reno 10 5G"
+        },
+        {
+          "label": "RAM options",
+          "value": "8 GB"
+        },
+        {
+          "label": "Storage options",
+          "value": "256 GB"
+        },
+        {
+          "label": "Network",
+          "value": "5G"
+        },
+        {
+          "label": "Colours",
+          "value": "Ice Blue, Silvery Grey"
+        },
+        {
+          "label": "Condition",
+          "value": "Brand new"
+        }
+      ]
+    }
+  ],
+  "boxContents": [],
+  "keywords": [
+    "oppo",
+    "reno",
+    "10",
+    "smartphone",
+    "5g"
+  ],
+  "warranty": "Manufacturer warranty as per brand policy.",
+  "manufacturerInfo": null,
+  "countryOfOrigin": null,
+  "hsnCode": "85171300",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": null,
+  "seoDescription": null,
+  "variants": [
+    {
+      "sku": "OPPO-RENO-10-5G-8-256-ICE-BLUE",
+      "color": "Ice Blue",
+      "colorHex": null,
+      "ramGb": 8,
+      "storageGb": 256,
+      "mrp": 32999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "OPPO RENO 10 5G 8/256 ICE BLUE"
+      ]
+    },
+    {
+      "sku": "OPPO-RENO-10-5G-8-256-SILVERY-GREY",
+      "color": "Silvery Grey",
+      "colorHex": null,
+      "ramGb": 8,
+      "storageGb": 256,
+      "mrp": 32999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "OPPO RENO 10 5G 8/256 SILVERY GREY"
+      ]
+    }
+  ],
+  "sources": []
+}

@@ -1,0 +1,181 @@
+{
+  "slug": "voltas-grand-52e-desert-air-cooler",
+  "name": "Voltas Grand 52E Desert Air Cooler",
+  "brand": "Voltas",
+  "category": "air-coolers",
+  "condition": "NEW",
+  "status": "draft",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "Voltas Grand 52E 52-litre desert air cooler with electronic controls, remote, honeycomb pads and 3600 m³/h air flow.",
+  "description": "The Voltas Grand 52E (model 4810330) is a 52-litre desert air cooler for rooms up to 40 sq m. It has honeycomb cooling pads and a 42 cm fan with an air flow of 3600 m³/h and an air throw of 10.7 m.\n\nIt has electronic controls with a remote, three speeds, Eco-Cool mode, oscillating swing, a water level indicator and castor wheels, and works on an inverter. It is rated at 190 W. Voltas gives a 1-year warranty on air coolers.",
+  "highlights": [
+    "52-litre water tank",
+    "Electronic controls and remote",
+    "Air flow 3600 m³/h, air throw 10.7 m",
+    "Honeycomb cooling pads",
+    "190 W, works on inverter",
+    "1-year warranty (per Voltas)"
+  ],
+  "specs": [
+    {
+      "group": "Cooling",
+      "items": [
+        {
+          "label": "Type",
+          "value": "Desert air cooler"
+        },
+        {
+          "label": "Tank capacity",
+          "value": "52 litres"
+        },
+        {
+          "label": "Room size",
+          "value": "Up to 40 sq m"
+        },
+        {
+          "label": "Air flow",
+          "value": "3600 m³/h"
+        },
+        {
+          "label": "Air throw",
+          "value": "10.7 m (at 0.5 m/s)"
+        },
+        {
+          "label": "Cooling pads",
+          "value": "Honeycomb"
+        },
+        {
+          "label": "Fan",
+          "value": "42 cm fan"
+        },
+        {
+          "label": "Swing",
+          "value": "Oscillating"
+        }
+      ]
+    },
+    {
+      "group": "Power and controls",
+      "items": [
+        {
+          "label": "Power consumption",
+          "value": "190 W"
+        },
+        {
+          "label": "Power supply",
+          "value": "230 V, 50 Hz, single phase"
+        },
+        {
+          "label": "Operation",
+          "value": "Electronic"
+        },
+        {
+          "label": "Remote control",
+          "value": "Yes"
+        },
+        {
+          "label": "Fan speeds",
+          "value": "3 (high, medium, low)"
+        },
+        {
+          "label": "Modes",
+          "value": "Eco-Cool"
+        },
+        {
+          "label": "Works on inverter",
+          "value": "Yes"
+        }
+      ]
+    },
+    {
+      "group": "Design",
+      "items": [
+        {
+          "label": "Water level indicator",
+          "value": "Yes"
+        },
+        {
+          "label": "Castor wheels",
+          "value": "Yes"
+        },
+        {
+          "label": "Dimensions (W x H x D)",
+          "value": "70.5 x 103 x 47.5 cm"
+        },
+        {
+          "label": "Net weight",
+          "value": "16.5 kg"
+        }
+      ]
+    },
+    {
+      "group": "General",
+      "items": [
+        {
+          "label": "Brand",
+          "value": "Voltas"
+        },
+        {
+          "label": "Model",
+          "value": "Grand 52E (4810330)"
+        },
+        {
+          "label": "Warranty",
+          "value": "1 year"
+        }
+      ]
+    }
+  ],
+  "boxContents": [],
+  "keywords": [
+    "voltas",
+    "grand 52e",
+    "voltas grand",
+    "52 litre",
+    "desert cooler",
+    "air cooler",
+    "cooler with remote",
+    "4810330"
+  ],
+  "warranty": "1 year manufacturer warranty (Voltas: free repair or replacement of defective parts for 12 months from the date of purchase)",
+  "manufacturerInfo": null,
+  "countryOfOrigin": null,
+  "hsnCode": "84796000",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": null,
+  "seoDescription": null,
+  "variants": [
+    {
+      "sku": "VOLTAS-GRAND-52E-DESERT-AIR-COOLER",
+      "color": null,
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": null,
+      "mrp": 12499,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "VOLTAS COOLER GRAND 52E",
+        "VOLTAS GRAND 52E DESERT AIR COOLER"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0578/6845/2026/files/Air_Cooler_2024_Catalogue.pdf?v=1719985289",
+      "usedFor": [
+        "specs"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.voltas.com/pages/terms-conditions-product-warranty",
+      "usedFor": [
+        "warranty"
+      ],
+      "retrievedAt": "2026-10-15"
+    }
+  ]
+}

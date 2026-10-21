@@ -1,13 +1,15 @@
 import { test as base, expect, type Page } from "@playwright/test";
 import { Client } from "pg";
 import { totpCode, totpStep } from "../../src/lib/auth/totp";
+import { STAFF_EMAIL, STAFF_PASSWORD } from "./accounts";
 
 /** Product with plenty of stock in the seeded catalogue; override with E2E_PRODUCT_SLUG. */
 export const PRODUCT_SLUG = process.env.E2E_PRODUCT_SLUG ?? "samsung-galaxy-a07-5g";
 export const ADMIN_EMAIL = process.env.E2E_ADMIN_EMAIL ?? process.env.ADMIN_EMAIL ?? "";
 export const ADMIN_PASSWORD = process.env.E2E_ADMIN_PASSWORD ?? process.env.ADMIN_PASSWORD ?? "";
-/** Authenticator secret that global-setup enrols for the e2e admin (2FA stays enforced in e2e). */
+/** Authenticator secrets that global-setup enrols for the e2e admin and staff (2FA stays enforced in e2e). */
 export const ADMIN_TOTP_SECRET = process.env.E2E_ADMIN_TOTP_SECRET ?? "JBSWY3DPEHPK3PXPJBSWY3DPEHPK3PXP";
+export const STAFF_TOTP_SECRET = process.env.E2E_STAFF_TOTP_SECRET ?? "KRSXG5CTMVRXEZLUKRSXG5CTMVRXEZLU";
 
 /** Runs a query against the e2e database (the same DATABASE_URL the server under test uses). */
 export async function withDb<T>(fn: (client: Client) => Promise<T>): Promise<T> {
@@ -49,6 +51,11 @@ export async function signIn(page: Page, { email, password, secret, next = "/adm
 export async function signInAsAdmin(page: Page, next = "/admin") {
   await signIn(page, { email: ADMIN_EMAIL, password: ADMIN_PASSWORD, secret: ADMIN_TOTP_SECRET, next });
 }
+
+export async function signInAsStaff(page: Page, next = "/admin") {
+  await signIn(page, { email: STAFF_EMAIL, password: STAFF_PASSWORD, secret: STAFF_TOTP_SECRET, next });
+}
+export { STAFF_EMAIL, STAFF_PASSWORD };
 
 /** Fails any test whose page throws or logs a console error. */
 export const test = base.extend<{ browserErrors: string[] }>({

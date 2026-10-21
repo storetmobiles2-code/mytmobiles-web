@@ -3,10 +3,12 @@ import { db } from "@/lib/db";
 import { daysAgo } from "@/lib/time";
 import { formatINR } from "@/lib/money";
 import { AdminPage, Panel, Stat } from "@/components/admin/ui";
+import { requirePermission } from "@/lib/auth/guards";
 
 export const metadata = { title: "Analytics" };
 
 export default async function AnalyticsPage(props: PageProps<"/admin/analytics">) {
+  await requirePermission("analytics.view");
   const days = [7, 30, 90].includes(Number((await props.searchParams).days)) ? Number((await props.searchParams).days) : 30;
   const since = daysAgo(days);
   const [sessions, views, topViewed, topSold, searches, revenue] = await Promise.all([

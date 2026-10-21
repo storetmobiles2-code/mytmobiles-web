@@ -1,0 +1,87 @@
+{
+  "slug": "samsung-galaxy-a27-5g-demo-unit",
+  "name": "Samsung Galaxy A27 5G (Demo Unit)",
+  "brand": "Samsung",
+  "category": "smartphones",
+  "condition": "DEMO",
+  "status": "live",
+  "featured": false,
+  "is5G": true,
+  "launchedAt": null,
+  "shortDescription": "Demo (display) unit of the Samsung Galaxy A27 5G, sold open-box at a lower price.",
+  "description": "This is a demo (display) unit of the Samsung Galaxy A27 5G that was used for in-store demonstration. It may show light signs of handling. Please contact us before ordering if you'd like to know its exact condition, accessories included and remaining manufacturer warranty.",
+  "highlights": [
+    "5G connectivity",
+    "6 GB RAM · 128 GB storage",
+    "Demo unit — priced below new"
+  ],
+  "specs": [
+    {
+      "group": "Key facts",
+      "items": [
+        {
+          "label": "Brand",
+          "value": "Samsung"
+        },
+        {
+          "label": "Model",
+          "value": "Galaxy A27 5G"
+        },
+        {
+          "label": "RAM options",
+          "value": "6 GB"
+        },
+        {
+          "label": "Storage options",
+          "value": "128 GB"
+        },
+        {
+          "label": "Network",
+          "value": "5G"
+        },
+        {
+          "label": "Colours",
+          "value": "Light Green"
+        },
+        {
+          "label": "Condition",
+          "value": "Demo / display unit (open box)"
+        }
+      ]
+    }
+  ],
+  "boxContents": [],
+  "keywords": [
+    "samsung",
+    "galaxy",
+    "a27",
+    "smartphone",
+    "5g",
+    "demo",
+    "open",
+    "box"
+  ],
+  "warranty": "Manufacturer warranty as applicable from the original activation date — ask us for the remaining period.",
+  "manufacturerInfo": null,
+  "countryOfOrigin": null,
+  "hsnCode": "85171300",
+  "gstRatePercent": 18,
+  "returnWindowDays": 0,
+  "seoTitle": null,
+  "seoDescription": null,
+  "variants": [
+    {
+      "sku": "SAMSUNG-GALAXY-A27-5G-DEMO-UNIT-6-128-LIGHT-GREEN",
+      "color": "Light Green",
+      "colorHex": null,
+      "ramGb": 6,
+      "storageGb": 128,
+      "mrp": 46999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY A27 5G 6/128 LIGHT GREEN DEMO"
+      ]
+    }
+  ],
+  "sources": []
+}

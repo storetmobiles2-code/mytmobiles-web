@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { deleteBanner, saveBanner } from "@/app/admin/actions/store";
 import { AdminPage, Panel } from "@/components/admin/ui";
 import { ActionButton, ActionForm, Field, inputCls } from "@/components/admin/action-form";
+import { requirePermission } from "@/lib/auth/guards";
 
 export const metadata = { title: "Banners" };
 type B = Awaited<ReturnType<typeof db.banner.findMany>>[number];
@@ -34,6 +35,7 @@ function BannerFields({ b }: { b?: B }) {
 }
 
 export default async function BannersPage() {
+  await requirePermission("banners.manage");
   const banners = await db.banner.findMany({ orderBy: [{ placement: "asc" }, { sortOrder: "asc" }] });
   return (
     <AdminPage title="Homepage banners">

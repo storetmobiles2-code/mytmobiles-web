@@ -14,6 +14,8 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // Static preview build output (scripts/build-demo.ts)
     ".next-demo/**",
+    // Agent worktrees (each is a full copy of the repo)
+    ".claude/worktrees/**",
     "demo-site/**",
   ]),
 ]);

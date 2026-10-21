@@ -21,6 +21,19 @@ export const mobileSchema = z
   .transform((v) => v.replace(/[\s-]/g, "").replace(/^(\+91|91|0)(?=\d{10}$)/, ""))
   .pipe(z.string().regex(/^[6-9]\d{9}$/, "Enter a valid 10-digit Indian mobile number"));
 
+/**
+ * Any Indian phone number a business might publish: a mobile, a landline with
+ * its STD code (e.g. 040 2345 6789), or a toll-free 1800/1860 number. Spaces,
+ * hyphens, brackets and a +91 / 0 prefix are allowed.
+ */
+export function isIndianPhone(v: string): boolean {
+  const digits = v.trim().replace(/[\s\-()]/g, "");
+  if (!/^\+?\d+$/.test(digits)) return false;
+  if (/^18[06]0\d{6,7}$/.test(digits)) return true;
+  const national = digits.replace(/^(\+91|91(?=\d{10}$)|0(?=\d{10}$))/, "");
+  return /^[1-9]\d{9}$/.test(national);
+}
+
 export const pincodeSchema = z
   .string({ error: "Pincode is required" })
   .trim()
