@@ -1,0 +1,320 @@
+{
+  "slug": "samsung-galaxy-a27-5g",
+  "name": "Samsung Galaxy A27 5G",
+  "brand": "Samsung",
+  "category": "smartphones",
+  "condition": "NEW",
+  "status": "live",
+  "featured": false,
+  "is5G": true,
+  "launchedAt": null,
+  "shortDescription": "Samsung Galaxy A27 5G with a 16.91 cm (6.7 inch) 120 Hz Super AMOLED display, Snapdragon 6 Gen 3, 50 MP OIS camera and IP64 rating.",
+  "description": "The Samsung Galaxy A27 5G has a 16.91 cm (6.7 inch) FHD+ Super AMOLED display with a refresh rate of up to 120 Hz. It runs on the Snapdragon 6 Gen 3 processor with 6 GB or 8 GB RAM and 128 GB or 256 GB storage, and takes a microSD card of up to 2 TB.\n\nThere are three rear cameras (50 MP with OIS, 5 MP and 2 MP) and a 12 MP front camera, with 4K video recording. The phone has a 5,000 mAh battery (typical), NFC, Corning Gorilla Glass Victus+ on the front and back, and an IP64 rating for dust and water resistance.\n\nSamsung lists up to 6 OS upgrades and up to 6 years of security updates for this model, with security updates until 31 July 2032.",
+  "highlights": [
+    "16.91 cm (6.7 inch) FHD+ Super AMOLED display, up to 120 Hz",
+    "Snapdragon 6 Gen 3 processor",
+    "50 MP (OIS) + 5 MP + 2 MP rear cameras, 12 MP front camera",
+    "5,000 mAh battery (typical)",
+    "IP64 rating, Gorilla Glass Victus+ front and back",
+    "Security updates until 31 July 2032 (per Samsung)"
+  ],
+  "specs": [
+    {
+      "group": "Display",
+      "items": [
+        {
+          "label": "Size",
+          "value": "16.91 cm (6.7 inch) full rectangle / 16.45 cm with rounded corners"
+        },
+        {
+          "label": "Resolution",
+          "value": "1080 x 2340 (FHD+)"
+        },
+        {
+          "label": "Type",
+          "value": "Super AMOLED"
+        },
+        {
+          "label": "Refresh rate",
+          "value": "Up to 120 Hz"
+        },
+        {
+          "label": "Colour depth",
+          "value": "16M"
+        },
+        {
+          "label": "Protection",
+          "value": "Corning Gorilla Glass Victus+ (front and back)"
+        }
+      ]
+    },
+    {
+      "group": "Performance",
+      "items": [
+        {
+          "label": "Processor",
+          "value": "Snapdragon 6 Gen 3"
+        },
+        {
+          "label": "CPU",
+          "value": "Octa-core, 2.4 GHz + 1.8 GHz"
+        },
+        {
+          "label": "RAM",
+          "value": "6 GB or 8 GB"
+        },
+        {
+          "label": "Storage",
+          "value": "128 GB (about 104.7 GB available) or 256 GB (about 232.3 GB available)"
+        },
+        {
+          "label": "Expandable storage",
+          "value": "microSD, up to 2 TB"
+        },
+        {
+          "label": "Operating system",
+          "value": "Android"
+        },
+        {
+          "label": "Security updates",
+          "value": "Until 31 July 2032"
+        }
+      ]
+    },
+    {
+      "group": "Camera",
+      "items": [
+        {
+          "label": "Rear cameras",
+          "value": "50 MP (F1.8) + 5 MP (F2.2) + 2 MP (F2.4), autofocus, flash"
+        },
+        {
+          "label": "Stabilisation",
+          "value": "OIS"
+        },
+        {
+          "label": "Front camera",
+          "value": "12 MP (F2.2)"
+        },
+        {
+          "label": "Zoom",
+          "value": "Digital zoom up to 10x"
+        },
+        {
+          "label": "Video recording",
+          "value": "UHD 4K (3840 x 2160) at 30 fps"
+        },
+        {
+          "label": "Slow motion",
+          "value": "240 fps at HD"
+        }
+      ]
+    },
+    {
+      "group": "Battery",
+      "items": [
+        {
+          "label": "Capacity",
+          "value": "5,000 mAh (typical)"
+        },
+        {
+          "label": "Video playback",
+          "value": "Up to 23 hours"
+        },
+        {
+          "label": "Removable",
+          "value": "No"
+        }
+      ]
+    },
+    {
+      "group": "Network and connectivity",
+      "items": [
+        {
+          "label": "Network",
+          "value": "5G, 4G LTE, 3G, 2G"
+        },
+        {
+          "label": "SIM",
+          "value": "Dual SIM (Nano-SIM), SIM 1 + hybrid slot (SIM or microSD)"
+        },
+        {
+          "label": "Wi-Fi",
+          "value": "802.11 a/b/g/n/ac, 2.4 GHz + 5 GHz"
+        },
+        {
+          "label": "Bluetooth",
+          "value": "v5.1"
+        },
+        {
+          "label": "NFC",
+          "value": "Yes"
+        },
+        {
+          "label": "USB",
+          "value": "USB Type-C (USB 2.0), also used for audio"
+        },
+        {
+          "label": "Location",
+          "value": "GPS, Glonass, Beidou, Galileo, QZSS"
+        }
+      ]
+    },
+    {
+      "group": "Design",
+      "items": [
+        {
+          "label": "Dimensions (H x W x D)",
+          "value": "162.4 x 78.2 x 7.8 mm"
+        },
+        {
+          "label": "Weight",
+          "value": "200 g"
+        },
+        {
+          "label": "Dust and water resistance",
+          "value": "IP64"
+        },
+        {
+          "label": "Sensors",
+          "value": "Accelerometer, fingerprint sensor, gyro sensor, geomagnetic sensor, light sensor, virtual proximity sensing"
+        }
+      ]
+    }
+  ],
+  "boxContents": [],
+  "keywords": [
+    "samsung",
+    "galaxy a27 5g",
+    "a27",
+    "samsung 5g phone",
+    "sm-a276b",
+    "snapdragon 6 gen 3",
+    "smartphone",
+    "5g"
+  ],
+  "warranty": "Samsung India manufacturer warranty: 12 months on the phone (battery 12 months) and 6 months on in-box accessories such as the data cable, from the date of purchase. Service at Samsung authorised service centres.",
+  "manufacturerInfo": "Manufactured by: Samsung India Electronics Pvt. Ltd. having its Registered Office at: 6th Floor, DLF Centre, Sansad Marg, New Delhi-110001",
+  "countryOfOrigin": "India",
+  "hsnCode": "85171300",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": "Samsung Galaxy A27 5G | myT Mobiles",
+  "seoDescription": "Samsung Galaxy A27 5G: 6.7 inch 120 Hz Super AMOLED, Snapdragon 6 Gen 3, 50 MP OIS camera, IP64. GST invoice included.",
+  "variants": [
+    {
+      "sku": "SAMSUNG-GALAXY-A27-5G-6-128-LIGHT-GREEN",
+      "color": "Light Green",
+      "colorHex": null,
+      "ramGb": 6,
+      "storageGb": 128,
+      "mrp": 46999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY A27 5G 6/128 LIGHT GREEN"
+      ]
+    },
+    {
+      "sku": "SAMSUNG-GALAXY-A27-5G-6-128-LIGHT-PINK",
+      "color": "Light Pink",
+      "colorHex": null,
+      "ramGb": 6,
+      "storageGb": 128,
+      "mrp": 46999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY A27 5G 6/128 LIGHT PINK"
+      ]
+    },
+    {
+      "sku": "SAMSUNG-GALAXY-A27-5G-8-128-BLACK",
+      "color": "Black",
+      "colorHex": null,
+      "ramGb": 8,
+      "storageGb": 128,
+      "mrp": 51999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY A27 5G 8/128 BLACK"
+      ]
+    },
+    {
+      "sku": "SAMSUNG-GALAXY-A27-5G-8-128-LIGHT-GREEN",
+      "color": "Light Green",
+      "colorHex": null,
+      "ramGb": 8,
+      "storageGb": 128,
+      "mrp": 51999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY A27 5G 8/128 LIGHT GREEN"
+      ]
+    },
+    {
+      "sku": "SAMSUNG-GALAXY-A27-5G-8-256-LIGHT-GREEN",
+      "color": "Light Green",
+      "colorHex": null,
+      "ramGb": 8,
+      "storageGb": 256,
+      "mrp": 40499,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY A27 5G 8/256 LIGHT GREEN"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-a/galaxy-a27-5g-light-green-128gb-sm-a276blgdins/",
+      "usedFor": [
+        "details",
+        "specs",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-a/galaxy-a27-5g-light-pink-128gb-sm-a276blidins/",
+      "usedFor": [
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-a/galaxy-a27-5g-black-128gb-sm-a276bzkgins/",
+      "usedFor": [
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-a/galaxy-a27-5g-light-green-128gb-sm-a276blggins/",
+      "usedFor": [
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-a/galaxy-a27-5g-light-green-256gb-sm-a276blghins/",
+      "usedFor": [
+        "legal",
+        "specs"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-a27/buy/",
+      "usedFor": [
+        "mrp"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/support/warranty/",
+      "usedFor": [
+        "warranty"
+      ],
+      "retrievedAt": "2026-10-19"
+    }
+  ]
+}

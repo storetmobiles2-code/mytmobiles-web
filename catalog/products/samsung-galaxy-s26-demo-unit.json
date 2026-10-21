@@ -1,0 +1,238 @@
+{
+  "slug": "samsung-galaxy-s26-demo-unit",
+  "name": "Samsung Galaxy S26 (Demo Unit)",
+  "brand": "Samsung",
+  "category": "smartphones",
+  "condition": "DEMO",
+  "status": "draft",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "Open-box demo (display) unit of the Samsung Galaxy S26. It has a 15.93 cm (6.3 inch) 120 Hz Dynamic AMOLED 2X display, Exynos 2600, 12 GB RAM and a 50 MP triple camera.",
+  "description": "This is a demo (display) unit of the Samsung Galaxy S26 that was used for in-store demonstration, sold open-box at a lower price. It may show light signs of handling. Please contact us before ordering if you'd like to know its exact condition, the accessories included and the remaining manufacturer warranty.\n\nThe Samsung Galaxy S26 has a 15.93 cm (6.3 inch) FHD+ Dynamic AMOLED 2X display with a refresh rate of up to 120 Hz, and runs on the Exynos 2600 processor with 12 GB RAM.\n\nOn the back are three cameras: 50 MP, 10 MP with 3x optical zoom, and 12 MP. The front camera is 12 MP, and the phone records video in up to 8K at 30 fps.\n\nIt has an Armor Aluminum frame with Corning Gorilla Glass Victus 2 on the front and back, an IP68 rating, a 4,300 mAh battery (typical), Wi-Fi 7, NFC and eSIM support. Samsung lists security updates until 28 February 2033. A charger (travel adapter) is not included in the box.",
+  "highlights": [
+    "15.93 cm (6.3 inch) FHD+ Dynamic AMOLED 2X display, up to 120 Hz",
+    "Exynos 2600 processor, 12 GB RAM",
+    "50 MP + 10 MP (3x optical zoom) + 12 MP rear cameras, 12 MP front camera",
+    "4,300 mAh battery (typical)",
+    "IP68, Gorilla Glass Victus 2 front and back",
+    "Open-box demo unit, priced below new"
+  ],
+  "specs": [
+    {
+      "group": "Display",
+      "items": [
+        {
+          "label": "Size",
+          "value": "15.93 cm (6.3 inch) full rectangle / 15.59 cm with rounded corners"
+        },
+        {
+          "label": "Resolution",
+          "value": "2340 x 1080 (FHD+)"
+        },
+        {
+          "label": "Type",
+          "value": "Dynamic AMOLED 2X"
+        },
+        {
+          "label": "Refresh rate",
+          "value": "Up to 120 Hz"
+        },
+        {
+          "label": "Colour depth",
+          "value": "16M"
+        },
+        {
+          "label": "Protection",
+          "value": "Corning Gorilla Glass Victus 2 (front and back)"
+        }
+      ]
+    },
+    {
+      "group": "Performance",
+      "items": [
+        {
+          "label": "Processor",
+          "value": "Exynos 2600"
+        },
+        {
+          "label": "CPU",
+          "value": "Deca-core, 3.8 GHz + 3.26 GHz + 2.76 GHz"
+        },
+        {
+          "label": "RAM",
+          "value": "12 GB"
+        },
+        {
+          "label": "Storage",
+          "value": "256 GB (about 225.4 GB available)"
+        },
+        {
+          "label": "Operating system",
+          "value": "Android with One UI"
+        },
+        {
+          "label": "Security updates",
+          "value": "Until 28 February 2033"
+        }
+      ]
+    },
+    {
+      "group": "Camera",
+      "items": [
+        {
+          "label": "Rear cameras",
+          "value": "50 MP (F1.8) + 10 MP (F2.4) + 12 MP (F2.2)"
+        },
+        {
+          "label": "Zoom",
+          "value": "3x optical, 2x optical-quality, digital up to 30x"
+        },
+        {
+          "label": "Stabilisation",
+          "value": "OIS"
+        },
+        {
+          "label": "Front camera",
+          "value": "12 MP (F2.2), autofocus"
+        },
+        {
+          "label": "Video recording",
+          "value": "Up to 8K (7680 x 4320) at 30 fps"
+        },
+        {
+          "label": "Slow motion",
+          "value": "240 fps at FHD, 120 fps at FHD and UHD"
+        }
+      ]
+    },
+    {
+      "group": "Battery",
+      "items": [
+        {
+          "label": "Capacity",
+          "value": "4,300 mAh (typical)"
+        },
+        {
+          "label": "Video playback",
+          "value": "Up to 30 hours"
+        },
+        {
+          "label": "Removable",
+          "value": "No"
+        }
+      ]
+    },
+    {
+      "group": "Network and connectivity",
+      "items": [
+        {
+          "label": "Network",
+          "value": "5G, 4G LTE, 3G, 2G"
+        },
+        {
+          "label": "SIM",
+          "value": "Dual SIM: Nano-SIM + Nano-SIM, Nano-SIM + eSIM, or dual eSIM"
+        },
+        {
+          "label": "Wi-Fi",
+          "value": "Wi-Fi 7 (802.11 a/b/g/n/ac/ax/be), 2.4/5/6 GHz"
+        },
+        {
+          "label": "Bluetooth",
+          "value": "v5.4"
+        },
+        {
+          "label": "NFC",
+          "value": "Yes"
+        },
+        {
+          "label": "USB",
+          "value": "USB Type-C (USB 3.2 Gen 1)"
+        },
+        {
+          "label": "Samsung DeX",
+          "value": "Yes"
+        }
+      ]
+    },
+    {
+      "group": "Design",
+      "items": [
+        {
+          "label": "Dimensions (H x W x D)",
+          "value": "149.6 x 71.7 x 7.2 mm"
+        },
+        {
+          "label": "Weight",
+          "value": "167 g"
+        },
+        {
+          "label": "Frame",
+          "value": "Armor Aluminum"
+        },
+        {
+          "label": "Dust and water resistance",
+          "value": "IP68"
+        },
+        {
+          "label": "Sensors",
+          "value": "Accelerometer, barometer, fingerprint sensor, gyro sensor, geomagnetic sensor, hall sensor, light sensor, proximity sensor"
+        }
+      ]
+    }
+  ],
+  "boxContents": [],
+  "keywords": [
+    "samsung",
+    "galaxy s26",
+    "s26",
+    "sm-s942b",
+    "exynos 2600",
+    "smartphone",
+    "5g",
+    "demo",
+    "open box"
+  ],
+  "warranty": "Manufacturer warranty as applicable from the original activation date — ask us for the remaining period.",
+  "manufacturerInfo": null,
+  "countryOfOrigin": "India",
+  "hsnCode": "85171300",
+  "gstRatePercent": 18,
+  "returnWindowDays": 0,
+  "seoTitle": "Samsung Galaxy S26 Demo Unit (12 GB, 256 GB) | myT Mobiles",
+  "seoDescription": "Open-box demo unit of the Samsung Galaxy S26: 6.3 inch 120 Hz AMOLED, Exynos 2600, 12 GB RAM. GST invoice included.",
+  "variants": [
+    {
+      "sku": "SAMSUNG-GALAXY-S26-DEMO-UNIT-12-256-COBALT-VIOLET",
+      "color": "Cobalt Violet",
+      "colorHex": null,
+      "ramGb": 12,
+      "storageGb": 256,
+      "mrp": 117999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY S26 12/256 COBALT VIOLET DEMO UNIT"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-s26/buy/",
+      "usedFor": [
+        "mrp",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-s/galaxy-s26-cobalt-violet-256gb-certified-re-newed-sm5s942bzvcins/",
+      "usedFor": [
+        "details",
+        "specs",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    }
+  ]
+}

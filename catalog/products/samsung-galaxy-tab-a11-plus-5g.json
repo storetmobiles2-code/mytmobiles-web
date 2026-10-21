@@ -1,0 +1,227 @@
+{
+  "slug": "samsung-galaxy-tab-a11-plus-5g",
+  "name": "Samsung Galaxy Tab A11+ 5G",
+  "brand": "Samsung",
+  "category": "tablets",
+  "condition": "NEW",
+  "status": "live",
+  "featured": false,
+  "is5G": true,
+  "launchedAt": null,
+  "shortDescription": "Samsung Galaxy Tab A11+ 5G with a 27.82 cm (11 inch) 90 Hz WUXGA display, 5G SIM slot, 7,040 mAh battery and 25 W charging.",
+  "description": "The Samsung Galaxy Tab A11+ 5G has a 27.82 cm (11 inch) WUXGA (1920 x 1200) TFT display with a refresh rate of 90 Hz. It has an octa-core processor (2.5 GHz + 2 GHz) with 6 GB or 8 GB RAM and 128 GB or 256 GB storage, and takes a microSD card of up to 2 TB.\n\nIt has a single 5G SIM slot, dual-band Wi-Fi (802.11 ac), Bluetooth 5.3, a 3.5 mm headphone jack, an 8 MP rear camera and a 5 MP front camera. The 7,040 mAh battery (typical) supports 25 W charging, and the tablet is 6.9 mm thin and weighs 482 g.",
+  "highlights": [
+    "27.82 cm (11 inch) WUXGA display, 90 Hz",
+    "5G (single SIM) and Wi-Fi",
+    "7,040 mAh battery (typical), 25 W charging",
+    "microSD up to 2 TB, 3.5 mm headphone jack",
+    "6.9 mm thin, 482 g"
+  ],
+  "specs": [
+    {
+      "group": "Display",
+      "items": [
+        {
+          "label": "Size",
+          "value": "27.82 cm (11 inch) full rectangle / 27.64 cm with rounded corners"
+        },
+        {
+          "label": "Resolution",
+          "value": "1920 x 1200 (WUXGA)"
+        },
+        {
+          "label": "Type",
+          "value": "TFT"
+        },
+        {
+          "label": "Refresh rate",
+          "value": "90 Hz"
+        },
+        {
+          "label": "Colour depth",
+          "value": "16M"
+        }
+      ]
+    },
+    {
+      "group": "Performance",
+      "items": [
+        {
+          "label": "CPU",
+          "value": "Octa-core, 2.5 GHz + 2 GHz"
+        },
+        {
+          "label": "RAM",
+          "value": "6 GB or 8 GB"
+        },
+        {
+          "label": "Storage",
+          "value": "128 GB (about 106 GB available) or 256 GB (about 232.7 GB available)"
+        },
+        {
+          "label": "Expandable storage",
+          "value": "microSD, up to 2 TB"
+        },
+        {
+          "label": "Operating system",
+          "value": "Android"
+        }
+      ]
+    },
+    {
+      "group": "Camera",
+      "items": [
+        {
+          "label": "Rear camera",
+          "value": "8 MP, autofocus"
+        },
+        {
+          "label": "Front camera",
+          "value": "5 MP"
+        },
+        {
+          "label": "Video recording",
+          "value": "FHD (1920 x 1080) at 30 fps"
+        }
+      ]
+    },
+    {
+      "group": "Battery",
+      "items": [
+        {
+          "label": "Capacity",
+          "value": "7,040 mAh (typical)"
+        },
+        {
+          "label": "Charging",
+          "value": "25 W"
+        },
+        {
+          "label": "Video playback",
+          "value": "Up to 15 hours"
+        },
+        {
+          "label": "Removable",
+          "value": "No"
+        }
+      ]
+    },
+    {
+      "group": "Network and connectivity",
+      "items": [
+        {
+          "label": "Network",
+          "value": "5G, 4G LTE, 3G, 2G"
+        },
+        {
+          "label": "SIM",
+          "value": "Single SIM (SIM 1 + microSD)"
+        },
+        {
+          "label": "Wi-Fi",
+          "value": "802.11 a/b/g/n/ac, 2.4 GHz + 5 GHz"
+        },
+        {
+          "label": "Bluetooth",
+          "value": "v5.3"
+        },
+        {
+          "label": "NFC",
+          "value": "No"
+        },
+        {
+          "label": "USB",
+          "value": "USB 2.0"
+        },
+        {
+          "label": "Audio jack",
+          "value": "3.5 mm"
+        },
+        {
+          "label": "Location",
+          "value": "GPS, Glonass, Beidou, Galileo, QZSS"
+        }
+      ]
+    },
+    {
+      "group": "Design",
+      "items": [
+        {
+          "label": "Dimensions (H x W x D)",
+          "value": "168.7 x 257.1 x 6.9 mm"
+        },
+        {
+          "label": "Weight",
+          "value": "482 g"
+        },
+        {
+          "label": "Sensors",
+          "value": "Accelerometer, gyro sensor, geomagnetic sensor, hall sensor, light sensor"
+        }
+      ]
+    }
+  ],
+  "boxContents": [
+    "Quick start guide",
+    "Ejection pin",
+    "USB Type-C data cable"
+  ],
+  "keywords": [
+    "samsung",
+    "galaxy tab a11+",
+    "tab a11 plus",
+    "sm-x236b",
+    "tablet",
+    "5g tablet",
+    "11 inch tablet",
+    "5g"
+  ],
+  "warranty": null,
+  "manufacturerInfo": "Manufactured by: Dixon Technologies (India) Ltd ,Plot no.6, Sector 90, Noida, Gautam Buddha Nagar, U.P. India – 201305; Imported by: Samsung India Electronics Pvt. Ltd. having its Registered Office at: 6th Floor, DLF Centre, Sansad Marg, New Delhi-110001",
+  "countryOfOrigin": "India",
+  "hsnCode": "84713010",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": "Samsung Galaxy Tab A11+ 5G | myT Mobiles",
+  "seoDescription": "Samsung Galaxy Tab A11+ 5G: 11 inch 90 Hz WUXGA display, 5G, 7,040 mAh battery, 25 W charging. GST invoice included.",
+  "variants": [
+    {
+      "sku": "SAMSUNG-GALAXY-TAB-A11-PLUS-5G-6-128-GRAY",
+      "color": "Gray",
+      "colorHex": null,
+      "ramGb": 6,
+      "storageGb": 128,
+      "mrp": 47999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG TAB A11+ 5G 6/128 GRAY"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.samsung.com/in/tablets/galaxy-tab-a/galaxy-tab-a11-plus-gray-128gb-sm-x236bzaains/",
+      "usedFor": [
+        "details",
+        "specs",
+        "legal",
+        "box"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/tablets/galaxy-tab-a/galaxy-tab-a11-plus-gray-256gb-sm-x236bzaeins/",
+      "usedFor": [
+        "specs"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/tablets/galaxy-tab-a11/buy/",
+      "usedFor": [
+        "mrp"
+      ],
+      "retrievedAt": "2026-10-15"
+    }
+  ]
+}

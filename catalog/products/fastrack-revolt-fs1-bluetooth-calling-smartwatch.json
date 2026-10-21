@@ -4,14 +4,14 @@
   "brand": "Fastrack",
   "category": "smartwatches",
   "condition": "NEW",
-  "status": "live",
+  "status": "draft",
   "featured": false,
   "is5G": false,
   "launchedAt": null,
-  "shortDescription": "Brand-new Fastrack Revolt FS1 Bluetooth Calling Smartwatch, with GST invoice from myT Mobiles.",
-  "description": "Buy the Fastrack Revolt FS1 Bluetooth Calling Smartwatch from myT Mobiles. Every order ships with a GST tax invoice, and you can choose Cash on Delivery or pay online. Prices shown include GST.",
+  "shortDescription": "Fastrack Revolt FS1 smartwatch with Bluetooth calling.",
+  "description": "The Fastrack Revolt FS1 is a smartwatch with Bluetooth calling. Ask us for the strap colours in stock and the full specifications.",
   "highlights": [
-    "Calling: Bluetooth calling",
+    "Bluetooth calling",
     "GST invoice with every order"
   ],
   "specs": [
@@ -40,15 +40,14 @@
   "boxContents": [],
   "keywords": [
     "fastrack",
-    "revolt",
+    "fastrack revolt fs1",
+    "revoltt fs1",
     "fs1",
-    "bt",
-    "calling",
-    "smart",
-    "watch",
-    "smartwatch"
+    "smartwatch",
+    "bluetooth calling",
+    "smart watch"
   ],
-  "warranty": "Manufacturer warranty as per brand policy.",
+  "warranty": null,
   "manufacturerInfo": null,
   "countryOfOrigin": null,
   "hsnCode": "85176290",

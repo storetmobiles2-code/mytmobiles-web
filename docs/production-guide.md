@@ -241,7 +241,12 @@ Online card and UPI payments are processed on Razorpay's hosted checkout, so the
   - Staff can't change prices, MRP, stock, products, images or categories, import stock sheets, manage coupons, banners or settings, issue refunds, receive returns, cancel paid online orders, see customer records or revenue, or manage staff.
   - The permission map is in `src/lib/auth/permissions.ts`. Nobody can change their own role, and the last active admin can't be demoted or disabled.
 - **Turn on two-factor sign-in** for GitHub, Vercel, the database provider, Razorpay, the domain registrar and email.
-- The store's own admin login has **no 2FA yet** (§9). Use strong unique passwords meanwhile.
+- **The store's admin login requires two-factor sign-in.** Everyone who can open `/admin`, owner and staff, must set up an authenticator app (Google or Microsoft Authenticator, or similar) in Admin → Security before any other admin page opens.
+  - **The key:** secrets are encrypted with `TOTP_ENCRYPTION_KEY` (generate it with `openssl rand -base64 32`). Set it once in the host's environment, keep a copy in your password manager, and never change it. Changing it makes every enrolled authenticator unusable.
+  - **Recovery codes:** each person gets 10 single-use recovery codes when they enrol. Keep them offline.
+  - **Lockout:** five wrong codes lock the second step for 15 minutes.
+  - **Lost phone and no recovery codes:** the owner runs `npm run auth:reset-2fa -- <email>` against the production database. That person then signs in with their password and enrols again.
+  - **Local development only:** set `ADMIN_2FA_ENFORCED=false`. It is ignored in production.
 - Database users:
   - **app**: read/write;
   - **ops**: read-only, for the daily brief and site audit;
@@ -306,7 +311,7 @@ Ranked by importance before launch:
 
 1. ~~**Grievance officer details**~~ **Done:** officer name, designation, email and phone in Admin → Settings, shown on Contact, Terms and the footer; complaints get ticket numbers at `/help/grievance` and are handled in Admin → Grievances.
 2. **Legal details for all live products:** fill manufacturer and country of origin (46 products today). Agents can draft them; staff confirm them from the boxes.
-3. **Admin two-factor authentication** (TOTP). ~~Staff roles~~ **Done:** Admin → Staff, with Admin (owner) and Staff roles (§6.1).
+3. ~~**Admin two-factor authentication**~~ **Done:** TOTP with recovery codes, required for owner and staff (§6.1). ~~Staff roles~~ **Done:** Admin → Staff, with Admin (owner) and Staff roles (§6.1).
 4. ~~**Admin audit log**~~ **Done:** Admin → Activity and per-order/product History, kept at least 1 year (§6.2.1).
 5. ~~**GST and sales export**~~ **Done:** Admin → Reports → GST (GSTR-1) (§5.4). Still open: credit notes for returns and refunds (Table 9B). B2B GSTIN capture at checkout is already in place.
 6. **Error tracking:** Sentry or similar, plus log retention set to 180 days or more (CERT-In) and one year (DPDP, from 2027).
