@@ -16,7 +16,7 @@ Never run `next dev`, because it rewrites `AGENTS.md`. If it does, run `git chec
 
 The current state of the project and the unfinished work are in `docs/progress.md`.
 
-**Navigate with the code graph:** run `npm run graph` at the start of a session, then `graphify query|explain|path|affected` before grepping or reading files. Rebuild after code changes. See the "Code graph" section in `CLAUDE.md`.
+**Navigate with the code graph:** it is built at session start (or run `npm run graph`); use `graphify query|explain|path|affected` before grepping or reading files. Rebuild after code changes. See the "Code graph" section in `CLAUDE.md`.
 
 ## Local setup (cloud container)
 
