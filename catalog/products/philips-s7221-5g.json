@@ -1,0 +1,215 @@
+{
+  "slug": "philips-s7221-5g",
+  "name": "Philips S7221 5G",
+  "brand": "Philips",
+  "category": "smartphones",
+  "condition": "NEW",
+  "status": "draft",
+  "featured": false,
+  "is5G": true,
+  "launchedAt": null,
+  "shortDescription": "Philips S7221 5G with a 6.67 inch HD+ display, 64 MP main camera, 5700 mAh battery, 6 GB RAM and 128 GB storage.",
+  "description": "The Philips S7221 is a 5G phone with a 6.67 inch HD+ IPS display and an octa-core Unisoc T765 processor. This variant has 6 GB RAM and 128 GB storage, with a memory card slot.\n\nIt has a 64 MP rear camera with PDAF, a 16 MP front camera, a 5700 mAh battery and a side-mounted fingerprint sensor, and runs Android 16. A charger, Type-C cable and screen protector are in the box.",
+  "highlights": [
+    "6.67 inch HD+ IPS display",
+    "5G, octa-core Unisoc T765 processor",
+    "64 MP rear camera, 16 MP front camera",
+    "5700 mAh battery",
+    "6 GB RAM · 128 GB storage, Android 16",
+    "GST invoice with every order"
+  ],
+  "specs": [
+    {
+      "group": "Display",
+      "items": [
+        {
+          "label": "Size",
+          "value": "6.67 inch"
+        },
+        {
+          "label": "Type",
+          "value": "IPS, HD+, capacitive touchscreen"
+        }
+      ]
+    },
+    {
+      "group": "Performance",
+      "items": [
+        {
+          "label": "Processor",
+          "value": "Unisoc (Spreadtrum) T765, 8 cores (2 x Cortex-A76 at 2.3 GHz + 6 x Cortex-A55 at 2.1 GHz)"
+        },
+        {
+          "label": "RAM",
+          "value": "6 GB"
+        },
+        {
+          "label": "Storage",
+          "value": "128 GB, memory card supported"
+        },
+        {
+          "label": "Operating system",
+          "value": "Android 16"
+        }
+      ]
+    },
+    {
+      "group": "Camera",
+      "items": [
+        {
+          "label": "Rear",
+          "value": "64 MP, PDAF, with flash"
+        },
+        {
+          "label": "Front",
+          "value": "16 MP"
+        }
+      ]
+    },
+    {
+      "group": "Battery",
+      "items": [
+        {
+          "label": "Capacity",
+          "value": "5700 mAh"
+        },
+        {
+          "label": "Type",
+          "value": "Polymer"
+        },
+        {
+          "label": "Charger",
+          "value": "9 V / 2 A"
+        }
+      ]
+    },
+    {
+      "group": "Connectivity",
+      "items": [
+        {
+          "label": "Network",
+          "value": "5G, 4G"
+        },
+        {
+          "label": "SIM",
+          "value": "Dual nano-SIM + microSD (two of three)"
+        },
+        {
+          "label": "Wi-Fi",
+          "value": "802.11 ac/a/b/g/n, 2.4 GHz and 5 GHz"
+        },
+        {
+          "label": "Other",
+          "value": "USB Type-C, GPS with A-GPS"
+        }
+      ]
+    },
+    {
+      "group": "Design",
+      "items": [
+        {
+          "label": "Dimensions",
+          "value": "166 x 77 x 8.95 mm"
+        },
+        {
+          "label": "Weight",
+          "value": "210 g"
+        },
+        {
+          "label": "Fingerprint sensor",
+          "value": "Side-mounted"
+        }
+      ]
+    }
+  ],
+  "boxContents": [
+    "Phone",
+    "Charger",
+    "Type-C data cable",
+    "Eject pin",
+    "Screen protector",
+    "Quick start guide",
+    "Warranty card"
+  ],
+  "keywords": [
+    "philips s7221",
+    "philips phone",
+    "philips 5g",
+    "philips",
+    "5g phone",
+    "5700mah",
+    "64mp camera",
+    "smartphone"
+  ],
+  "warranty": null,
+  "manufacturerInfo": null,
+  "countryOfOrigin": null,
+  "hsnCode": "85171300",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": "Philips S7221 5G (6 GB + 128 GB) | myT Mobiles",
+  "seoDescription": "Philips S7221 5G with 6.67-inch HD+ display, 64 MP camera, 5700 mAh battery, 6 GB RAM and 128 GB storage.",
+  "variants": [
+    {
+      "sku": "PHILIPS-S7221-5G-6-128-BLACK",
+      "color": "Black",
+      "colorHex": null,
+      "ramGb": 6,
+      "storageGb": 128,
+      "mrp": 20999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "PHILIPS S7221 5G 6/128 BLACK"
+      ]
+    },
+    {
+      "sku": "PHILIPS-S7221-5G-6-128-BLUE",
+      "color": "Blue",
+      "colorHex": null,
+      "ramGb": 6,
+      "storageGb": 128,
+      "mrp": 20999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "PHILIPS S7221 5G 6/128 BLUE"
+      ]
+    },
+    {
+      "sku": "PHILIPS-S7221-5G-6-128-GRAY",
+      "color": "Gray",
+      "colorHex": null,
+      "ramGb": 6,
+      "storageGb": 128,
+      "mrp": 20999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "PHILIPS S7221 5G 6/128 GRAY"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.philips.co.in/c-p/CTS7221BKA_94",
+      "usedFor": [
+        "details"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.philips.co.in/prx/product/B2C/en_IN/CONSUMER/products/CTS7221BKA_94.specification",
+      "usedFor": [
+        "specs",
+        "box"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://tpvpxm.saas.contentserv.com/admin/rest/xcstream/stream/assets/HealthTech/TPV%20Mobility/Unallocated/All%20leaflets/Commercial%20leaflet/CTS7221BKA_94_en_IN_b2c_PSS.pdf",
+      "usedFor": [
+        "specs",
+        "box"
+      ],
+      "retrievedAt": "2026-10-15"
+    }
+  ]
+}

@@ -1,0 +1,214 @@
+{
+  "slug": "samsung-galaxy-tab-a11-lte-demo-unit",
+  "name": "Samsung Galaxy Tab A11 (LTE) (Demo Unit)",
+  "brand": "Samsung",
+  "category": "tablets",
+  "condition": "DEMO",
+  "status": "live",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "Open-box demo (display) unit of the Samsung Galaxy Tab A11 (LTE). It has a 22.05 cm (8.7 inch) 90 Hz display, 4G SIM slot, 5,100 mAh battery and microSD support.",
+  "description": "This is a demo (display) unit of the Samsung Galaxy Tab A11 (LTE) that was used for in-store demonstration, sold open-box at a lower price. It may show light signs of handling. Please contact us before ordering if you'd like to know its exact condition, the accessories included and the remaining manufacturer warranty.\n\nThe Samsung Galaxy Tab A11 (LTE) has a 22.05 cm (8.7 inch) WXGA+ (1340 x 800) TFT display with a refresh rate of 90 Hz. It has an octa-core processor (2.2 GHz + 2 GHz) with 4 GB or 8 GB RAM and 64 GB or 128 GB storage, and takes a microSD card of up to 2 TB.\n\nIt has a single 4G LTE SIM slot, dual-band Wi-Fi (802.11 ac), Bluetooth 5.3, a 3.5 mm headphone jack, an 8 MP rear camera and a 5 MP front camera. The battery is 5,100 mAh (typical), and the tablet weighs 337 g.",
+  "highlights": [
+    "22.05 cm (8.7 inch) WXGA+ display, 90 Hz",
+    "4G LTE (single SIM) and Wi-Fi",
+    "5,100 mAh battery (typical)",
+    "microSD up to 2 TB, 3.5 mm headphone jack",
+    "8 MP rear camera, 5 MP front camera",
+    "Open-box demo unit, priced below new"
+  ],
+  "specs": [
+    {
+      "group": "Display",
+      "items": [
+        {
+          "label": "Size",
+          "value": "22.05 cm (8.7 inch) full rectangle / 21.96 cm with rounded corners"
+        },
+        {
+          "label": "Resolution",
+          "value": "1340 x 800 (WXGA+)"
+        },
+        {
+          "label": "Type",
+          "value": "TFT"
+        },
+        {
+          "label": "Refresh rate",
+          "value": "90 Hz"
+        },
+        {
+          "label": "Colour depth",
+          "value": "16M"
+        }
+      ]
+    },
+    {
+      "group": "Performance",
+      "items": [
+        {
+          "label": "CPU",
+          "value": "Octa-core, 2.2 GHz + 2 GHz"
+        },
+        {
+          "label": "RAM",
+          "value": "4 GB or 8 GB"
+        },
+        {
+          "label": "Storage",
+          "value": "64 GB (about 44.6 GB available) or 128 GB (about 108.3 GB available)"
+        },
+        {
+          "label": "Expandable storage",
+          "value": "microSD, up to 2 TB"
+        },
+        {
+          "label": "Operating system",
+          "value": "Android"
+        }
+      ]
+    },
+    {
+      "group": "Camera",
+      "items": [
+        {
+          "label": "Rear camera",
+          "value": "8 MP, autofocus"
+        },
+        {
+          "label": "Front camera",
+          "value": "5 MP"
+        },
+        {
+          "label": "Video recording",
+          "value": "FHD (1920 x 1080) at 30 fps"
+        }
+      ]
+    },
+    {
+      "group": "Battery",
+      "items": [
+        {
+          "label": "Capacity",
+          "value": "5,100 mAh (typical)"
+        },
+        {
+          "label": "Removable",
+          "value": "No"
+        }
+      ]
+    },
+    {
+      "group": "Network and connectivity",
+      "items": [
+        {
+          "label": "Network",
+          "value": "4G LTE, 3G, 2G"
+        },
+        {
+          "label": "SIM",
+          "value": "Single SIM (SIM 1 + microSD)"
+        },
+        {
+          "label": "Wi-Fi",
+          "value": "802.11 a/b/g/n/ac, 2.4 GHz + 5 GHz"
+        },
+        {
+          "label": "Bluetooth",
+          "value": "v5.3"
+        },
+        {
+          "label": "NFC",
+          "value": "No"
+        },
+        {
+          "label": "USB",
+          "value": "USB 2.0"
+        },
+        {
+          "label": "Audio jack",
+          "value": "3.5 mm"
+        },
+        {
+          "label": "Location",
+          "value": "GPS, Glonass, Beidou, Galileo, QZSS"
+        }
+      ]
+    },
+    {
+      "group": "Design",
+      "items": [
+        {
+          "label": "Dimensions (H x W x D)",
+          "value": "211.0 x 124.7 x 8.0 mm"
+        },
+        {
+          "label": "Weight",
+          "value": "337 g"
+        },
+        {
+          "label": "Sensors",
+          "value": "Accelerometer, geomagnetic sensor, light sensor, proximity sensor"
+        }
+      ]
+    }
+  ],
+  "boxContents": [
+    "Quick start guide",
+    "Ejection pin",
+    "USB Type-C data cable"
+  ],
+  "keywords": [
+    "samsung",
+    "galaxy tab a11",
+    "tab a11",
+    "sm-x135",
+    "tablet",
+    "lte",
+    "4g tablet",
+    "demo",
+    "open box"
+  ],
+  "warranty": "Manufacturer warranty as applicable from the original activation date — ask us for the remaining period.",
+  "manufacturerInfo": "Manufactured by: Dixon Technologies (India) Ltd ,Plot no.6, Sector 90, Noida, Gautam Buddha Nagar, U.P. India – 201305; Imported by: Samsung India Electronics Pvt. Ltd. having its Registered Office at: 6th Floor, DLF Centre, Sansad Marg, New Delhi-110001",
+  "countryOfOrigin": "India",
+  "hsnCode": "84713010",
+  "gstRatePercent": 18,
+  "returnWindowDays": 0,
+  "seoTitle": "Samsung Galaxy Tab A11 LTE Demo Unit | myT Mobiles",
+  "seoDescription": "Open-box demo unit of the Samsung Galaxy Tab A11 (LTE): 8.7 inch 90 Hz display, 4G, 5,100 mAh battery. GST invoice included.",
+  "variants": [
+    {
+      "sku": "SAMSUNG-GALAXY-TAB-A11-LTE-DEMO-UNIT-4-64-SILVER",
+      "color": "Silver",
+      "colorHex": null,
+      "ramGb": 4,
+      "storageGb": 64,
+      "mrp": 29999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY TAB A11 LTE 4/64 SILVER DEMO"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.samsung.com/in/tablets/galaxy-tab-a/galaxy-tab-a11-silver-64gb-sm-x135gzsains/",
+      "usedFor": [
+        "details",
+        "specs",
+        "legal",
+        "box"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/tablets/galaxy-tab-a11/buy/",
+      "usedFor": [
+        "mrp"
+      ],
+      "retrievedAt": "2026-10-15"
+    }
+  ]
+}

@@ -1,0 +1,230 @@
+{
+  "slug": "oppo-reno-10-5g",
+  "name": "OPPO Reno 10 5G",
+  "brand": "OPPO",
+  "category": "smartphones",
+  "condition": "NEW",
+  "status": "draft",
+  "featured": false,
+  "is5G": true,
+  "launchedAt": null,
+  "shortDescription": "OPPO Reno10 5G with a 17.02 cm (6.7 inch) 120 Hz AMOLED display, 32 MP telephoto portrait camera, 67 W SUPERVOOC charging, 8 GB RAM and 256 GB storage.",
+  "description": "The OPPO Reno10 5G (CPH2531) has a 17.02 cm (6.7 inch) FHD+ 3D curved AMOLED display with a refresh rate of up to 120 Hz, and runs on the MediaTek Dimensity 7050 with 8 GB RAM and 256 GB storage.\n\nOn the back are a 64 MP main camera, a 32 MP telephoto portrait camera with 2x hybrid optical zoom, and an 8 MP ultra-wide camera. The front camera is 32 MP.\n\nIt has a 5000 mAh battery (typical) with 67 W SUPERVOOC charging and runs ColorOS 13.1. It supports 5G, Wi-Fi 6, Bluetooth 5.3 and NFC, and weighs about 185 g. A charger and protective case are in the box.",
+  "highlights": [
+    "17.02 cm (6.7 inch) FHD+ AMOLED display, up to 120 Hz",
+    "MediaTek Dimensity 7050, 8 GB RAM · 256 GB storage",
+    "64 MP main + 32 MP telephoto portrait + 8 MP ultra-wide cameras, 32 MP front",
+    "5000 mAh battery (typical), 67 W SUPERVOOC charging",
+    "5G, Wi-Fi 6, NFC",
+    "GST invoice with every order"
+  ],
+  "specs": [
+    {
+      "group": "Display",
+      "items": [
+        {
+          "label": "Size",
+          "value": "17.02 cm (6.7 inch)"
+        },
+        {
+          "label": "Type",
+          "value": "3D AMOLED (flexible)"
+        },
+        {
+          "label": "Resolution",
+          "value": "FHD+ (2412 x 1080), 394 PPI"
+        },
+        {
+          "label": "Refresh rate",
+          "value": "Up to 120 Hz; touch sampling up to 240 Hz"
+        },
+        {
+          "label": "Brightness",
+          "value": "500 nits typical; 800 nits in sunlight; up to 950 nits for HDR content"
+        },
+        {
+          "label": "Cover glass",
+          "value": "AGC DT-Star2"
+        }
+      ]
+    },
+    {
+      "group": "Performance",
+      "items": [
+        {
+          "label": "Processor",
+          "value": "MediaTek Dimensity 7050, 8 cores"
+        },
+        {
+          "label": "GPU",
+          "value": "ARM Mali-G68 MC4"
+        },
+        {
+          "label": "RAM",
+          "value": "8 GB LPDDR4x"
+        },
+        {
+          "label": "Storage",
+          "value": "256 GB UFS 2.2"
+        },
+        {
+          "label": "Operating system",
+          "value": "ColorOS 13.1"
+        }
+      ]
+    },
+    {
+      "group": "Camera",
+      "items": [
+        {
+          "label": "Rear",
+          "value": "64 MP main (f/1.7) + 32 MP telephoto (f/2.0) + 8 MP ultra-wide (f/2.2, 112°)"
+        },
+        {
+          "label": "Zoom",
+          "value": "2x hybrid optical zoom, up to 20x digital zoom"
+        },
+        {
+          "label": "Front",
+          "value": "32 MP, f/2.4"
+        },
+        {
+          "label": "Video",
+          "value": "Rear up to 4K at 30 fps; front up to 1080p at 30 fps"
+        }
+      ]
+    },
+    {
+      "group": "Battery",
+      "items": [
+        {
+          "label": "Capacity",
+          "value": "5000 mAh (typical), 4870 mAh (rated)"
+        },
+        {
+          "label": "Charging",
+          "value": "67 W SUPERVOOC"
+        }
+      ]
+    },
+    {
+      "group": "Connectivity",
+      "items": [
+        {
+          "label": "Network",
+          "value": "5G, dual nano-SIM"
+        },
+        {
+          "label": "Wi-Fi",
+          "value": "Wi-Fi 6 (802.11ax)"
+        },
+        {
+          "label": "Bluetooth",
+          "value": "Bluetooth 5.3"
+        },
+        {
+          "label": "Other",
+          "value": "NFC, USB Type-C, infrared sensor"
+        },
+        {
+          "label": "Location",
+          "value": "GPS, GLONASS, BDS, Galileo and QZSS"
+        }
+      ]
+    },
+    {
+      "group": "Design",
+      "items": [
+        {
+          "label": "Colours",
+          "value": "Silvery Grey, Ice Blue"
+        },
+        {
+          "label": "Dimensions",
+          "value": "about 16.24 x 7.42 x 0.79 cm"
+        },
+        {
+          "label": "Weight",
+          "value": "about 185 g"
+        },
+        {
+          "label": "Biometrics",
+          "value": "Fingerprint and face recognition"
+        }
+      ]
+    }
+  ],
+  "boxContents": [
+    "Phone",
+    "Charger",
+    "USB data cable",
+    "SIM ejector tool",
+    "Quick guide",
+    "Safety guide",
+    "Protective case",
+    "Phone hole seal stickers"
+  ],
+  "keywords": [
+    "oppo reno10 5g",
+    "reno 10",
+    "oppo reno",
+    "oppo",
+    "5g phone",
+    "dimensity 7050",
+    "8gb 256gb",
+    "telephoto camera"
+  ],
+  "warranty": null,
+  "manufacturerInfo": null,
+  "countryOfOrigin": "India",
+  "hsnCode": "85171300",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": "OPPO Reno10 5G (8 GB + 256 GB) | myT Mobiles",
+  "seoDescription": "OPPO Reno10 5G with 6.7-inch 120 Hz AMOLED display, 32 MP telephoto portrait camera, 67 W charging, 8 GB + 256 GB.",
+  "variants": [
+    {
+      "sku": "OPPO-RENO-10-5G-8-256-ICE-BLUE",
+      "color": "Ice Blue",
+      "colorHex": null,
+      "ramGb": 8,
+      "storageGb": 256,
+      "mrp": 32999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "OPPO RENO 10 5G 8/256 ICE BLUE"
+      ]
+    },
+    {
+      "sku": "OPPO-RENO-10-5G-8-256-SILVERY-GREY",
+      "color": "Silvery Grey",
+      "colorHex": null,
+      "ramGb": 8,
+      "storageGb": 256,
+      "mrp": 32999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "OPPO RENO 10 5G 8/256 SILVERY GREY"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.oppo.com/in/smartphones/series-reno/reno10/specs/",
+      "usedFor": [
+        "specs",
+        "details",
+        "box",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.oppo.com/in/newsroom/press/oppo-reno10-portrait-photography-telephoto-camera/",
+      "usedFor": [
+        "details"
+      ],
+      "retrievedAt": "2026-10-15"
+    }
+  ]
+}

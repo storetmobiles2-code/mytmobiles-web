@@ -21,7 +21,7 @@ Online store for myT Mobiles (Next.js 16, Prisma 7, PostgreSQL). See README.md f
 
 ## Code graph (graphify): use it before searching
 
-`graphify-out/` holds a knowledge graph of the code: symbols, imports, calls, and communities named after their folders. It's built locally from the source by tree-sitter, with no LLM calls. It's git-ignored, so **at the start of every session run `npm run graph`** (`scripts/graph.sh`). It installs graphify if it's missing (`graphifyy[sql]` on PyPI, via `uv tool install`) and builds the graph in a few seconds. The PreToolUse hooks in `.claude/settings.json` call `graphify hook-guard`, which only adds a reminder and never blocks. Until the first `npm run graph` in a fresh container they report "command not found", which is harmless.
+`graphify-out/` holds a knowledge graph of the code: symbols, imports, calls, and communities named after their folders. It's built locally from the source by tree-sitter, with no LLM calls. It's git-ignored and rebuilt automatically at session start by a `SessionStart` hook (`.claude/settings.json` → `scripts/graph.sh`). The script installs graphify if it's missing (`graphifyy[sql]` on PyPI) and builds the graph in a few seconds. If `graphify-out/graph.json` is missing anyway, run `npm run graph`. The PreToolUse hooks call `graphify hook-guard`, which only adds a reminder and never blocks.
 
 Rules, to keep token use down:
 - **Codebase questions:** before your first grep, glob or source-file read, ask the graph:

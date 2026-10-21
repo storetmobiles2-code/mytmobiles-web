@@ -29,4 +29,4 @@ After review and merge, `apply --write` runs against production; see `docs/agent
 
 ## `_wip/`
 
-Unfinished product files are parked in `_wip/`. Validation, `apply` and CI skip it, because they only read `catalog/products/*.json`. Move a file back once its research is finished and `npm run catalog -- validate <slug>` shows no errors. `docs/progress.md` says what is parked there and why.
+Unfinished product files can be parked in `_wip/`: validation, `apply` and CI skip it, because they only read `catalog/products/*.json`. Move a file back once `npm run catalog -- validate <slug>` shows no errors.

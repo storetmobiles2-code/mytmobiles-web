@@ -39,6 +39,7 @@ test.describe("storefront", () => {
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
     await expect(page.getByText(/₹\s?[\d,]+/).locator("visible=true").first()).toBeVisible();
     await expect(page.getByRole("button", { name: /Add to cart/ })).toBeEnabled();
+    await expect(page.getByRole("heading", { name: "Warranty and legal details" })).toBeVisible();
     const ld = await page.locator('script[type="application/ld+json"]').allTextContents();
     const product = ld.map((t) => JSON.parse(t)).flat().find((j) => j["@type"] === "Product");
     expect(product?.offers).toBeTruthy();

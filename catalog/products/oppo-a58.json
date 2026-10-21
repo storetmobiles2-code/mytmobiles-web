@@ -1,0 +1,184 @@
+{
+  "slug": "oppo-a58",
+  "name": "OPPO A58",
+  "brand": "OPPO",
+  "category": "smartphones",
+  "condition": "NEW",
+  "status": "draft",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "OPPO A58 with a 6.72 inch FHD+ display, MediaTek Helio G85, 50 MP main camera, 5000 mAh battery with 33 W SUPERVOOC, 6 GB RAM and 128 GB storage.",
+  "description": "The OPPO A58 has a 6.72 inch FHD+ (2400 x 1080) LCD display and runs on the MediaTek Helio G85 with 6 GB RAM and 128 GB storage, expandable with a memory card.\n\nIt has a 50 MP main camera with a 2 MP mono camera, an 8 MP front camera, and a 5000 mAh battery (typical) with 33 W SUPERVOOC charging. It runs ColorOS 13.1 and has a 3.5 mm headphone jack and USB Type-C.",
+  "highlights": [
+    "6.72 inch FHD+ display",
+    "MediaTek Helio G85, 6 GB RAM · 128 GB storage",
+    "50 MP main + 2 MP mono rear cameras, 8 MP front camera",
+    "5000 mAh battery (typical), 33 W SUPERVOOC charging",
+    "3.5 mm headphone jack, USB Type-C",
+    "GST invoice with every order"
+  ],
+  "specs": [
+    {
+      "group": "Display",
+      "items": [
+        {
+          "label": "Size",
+          "value": "6.72 inch"
+        },
+        {
+          "label": "Type",
+          "value": "LCD (LTPS)"
+        },
+        {
+          "label": "Resolution",
+          "value": "FHD+ (2400 x 1080), 391 PPI"
+        },
+        {
+          "label": "Brightness",
+          "value": "550 nits typical; 680 nits in direct sunlight"
+        }
+      ]
+    },
+    {
+      "group": "Performance",
+      "items": [
+        {
+          "label": "Processor",
+          "value": "MediaTek Helio G85, 8 cores, up to 2.0 GHz"
+        },
+        {
+          "label": "GPU",
+          "value": "Mali-G52 MC2"
+        },
+        {
+          "label": "RAM",
+          "value": "6 GB LPDDR4X"
+        },
+        {
+          "label": "Storage",
+          "value": "128 GB eMMC 5.1, memory card supported"
+        },
+        {
+          "label": "Operating system",
+          "value": "ColorOS 13.1"
+        }
+      ]
+    },
+    {
+      "group": "Camera",
+      "items": [
+        {
+          "label": "Rear",
+          "value": "50 MP main (f/1.8, AF) + 2 MP mono (f/2.4)"
+        },
+        {
+          "label": "Front",
+          "value": "8 MP, f/2.0"
+        },
+        {
+          "label": "Video",
+          "value": "1080p and 720p at 30 fps"
+        }
+      ]
+    },
+    {
+      "group": "Battery",
+      "items": [
+        {
+          "label": "Capacity",
+          "value": "5000 mAh (typical), 4880 mAh (rated)"
+        },
+        {
+          "label": "Charging",
+          "value": "33 W SUPERVOOC"
+        }
+      ]
+    },
+    {
+      "group": "Connectivity",
+      "items": [
+        {
+          "label": "Network",
+          "value": "4G, dual nano-SIM"
+        },
+        {
+          "label": "Wi-Fi",
+          "value": "Wi-Fi 5 (802.11ac), 2.4 GHz and 5 GHz"
+        },
+        {
+          "label": "Bluetooth",
+          "value": "Bluetooth 5.3"
+        },
+        {
+          "label": "Ports",
+          "value": "USB Type-C, 3.5 mm headphone jack"
+        }
+      ]
+    },
+    {
+      "group": "Design",
+      "items": [
+        {
+          "label": "Colours",
+          "value": "Glowing Black, Dazzling Green"
+        },
+        {
+          "label": "Dimensions",
+          "value": "about 165.65 x 75.98 x 7.99 mm"
+        },
+        {
+          "label": "Weight",
+          "value": "about 192 g"
+        },
+        {
+          "label": "Biometrics",
+          "value": "Fingerprint and face recognition"
+        }
+      ]
+    }
+  ],
+  "boxContents": [],
+  "keywords": [
+    "oppo a58",
+    "oppo",
+    "a58",
+    "oppo phone",
+    "helio g85",
+    "6gb 128gb",
+    "5000mah",
+    "smartphone"
+  ],
+  "warranty": null,
+  "manufacturerInfo": null,
+  "countryOfOrigin": null,
+  "hsnCode": "85171300",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": "OPPO A58 (6 GB + 128 GB) | myT Mobiles",
+  "seoDescription": "OPPO A58 with 6.72-inch FHD+ display, Helio G85, 50 MP camera, 5000 mAh battery with 33 W SUPERVOOC, 6 GB + 128 GB.",
+  "variants": [
+    {
+      "sku": "OPPO-A58-6-128-DAZZLING-GREEN",
+      "color": "Dazzling Green",
+      "colorHex": null,
+      "ramGb": 6,
+      "storageGb": 128,
+      "mrp": 12999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "OPPO A58 6/128 DAZZLING GREEN"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.oppo.com/en/smartphones/series-a/a58/specs/",
+      "usedFor": [
+        "specs",
+        "details"
+      ],
+      "retrievedAt": "2026-10-20"
+    }
+  ]
+}

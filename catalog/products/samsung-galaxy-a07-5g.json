@@ -1,0 +1,327 @@
+{
+  "slug": "samsung-galaxy-a07-5g",
+  "name": "Samsung Galaxy A07 5G",
+  "brand": "Samsung",
+  "category": "smartphones",
+  "condition": "NEW",
+  "status": "live",
+  "featured": false,
+  "is5G": true,
+  "launchedAt": null,
+  "shortDescription": "Samsung Galaxy A07 5G with a 17.13 cm (6.7 inch) 120 Hz HD+ display, 50 MP main camera and 6,000 mAh battery.",
+  "description": "The Samsung Galaxy A07 5G has a 17.13 cm (6.7 inch) HD+ PLS LCD display with a refresh rate of up to 120 Hz. It has an octa-core processor (2.4 GHz + 2 GHz) with 4 GB or 6 GB RAM and 128 GB storage, and takes a microSD card of up to 2 TB.\n\nThere are two rear cameras (50 MP and 2 MP) and an 8 MP front camera. The phone has a 6,000 mAh battery (typical), an IP54 rating for dust and splash resistance, and a 3.5 mm headphone jack.\n\nSamsung lists six generations of OS upgrades and six years of security updates for this model, with security updates until 31 January 2032.",
+  "highlights": [
+    "17.13 cm (6.7 inch) HD+ display, up to 120 Hz",
+    "50 MP + 2 MP rear cameras, 8 MP front camera",
+    "6,000 mAh battery (typical)",
+    "128 GB storage, microSD up to 2 TB",
+    "IP54 dust and splash resistance",
+    "6 OS upgrades, security updates until 31 January 2032 (per Samsung)"
+  ],
+  "specs": [
+    {
+      "group": "Display",
+      "items": [
+        {
+          "label": "Size",
+          "value": "17.13 cm (6.7 inch) full rectangle / 16.73 cm with rounded corners"
+        },
+        {
+          "label": "Resolution",
+          "value": "720 x 1600 (HD+)"
+        },
+        {
+          "label": "Type",
+          "value": "PLS LCD"
+        },
+        {
+          "label": "Refresh rate",
+          "value": "Up to 120 Hz"
+        },
+        {
+          "label": "Colour depth",
+          "value": "16M"
+        }
+      ]
+    },
+    {
+      "group": "Performance",
+      "items": [
+        {
+          "label": "CPU",
+          "value": "Octa-core, 2.4 GHz + 2 GHz"
+        },
+        {
+          "label": "RAM",
+          "value": "4 GB or 6 GB"
+        },
+        {
+          "label": "Storage",
+          "value": "128 GB (about 108 GB available)"
+        },
+        {
+          "label": "Expandable storage",
+          "value": "microSD, up to 2 TB"
+        },
+        {
+          "label": "Operating system",
+          "value": "Android"
+        },
+        {
+          "label": "Security updates",
+          "value": "Until 31 January 2032"
+        }
+      ]
+    },
+    {
+      "group": "Camera",
+      "items": [
+        {
+          "label": "Rear cameras",
+          "value": "50 MP (F1.8) + 2 MP (F2.4), autofocus, flash"
+        },
+        {
+          "label": "Front camera",
+          "value": "8 MP (F2.0)"
+        },
+        {
+          "label": "Zoom",
+          "value": "Digital zoom up to 10x"
+        },
+        {
+          "label": "Video recording",
+          "value": "FHD (1920 x 1080) at 30 fps"
+        },
+        {
+          "label": "Slow motion",
+          "value": "120 fps at HD"
+        }
+      ]
+    },
+    {
+      "group": "Battery",
+      "items": [
+        {
+          "label": "Capacity",
+          "value": "6,000 mAh (typical)"
+        },
+        {
+          "label": "Removable",
+          "value": "No"
+        }
+      ]
+    },
+    {
+      "group": "Network and connectivity",
+      "items": [
+        {
+          "label": "Network",
+          "value": "5G, 4G LTE, 3G, 2G"
+        },
+        {
+          "label": "SIM",
+          "value": "Dual SIM (Nano-SIM), SIM 1 + hybrid slot (SIM or microSD)"
+        },
+        {
+          "label": "Wi-Fi",
+          "value": "802.11 a/b/g/n/ac, 2.4 GHz + 5 GHz"
+        },
+        {
+          "label": "Bluetooth",
+          "value": "v5.3"
+        },
+        {
+          "label": "USB",
+          "value": "USB Type-C (USB 2.0)"
+        },
+        {
+          "label": "Audio jack",
+          "value": "3.5 mm"
+        },
+        {
+          "label": "Location",
+          "value": "GPS, Glonass, Beidou, Galileo, QZSS"
+        }
+      ]
+    },
+    {
+      "group": "Design",
+      "items": [
+        {
+          "label": "Dimensions (H x W x D)",
+          "value": "167.4 x 77.4 x 8.2 mm"
+        },
+        {
+          "label": "Weight",
+          "value": "199 g"
+        },
+        {
+          "label": "Dust and water resistance",
+          "value": "IP54"
+        },
+        {
+          "label": "Sensors",
+          "value": "Accelerometer, fingerprint sensor, gyro sensor, geomagnetic sensor, light sensor, proximity sensor"
+        }
+      ]
+    }
+  ],
+  "boxContents": [],
+  "keywords": [
+    "samsung",
+    "galaxy a07 5g",
+    "a07",
+    "samsung 5g phone",
+    "sm-a076b",
+    "smartphone",
+    "5g",
+    "6000 mah"
+  ],
+  "warranty": "Samsung India manufacturer warranty: 12 months on the phone (battery 12 months) and 6 months on in-box accessories such as the data cable, from the date of purchase. Service at Samsung authorised service centres.",
+  "manufacturerInfo": "Manufactured by: Dixon Technologies (India) Ltd.,Plot No. 6, Sector 90, Noida, U.P. India 201305; Imported by: Samsung India Electronics Pvt. Ltd. having its Registered Office at: 6th Floor, DLF Centre, Sansad Marg, New Delhi-110001",
+  "countryOfOrigin": "India",
+  "hsnCode": "85171300",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": "Samsung Galaxy A07 5G | myT Mobiles",
+  "seoDescription": "Samsung Galaxy A07 5G: 6.7 inch 120 Hz display, 50 MP camera, 6,000 mAh battery, IP54. GST invoice included.",
+  "variants": [
+    {
+      "sku": "SAMSUNG-GALAXY-A07-5G-4-128-BLACK",
+      "color": "Black",
+      "colorHex": null,
+      "ramGb": 4,
+      "storageGb": 128,
+      "mrp": 31999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY A07 5G 4/128 BLACK"
+      ]
+    },
+    {
+      "sku": "SAMSUNG-GALAXY-A07-5G-4-128-LIGHT-GREEN",
+      "color": "Light Green",
+      "colorHex": null,
+      "ramGb": 4,
+      "storageGb": 128,
+      "mrp": 31999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY A07 5G 4/128 LIGHT GREEN"
+      ]
+    },
+    {
+      "sku": "SAMSUNG-GALAXY-A07-5G-4-128-LIGHT-VIOLET",
+      "color": "Light Violet",
+      "colorHex": null,
+      "ramGb": 4,
+      "storageGb": 128,
+      "mrp": 19999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY A07 5G 4/128 LIGHT VIOLET"
+      ]
+    },
+    {
+      "sku": "SAMSUNG-GALAXY-A07-5G-6-128-BLACK",
+      "color": "Black",
+      "colorHex": null,
+      "ramGb": 6,
+      "storageGb": 128,
+      "mrp": 34999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY A07 5G 6/128 BLACK"
+      ]
+    },
+    {
+      "sku": "SAMSUNG-GALAXY-A07-5G-6-128-LIGHT-GREEN",
+      "color": "Light Green",
+      "colorHex": null,
+      "ramGb": 6,
+      "storageGb": 128,
+      "mrp": 34999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY A07 5G 6/128 LIGHT GREEN"
+      ]
+    },
+    {
+      "sku": "SAMSUNG-GALAXY-A07-5G-6-128-LIGHT-VIOLET",
+      "color": "Light Violet",
+      "colorHex": null,
+      "ramGb": 6,
+      "storageGb": 128,
+      "mrp": 34999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY A07 5G 6/128 LIGHT VIOLET"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-a/galaxy-a07-5g-black-128gb-sm-a076bzkbins/",
+      "usedFor": [
+        "details",
+        "specs",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-a/galaxy-a07-5g-light-violet-128gb-sm-a076blvbins/",
+      "usedFor": [
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-a/galaxy-a07-5g-black-128gb-sm-a076bzkbins/buy/",
+      "usedFor": [
+        "mrp",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-a/galaxy-a07-5g-light-green-128gb-sm-a076blgbins/buy/",
+      "usedFor": [
+        "mrp",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-a/galaxy-a07-5g-black-128gb-sm-a076bzkcins/buy/",
+      "usedFor": [
+        "mrp",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-a/galaxy-a07-5g-light-green-128gb-sm-a076blgcins/buy/",
+      "usedFor": [
+        "mrp",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-a/galaxy-a07-5g-light-violet-128gb-sm-a076blvcins/buy/",
+      "usedFor": [
+        "mrp",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/support/warranty/",
+      "usedFor": [
+        "warranty"
+      ],
+      "retrievedAt": "2026-10-19"
+    }
+  ]
+}

@@ -1,0 +1,390 @@
+{
+  "slug": "samsung-galaxy-a17-5g",
+  "name": "Samsung Galaxy A17 5G",
+  "brand": "Samsung",
+  "category": "smartphones",
+  "condition": "NEW",
+  "status": "live",
+  "featured": false,
+  "is5G": true,
+  "launchedAt": null,
+  "shortDescription": "Samsung Galaxy A17 5G with a 16.91 cm (6.7 inch) 90 Hz Super AMOLED display, 50 MP main camera with OIS and 5,000 mAh battery.",
+  "description": "The Samsung Galaxy A17 5G has a 16.91 cm (6.7 inch) FHD+ Super AMOLED display with a refresh rate of up to 90 Hz and Corning Gorilla Glass Victus on the front. It has an octa-core processor (2.4 GHz + 2 GHz) with 6 GB or 8 GB RAM and 128 GB or 256 GB storage, and takes a microSD card of up to 2 TB.\n\nThere are three rear cameras (50 MP with OIS, 5 MP and 2 MP) and a 13 MP front camera. The phone has a 5,000 mAh battery (typical) and an IP54 rating for dust and splash resistance.\n\nSamsung lists six generations of OS upgrades and six years of security updates for this model, with security updates until 31 August 2031.",
+  "highlights": [
+    "16.91 cm (6.7 inch) FHD+ Super AMOLED display, up to 90 Hz",
+    "50 MP (OIS) + 5 MP + 2 MP rear cameras, 13 MP front camera",
+    "5,000 mAh battery (typical)",
+    "Gorilla Glass Victus front, IP54 dust and splash resistance",
+    "6 OS upgrades, security updates until 31 August 2031 (per Samsung)"
+  ],
+  "specs": [
+    {
+      "group": "Display",
+      "items": [
+        {
+          "label": "Size",
+          "value": "16.91 cm (6.7 inch) full rectangle / 16.45 cm with rounded corners"
+        },
+        {
+          "label": "Resolution",
+          "value": "1080 x 2340 (FHD+)"
+        },
+        {
+          "label": "Type",
+          "value": "Super AMOLED"
+        },
+        {
+          "label": "Refresh rate",
+          "value": "Up to 90 Hz"
+        },
+        {
+          "label": "Colour depth",
+          "value": "16M"
+        },
+        {
+          "label": "Protection",
+          "value": "Corning Gorilla Glass Victus (front)"
+        }
+      ]
+    },
+    {
+      "group": "Performance",
+      "items": [
+        {
+          "label": "CPU",
+          "value": "Octa-core, 2.4 GHz + 2 GHz"
+        },
+        {
+          "label": "RAM",
+          "value": "6 GB or 8 GB"
+        },
+        {
+          "label": "Storage",
+          "value": "128 GB (about 106.5 GB available) or 256 GB (about 232.8 GB available)"
+        },
+        {
+          "label": "Expandable storage",
+          "value": "microSD, up to 2 TB"
+        },
+        {
+          "label": "Operating system",
+          "value": "Android"
+        },
+        {
+          "label": "Security updates",
+          "value": "Until 31 August 2031"
+        }
+      ]
+    },
+    {
+      "group": "Camera",
+      "items": [
+        {
+          "label": "Rear cameras",
+          "value": "50 MP (F1.8) + 5 MP (F2.2) + 2 MP (F2.4), autofocus, flash"
+        },
+        {
+          "label": "Stabilisation",
+          "value": "OIS"
+        },
+        {
+          "label": "Front camera",
+          "value": "13 MP (F2.0)"
+        },
+        {
+          "label": "Zoom",
+          "value": "Digital zoom up to 10x"
+        },
+        {
+          "label": "Video recording",
+          "value": "FHD (1920 x 1080) at 30 fps"
+        },
+        {
+          "label": "Slow motion",
+          "value": "120 fps at HD"
+        }
+      ]
+    },
+    {
+      "group": "Battery",
+      "items": [
+        {
+          "label": "Capacity",
+          "value": "5,000 mAh (typical)"
+        },
+        {
+          "label": "Video playback",
+          "value": "Up to 18 hours"
+        },
+        {
+          "label": "Removable",
+          "value": "No"
+        }
+      ]
+    },
+    {
+      "group": "Network and connectivity",
+      "items": [
+        {
+          "label": "Network",
+          "value": "5G, 4G LTE, 3G, 2G"
+        },
+        {
+          "label": "SIM",
+          "value": "Dual SIM (Nano-SIM), SIM 1 + hybrid slot (SIM or microSD)"
+        },
+        {
+          "label": "Wi-Fi",
+          "value": "802.11 a/b/g/n/ac, 2.4 GHz + 5 GHz"
+        },
+        {
+          "label": "Bluetooth",
+          "value": "v5.3"
+        },
+        {
+          "label": "USB",
+          "value": "USB Type-C (USB 2.0), also used for audio"
+        },
+        {
+          "label": "Location",
+          "value": "GPS, Glonass, Beidou, Galileo, QZSS"
+        }
+      ]
+    },
+    {
+      "group": "Design",
+      "items": [
+        {
+          "label": "Dimensions (H x W x D)",
+          "value": "164.4 x 77.9 x 7.5 mm"
+        },
+        {
+          "label": "Weight",
+          "value": "192 g"
+        },
+        {
+          "label": "Dust and water resistance",
+          "value": "IP54"
+        },
+        {
+          "label": "Sensors",
+          "value": "Accelerometer, fingerprint sensor, gyro sensor, geomagnetic sensor, light sensor, virtual proximity sensing"
+        }
+      ]
+    }
+  ],
+  "boxContents": [],
+  "keywords": [
+    "samsung",
+    "galaxy a17 5g",
+    "a17",
+    "samsung 5g phone",
+    "sm-a176b",
+    "amoled",
+    "smartphone",
+    "5g"
+  ],
+  "warranty": "Samsung India manufacturer warranty: 12 months on the phone (battery 12 months) and 6 months on in-box accessories such as the data cable, from the date of purchase. Service at Samsung authorised service centres.",
+  "manufacturerInfo": "Manufactured by: Samsung India Electronics Pvt. Ltd. having its Registered Office at: 6th Floor, DLF Centre, Sansad Marg, New Delhi-110001",
+  "countryOfOrigin": "India",
+  "hsnCode": "85171300",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": "Samsung Galaxy A17 5G | myT Mobiles",
+  "seoDescription": "Samsung Galaxy A17 5G: 6.7 inch 90 Hz Super AMOLED, 50 MP OIS camera, 5,000 mAh battery, IP54. GST invoice included.",
+  "variants": [
+    {
+      "sku": "SAMSUNG-GALAXY-A17-5G-6-128-BLACK",
+      "color": "Black",
+      "colorHex": null,
+      "ramGb": 6,
+      "storageGb": 128,
+      "mrp": 38999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY A17 5G 6/128 BLACK",
+        "SAMSUNG GALAXY A17 5G 6/128 BLACK WITHOUT TA"
+      ]
+    },
+    {
+      "sku": "SAMSUNG-GALAXY-A17-5G-6-128-BLUE",
+      "color": "Blue",
+      "colorHex": null,
+      "ramGb": 6,
+      "storageGb": 128,
+      "mrp": 38999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY A17 5G 6/128 BLUE",
+        "SAMSUNG GALAXY A17 5G 6/128 BLUE WITHOUT TA"
+      ]
+    },
+    {
+      "sku": "SAMSUNG-GALAXY-A17-5G-6-128-GRAY",
+      "color": "Gray",
+      "colorHex": null,
+      "ramGb": 6,
+      "storageGb": 128,
+      "mrp": 38999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY A17 5G 6/128 GRAY WITHOUT TA"
+      ]
+    },
+    {
+      "sku": "SAMSUNG-GALAXY-A17-5G-8-128-BLACK",
+      "color": "Black",
+      "colorHex": null,
+      "ramGb": 8,
+      "storageGb": 128,
+      "mrp": 41999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY A17 5G 8/128 BLACK WITHOUT TA"
+      ]
+    },
+    {
+      "sku": "SAMSUNG-GALAXY-A17-5G-8-128-BLUE",
+      "color": "Blue",
+      "colorHex": null,
+      "ramGb": 8,
+      "storageGb": 128,
+      "mrp": 41999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY A17 5G 8/128 BLUE",
+        "SAMSUNG GALAXY A17 5G 8/128 BLUE WITHOUT TA"
+      ]
+    },
+    {
+      "sku": "SAMSUNG-GALAXY-A17-5G-8-128-GRAY",
+      "color": "Gray",
+      "colorHex": null,
+      "ramGb": 8,
+      "storageGb": 128,
+      "mrp": 41999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY A17 5G 8/128 GRAY",
+        "SAMSUNG GALAXY A17 5G 8/128 GRAY WITHOUT TA"
+      ]
+    },
+    {
+      "sku": "SAMSUNG-GALAXY-A17-5G-8-256-BLACK",
+      "color": "Black",
+      "colorHex": null,
+      "ramGb": 8,
+      "storageGb": 256,
+      "mrp": 47499,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY A17 5G 8/256 BLACK WITHOUT TA"
+      ]
+    },
+    {
+      "sku": "SAMSUNG-GALAXY-A17-5G-8-256-BLUE",
+      "color": "Blue",
+      "colorHex": null,
+      "ramGb": 8,
+      "storageGb": 256,
+      "mrp": 47499,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY A17 5G 8/256 BLUE WITHOUT TA"
+      ]
+    },
+    {
+      "sku": "SAMSUNG-GALAXY-A17-5G-8-256-GRAY",
+      "color": "Gray",
+      "colorHex": null,
+      "ramGb": 8,
+      "storageGb": 256,
+      "mrp": 47499,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY A17 5G 8/256 GRAY WITHOUT TA"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-a/galaxy-a17-5g-black-128gb-sm-a176bzklins/",
+      "usedFor": [
+        "details",
+        "specs",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-a/galaxy-a17-5g-blue-128gb-sm-a176bzblins/",
+      "usedFor": [
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-a/galaxy-a17-5g-gray-128gb-sm-a176bzalins/",
+      "usedFor": [
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-a/galaxy-a17-5g-black-128gb-sm-a176bzkmins/",
+      "usedFor": [
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-a/galaxy-a17-5g-blue-128gb-sm-a176bzbmins/",
+      "usedFor": [
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-a/galaxy-a17-5g-gray-128gb-sm-a176bzamins/",
+      "usedFor": [
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-a/galaxy-a17-5g-black-256gb-sm-a176bzknins/",
+      "usedFor": [
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-a/galaxy-a17-5g-blue-256gb-sm-a176bzbnins/",
+      "usedFor": [
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-a/galaxy-a17-5g-gray-256gb-sm-a176bzanins/",
+      "usedFor": [
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-a17/buy/",
+      "usedFor": [
+        "mrp"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/support/warranty/",
+      "usedFor": [
+        "warranty"
+      ],
+      "retrievedAt": "2026-10-19"
+    }
+  ]
+}

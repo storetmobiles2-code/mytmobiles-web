@@ -30,6 +30,8 @@ jobs:
       CRON_SECRET: ci-cron-secret-0123456789abcdef
       ADMIN_EMAIL: admin@ci.example.com
       ADMIN_PASSWORD: CiAdminPass!2026
+      # Test-only key for admin two-factor secrets in the throwaway CI database
+      TOTP_ENCRYPTION_KEY: "SWfHsKmZrILcXM8UDHTWYvYSwbCIEF9dCQxqBkAUcHI="
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5

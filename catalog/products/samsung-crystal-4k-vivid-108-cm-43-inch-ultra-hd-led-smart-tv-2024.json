@@ -4,7 +4,7 @@
   "brand": "Samsung",
   "category": "smart-tvs",
   "condition": "NEW",
-  "status": "live",
+  "status": "draft",
   "featured": false,
   "is5G": false,
   "launchedAt": null,
@@ -49,27 +49,16 @@
   "boxContents": [],
   "keywords": [
     "samsung",
-    "new",
-    "d",
-    "series",
-    "brighter",
-    "crystal",
-    "4k",
-    "vivid",
-    "(2024",
-    "edition)",
-    "108",
-    "cm",
-    "(43",
-    "inch)",
-    "ultra",
-    "hd",
-    "(4k)",
-    "led",
-    "smart",
-    "tv"
+    "crystal 4k vivid",
+    "crystal uhd",
+    "43 inch tv",
+    "108 cm",
+    "4k tv",
+    "smart tv",
+    "led tv",
+    "2024"
   ],
-  "warranty": "Manufacturer warranty as per brand policy.",
+  "warranty": "Samsung India standard warranty for LED TVs: 12 months from the date of purchase, with repairs by a Samsung authorised service engineer at your home. Remote and other accessories: 12 months exchange warranty. Free installation and demo once within 6 months of purchase.",
   "manufacturerInfo": null,
   "countryOfOrigin": null,
   "hsnCode": "85287217",
@@ -91,5 +80,55 @@
       ]
     }
   ],
-  "sources": []
+  "sources": [
+    {
+      "url": "https://www.samsung.com/in/support/warranty/",
+      "usedFor": [
+        "warranty"
+      ],
+      "retrievedAt": "2026-10-19"
+    },
+    {
+      "url": "https://www.samsung.com/in/support/model/UA43DUE76AKLXL/",
+      "usedFor": [
+        "details"
+      ],
+      "retrievedAt": "2026-10-19"
+    },
+    {
+      "url": "https://www.samsung.com/in/support/model/UA43DUE77AKLXL/",
+      "usedFor": [
+        "details"
+      ],
+      "retrievedAt": "2026-10-19"
+    },
+    {
+      "url": "https://www.samsung.com/in/support/model/UA43DUE70BKLXL/",
+      "usedFor": [
+        "details"
+      ],
+      "retrievedAt": "2026-10-19"
+    },
+    {
+      "url": "https://www.samsung.com/in/support/model/UA43DUE80AKLXL/",
+      "usedFor": [
+        "details"
+      ],
+      "retrievedAt": "2026-10-19"
+    },
+    {
+      "url": "https://www.samsung.com/in/support/model/UA43DU7000KLXL/",
+      "usedFor": [
+        "details"
+      ],
+      "retrievedAt": "2026-10-19"
+    },
+    {
+      "url": "https://www.samsung.com/in/support/model/UA43DU7700KLXL/",
+      "usedFor": [
+        "details"
+      ],
+      "retrievedAt": "2026-10-19"
+    }
+  ]
 }

@@ -1,0 +1,341 @@
+{
+  "slug": "samsung-galaxy-f17-5g",
+  "name": "Samsung Galaxy F17 5G",
+  "brand": "Samsung",
+  "category": "smartphones",
+  "condition": "NEW",
+  "status": "live",
+  "featured": false,
+  "is5G": true,
+  "launchedAt": null,
+  "shortDescription": "Samsung Galaxy F17 5G with a 16.91 cm (6.7 inch) 90 Hz Super AMOLED display, Exynos 1330, 50 MP OIS camera and 5,000 mAh battery.",
+  "description": "The Samsung Galaxy F17 5G has a 16.91 cm (6.7 inch) FHD+ Super AMOLED display with a refresh rate of up to 90 Hz and Corning Gorilla Glass Victus on the front. It runs on the Exynos 1330 processor with 4 GB, 6 GB or 8 GB RAM and 128 GB storage, and takes a microSD card of up to 2 TB.\n\nThere are three rear cameras (50 MP with OIS, 5 MP and 2 MP) and a 13 MP front camera. The phone has a 5,000 mAh battery (typical) with support for 25 W fast charging (charger sold separately) and an IP54 rating for dust and splash resistance.\n\nSamsung lists 6 generations of OS upgrades and 6 years of security updates for this model, with security updates until 30 September 2031.",
+  "highlights": [
+    "16.91 cm (6.7 inch) FHD+ Super AMOLED display, up to 90 Hz",
+    "Exynos 1330 processor with 5G",
+    "50 MP (OIS) + 5 MP + 2 MP rear cameras, 13 MP front camera",
+    "5,000 mAh battery (typical), 25 W fast charging support",
+    "Gorilla Glass Victus front, IP54 dust and splash resistance",
+    "Security updates until 30 September 2031 (per Samsung)"
+  ],
+  "specs": [
+    {
+      "group": "Display",
+      "items": [
+        {
+          "label": "Size",
+          "value": "16.91 cm (6.7 inch) full rectangle / 16.45 cm with rounded corners"
+        },
+        {
+          "label": "Resolution",
+          "value": "1080 x 2340 (FHD+)"
+        },
+        {
+          "label": "Type",
+          "value": "Super AMOLED"
+        },
+        {
+          "label": "Refresh rate",
+          "value": "Up to 90 Hz"
+        },
+        {
+          "label": "Colour depth",
+          "value": "16M"
+        },
+        {
+          "label": "Protection",
+          "value": "Corning Gorilla Glass Victus (front)"
+        }
+      ]
+    },
+    {
+      "group": "Performance",
+      "items": [
+        {
+          "label": "Processor",
+          "value": "Exynos 1330"
+        },
+        {
+          "label": "CPU",
+          "value": "Octa-core, 2.4 GHz + 2 GHz"
+        },
+        {
+          "label": "RAM",
+          "value": "4 GB, 6 GB or 8 GB"
+        },
+        {
+          "label": "Storage",
+          "value": "128 GB (about 106.5 GB available)"
+        },
+        {
+          "label": "Expandable storage",
+          "value": "microSD, up to 2 TB"
+        },
+        {
+          "label": "Operating system",
+          "value": "Android"
+        },
+        {
+          "label": "Security updates",
+          "value": "Until 30 September 2031"
+        }
+      ]
+    },
+    {
+      "group": "Camera",
+      "items": [
+        {
+          "label": "Rear cameras",
+          "value": "50 MP (F1.8) + 5 MP (F2.2) + 2 MP (F2.4), autofocus, flash"
+        },
+        {
+          "label": "Stabilisation",
+          "value": "OIS"
+        },
+        {
+          "label": "Front camera",
+          "value": "13 MP (F2.0)"
+        },
+        {
+          "label": "Zoom",
+          "value": "Digital zoom up to 10x"
+        },
+        {
+          "label": "Video recording",
+          "value": "FHD (1920 x 1080) at 30 fps"
+        },
+        {
+          "label": "Slow motion",
+          "value": "120 fps at HD"
+        }
+      ]
+    },
+    {
+      "group": "Battery",
+      "items": [
+        {
+          "label": "Capacity",
+          "value": "5,000 mAh (typical)"
+        },
+        {
+          "label": "Charging",
+          "value": "25 W fast charging support (charger sold separately)"
+        },
+        {
+          "label": "Video playback",
+          "value": "Up to 18 hours"
+        },
+        {
+          "label": "Removable",
+          "value": "No"
+        }
+      ]
+    },
+    {
+      "group": "Network and connectivity",
+      "items": [
+        {
+          "label": "Network",
+          "value": "5G, 4G LTE, 3G, 2G"
+        },
+        {
+          "label": "SIM",
+          "value": "Dual SIM (Nano-SIM), SIM 1 + hybrid slot (SIM or microSD)"
+        },
+        {
+          "label": "Wi-Fi",
+          "value": "802.11 a/b/g/n/ac, 2.4 GHz + 5 GHz"
+        },
+        {
+          "label": "Bluetooth",
+          "value": "v5.3"
+        },
+        {
+          "label": "USB",
+          "value": "USB Type-C (USB 2.0), also used for audio"
+        },
+        {
+          "label": "Location",
+          "value": "GPS, Glonass, Beidou, Galileo, QZSS"
+        }
+      ]
+    },
+    {
+      "group": "Design",
+      "items": [
+        {
+          "label": "Dimensions (H x W x D)",
+          "value": "164.4 x 77.9 x 7.5 mm"
+        },
+        {
+          "label": "Weight",
+          "value": "192 g"
+        },
+        {
+          "label": "Dust and water resistance",
+          "value": "IP54"
+        },
+        {
+          "label": "Sensors",
+          "value": "Accelerometer, fingerprint sensor, gyro sensor, geomagnetic sensor, light sensor, virtual proximity sensing"
+        }
+      ]
+    }
+  ],
+  "boxContents": [],
+  "keywords": [
+    "samsung",
+    "galaxy f17 5g",
+    "f17",
+    "samsung 5g phone",
+    "sm-e176b",
+    "exynos 1330",
+    "smartphone",
+    "5g"
+  ],
+  "warranty": "Samsung India manufacturer warranty: 12 months on the phone (battery 12 months) and 6 months on in-box accessories such as the data cable, from the date of purchase. Service at Samsung authorised service centres.",
+  "manufacturerInfo": "Manufactured by: Samsung India Electronics Pvt. Ltd. having its Registered Office at: 6th Floor, DLF Centre, Sansad Marg, New Delhi-110001",
+  "countryOfOrigin": "India",
+  "hsnCode": "85171300",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": "Samsung Galaxy F17 5G | myT Mobiles",
+  "seoDescription": "Samsung Galaxy F17 5G: 6.7 inch 90 Hz Super AMOLED, Exynos 1330, 50 MP OIS camera, 5,000 mAh battery. GST invoice included.",
+  "variants": [
+    {
+      "sku": "SAMSUNG-GALAXY-F17-5G-4-128-NEO-BLACK",
+      "color": "Neo Black",
+      "colorHex": null,
+      "ramGb": 4,
+      "storageGb": 128,
+      "mrp": 28999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY F17 5G 4/128 NEO BLACK"
+      ]
+    },
+    {
+      "sku": "SAMSUNG-GALAXY-F17-5G-4-128-VIOLET-POP",
+      "color": "Violet Pop",
+      "colorHex": null,
+      "ramGb": 4,
+      "storageGb": 128,
+      "mrp": 28999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY F17 5G 4/128 VIOLET POP"
+      ]
+    },
+    {
+      "sku": "SAMSUNG-GALAXY-F17-5G-6-128-NEO-BLACK",
+      "color": "Neo Black",
+      "colorHex": null,
+      "ramGb": 6,
+      "storageGb": 128,
+      "mrp": 30999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY F17 5G 6/128 NEO BLACK"
+      ]
+    },
+    {
+      "sku": "SAMSUNG-GALAXY-F17-5G-6-128-VIOLET-POP",
+      "color": "Violet Pop",
+      "colorHex": null,
+      "ramGb": 6,
+      "storageGb": 128,
+      "mrp": 30999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY F17 5G 6/128 VIOLET POP"
+      ]
+    },
+    {
+      "sku": "SAMSUNG-GALAXY-F17-5G-8-128-NEO-BLACK",
+      "color": "Neo Black",
+      "colorHex": null,
+      "ramGb": 8,
+      "storageGb": 128,
+      "mrp": 25999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY F17 5G 8/128 NEO BLACK"
+      ]
+    },
+    {
+      "sku": "SAMSUNG-GALAXY-F17-5G-8-128-VIOLET-POP",
+      "color": "Violet Pop",
+      "colorHex": null,
+      "ramGb": 8,
+      "storageGb": 128,
+      "mrp": 23999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY F17 5G 8/128 VIOLET POP"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-f/galaxy-f17-5g-black-128gb-sm-e176bzkains/",
+      "usedFor": [
+        "details",
+        "specs",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-f/galaxy-f17-5g-violet-pop-128gb-sm-e176blvbins/",
+      "usedFor": [
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-f/galaxy-f17-5g-black-128gb-sm-e176bzkdins/",
+      "usedFor": [
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-f/galaxy-f17-5g-violet-pop-128gb-sm-e176blvdins/",
+      "usedFor": [
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-f/galaxy-f17-5g-black-128gb-sm-e176bzkains/buy/",
+      "usedFor": [
+        "mrp",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-f/galaxy-f17-5g-violet-pop-128gb-sm-e176blvains/buy/",
+      "usedFor": [
+        "mrp",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-f/galaxy-f17-5g-black-128gb-sm-e176bzkbins/buy/",
+      "usedFor": [
+        "mrp",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/support/warranty/",
+      "usedFor": [
+        "warranty"
+      ],
+      "retrievedAt": "2026-10-19"
+    }
+  ]
+}

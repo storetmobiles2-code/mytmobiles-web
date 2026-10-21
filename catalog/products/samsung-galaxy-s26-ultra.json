@@ -1,0 +1,272 @@
+{
+  "slug": "samsung-galaxy-s26-ultra",
+  "name": "Samsung Galaxy S26 Ultra",
+  "brand": "Samsung",
+  "category": "smartphones",
+  "condition": "NEW",
+  "status": "draft",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "Samsung Galaxy S26 Ultra with a 17.49 cm (6.9 inch) 120 Hz QHD+ display, Snapdragon 8 Elite Gen 5 for Galaxy, 200 MP camera and S Pen support.",
+  "description": "The Samsung Galaxy S26 Ultra has a 17.49 cm (6.9 inch) QHD+ Dynamic AMOLED 2X display with a refresh rate of up to 120 Hz, and runs on the Snapdragon 8 Elite Gen 5 for Galaxy processor with 12 GB RAM and 256 GB or 512 GB storage. It supports the S Pen.\n\nOn the back are four cameras: 200 MP, 50 MP, 50 MP and 10 MP, with 3x and 5x optical zoom and digital zoom up to 100x. The front camera is 12 MP, and the phone records video in up to 8K at 30 fps.\n\nIt has an Armor Aluminum frame, Corning Gorilla Armor 2 on the front and Gorilla Glass Victus 2 on the back, an IP68 rating, a 5,000 mAh battery (typical), Wi-Fi 7, UWB, NFC and eSIM support. Samsung lists security updates until 28 February 2033. A charger (travel adapter) is not included in the box.",
+  "highlights": [
+    "17.49 cm (6.9 inch) QHD+ Dynamic AMOLED 2X display, up to 120 Hz",
+    "Snapdragon 8 Elite Gen 5 for Galaxy, 12 GB RAM",
+    "200 MP + 50 MP + 50 MP + 10 MP rear cameras, 3x and 5x optical zoom",
+    "5,000 mAh battery (typical), S Pen support",
+    "IP68, Gorilla Armor 2 front and Gorilla Glass Victus 2 back",
+    "Security updates until 28 February 2033 (per Samsung)"
+  ],
+  "specs": [
+    {
+      "group": "Display",
+      "items": [
+        {
+          "label": "Size",
+          "value": "17.49 cm (6.9 inch) full rectangle / 17.14 cm with rounded corners"
+        },
+        {
+          "label": "Resolution",
+          "value": "3120 x 1440 (QHD+)"
+        },
+        {
+          "label": "Type",
+          "value": "Dynamic AMOLED 2X"
+        },
+        {
+          "label": "Refresh rate",
+          "value": "Up to 120 Hz"
+        },
+        {
+          "label": "Colour depth",
+          "value": "16M"
+        },
+        {
+          "label": "Protection",
+          "value": "Corning Gorilla Armor 2 (front), Corning Gorilla Glass Victus 2 (back)"
+        },
+        {
+          "label": "S Pen support",
+          "value": "Yes"
+        }
+      ]
+    },
+    {
+      "group": "Performance",
+      "items": [
+        {
+          "label": "Processor",
+          "value": "Snapdragon 8 Elite Gen 5 for Galaxy"
+        },
+        {
+          "label": "CPU",
+          "value": "Octa-core, 4.74 GHz + 3.6 GHz"
+        },
+        {
+          "label": "RAM",
+          "value": "12 GB"
+        },
+        {
+          "label": "Storage",
+          "value": "256 GB (about 224.1 GB available) or 512 GB (about 479.2 GB available)"
+        },
+        {
+          "label": "Operating system",
+          "value": "Android with One UI"
+        },
+        {
+          "label": "Security updates",
+          "value": "Until 28 February 2033"
+        }
+      ]
+    },
+    {
+      "group": "Camera",
+      "items": [
+        {
+          "label": "Rear cameras",
+          "value": "200 MP (F1.4) + 50 MP (F2.9) + 50 MP (F1.9) + 10 MP (F2.4)"
+        },
+        {
+          "label": "Zoom",
+          "value": "3x and 5x optical, 2x and 10x optical-quality, digital up to 100x"
+        },
+        {
+          "label": "Stabilisation",
+          "value": "OIS"
+        },
+        {
+          "label": "Front camera",
+          "value": "12 MP (F2.2), autofocus"
+        },
+        {
+          "label": "Video recording",
+          "value": "Up to 8K (7680 x 4320) at 30 fps"
+        },
+        {
+          "label": "Slow motion",
+          "value": "240 fps at FHD, 120 fps at FHD and UHD"
+        }
+      ]
+    },
+    {
+      "group": "Battery",
+      "items": [
+        {
+          "label": "Capacity",
+          "value": "5,000 mAh (typical)"
+        },
+        {
+          "label": "Video playback",
+          "value": "Up to 31 hours"
+        },
+        {
+          "label": "Removable",
+          "value": "No"
+        }
+      ]
+    },
+    {
+      "group": "Network and connectivity",
+      "items": [
+        {
+          "label": "Network",
+          "value": "5G, 4G LTE, 3G, 2G"
+        },
+        {
+          "label": "SIM",
+          "value": "Dual SIM: Nano-SIM + Nano-SIM, Nano-SIM + eSIM, or dual eSIM"
+        },
+        {
+          "label": "Wi-Fi",
+          "value": "Wi-Fi 7 (802.11 a/b/g/n/ac/ax/be), 2.4/5/6 GHz"
+        },
+        {
+          "label": "Bluetooth",
+          "value": "v6.0"
+        },
+        {
+          "label": "NFC",
+          "value": "Yes"
+        },
+        {
+          "label": "UWB",
+          "value": "Yes"
+        },
+        {
+          "label": "USB",
+          "value": "USB Type-C (USB 3.2 Gen 1)"
+        },
+        {
+          "label": "Samsung DeX",
+          "value": "Yes"
+        }
+      ]
+    },
+    {
+      "group": "Design",
+      "items": [
+        {
+          "label": "Dimensions (H x W x D)",
+          "value": "163.6 x 78.1 x 7.9 mm"
+        },
+        {
+          "label": "Weight",
+          "value": "214 g"
+        },
+        {
+          "label": "Frame",
+          "value": "Armor Aluminum"
+        },
+        {
+          "label": "Dust and water resistance",
+          "value": "IP68"
+        },
+        {
+          "label": "Sensors",
+          "value": "Accelerometer, barometer, fingerprint sensor, gyro sensor, geomagnetic sensor, hall sensor, light sensor, proximity sensor"
+        }
+      ]
+    }
+  ],
+  "boxContents": [],
+  "keywords": [
+    "samsung",
+    "galaxy s26 ultra",
+    "s26 ultra",
+    "sm-s948b",
+    "snapdragon 8 elite gen 5",
+    "s pen",
+    "smartphone",
+    "5g"
+  ],
+  "warranty": "Samsung India manufacturer warranty: 12 months on the phone (battery 12 months) and 6 months on in-box accessories such as the data cable, from the date of purchase. Service at Samsung authorised service centres.",
+  "manufacturerInfo": null,
+  "countryOfOrigin": "India",
+  "hsnCode": "85171300",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": "Samsung Galaxy S26 Ultra | myT Mobiles",
+  "seoDescription": "Samsung Galaxy S26 Ultra: 6.9 inch 120 Hz QHD+ AMOLED, Snapdragon 8 Elite Gen 5 for Galaxy, 200 MP camera, S Pen. GST invoice included.",
+  "variants": [
+    {
+      "sku": "SAMSUNG-GALAXY-S26-ULTRA-12-256-COBALT-VIOLET",
+      "color": "Cobalt Violet",
+      "colorHex": null,
+      "ramGb": 12,
+      "storageGb": 256,
+      "mrp": 169999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG S26 ULTRA 12/256 GB COBALT VIOLET"
+      ]
+    },
+    {
+      "sku": "SAMSUNG-GALAXY-S26-ULTRA-12-512-SKY-BLUE",
+      "color": "Sky Blue",
+      "colorHex": null,
+      "ramGb": 12,
+      "storageGb": 512,
+      "mrp": 189999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY S26 ULTRA 12/512 SKY BLUE"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-s26-ultra/buy/",
+      "usedFor": [
+        "mrp",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-s/galaxy-s26-ultra-cobalt-violet-256gb-certified-re-newed-sm5s948bzvbins/",
+      "usedFor": [
+        "details",
+        "specs",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-s/galaxy-s26-ultra-cobalt-violet-512gb-certified-re-newed-sm5s948bzvcins/",
+      "usedFor": [
+        "specs",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/support/warranty/",
+      "usedFor": [
+        "warranty"
+      ],
+      "retrievedAt": "2026-10-19"
+    }
+  ]
+}

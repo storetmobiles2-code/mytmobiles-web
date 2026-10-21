@@ -148,10 +148,22 @@ export default async function ProductPage(props: PageProps<"/p/[slug]">) {
               </dl>
             </div>
           ))}
-          <div className="mt-4 grid grid-cols-[40%_1fr] gap-3 rounded-xl border border-ink-100 px-3 py-2.5 text-sm">
-            <span className="text-ink-500">Warranty</span>
-            <span>{product.warranty}</span>
-          </div>
+          {/* Legal Metrology (Packaged Commodities) Rules: manufacturer/importer and country of origin */}
+          <h3 className="mt-4 mb-2 text-xs font-bold tracking-wide text-ink-500 uppercase">Warranty and legal details</h3>
+          <dl className="divide-y divide-ink-100 rounded-xl border border-ink-100">
+            {[
+              ["Warranty", product.warranty],
+              ["Country of origin", product.countryOfOrigin],
+              ["Manufacturer / importer", product.manufacturerInfo],
+            ]
+              .filter((row): row is [string, string] => Boolean(row[1]))
+              .map(([label, value]) => (
+                <div key={label} className="grid grid-cols-[40%_1fr] gap-3 px-3 py-2.5 text-sm">
+                  <dt className="text-ink-500">{label}</dt>
+                  <dd className="whitespace-pre-line text-ink-900">{value}</dd>
+                </div>
+              ))}
+          </dl>
         </section>
         <section className="card p-5 sm:p-6" aria-labelledby="about">
           <h2 id="about" className="text-lg font-bold">About this product</h2>

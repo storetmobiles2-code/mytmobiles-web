@@ -1,4 +1,4 @@
-import { test, expect, ADMIN_EMAIL, ADMIN_PASSWORD } from "./fixtures";
+import { test, expect, ADMIN_EMAIL, ADMIN_PASSWORD, signInAsAdmin } from "./fixtures";
 
 /**
  * Complaint handling (Consumer Protection (E-Commerce) Rules, 2020): a guest
@@ -59,10 +59,7 @@ test.describe.serial("grievances", () => {
     test.skip(!ADMIN_EMAIL || !ADMIN_PASSWORD, "Set ADMIN_EMAIL/ADMIN_PASSWORD (or E2E_ADMIN_*)");
     test.skip(!ticket, "needs the ticket from the first test");
 
-    await page.goto("/login?next=/admin/grievances");
-    await page.getByLabel("Email", { exact: true }).fill(ADMIN_EMAIL);
-    await page.getByLabel("Password", { exact: true }).fill(ADMIN_PASSWORD);
-    await page.getByRole("button", { name: "Sign in" }).click();
+    await signInAsAdmin(page, "/admin/grievances");
     await expect(page.getByRole("heading", { name: "Grievances" })).toBeVisible();
 
     await page.goto(`/admin/grievances?q=${ticket}`);

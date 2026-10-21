@@ -1,0 +1,241 @@
+{
+  "slug": "samsung-galaxy-a57-5g-demo-unit",
+  "name": "Samsung Galaxy A57 5G (Demo Unit)",
+  "brand": "Samsung",
+  "category": "smartphones",
+  "condition": "DEMO",
+  "status": "live",
+  "featured": false,
+  "is5G": true,
+  "launchedAt": null,
+  "shortDescription": "Open-box demo (display) unit of the Samsung Galaxy A57 5G. It has a 17.11 cm (6.7 inch) 120 Hz Super AMOLED Plus display, 50 MP OIS camera, 5,000 mAh battery and IP68 rating.",
+  "description": "This is a demo (display) unit of the Samsung Galaxy A57 5G that was used for in-store demonstration, sold open-box at a lower price. It may show light signs of handling. Please contact us before ordering if you'd like to know its exact condition, the accessories included and the remaining manufacturer warranty.\n\nThe Samsung Galaxy A57 5G has a 17.11 cm (6.7 inch) FHD+ Super AMOLED Plus display with a refresh rate of up to 120 Hz. It has an octa-core processor (2.9 GHz + 2.6 GHz + 1.9 GHz) with 8 GB or 12 GB RAM and 256 GB storage.\n\nThere are three rear cameras (50 MP with OIS, 12 MP and 5 MP) and a 12 MP front camera, with 4K video recording and stereo speakers. The phone has a 5,000 mAh battery (typical), NFC, eSIM support, Bluetooth 6.0, Corning Gorilla Glass Victus+ on the front and back, and an IP68 rating. It is 6.9 mm thin and weighs 179 g.\n\nSamsung lists up to 6 OS upgrades for this model, with security updates until 31 March 2032.",
+  "highlights": [
+    "17.11 cm (6.7 inch) FHD+ Super AMOLED Plus display, up to 120 Hz",
+    "50 MP (OIS) + 12 MP + 5 MP rear cameras, 12 MP front camera",
+    "5,000 mAh battery (typical)",
+    "IP68 dust and water resistance, Gorilla Glass Victus+ front and back",
+    "6.9 mm thin, 179 g",
+    "Open-box demo unit, priced below new"
+  ],
+  "specs": [
+    {
+      "group": "Display",
+      "items": [
+        {
+          "label": "Size",
+          "value": "17.11 cm (6.7 inch) full rectangle / 16.64 cm with rounded corners"
+        },
+        {
+          "label": "Resolution",
+          "value": "1080 x 2340 (FHD+)"
+        },
+        {
+          "label": "Type",
+          "value": "Super AMOLED Plus"
+        },
+        {
+          "label": "Refresh rate",
+          "value": "Up to 120 Hz"
+        },
+        {
+          "label": "Colour depth",
+          "value": "16M"
+        },
+        {
+          "label": "Protection",
+          "value": "Corning Gorilla Glass Victus+ (front and back)"
+        }
+      ]
+    },
+    {
+      "group": "Performance",
+      "items": [
+        {
+          "label": "CPU",
+          "value": "Octa-core, 2.9 GHz + 2.6 GHz + 1.9 GHz"
+        },
+        {
+          "label": "RAM",
+          "value": "8 GB or 12 GB"
+        },
+        {
+          "label": "Storage",
+          "value": "256 GB (about 233 GB available)"
+        },
+        {
+          "label": "Operating system",
+          "value": "Android with One UI"
+        },
+        {
+          "label": "Security updates",
+          "value": "Until 31 March 2032"
+        }
+      ]
+    },
+    {
+      "group": "Camera",
+      "items": [
+        {
+          "label": "Rear cameras",
+          "value": "50 MP (F1.8) + 12 MP (F2.2) + 5 MP (F2.4), autofocus, flash"
+        },
+        {
+          "label": "Stabilisation",
+          "value": "OIS"
+        },
+        {
+          "label": "Front camera",
+          "value": "12 MP (F2.2)"
+        },
+        {
+          "label": "Zoom",
+          "value": "Digital zoom up to 10x"
+        },
+        {
+          "label": "Video recording",
+          "value": "UHD 4K (3840 x 2160) at 30 fps"
+        },
+        {
+          "label": "Slow motion",
+          "value": "240 fps at HD"
+        }
+      ]
+    },
+    {
+      "group": "Battery",
+      "items": [
+        {
+          "label": "Capacity",
+          "value": "5,000 mAh (typical)"
+        },
+        {
+          "label": "Video playback",
+          "value": "Up to 29 hours"
+        },
+        {
+          "label": "Removable",
+          "value": "No"
+        }
+      ]
+    },
+    {
+      "group": "Network and connectivity",
+      "items": [
+        {
+          "label": "Network",
+          "value": "5G, 4G LTE, 3G, 2G"
+        },
+        {
+          "label": "SIM",
+          "value": "Dual SIM: Nano-SIM + Nano-SIM, Nano-SIM + eSIM, or dual eSIM"
+        },
+        {
+          "label": "Wi-Fi",
+          "value": "802.11 a/b/g/n/ac/ax, 2.4 GHz + 5 GHz + 6 GHz"
+        },
+        {
+          "label": "Bluetooth",
+          "value": "v6.0"
+        },
+        {
+          "label": "NFC",
+          "value": "Yes"
+        },
+        {
+          "label": "USB",
+          "value": "USB Type-C (USB 2.0), also used for audio"
+        },
+        {
+          "label": "Location",
+          "value": "GPS, Glonass, Beidou, Galileo, QZSS"
+        }
+      ]
+    },
+    {
+      "group": "Design",
+      "items": [
+        {
+          "label": "Dimensions (H x W x D)",
+          "value": "161.5 x 76.8 x 6.9 mm"
+        },
+        {
+          "label": "Weight",
+          "value": "179 g"
+        },
+        {
+          "label": "Dust and water resistance",
+          "value": "IP68"
+        },
+        {
+          "label": "Speakers",
+          "value": "Stereo"
+        },
+        {
+          "label": "Sensors",
+          "value": "Accelerometer, fingerprint sensor, gyro sensor, geomagnetic sensor, light sensor, proximity sensor"
+        }
+      ]
+    }
+  ],
+  "boxContents": [],
+  "keywords": [
+    "samsung",
+    "galaxy a57 5g",
+    "a57",
+    "samsung 5g phone",
+    "sm-a576b",
+    "ip68",
+    "smartphone",
+    "5g",
+    "demo",
+    "open box"
+  ],
+  "warranty": "Manufacturer warranty as applicable from the original activation date — ask us for the remaining period.",
+  "manufacturerInfo": "Manufactured by: Samsung India Electronics Pvt. Ltd. having its Registered Office at: 6th Floor, DLF Centre, Sansad Marg, New Delhi-110001",
+  "countryOfOrigin": "India",
+  "hsnCode": "85171300",
+  "gstRatePercent": 18,
+  "returnWindowDays": 0,
+  "seoTitle": "Samsung Galaxy A57 5G Demo Unit | myT Mobiles",
+  "seoDescription": "Open-box demo unit. Samsung Galaxy A57 5G: 6.7 inch 120 Hz Super AMOLED Plus, 50 MP OIS camera, 5,000 mAh battery, IP68. GST invoice included.",
+  "variants": [
+    {
+      "sku": "SAMSUNG-GALAXY-A57-5G-DEMO-UNIT-8-256-AWESOME-NAVY",
+      "color": "Awesome Navy",
+      "colorHex": null,
+      "ramGb": 8,
+      "storageGb": 256,
+      "mrp": 77999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY A57 8/256 AWESOME NAVY DEMO UNIT"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-a/galaxy-a57-5g-awesome-navy-256gb-sm-a576bdbfins/",
+      "usedFor": [
+        "details",
+        "specs",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/smartphones/galaxy-a57/buy/",
+      "usedFor": [
+        "mrp"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.samsung.com/in/support/warranty/",
+      "usedFor": [
+        "warranty"
+      ],
+      "retrievedAt": "2026-10-19"
+    }
+  ]
+}
