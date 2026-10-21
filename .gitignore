@@ -57,3 +57,6 @@ next-env.d.ts
 
 # agent worktrees
 /.claude/worktrees/
+
+# graphify code graph (rebuilt per session by scripts/graph.sh)
+/graphify-out/

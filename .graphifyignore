@@ -1,0 +1,8 @@
+# graphify: what not to put in the code graph (gitignored paths are skipped already)
+src/generated/
+public/
+demo-site/
+.claude/worktrees/
+docs/handoff/
+catalog/products/_wip/
+*.lock.json
