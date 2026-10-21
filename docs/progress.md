@@ -29,7 +29,7 @@ Merge integration decisions:
 - GST reports are ADMIN only (`reports.view`).
 - Grievance updates and GST exports are written to the audit log.
 
-Checks run on the merged branch: lint, typecheck, unit tests (110), the production build and the full e2e suite (47) pass.
+Checks run on the merged branch: lint, typecheck, unit tests (127), the production build and the full e2e suite (47) pass.
 
 ## Unfinished: pick up here
 
@@ -105,6 +105,6 @@ Partly researched files are parked in `catalog/products/_wip/`, where validation
 
 Results of the last full run on the merged branch are recorded here.
 
-- **Unit tests:** 110 passed.
+- **Unit tests:** 127 passed.
 - **Production build:** passed.
 - **e2e (Playwright, fresh seeded database):** 47 of 47 passed on desktop and mobile on 21 October 2026, after merging grievances, roles and GST. Recipe in the store-dev skill.

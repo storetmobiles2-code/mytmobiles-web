@@ -15,7 +15,7 @@ describe("role → permission map", () => {
 
   it("lets STAFF into the admin for day-to-day fulfilment", () => {
     expect(canAccessAdmin("STAFF")).toBe(true);
-    const allowed: Permission[] = ["dashboard.view", "orders.view", "orders.update", "orders.print", "orders.cancel", "products.view", "reviews.moderate"];
+    const allowed: Permission[] = ["dashboard.view", "orders.view", "orders.update", "orders.print", "orders.cancel", "products.view", "reviews.moderate", "grievances.manage"];
     for (const p of allowed) expect(hasPermission("STAFF", p), p).toBe(true);
   });
 
@@ -32,6 +32,7 @@ describe("role → permission map", () => {
       "customers.view",
       "customers.manage",
       "analytics.view",
+      "reports.view",
       "staff.manage",
       "audit.view",
     ];
