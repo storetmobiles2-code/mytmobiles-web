@@ -1,0 +1,272 @@
+{
+  "slug": "apple-iphone-15",
+  "name": "Apple iPhone 15",
+  "brand": "Apple",
+  "category": "smartphones",
+  "condition": "NEW",
+  "status": "draft",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "iPhone 15 with a 6.1-inch Super Retina XDR display, A16 Bionic chip, 48 MP main camera and USB-C.",
+  "description": "The iPhone 15 has a 6.1-inch Super Retina XDR OLED display with the Dynamic Island and runs on the A16 Bionic chip with a 6-core CPU and 5-core GPU.\n\nIts dual-camera system pairs a 48 MP Main camera with a 12 MP Ultra Wide camera, with a 2x optical-quality telephoto option. The front TrueDepth camera is 12 MP. It records 4K video at up to 60 fps, including Dolby Vision HDR.\n\nIt has an aluminium design with a Ceramic Shield front and colour-infused glass back, is rated IP68, and supports 5G, Wi-Fi 6, USB-C and MagSafe wireless charging up to 15 W. Apple quotes up to 20 hours of video playback. A USB-C charge cable is in the box; the power adapter is sold separately.",
+  "highlights": [
+    "6.1-inch Super Retina XDR display with Dynamic Island",
+    "A16 Bionic chip",
+    "48 MP Main + 12 MP Ultra Wide rear cameras, 12 MP front camera",
+    "USB-C, MagSafe wireless charging up to 15 W",
+    "IP68 splash, water and dust resistance",
+    "GST invoice with every order"
+  ],
+  "specs": [
+    {
+      "group": "Display",
+      "items": [
+        {
+          "label": "Size",
+          "value": "6.1-inch (diagonal) all-screen OLED"
+        },
+        {
+          "label": "Type",
+          "value": "Super Retina XDR, Dynamic Island"
+        },
+        {
+          "label": "Resolution",
+          "value": "2556 x 1179 pixels at 460 ppi"
+        },
+        {
+          "label": "Brightness",
+          "value": "1,000 nits max (typical); 1,600 nits peak (HDR); 2,000 nits peak (outdoor)"
+        }
+      ]
+    },
+    {
+      "group": "Performance",
+      "items": [
+        {
+          "label": "Chip",
+          "value": "A16 Bionic"
+        },
+        {
+          "label": "CPU",
+          "value": "6-core (2 performance, 4 efficiency cores)"
+        },
+        {
+          "label": "GPU",
+          "value": "5-core"
+        },
+        {
+          "label": "Neural Engine",
+          "value": "16-core"
+        },
+        {
+          "label": "Storage",
+          "value": "128 GB or 256 GB (as per variant)"
+        },
+        {
+          "label": "Operating system",
+          "value": "iOS"
+        }
+      ]
+    },
+    {
+      "group": "Camera",
+      "items": [
+        {
+          "label": "Rear",
+          "value": "48 MP Main (ƒ/1.6, sensor-shift OIS) + 12 MP Ultra Wide (ƒ/2.4, 120°)"
+        },
+        {
+          "label": "Zoom",
+          "value": "12 MP 2x Telephoto (quad-pixel sensor); digital zoom up to 10x"
+        },
+        {
+          "label": "Front",
+          "value": "12 MP TrueDepth camera, ƒ/1.9, autofocus"
+        },
+        {
+          "label": "Video",
+          "value": "4K at 24, 25, 30 or 60 fps; Dolby Vision HDR up to 4K at 60 fps; Cinematic mode up to 4K HDR at 30 fps"
+        }
+      ]
+    },
+    {
+      "group": "Battery and charging",
+      "items": [
+        {
+          "label": "Video playback",
+          "value": "Up to 20 hours (up to 16 hours streamed)"
+        },
+        {
+          "label": "Audio playback",
+          "value": "Up to 80 hours"
+        },
+        {
+          "label": "Fast charging",
+          "value": "Up to 50% in around 30 minutes with a 20 W adapter or higher (sold separately)"
+        },
+        {
+          "label": "Wireless",
+          "value": "MagSafe up to 15 W; Qi up to 7.5 W"
+        },
+        {
+          "label": "Connector",
+          "value": "USB-C (USB 2, up to 480 Mbps)"
+        }
+      ]
+    },
+    {
+      "group": "Connectivity",
+      "items": [
+        {
+          "label": "Network",
+          "value": "5G (sub-6 GHz), Gigabit LTE"
+        },
+        {
+          "label": "Wi-Fi",
+          "value": "Wi-Fi 6 (802.11ax) with 2x2 MIMO"
+        },
+        {
+          "label": "Bluetooth",
+          "value": "Bluetooth 5.3"
+        },
+        {
+          "label": "Other",
+          "value": "NFC with reader mode, second-generation Ultra Wideband chip"
+        },
+        {
+          "label": "Location",
+          "value": "GPS, GLONASS, Galileo, QZSS and BeiDou"
+        }
+      ]
+    },
+    {
+      "group": "Design",
+      "items": [
+        {
+          "label": "Build",
+          "value": "Aluminium design, Ceramic Shield front, colour-infused glass back"
+        },
+        {
+          "label": "Water and dust resistance",
+          "value": "IP68 (maximum depth of 6 metres up to 30 minutes)"
+        },
+        {
+          "label": "Dimensions",
+          "value": "147.6 x 71.6 x 7.80 mm"
+        },
+        {
+          "label": "Weight",
+          "value": "171 g"
+        },
+        {
+          "label": "Security",
+          "value": "Face ID"
+        }
+      ]
+    }
+  ],
+  "boxContents": [
+    "iPhone 15",
+    "USB-C Charge Cable (1 m)",
+    "Documentation"
+  ],
+  "keywords": [
+    "iphone 15",
+    "iphone",
+    "apple",
+    "apple iphone",
+    "a16 bionic",
+    "128gb",
+    "256gb",
+    "5g phone"
+  ],
+  "warranty": "1 year Apple limited warranty (hardware coverage), in addition to your rights under consumer law.",
+  "manufacturerInfo": null,
+  "countryOfOrigin": null,
+  "hsnCode": "85171300",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": "Apple iPhone 15 | myT Mobiles",
+  "seoDescription": "iPhone 15 with 6.1-inch Super Retina XDR display, A16 Bionic chip, 48 MP main camera and USB-C. GST invoice with every order.",
+  "variants": [
+    {
+      "sku": "APPLE-IPHONE-15-128-BLACK",
+      "color": "Black",
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": 128,
+      "mrp": 59900,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "APPLE IPHONE 15 BLACK 128 GB"
+      ]
+    },
+    {
+      "sku": "APPLE-IPHONE-15-128-BLUE",
+      "color": "Blue",
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": 128,
+      "mrp": 59900,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "APPLE IPHONE 15 BLUE 128GB"
+      ]
+    },
+    {
+      "sku": "APPLE-IPHONE-15-128-GREEN",
+      "color": "Green",
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": 128,
+      "mrp": 52999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "APPLE IPHONE 15 GREEN 128 GB"
+      ]
+    },
+    {
+      "sku": "APPLE-IPHONE-15-128-PINK",
+      "color": "Pink",
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": 128,
+      "mrp": 54999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "APPLE IPHONE 15 PINK 128 GB"
+      ]
+    },
+    {
+      "sku": "APPLE-IPHONE-15-256-BLUE",
+      "color": "Blue",
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": 256,
+      "mrp": 69900,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "APPLE IPHONE 15 BLUE 256 GB"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://support.apple.com/en-in/111831",
+      "usedFor": [
+        "specs",
+        "details",
+        "box"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.apple.com/in/applecare/",
+      "usedFor": [
+        "warranty"
+      ],
+      "retrievedAt": "2026-10-19"
+    }
+  ]
+}

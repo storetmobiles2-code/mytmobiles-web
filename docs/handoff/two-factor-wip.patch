@@ -1,0 +1,2301 @@
+diff --git a/.env.example b/.env.example
+index e7ff0c0..70729d6 100644
+--- a/.env.example
++++ b/.env.example
+@@ -10,6 +10,14 @@ CRON_SECRET=""
+ ADMIN_EMAIL=""
+ ADMIN_PASSWORD=""
+ 
++# Admin two-factor sign-in. Encrypts authenticator secrets at rest (AES-256-GCM).
++# 32 random bytes, base64: `openssl rand -base64 32`. Keep it stable: changing it
++# makes every enrolled admin unable to sign in until reset (npm run auth:reset-2fa).
++TOTP_ENCRYPTION_KEY=""
++# Every admin account must have two-factor sign-in on. Set to "false" only for
++# local development; it is ignored in production.
++ADMIN_2FA_ENFORCED="true"
++
+ # ── Online payments (Razorpay) — online payment is hidden at checkout until set ──
+ RAZORPAY_KEY_ID=""
+ RAZORPAY_KEY_SECRET=""
+diff --git a/package-lock.json b/package-lock.json
+index 02c2171..e003572 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -16,6 +16,7 @@
+         "next": "16.3.8",
+         "nodemailer": "^10.0.14",
+         "pg": "^8.23.1",
++        "qrcode": "^1.5.4",
+         "react": "19.2.8",
+         "react-dom": "19.2.8",
+         "server-only": "^0.0.1",
+@@ -29,6 +30,7 @@
+         "@types/node": "^22.20.5",
+         "@types/nodemailer": "^8.0.2",
+         "@types/pg": "^8.23.1",
++        "@types/qrcode": "^1.5.6",
+         "@types/react": "^19",
+         "@types/react-dom": "^19",
+         "dotenv": "^18.0.5",
+@@ -2992,6 +2994,16 @@
+         "pg-types": "^2.2.0"
+       }
+     },
++    "node_modules/@types/qrcode": {
++      "version": "1.5.6",
++      "resolved": "https://registry.npmjs.org/@types/qrcode/-/qrcode-1.5.6.tgz",
++      "integrity": "sha512-te7NQcV2BOvdj2b1hCAHzAoMNuj65kNBMz0KBaxM6c3VGBOhU0dURQKOtH8CFNI/dsKkwlv32p26qYQTWoB5bw==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@types/node": "*"
++      }
++    },
+     "node_modules/@types/react": {
+       "version": "19.3.0",
+       "resolved": "https://registry.npmjs.org/@types/react/-/react-19.3.0.tgz",
+@@ -3870,11 +3882,19 @@
+         "url": "https://github.com/sponsors/epoberezkin"
+       }
+     },
++    "node_modules/ansi-regex": {
++      "version": "5.0.1",
++      "resolved": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-5.0.1.tgz",
++      "integrity": "sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==",
++      "license": "MIT",
++      "engines": {
++        "node": ">=8"
++      }
++    },
+     "node_modules/ansi-styles": {
+       "version": "4.3.0",
+       "resolved": "https://registry.npmjs.org/ansi-styles/-/ansi-styles-4.3.0.tgz",
+       "integrity": "sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg==",
+-      "dev": true,
+       "license": "MIT",
+       "dependencies": {
+         "color-convert": "^2.0.1"
+@@ -4322,6 +4342,15 @@
+         "node": ">=6"
+       }
+     },
++    "node_modules/camelcase": {
++      "version": "5.3.1",
++      "resolved": "https://registry.npmjs.org/camelcase/-/camelcase-5.3.1.tgz",
++      "integrity": "sha512-L28STB170nwWS63UjtlEOE3dldQApaJXZkOI1uMFfzf3rRuPegHaHesyee+YxQ+W6SvRDQV6UrdOdRiR153wJg==",
++      "license": "MIT",
++      "engines": {
++        "node": ">=6"
++      }
++    },
+     "node_modules/caniuse-lite": {
+       "version": "1.0.30001814",
+       "resolved": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001814.tgz",
+@@ -4398,6 +4427,17 @@
+       "integrity": "sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==",
+       "license": "MIT"
+     },
++    "node_modules/cliui": {
++      "version": "6.0.0",
++      "resolved": "https://registry.npmjs.org/cliui/-/cliui-6.0.0.tgz",
++      "integrity": "sha512-t6wbgtoCXvAzst7QgXxJYqPt0usEfbgQdftEPbLL/cvv6HPE5VgvqCuAIDR0NgU52ds6rFwqrgakNLrHEjCbrQ==",
++      "license": "ISC",
++      "dependencies": {
++        "string-width": "^4.2.0",
++        "strip-ansi": "^6.0.0",
++        "wrap-ansi": "^6.2.0"
++      }
++    },
+     "node_modules/clsx": {
+       "version": "2.1.1",
+       "resolved": "https://registry.npmjs.org/clsx/-/clsx-2.1.1.tgz",
+@@ -4411,7 +4451,6 @@
+       "version": "2.0.1",
+       "resolved": "https://registry.npmjs.org/color-convert/-/color-convert-2.0.1.tgz",
+       "integrity": "sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/52OVTRKb4zP5onXwVF3zVmmToNcOfGC+CRDpfK/U584fMg38ZHCaElKQ==",
+-      "dev": true,
+       "license": "MIT",
+       "dependencies": {
+         "color-name": "~1.1.4"
+@@ -4424,7 +4463,6 @@
+       "version": "1.1.4",
+       "resolved": "https://registry.npmjs.org/color-name/-/color-name-1.1.4.tgz",
+       "integrity": "sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==",
+-      "dev": true,
+       "license": "MIT"
+     },
+     "node_modules/concat-map": {
+@@ -4687,6 +4725,15 @@
+         }
+       }
+     },
++    "node_modules/decamelize": {
++      "version": "1.2.0",
++      "resolved": "https://registry.npmjs.org/decamelize/-/decamelize-1.2.0.tgz",
++      "integrity": "sha512-z2S+W9X73hAUUki+N+9Za2lBlun89zigOyGrsax+KUQ6wKW4ZoWpEYBkGhQjwAjjDCkWxhY0VKEhk8wzY7F5cA==",
++      "license": "MIT",
++      "engines": {
++        "node": ">=0.10.0"
++      }
++    },
+     "node_modules/deep-is": {
+       "version": "0.1.4",
+       "resolved": "https://registry.npmjs.org/deep-is/-/deep-is-0.1.4.tgz",
+@@ -4783,6 +4830,12 @@
+         "node": ">=8"
+       }
+     },
++    "node_modules/dijkstrajs": {
++      "version": "1.0.3",
++      "resolved": "https://registry.npmjs.org/dijkstrajs/-/dijkstrajs-1.0.3.tgz",
++      "integrity": "sha512-qiSlmBq9+BCdCA/L46dw8Uy93mloxsPSbwnm5yrKn2vMPiy8KyAskTF6zuV/j5BMsmOGZDPs7KjU+mjb670kfA==",
++      "license": "MIT"
++    },
+     "node_modules/doctrine": {
+       "version": "2.1.0",
+       "resolved": "https://registry.npmjs.org/doctrine/-/doctrine-2.1.0.tgz",
+@@ -5920,6 +5973,15 @@
+         "node": ">=6.9.0"
+       }
+     },
++    "node_modules/get-caller-file": {
++      "version": "2.0.5",
++      "resolved": "https://registry.npmjs.org/get-caller-file/-/get-caller-file-2.0.5.tgz",
++      "integrity": "sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg==",
++      "license": "ISC",
++      "engines": {
++        "node": "6.* || 8.* || >= 10.*"
++      }
++    },
+     "node_modules/get-intrinsic": {
+       "version": "1.3.0",
+       "resolved": "https://registry.npmjs.org/get-intrinsic/-/get-intrinsic-1.3.0.tgz",
+@@ -6474,6 +6536,15 @@
+         "url": "https://github.com/sponsors/ljharb"
+       }
+     },
++    "node_modules/is-fullwidth-code-point": {
++      "version": "3.0.0",
++      "resolved": "https://registry.npmjs.org/is-fullwidth-code-point/-/is-fullwidth-code-point-3.0.0.tgz",
++      "integrity": "sha512-zymm5+u+sCsSWyD9qNaejV3DFvhCKclKdizYaJUuHA83RLjb7nSuGnddCHGv0hk+KY7BMAlsWeK4Ueg6EV6XQg==",
++      "license": "MIT",
++      "engines": {
++        "node": ">=8"
++      }
++    },
+     "node_modules/is-generator-function": {
+       "version": "1.1.2",
+       "resolved": "https://registry.npmjs.org/is-generator-function/-/is-generator-function-1.1.2.tgz",
+@@ -7724,6 +7795,15 @@
+         "url": "https://github.com/sponsors/sindresorhus"
+       }
+     },
++    "node_modules/p-try": {
++      "version": "2.2.0",
++      "resolved": "https://registry.npmjs.org/p-try/-/p-try-2.2.0.tgz",
++      "integrity": "sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==",
++      "license": "MIT",
++      "engines": {
++        "node": ">=6"
++      }
++    },
+     "node_modules/parent-module": {
+       "version": "1.0.1",
+       "resolved": "https://registry.npmjs.org/parent-module/-/parent-module-1.0.1.tgz",
+@@ -7741,7 +7821,6 @@
+       "version": "4.0.0",
+       "resolved": "https://registry.npmjs.org/path-exists/-/path-exists-4.0.0.tgz",
+       "integrity": "sha512-ak9Qy5Q7jYb2Wwcey5Fpvg2KoAc/ZIhLSLOSBmRmygPsGwkVVt0fZa0qrtMz+m6tJTAHfZQ8FnmB4MG4LWy7/w==",
+-      "dev": true,
+       "license": "MIT",
+       "engines": {
+         "node": ">=8"
+@@ -7946,6 +8025,15 @@
+         "node": ">=18"
+       }
+     },
++    "node_modules/pngjs": {
++      "version": "5.0.0",
++      "resolved": "https://registry.npmjs.org/pngjs/-/pngjs-5.0.0.tgz",
++      "integrity": "sha512-40QW5YalBNfQo5yRYmiw7Yz6TKKVr3h6970B2YE+3fQpsWcrbj1PzJgxeJ19DRQjhMbKPIuMY8rFaXc8moolVw==",
++      "license": "MIT",
++      "engines": {
++        "node": ">=10.13.0"
++      }
++    },
+     "node_modules/possible-typed-array-names": {
+       "version": "1.1.0",
+       "resolved": "https://registry.npmjs.org/possible-typed-array-names/-/possible-typed-array-names-1.1.0.tgz",
+@@ -8140,6 +8228,23 @@
+       ],
+       "license": "MIT"
+     },
++    "node_modules/qrcode": {
++      "version": "1.5.4",
++      "resolved": "https://registry.npmjs.org/qrcode/-/qrcode-1.5.4.tgz",
++      "integrity": "sha512-1ca71Zgiu6ORjHqFBDpnSMTR2ReToX4l1Au1VFLyVeBTFavzQnv5JxMFr3ukHVKpSrSA2MCk0lNJSykjUfz7Zg==",
++      "license": "MIT",
++      "dependencies": {
++        "dijkstrajs": "^1.0.1",
++        "pngjs": "^5.0.0",
++        "yargs": "^15.3.1"
++      },
++      "bin": {
++        "qrcode": "bin/qrcode"
++      },
++      "engines": {
++        "node": ">=10.13.0"
++      }
++    },
+     "node_modules/queue-microtask": {
+       "version": "1.2.3",
+       "resolved": "https://registry.npmjs.org/queue-microtask/-/queue-microtask-1.2.3.tgz",
+@@ -8268,6 +8373,15 @@
+         "url": "https://github.com/sponsors/remeda"
+       }
+     },
++    "node_modules/require-directory": {
++      "version": "2.1.1",
++      "resolved": "https://registry.npmjs.org/require-directory/-/require-directory-2.1.1.tgz",
++      "integrity": "sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==",
++      "license": "MIT",
++      "engines": {
++        "node": ">=0.10.0"
++      }
++    },
+     "node_modules/require-from-string": {
+       "version": "2.0.2",
+       "resolved": "https://registry.npmjs.org/require-from-string/-/require-from-string-2.0.2.tgz",
+@@ -8278,6 +8392,12 @@
+         "node": ">=0.10.0"
+       }
+     },
++    "node_modules/require-main-filename": {
++      "version": "2.0.0",
++      "resolved": "https://registry.npmjs.org/require-main-filename/-/require-main-filename-2.0.0.tgz",
++      "integrity": "sha512-NKN5kMDylKuldxYLSUfrbo5Tuzh4hd+2E8NPPX02mZtn1VuREQToYe/ZdlJy+J3uCpfaiGF05e7B8W0iXbQHmg==",
++      "license": "ISC"
++    },
+     "node_modules/resolve": {
+       "version": "2.0.0-next.7",
+       "resolved": "https://registry.npmjs.org/resolve/-/resolve-2.0.0-next.7.tgz",
+@@ -8532,6 +8652,12 @@
+       "integrity": "sha512-qepMx2JxAa5jjfzxG79yPPq+8BuFToHd1hm7kI+Z4zAq1ftQiP7HcxMhDDItrbtwVeLg/cY2JnKnrcFkmiswNA==",
+       "license": "MIT"
+     },
++    "node_modules/set-blocking": {
++      "version": "2.0.0",
++      "resolved": "https://registry.npmjs.org/set-blocking/-/set-blocking-2.0.0.tgz",
++      "integrity": "sha512-KiKBS8AnWGEyLzofFfmvKwpdPzqiy16LvQfK3yv/fVH7Bj13/wl3JSR1J+rfgRE9q7xUJK4qvgS8raSOeLUehw==",
++      "license": "ISC"
++    },
+     "node_modules/set-function-length": {
+       "version": "1.2.2",
+       "resolved": "https://registry.npmjs.org/set-function-length/-/set-function-length-1.2.2.tgz",
+@@ -8810,6 +8936,26 @@
+         "node": ">= 0.4"
+       }
+     },
++    "node_modules/string-width": {
++      "version": "4.2.3",
++      "resolved": "https://registry.npmjs.org/string-width/-/string-width-4.2.3.tgz",
++      "integrity": "sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==",
++      "license": "MIT",
++      "dependencies": {
++        "emoji-regex": "^8.0.0",
++        "is-fullwidth-code-point": "^3.0.0",
++        "strip-ansi": "^6.0.1"
++      },
++      "engines": {
++        "node": ">=8"
++      }
++    },
++    "node_modules/string-width/node_modules/emoji-regex": {
++      "version": "8.0.0",
++      "resolved": "https://registry.npmjs.org/emoji-regex/-/emoji-regex-8.0.0.tgz",
++      "integrity": "sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==",
++      "license": "MIT"
++    },
+     "node_modules/string.prototype.includes": {
+       "version": "2.0.1",
+       "resolved": "https://registry.npmjs.org/string.prototype.includes/-/string.prototype.includes-2.0.1.tgz",
+@@ -8924,6 +9070,18 @@
+         "url": "https://github.com/sponsors/ljharb"
+       }
+     },
++    "node_modules/strip-ansi": {
++      "version": "6.0.1",
++      "resolved": "https://registry.npmjs.org/strip-ansi/-/strip-ansi-6.0.1.tgz",
++      "integrity": "sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==",
++      "license": "MIT",
++      "dependencies": {
++        "ansi-regex": "^5.0.1"
++      },
++      "engines": {
++        "node": ">=8"
++      }
++    },
+     "node_modules/strip-bom": {
+       "version": "3.0.0",
+       "resolved": "https://registry.npmjs.org/strip-bom/-/strip-bom-3.0.0.tgz",
+@@ -10002,6 +10160,12 @@
+         "url": "https://github.com/sponsors/ljharb"
+       }
+     },
++    "node_modules/which-module": {
++      "version": "2.0.1",
++      "resolved": "https://registry.npmjs.org/which-module/-/which-module-2.0.1.tgz",
++      "integrity": "sha512-iBdZ57RDvnOR9AGBhML2vFZf7h8vmBjhoaZqODJBFWHVtKkDmKuHai3cx5PgVMrX5YDNp27AofYbAwctSS+vhQ==",
++      "license": "ISC"
++    },
+     "node_modules/which-typed-array": {
+       "version": "1.1.24",
+       "resolved": "https://registry.npmjs.org/which-typed-array/-/which-typed-array-1.1.24.tgz",
+@@ -10047,6 +10211,20 @@
+         "node": ">=0.10.0"
+       }
+     },
++    "node_modules/wrap-ansi": {
++      "version": "6.2.0",
++      "resolved": "https://registry.npmjs.org/wrap-ansi/-/wrap-ansi-6.2.0.tgz",
++      "integrity": "sha512-r6lPcBGxZXlIcymEu7InxDMhdW0KDxpLgoFLcguasxCaJ/SOIZwINatK9KY/tf+ZrlywOKU0UDj3ATXUBfxJXA==",
++      "license": "MIT",
++      "dependencies": {
++        "ansi-styles": "^4.0.0",
++        "string-width": "^4.1.0",
++        "strip-ansi": "^6.0.0"
++      },
++      "engines": {
++        "node": ">=8"
++      }
++    },
+     "node_modules/xtend": {
+       "version": "4.0.2",
+       "resolved": "https://registry.npmjs.org/xtend/-/xtend-4.0.2.tgz",
+@@ -10056,6 +10234,12 @@
+         "node": ">=0.4"
+       }
+     },
++    "node_modules/y18n": {
++      "version": "4.0.3",
++      "resolved": "https://registry.npmjs.org/y18n/-/y18n-4.0.3.tgz",
++      "integrity": "sha512-JKhqTOwSrqNA1NY5lSztJ1GrBiUodLMmIZuLiDaMRJ+itFd+ABVE8XBjOvIWL+rSqNDC74LCSFmlb/U4UZ4hJQ==",
++      "license": "ISC"
++    },
+     "node_modules/yallist": {
+       "version": "3.1.1",
+       "resolved": "https://registry.npmjs.org/yallist/-/yallist-3.1.1.tgz",
+@@ -10063,6 +10247,93 @@
+       "dev": true,
+       "license": "ISC"
+     },
++    "node_modules/yargs": {
++      "version": "15.4.1",
++      "resolved": "https://registry.npmjs.org/yargs/-/yargs-15.4.1.tgz",
++      "integrity": "sha512-aePbxDmcYW++PaqBsJ+HYUFwCdv4LVvdnhBy78E57PIor8/OVvhMrADFFEDh8DHDFRv/O9i3lPhsENjO7QX0+A==",
++      "license": "MIT",
++      "dependencies": {
++        "cliui": "^6.0.0",
++        "decamelize": "^1.2.0",
++        "find-up": "^4.1.0",
++        "get-caller-file": "^2.0.1",
++        "require-directory": "^2.1.1",
++        "require-main-filename": "^2.0.0",
++        "set-blocking": "^2.0.0",
++        "string-width": "^4.2.0",
++        "which-module": "^2.0.0",
++        "y18n": "^4.0.0",
++        "yargs-parser": "^18.1.2"
++      },
++      "engines": {
++        "node": ">=8"
++      }
++    },
++    "node_modules/yargs-parser": {
++      "version": "18.1.3",
++      "resolved": "https://registry.npmjs.org/yargs-parser/-/yargs-parser-18.1.3.tgz",
++      "integrity": "sha512-o50j0JeToy/4K6OZcaQmW6lyXXKhq7csREXcDwk2omFPJEwUNOVtJKvmDr9EI1fAJZUyZcRF7kxGBWmRXudrCQ==",
++      "license": "ISC",
++      "dependencies": {
++        "camelcase": "^5.0.0",
++        "decamelize": "^1.2.0"
++      },
++      "engines": {
++        "node": ">=6"
++      }
++    },
++    "node_modules/yargs/node_modules/find-up": {
++      "version": "4.1.0",
++      "resolved": "https://registry.npmjs.org/find-up/-/find-up-4.1.0.tgz",
++      "integrity": "sha512-PpOwAdQ/YlXQ2vj8a3h8IipDuYRi3wceVQQGYWxNINccq40Anw7BlsEXCMbt1Zt+OLA6Fq9suIpIWD0OsnISlw==",
++      "license": "MIT",
++      "dependencies": {
++        "locate-path": "^5.0.0",
++        "path-exists": "^4.0.0"
++      },
++      "engines": {
++        "node": ">=8"
++      }
++    },
++    "node_modules/yargs/node_modules/locate-path": {
++      "version": "5.0.0",
++      "resolved": "https://registry.npmjs.org/locate-path/-/locate-path-5.0.0.tgz",
++      "integrity": "sha512-t7hw9pI+WvuwNJXwk5zVHpyhIqzg2qTlklJOf0mVxGSbe3Fp2VieZcduNYjaLDoy6p9uGpQEGWG87WpMKlNq8g==",
++      "license": "MIT",
++      "dependencies": {
++        "p-locate": "^4.1.0"
++      },
++      "engines": {
++        "node": ">=8"
++      }
++    },
++    "node_modules/yargs/node_modules/p-limit": {
++      "version": "2.3.0",
++      "resolved": "https://registry.npmjs.org/p-limit/-/p-limit-2.3.0.tgz",
++      "integrity": "sha512-//88mFWSJx8lxCzwdAABTJL2MyWB12+eIY7MDL2SqLmAkeKU9qxRvWuSyTjm3FUmpBEMuFfckAIqEaVGUDxb6w==",
++      "license": "MIT",
++      "dependencies": {
++        "p-try": "^2.0.0"
++      },
++      "engines": {
++        "node": ">=6"
++      },
++      "funding": {
++        "url": "https://github.com/sponsors/sindresorhus"
++      }
++    },
++    "node_modules/yargs/node_modules/p-locate": {
++      "version": "4.1.0",
++      "resolved": "https://registry.npmjs.org/p-locate/-/p-locate-4.1.0.tgz",
++      "integrity": "sha512-R79ZZ/0wAxKGu3oYMlz8jy/kbhsNrS7SKZ7PxEHBgJ5+F2mtFW2fK2cOtBh1cHYkQsbzFV7I+EoRKe6Yt0oK7A==",
++      "license": "MIT",
++      "dependencies": {
++        "p-limit": "^2.2.0"
++      },
++      "engines": {
++        "node": ">=8"
++      }
++    },
+     "node_modules/yocto-queue": {
+       "version": "0.1.0",
+       "resolved": "https://registry.npmjs.org/yocto-queue/-/yocto-queue-0.1.0.tgz",
+diff --git a/package.json b/package.json
+index 31f26c7..91bc197 100644
+--- a/package.json
++++ b/package.json
+@@ -19,6 +19,7 @@
+     "demo:build": "tsx scripts/build-demo.ts",
+     "catalog": "node --conditions=react-server --import tsx scripts/catalog.ts",
+     "ops": "node --conditions=react-server --import tsx scripts/ops.ts",
++    "auth:reset-2fa": "node --conditions=react-server --import tsx scripts/reset-2fa.ts",
+     "postinstall": "prisma generate"
+   },
+   "dependencies": {
+@@ -29,6 +30,7 @@
+     "next": "16.3.8",
+     "nodemailer": "^10.0.14",
+     "pg": "^8.23.1",
++    "qrcode": "^1.5.4",
+     "react": "19.2.8",
+     "react-dom": "19.2.8",
+     "server-only": "^0.0.1",
+@@ -42,6 +44,7 @@
+     "@types/node": "^22.20.5",
+     "@types/nodemailer": "^8.0.2",
+     "@types/pg": "^8.23.1",
++    "@types/qrcode": "^1.5.6",
+     "@types/react": "^19",
+     "@types/react-dom": "^19",
+     "dotenv": "^18.0.5",
+diff --git a/prisma/migrations/20261015152739_admin_two_factor/migration.sql b/prisma/migrations/20261015152739_admin_two_factor/migration.sql
+new file mode 100644
+index 0000000..8aa4141
+--- /dev/null
++++ b/prisma/migrations/20261015152739_admin_two_factor/migration.sql
+@@ -0,0 +1,24 @@
++-- AlterEnum
++ALTER TYPE "AuthTokenType" ADD VALUE 'TWO_FACTOR_PENDING';
++
++-- AlterTable
++ALTER TABLE "User" ADD COLUMN     "totpEnabledAt" TIMESTAMP(3),
++ADD COLUMN     "totpLastStep" INTEGER,
++ADD COLUMN     "totpSecretEnc" TEXT;
++
++-- CreateTable
++CREATE TABLE "RecoveryCode" (
++    "id" TEXT NOT NULL,
++    "userId" TEXT NOT NULL,
++    "codeHash" TEXT NOT NULL,
++    "usedAt" TIMESTAMP(3),
++    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
++
++    CONSTRAINT "RecoveryCode_pkey" PRIMARY KEY ("id")
++);
++
++-- CreateIndex
++CREATE UNIQUE INDEX "RecoveryCode_userId_codeHash_key" ON "RecoveryCode"("userId", "codeHash");
++
++-- AddForeignKey
++ALTER TABLE "RecoveryCode" ADD CONSTRAINT "RecoveryCode_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+diff --git a/prisma/schema.prisma b/prisma/schema.prisma
+index da25dc0..060a585 100644
+--- a/prisma/schema.prisma
++++ b/prisma/schema.prisma
+@@ -37,6 +37,12 @@ model User {
+   updatedAt       DateTime  @updatedAt
+   lastLoginAt     DateTime?
+ 
++  /// Two-factor sign-in (TOTP). The secret is AES-256-GCM encrypted with
++  /// TOTP_ENCRYPTION_KEY; totpLastStep blocks reuse of a code (src/lib/auth/two-factor.ts).
++  totpSecretEnc String?
++  totpEnabledAt DateTime?
++  totpLastStep  Int?
++
+   sessions      Session[]
+   authTokens    AuthToken[]
+   addresses     Address[]
+@@ -47,6 +53,7 @@ model User {
+   redemptions   CouponRedemption[]
+   orderEvents   OrderEvent[]
+   inventoryLogs InventoryLog[]
++  recoveryCodes RecoveryCode[]
+ }
+ 
+ /// Server-side session. `id` is the SHA-256 of the random cookie token, so a
+@@ -67,9 +74,11 @@ model Session {
+ enum AuthTokenType {
+   PASSWORD_RESET
+   EMAIL_VERIFICATION
++  TWO_FACTOR_PENDING // password accepted, waiting for the second factor (5 minutes)
+ }
+ 
+-/// Single-use tokens for password reset / email verification. Only the hash is stored.
++/// Single-use tokens for password reset, email verification and the pending
++/// two-factor step of sign-in. Only the hash is stored.
+ model AuthToken {
+   id        String        @id // SHA-256 of the emailed token
+   userId    String
+@@ -82,6 +91,18 @@ model AuthToken {
+   @@index([userId, type])
+ }
+ 
++/// Single-use two-factor recovery codes. Only the SHA-256 hash is stored.
++model RecoveryCode {
++  id        String    @id @default(cuid())
++  userId    String
++  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
++  codeHash  String
++  usedAt    DateTime?
++  createdAt DateTime  @default(now())
++
++  @@unique([userId, codeHash])
++}
++
+ enum AddressType {
+   HOME
+   WORK
+diff --git a/scripts/reset-2fa.ts b/scripts/reset-2fa.ts
+new file mode 100644
+index 0000000..8603085
+--- /dev/null
++++ b/scripts/reset-2fa.ts
+@@ -0,0 +1,49 @@
++/**
++ * Clears two-factor sign-in for a locked-out admin (lost phone and recovery codes).
++ * For the store owner only.
++ *
++ *   npm run auth:reset-2fa -- <email>
++ *
++ * Removes the authenticator secret, recovery codes, any pending sign-in and the
++ * wrong-code lock, and signs the account out everywhere. While 2FA is enforced,
++ * the admin must set it up again at Admin → Security right after signing in.
++ */
++import "dotenv/config";
++import { db } from "@/lib/db";
++import { clearTwoFactor } from "@/lib/auth/two-factor-data";
++
++async function main() {
++  const email = process.argv[2]?.trim().toLowerCase();
++  if (!email || email.startsWith("-")) {
++    console.error("Usage: npm run auth:reset-2fa -- <email>");
++    process.exit(1);
++  }
++  const user = await db.user.findUnique({ where: { email }, select: { id: true, role: true, totpEnabledAt: true, totpSecretEnc: true } });
++  if (!user) {
++    console.error(`No account found for ${email}.`);
++    process.exit(1);
++  }
++
++  console.warn(
++    [
++      "",
++      "WARNING: this turns off two-factor sign-in for this account.",
++      "Do it only after confirming in person or by phone that the request is genuine.",
++      "Anyone who knows the password can then sign in with the password alone until 2FA is set up again.",
++      "",
++    ].join("\n"),
++  );
++  if (!user.totpEnabledAt && !user.totpSecretEnc) console.log(`${email} does not have two-factor sign-in on. Clearing anything left over.`);
++
++  await clearTwoFactor(user.id);
++  const { count } = await db.session.deleteMany({ where: { userId: user.id } });
++  console.log(`Two-factor sign-in reset for ${email} (${user.role}). Signed out of ${count} session(s).`);
++  console.log("Ask them to sign in and set it up again at Admin → Security.");
++}
++
++main()
++  .catch((e) => {
++    console.error(e);
++    process.exitCode = 1;
++  })
++  .finally(() => db.$disconnect());
+diff --git a/src/app/(store)/(auth)/login/verify/page.tsx b/src/app/(store)/(auth)/login/verify/page.tsx
+new file mode 100644
+index 0000000..10a51a5
+--- /dev/null
++++ b/src/app/(store)/(auth)/login/verify/page.tsx
+@@ -0,0 +1,28 @@
++import type { Metadata } from "next";
++import { redirect } from "next/navigation";
++import { safeNext } from "@/lib/auth/guards";
++import { getPendingSignIn } from "@/lib/auth/two-factor";
++import { AuthCard } from "@/components/auth/auth-card";
++import { TwoFactorForm } from "@/components/auth/auth-forms";
++import { cancelTwoFactor } from "@/app/actions/auth";
++
++export const metadata: Metadata = { title: "Enter your code", robots: { index: false } };
++
++export default async function VerifyPage(props: PageProps<"/login/verify">) {
++  const sp = await props.searchParams;
++  const next = safeNext(sp.next, "");
++  if (!(await getPendingSignIn())) redirect(`/login${next ? `?next=${encodeURIComponent(next)}` : ""}`);
++  return (
++    <AuthCard
++      title="Two-factor sign-in"
++      subtitle="Open your authenticator app and enter the 6-digit code for myT Mobiles."
++      footer={
++        <form action={cancelTwoFactor}>
++          <button className="font-semibold text-brand-700 hover:underline">Cancel and sign in again</button>
++        </form>
++      }
++    >
++      <TwoFactorForm next={next} />
++    </AuthCard>
++  );
++}
+diff --git a/src/app/actions/auth.ts b/src/app/actions/auth.ts
+index 7fc1c10..c9f99d1 100644
+--- a/src/app/actions/auth.ts
++++ b/src/app/actions/auth.ts
+@@ -11,6 +11,7 @@ import { rateLimit } from "@/lib/rate-limit";
+ import { emailSchema, fieldErrors, loginSchema, passwordSchema, registerSchema } from "@/lib/validation";
+ import { sendPasswordResetEmail, sendVerificationEmail } from "@/lib/email/auth-emails";
+ import { trackServer } from "@/lib/analytics";
++import { checkSecondFactor, clearPendingSignIn, CODE_MESSAGES, consumePendingSignIn, getPendingSignIn, startPendingSignIn, twoFactorRequiredAtSignIn } from "@/lib/auth/two-factor";
+ 
+ export interface FormState {
+   error?: string;
+@@ -65,12 +66,44 @@ export async function login(_prev: FormState, fd: FormData): Promise<FormState>
+   if (!user || !valid) return { error: "Incorrect email or password.", values };
+   if (user.isDisabled) return { error: "This account has been disabled. Please contact support.", values };
+ 
++  // Two-factor accounts get a 5-minute pending step, not a session, until they enter a code.
++  if (twoFactorRequiredAtSignIn(user)) {
++    await startPendingSignIn(user.id);
++    const next = safeNext(fd.get("next"), "");
++    redirect(`/login/verify${next ? `?next=${encodeURIComponent(next)}` : ""}`);
++  }
++
+   await mergeGuestCart(user.id);
+   await createSession(user.id);
+   void trackServer({ name: "login", userId: user.id });
+   redirect(safeNext(fd.get("next"), user.role === "ADMIN" ? "/admin" : "/account"));
+ }
+ 
++/** Second step of sign-in: an authenticator code or a recovery code. */
++export async function verifyTwoFactor(_prev: FormState, fd: FormData): Promise<FormState> {
++  const pending = await getPendingSignIn();
++  if (!pending) return { error: "Your sign-in has expired. Please sign in again." };
++  if (!(await rateLimit(`2fa-ip:${await clientIp()}`, 30, 900))) return { error: "Too many attempts. Please wait 15 minutes." };
++  const code = String(fd.get("code") ?? "").trim();
++  if (!code) return { fieldErrors: { code: "Enter the 6-digit code or a recovery code." } };
++
++  const result = await checkSecondFactor(pending.userId, code);
++  // The pending step is kept so the message stays on screen; every code is refused while locked.
++  if (result === "locked") return { error: CODE_MESSAGES.locked };
++  if (result !== "ok") return { fieldErrors: { code: CODE_MESSAGES.invalid } };
++  if (!(await consumePendingSignIn(pending.tokenId))) return { error: "Your sign-in has expired. Please sign in again." };
++
++  await mergeGuestCart(pending.userId);
++  await createSession(pending.userId);
++  void trackServer({ name: "login", userId: pending.userId });
++  redirect(safeNext(fd.get("next"), pending.role === "ADMIN" ? "/admin" : "/account"));
++}
++
++export async function cancelTwoFactor(): Promise<void> {
++  await clearPendingSignIn();
++  redirect("/login");
++}
++
+ export async function logout(): Promise<void> {
+   await destroySession();
+   redirect("/");
+@@ -107,6 +140,12 @@ export async function resetPassword(_prev: FormState, fd: FormData): Promise<For
+     db.authToken.update({ where: { id: record.id }, data: { usedAt: new Date() } }),
+   ]);
+   await destroyAllSessions(record.userId); // sign out everywhere
++  // A reset link proves the email address only; two-factor accounts still need a code.
++  const user = await db.user.findUniqueOrThrow({ where: { id: record.userId }, select: { totpEnabledAt: true, totpSecretEnc: true } });
++  if (twoFactorRequiredAtSignIn(user)) {
++    await startPendingSignIn(record.userId);
++    redirect(`/login/verify?next=${encodeURIComponent("/account?reset=1")}`);
++  }
+   await createSession(record.userId);
+   redirect("/account?reset=1");
+ }
+diff --git a/src/app/admin/actions/security.ts b/src/app/admin/actions/security.ts
+new file mode 100644
+index 0000000..b55dc84
+--- /dev/null
++++ b/src/app/admin/actions/security.ts
+@@ -0,0 +1,60 @@
++"use server";
++
++import { revalidatePath } from "next/cache";
++import { db } from "@/lib/db";
++import { assertAdmin } from "@/lib/auth/guards";
++import { verifyPassword } from "@/lib/auth/password";
++import { generateTotpSecret } from "@/lib/auth/totp";
++import { rateLimit } from "@/lib/rate-limit";
++import {
++  beginEnrolment,
++  checkSecondFactor,
++  clearTwoFactor,
++  CODE_MESSAGES,
++  confirmEnrolment,
++  getTwoFactorStatus,
++  replaceRecoveryCodes,
++  withoutTwoFactorCheck,
++} from "@/lib/auth/two-factor";
++
++export type SecurityState = { ok?: string; error?: string; codes?: string[] };
++
++/** These actions are how an admin sets 2FA up, so they skip the "2FA required" check (but not the admin check). */
++const admin = () => withoutTwoFactorCheck(() => assertAdmin());
++
++export async function startTwoFactorSetup(): Promise<void> {
++  const user = await admin();
++  await beginEnrolment(user.id, generateTotpSecret());
++  revalidatePath("/admin/security");
++}
++
++export async function confirmTwoFactorSetup(_prev: SecurityState, fd: FormData): Promise<SecurityState> {
++  const user = await admin();
++  const code = String(fd.get("code") ?? "").trim();
++  if (!/^\d{3}\s?\d{3}$/.test(code)) return { error: "Enter the 6-digit code from your authenticator app." };
++  const result = await confirmEnrolment(user.id, code);
++  if ("error" in result) return { error: CODE_MESSAGES[result.error === "locked" ? "locked" : "invalid"] };
++  // No revalidation here: the page would swap to the "on" view and hide the codes.
++  // The form refreshes the page once the admin has saved them.
++  return { ok: "Two-factor sign-in is on.", codes: result.codes };
++}
++
++export async function regenerateRecoveryCodes(_prev: SecurityState, fd: FormData): Promise<SecurityState> {
++  const user = await admin();
++  if (!(await getTwoFactorStatus(user.id)).enabled) return { error: "Two-factor sign-in is not on." };
++  const result = await checkSecondFactor(user.id, String(fd.get("code") ?? ""));
++  if (result !== "ok") return { error: CODE_MESSAGES[result] };
++  return { ok: "New recovery codes created. The old ones no longer work.", codes: await replaceRecoveryCodes(user.id) };
++}
++
++export async function disableTwoFactor(_prev: SecurityState, fd: FormData): Promise<SecurityState> {
++  const user = await admin();
++  if (!(await rateLimit(`2fa-disable:${user.id}`, 5, 900))) return { error: "Too many attempts. Please wait 15 minutes." };
++  const record = await db.user.findUniqueOrThrow({ where: { id: user.id }, select: { passwordHash: true } });
++  if (!(await verifyPassword(String(fd.get("password") ?? ""), record.passwordHash))) return { error: "Your password is incorrect." };
++  const result = await checkSecondFactor(user.id, String(fd.get("code") ?? ""));
++  if (result !== "ok") return { error: CODE_MESSAGES[result] };
++  await clearTwoFactor(user.id);
++  revalidatePath("/admin", "layout");
++  return { ok: "Two-factor sign-in is off." };
++}
+diff --git a/src/app/admin/layout.tsx b/src/app/admin/layout.tsx
+index f3d8fc8..1ebbeef 100644
+--- a/src/app/admin/layout.tsx
++++ b/src/app/admin/layout.tsx
+@@ -1,7 +1,8 @@
+ import type { Metadata } from "next";
+ import Link from "next/link";
+-import { BarChart3, Boxes, FolderTree, Image as ImageIcon, LayoutDashboard, MessageSquareText, Package, Settings, ShoppingCart, TicketPercent, Users } from "lucide-react";
++import { BarChart3, Boxes, FolderTree, Image as ImageIcon, LayoutDashboard, MessageSquareText, Package, Settings, ShieldCheck, ShoppingCart, TicketPercent, Users } from "lucide-react";
+ import { requireAdmin } from "@/lib/auth/guards";
++import { twoFactorSetupRequired } from "@/lib/auth/two-factor";
+ import { logout } from "@/app/actions/auth";
+ import { Logo } from "@/components/brand/logo";
+ 
+@@ -20,10 +21,13 @@ const NAV = [
+   { href: "/admin/reviews", label: "Reviews", icon: MessageSquareText },
+   { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
+   { href: "/admin/settings", label: "Settings", icon: Settings },
++  { href: "/admin/security", label: "Security", icon: ShieldCheck },
+ ];
+ 
+ export default async function AdminLayout({ children }: { children: React.ReactNode }) {
+   const user = await requireAdmin();
++  // Until 2FA is on, only the Security page is offered (the others redirect there).
++  const nav = (await twoFactorSetupRequired(user.id)) ? NAV.filter((n) => n.href === "/admin/security") : NAV;
+   return (
+     <div className="flex min-h-dvh flex-col bg-ink-50 lg:flex-row">
+       <aside className="bg-brand-950 text-white lg:sticky lg:top-0 lg:h-dvh lg:w-60 lg:shrink-0">
+@@ -32,7 +36,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
+           <p className="text-xs text-white/50 lg:mt-2">Admin · {user.name}</p>
+         </div>
+         <nav aria-label="Admin" className="no-scrollbar flex gap-1 overflow-x-auto px-3 pb-3 lg:flex-col lg:overflow-visible">
+-          {NAV.map((n) => (
++          {nav.map((n) => (
+             <Link key={n.href} href={n.href} className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium whitespace-nowrap text-white/75 hover:bg-white/10 hover:text-white">
+               <n.icon className="h-4 w-4" aria-hidden="true" /> {n.label}
+             </Link>
+diff --git a/src/app/admin/security/page.tsx b/src/app/admin/security/page.tsx
+new file mode 100644
+index 0000000..bd4a0c4
+--- /dev/null
++++ b/src/app/admin/security/page.tsx
+@@ -0,0 +1,120 @@
++import QRCode from "qrcode";
++import { requireAdmin } from "@/lib/auth/guards";
++import { encryptionKeyProblem, getTwoFactorStatus, ISSUER, pendingEnrolmentSecret, twoFactorEnforced } from "@/lib/auth/two-factor";
++import { formatManualKey, otpauthUri } from "@/lib/auth/totp";
++import { RECOVERY_CODE_COUNT } from "@/lib/auth/two-factor-crypto";
++import { startTwoFactorSetup } from "@/app/admin/actions/security";
++import { AdminPage, Panel } from "@/components/admin/ui";
++import { DisableForm, EnrolForm, RegenerateCodesForm } from "@/components/admin/security-forms";
++import { SubmitButton } from "@/components/auth/submit-button";
++import { Badge } from "@/components/ui/misc";
++
++export const metadata = { title: "Security" };
++
++const APPS = "Google Authenticator, Microsoft Authenticator or a similar app";
++
++export default async function SecurityPage() {
++  const user = await requireAdmin();
++  const enforced = twoFactorEnforced();
++  const keyProblem = encryptionKeyProblem();
++  const status = await getTwoFactorStatus(user.id);
++
++  if (keyProblem) {
++    return (
++      <AdminPage title="Security">
++        <Panel title="Two-factor sign-in is not available">
++          <p className="text-sm text-danger-700" role="alert">{keyProblem}</p>
++          <p className="mt-2 text-sm text-ink-700">Ask the developer to set it in the hosting environment, then reload this page.</p>
++        </Panel>
++      </AdminPage>
++    );
++  }
++
++  return (
++    <AdminPage
++      title="Security"
++      description="Two-factor sign-in protects the admin panel if your password is ever stolen. After your password, you enter a 6-digit code from an app on your phone."
++    >
++      {!status.enabled && enforced && (
++        <div role="status" className="rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-ink-900">
++          Admin accounts must use two-factor sign-in. Set it up below to use the rest of the admin panel.
++        </div>
++      )}
++
++      {status.enabled ? <EnabledView enabledAt={status.enabledAt} codesLeft={status.recoveryCodesLeft} enforced={enforced} /> : status.pendingSetup ? <SetupView userId={user.id} email={user.email} /> : <StartView />}
++    </AdminPage>
++  );
++}
++
++function StartView() {
++  return (
++    <Panel title="Two-factor sign-in is off">
++      <p className="text-sm text-ink-700">You need {APPS} on your phone. Setting it up takes about two minutes.</p>
++      <form action={startTwoFactorSetup} className="mt-4">
++        <SubmitButton className="w-full sm:w-auto" pendingText="Preparing…">Set up two-factor sign-in</SubmitButton>
++      </form>
++    </Panel>
++  );
++}
++
++async function SetupView({ userId, email }: { userId: string; email: string }) {
++  const secret = (await pendingEnrolmentSecret(userId))!;
++  // Rendered here on the server: the secret never goes to a third-party QR service.
++  const svg = await QRCode.toString(otpauthUri({ secret, account: email, issuer: ISSUER }), { type: "svg", margin: 1, errorCorrectionLevel: "M" });
++  const qrSrc = `data:image/svg+xml;base64,${Buffer.from(svg).toString("base64")}`;
++  return (
++    <Panel title="Set up two-factor sign-in">
++      <ol className="space-y-5 text-sm text-ink-700">
++        <li>
++          <p className="font-semibold text-ink-900">1. Install an authenticator app</p>
++          <p className="mt-1">Use {APPS}.</p>
++        </li>
++        <li>
++          <p className="font-semibold text-ink-900">2. Scan this QR code with the app</p>
++          {/* eslint-disable-next-line @next/next/no-img-element -- inline data URL, nothing to optimise */}
++          <img src={qrSrc} alt={`QR code to add ${ISSUER} to your authenticator app`} width={192} height={192} className="mt-2 rounded-lg border border-ink-200 bg-white" />
++          <p className="mt-3">Can&apos;t scan it? Add an account by hand, choose a time-based code, and enter this setup key:</p>
++          <p className="mt-1">
++            <code data-testid="totp-setup-key" className="inline-block rounded-lg bg-ink-100 px-3 py-1.5 font-mono text-sm font-semibold break-all text-ink-900">
++              {formatManualKey(secret)}
++            </code>
++          </p>
++          <p className="mt-1 text-xs text-ink-500">Account: {email}</p>
++        </li>
++        <li>
++          <p className="mb-2 font-semibold text-ink-900">3. Enter the code the app shows</p>
++          <EnrolForm />
++        </li>
++      </ol>
++      <form action={startTwoFactorSetup} className="mt-5 border-t border-ink-100 pt-4">
++        <SubmitButton className="w-auto" variant="outline" pendingText="Preparing…">Start again with a new key</SubmitButton>
++      </form>
++    </Panel>
++  );
++}
++
++function EnabledView({ enabledAt, codesLeft, enforced }: { enabledAt: Date | null; codesLeft: number; enforced: boolean }) {
++  return (
++    <>
++      <Panel title="Two-factor sign-in">
++        <p className="flex flex-wrap items-center gap-2 text-sm text-ink-700">
++          <Badge tone="success">On</Badge>
++          {enabledAt && <>Since {enabledAt.toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Kolkata" })}.</>}
++        </p>
++      </Panel>
++      <Panel title="Recovery codes">
++        <p className="mb-4 text-sm text-ink-700">
++          {codesLeft} of {RECOVERY_CODE_COUNT} unused.{codesLeft <= 3 && " Create new ones soon."} For security, saved codes can&apos;t be shown again. Creating new codes replaces all the old ones.
++        </p>
++        <RegenerateCodesForm />
++      </Panel>
++      <Panel title="Turn off two-factor sign-in">
++        <p className="mb-4 text-sm text-ink-700">
++          Do this when you move to a new phone.
++          {enforced && " Admin accounts must use two-factor sign-in, so you'll be asked to set it up again straight away."}
++        </p>
++        <DisableForm />
++      </Panel>
++    </>
++  );
++}
+diff --git a/src/components/admin/security-forms.tsx b/src/components/admin/security-forms.tsx
+new file mode 100644
+index 0000000..86365b0
+--- /dev/null
++++ b/src/components/admin/security-forms.tsx
+@@ -0,0 +1,107 @@
++"use client";
++
++import { useRouter } from "next/navigation";
++import { useActionState, useEffect, useState } from "react";
++import { confirmTwoFactorSetup, disableTwoFactor, regenerateRecoveryCodes, type SecurityState } from "@/app/admin/actions/security";
++import { SubmitButton } from "@/components/auth/submit-button";
++import { Button } from "@/components/ui/button";
++import { FormError, FormSuccess } from "@/components/ui/field";
++import { Field, inputCls } from "@/components/admin/action-form";
++
++const codeInput = { name: "code", autoComplete: "one-time-code", inputMode: "numeric" as const, required: true, className: `${inputCls} max-w-48 font-mono tracking-widest` };
++
++/** Shown once, straight after the codes are created. */
++export function RecoveryCodes({ codes }: { codes: string[] }) {
++  const [copied, setCopied] = useState(false);
++  return (
++    <div className="space-y-3 rounded-xl border border-amber-300 bg-amber-50 p-4">
++      <p className="text-sm font-semibold text-ink-900">Save your recovery codes now</p>
++      <p className="text-sm text-ink-700">
++        Each code signs you in once if you lose your phone. Keep them somewhere safe, such as a password manager or a printed copy. They won&apos;t be shown again.
++      </p>
++      <ol className="grid grid-cols-2 gap-x-6 gap-y-1 font-mono text-sm text-ink-900 sm:max-w-md" aria-label="Recovery codes">
++        {codes.map((c) => (
++          <li key={c}>{c}</li>
++        ))}
++      </ol>
++      <Button
++        variant="outline"
++        size="sm"
++        onClick={async () => {
++          try {
++            await navigator.clipboard.writeText(codes.join("\n"));
++            setCopied(true);
++          } catch {
++            setCopied(false);
++          }
++        }}
++      >
++        {copied ? "Copied" : "Copy codes"}
++      </Button>
++    </div>
++  );
++}
++
++export function EnrolForm() {
++  const router = useRouter();
++  const [state, action] = useActionState<SecurityState, FormData>(confirmTwoFactorSetup, {});
++  if (state.codes) {
++    return (
++      <div className="space-y-4">
++        <FormSuccess message={state.ok} />
++        <RecoveryCodes codes={state.codes} />
++        {/* Refreshes the whole page, layout included, so the full admin menu appears. */}
++        <Button onClick={() => router.refresh()}>I&apos;ve saved my codes</Button>
++      </div>
++    );
++  }
++  return (
++    <form action={action} className="space-y-3">
++      <FormError message={state.error} />
++      <Field label="6-digit code from the app">
++        <input {...codeInput} />
++      </Field>
++      <SubmitButton className="w-full sm:w-auto" pendingText="Checking…">Turn on two-factor sign-in</SubmitButton>
++    </form>
++  );
++}
++
++export function RegenerateCodesForm() {
++  const router = useRouter();
++  const [state, action] = useActionState<SecurityState, FormData>(regenerateRecoveryCodes, {});
++  useEffect(() => {
++    if (state.codes) router.refresh(); // updates the "unused codes" count
++  }, [state, router]);
++  return (
++    <div className="space-y-3">
++      <FormSuccess message={state.ok} />
++      {state.codes && <RecoveryCodes codes={state.codes} />}
++      <form action={action} className="space-y-3">
++        <FormError message={state.error} />
++        <Field label="Current code from your app" hint="Or one of your unused recovery codes.">
++          <input {...codeInput} inputMode="text" />
++        </Field>
++        <SubmitButton className="w-full sm:w-auto" variant="outline" pendingText="Creating…">Create new recovery codes</SubmitButton>
++      </form>
++    </div>
++  );
++}
++
++export function DisableForm() {
++  const [state, action] = useActionState<SecurityState, FormData>(disableTwoFactor, {});
++  return (
++    <form action={action} className="space-y-3">
++      <FormError message={state.error} />
++      <FormSuccess message={state.ok} />
++      <div className="grid gap-3 sm:max-w-md">
++        <Field label="Your password">
++          <input name="password" type="password" autoComplete="current-password" required className={inputCls} />
++        </Field>
++        <Field label="Current code from your app" hint="Or one of your unused recovery codes.">
++          <input {...codeInput} inputMode="text" />
++        </Field>
++      </div>
++      <SubmitButton className="w-full sm:w-auto" variant="danger" pendingText="Turning off…">Turn off two-factor sign-in</SubmitButton>
++    </form>
++  );
++}
+diff --git a/src/components/auth/auth-forms.tsx b/src/components/auth/auth-forms.tsx
+index 12dc5dc..94e03c8 100644
+--- a/src/components/auth/auth-forms.tsx
++++ b/src/components/auth/auth-forms.tsx
+@@ -2,7 +2,7 @@
+ 
+ import Link from "next/link";
+ import { useActionState } from "react";
+-import { login, register, requestPasswordReset, resetPassword, type FormState } from "@/app/actions/auth";
++import { login, register, requestPasswordReset, resetPassword, verifyTwoFactor, type FormState } from "@/app/actions/auth";
+ import { FormError, FormSuccess, TextField } from "@/components/ui/field";
+ import { SubmitButton } from "./submit-button";
+ import { DEMO } from "@/lib/demo";
+@@ -31,6 +31,27 @@ export function LoginForm({ next }: { next?: string }) {
+   );
+ }
+ 
++export function TwoFactorForm({ next }: { next?: string }) {
++  const [state, action] = useActionState(DEMO ? previewAction : verifyTwoFactor, initial);
++  return (
++    <form action={action} className="space-y-4" noValidate>
++      <input type="hidden" name="next" value={next ?? ""} />
++      <FormError message={state.error} />
++      <TextField
++        label="Code"
++        name="code"
++        autoComplete="one-time-code"
++        autoCapitalize="none"
++        spellCheck={false}
++        required
++        error={state.fieldErrors?.code}
++        hint="Lost your phone? Enter one of your recovery codes instead."
++      />
++      <SubmitButton pendingText="Checking…">Verify</SubmitButton>
++    </form>
++  );
++}
++
+ export function RegisterForm({ next }: { next?: string }) {
+   const [state, action] = useActionState(DEMO ? previewAction : register, initial);
+   return (
+diff --git a/src/lib/auth/guards.ts b/src/lib/auth/guards.ts
+index a2968e3..b20a86d 100644
+--- a/src/lib/auth/guards.ts
++++ b/src/lib/auth/guards.ts
+@@ -1,6 +1,7 @@
+ import "server-only";
+ import { redirect } from "next/navigation";
+ import { getCurrentUser, type SessionUser } from "./session";
++import { enforceTwoFactor } from "./two-factor";
+ 
+ /** For pages: redirects to sign-in, preserving where the shopper was going. */
+ export async function requireUser(returnTo: string): Promise<SessionUser> {
+@@ -13,6 +14,7 @@ export async function requireAdmin(): Promise<SessionUser> {
+   const user = await getCurrentUser();
+   if (!user) redirect("/login?next=/admin");
+   if (user.role !== "ADMIN") redirect("/");
++  await enforceTwoFactor(user, "page");
+   return user;
+ }
+ 
+@@ -27,6 +29,7 @@ export class AuthError extends Error {
+ export async function assertAdmin(): Promise<SessionUser> {
+   const user = await getCurrentUser();
+   if (!user || user.role !== "ADMIN") throw new AuthError("Not authorised.");
++  await enforceTwoFactor(user, "action");
+   return user;
+ }
+ 
+diff --git a/src/lib/auth/totp.ts b/src/lib/auth/totp.ts
+new file mode 100644
+index 0000000..f630e05
+--- /dev/null
++++ b/src/lib/auth/totp.ts
+@@ -0,0 +1,112 @@
++import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
++
++/**
++ * Time-based one-time passwords (RFC 6238, built on HOTP from RFC 4226).
++ * Defaults match Google Authenticator, Microsoft Authenticator and similar
++ * apps: SHA-1, 6 digits, 30-second steps.
++ *
++ * Pure functions with no database or environment access, so they can be used
++ * by the app, scripts and the e2e helpers alike.
++ */
++
++export const TOTP_PERIOD = 30;
++export const TOTP_DIGITS = 6;
++/** Accept the previous and next step too, for clock drift and slow typing. */
++export const TOTP_WINDOW = 1;
++
++export type TotpAlgorithm = "sha1" | "sha256" | "sha512";
++
++const B32 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
++
++export function base32Encode(buf: Uint8Array): string {
++  let bits = 0;
++  let value = 0;
++  let out = "";
++  for (const byte of buf) {
++    value = (value << 8) | byte;
++    bits += 8;
++    while (bits >= 5) {
++      out += B32[(value >>> (bits - 5)) & 31];
++      bits -= 5;
++    }
++  }
++  if (bits > 0) out += B32[(value << (5 - bits)) & 31];
++  return out;
++}
++
++/** Decodes RFC 4648 base32. Ignores case, spaces, dashes and padding, as apps do. */
++export function base32Decode(input: string): Buffer {
++  const clean = input.toUpperCase().replace(/[\s=-]/g, "");
++  let bits = 0;
++  let value = 0;
++  const out: number[] = [];
++  for (const ch of clean) {
++    const idx = B32.indexOf(ch);
++    if (idx < 0) throw new Error("Invalid base32 character.");
++    value = (value << 5) | idx;
++    bits += 5;
++    if (bits >= 8) {
++      out.push((value >>> (bits - 8)) & 255);
++      bits -= 8;
++    }
++  }
++  return Buffer.from(out);
++}
++
++/** A new 160-bit secret (the size RFC 4226 recommends for SHA-1), base32-encoded. */
++export function generateTotpSecret(): string {
++  return base32Encode(randomBytes(20));
++}
++
++export function hotp(secret: Uint8Array, counter: number, digits = TOTP_DIGITS, algorithm: TotpAlgorithm = "sha1"): string {
++  const msg = Buffer.alloc(8);
++  msg.writeBigUInt64BE(BigInt(counter));
++  const mac = createHmac(algorithm, secret).update(msg).digest();
++  const offset = mac[mac.length - 1] & 0x0f;
++  const binary = (mac.readUInt32BE(offset) & 0x7fffffff) % 10 ** digits;
++  return binary.toString().padStart(digits, "0");
++}
++
++/** The time step a moment falls in (seconds since the epoch / 30). */
++export function totpStep(nowMs = Date.now(), period = TOTP_PERIOD): number {
++  return Math.floor(nowMs / 1000 / period);
++}
++
++export function totpCode(secretBase32: string, step: number, digits = TOTP_DIGITS, algorithm: TotpAlgorithm = "sha1"): string {
++  return hotp(base32Decode(secretBase32), step, digits, algorithm);
++}
++
++/**
++ * Checks a code against the current step ±TOTP_WINDOW. Returns the matched
++ * step, or null. Steps at or before `lastStep` are refused, so a code can be
++ * used only once; store the returned step as the new lastStep.
++ */
++export function verifyTotp(
++  secretBase32: string,
++  code: string,
++  { nowMs = Date.now(), lastStep = null, window = TOTP_WINDOW }: { nowMs?: number; lastStep?: number | null; window?: number } = {},
++): number | null {
++  const given = code.replace(/\s/g, "");
++  if (!/^\d{6}$/.test(given)) return null;
++  const secret = base32Decode(secretBase32);
++  const now = totpStep(nowMs);
++  let matched: number | null = null;
++  // Check every candidate (no early exit) so timing doesn't reveal which one matched.
++  for (let step = now - window; step <= now + window; step++) {
++    const ok = timingSafeEqual(Buffer.from(hotp(secret, step)), Buffer.from(given));
++    if (ok && matched === null && (lastStep === null || step > lastStep)) matched = step;
++  }
++  return matched;
++}
++
++/** The otpauth:// URI that authenticator apps read from the QR code. */
++export function otpauthUri({ secret, account, issuer }: { secret: string; account: string; issuer: string }): string {
++  const label = `${encodeURIComponent(issuer)}:${encodeURIComponent(account)}`;
++  const params = new URLSearchParams({ secret, issuer, algorithm: "SHA1", digits: String(TOTP_DIGITS), period: String(TOTP_PERIOD) });
++  return `otpauth://totp/${label}?${params.toString()}`;
++}
++
++/** Groups a base32 secret in fours for typing it into an app by hand. */
++export function formatManualKey(secret: string): string {
++  return secret.replace(/(.{4})/g, "$1 ").trim();
++}
+diff --git a/src/lib/auth/two-factor-crypto.ts b/src/lib/auth/two-factor-crypto.ts
+new file mode 100644
+index 0000000..7582de6
+--- /dev/null
++++ b/src/lib/auth/two-factor-crypto.ts
+@@ -0,0 +1,75 @@
++import { createCipheriv, createDecipheriv, createHash, randomBytes, randomInt } from "node:crypto";
++
++/**
++ * Encryption of TOTP secrets at rest and recovery-code hashing. Pure functions;
++ * the key comes from the caller (see src/lib/auth/two-factor.ts for env handling).
++ */
++
++/** Parses TOTP_ENCRYPTION_KEY: 32 random bytes, base64. Throws with a fix-it message otherwise. */
++export function parseEncryptionKey(value: string | undefined): Buffer {
++  if (!value?.trim()) {
++    throw new Error(
++      "TOTP_ENCRYPTION_KEY is not set. Two-factor sign-in needs it to encrypt authenticator secrets. " +
++        "Generate one with `openssl rand -base64 32` and add it to the environment (.env locally).",
++    );
++  }
++  const key = Buffer.from(value.trim(), "base64");
++  if (key.length !== 32) {
++    throw new Error(`TOTP_ENCRYPTION_KEY must be 32 bytes, base64-encoded (got ${key.length} bytes). Generate one with \`openssl rand -base64 32\`.`);
++  }
++  return key;
++}
++
++const VERSION = "v1";
++
++/**
++ * AES-256-GCM. The user id is bound in as associated data, so an encrypted
++ * secret copied onto another account won't decrypt.
++ * Format: v1.<iv>.<tag>.<ciphertext>, each base64url.
++ */
++export function encryptSecret(plain: string, key: Buffer, userId: string): string {
++  const iv = randomBytes(12);
++  const cipher = createCipheriv("aes-256-gcm", key, iv);
++  cipher.setAAD(Buffer.from(userId));
++  const ct = Buffer.concat([cipher.update(plain, "utf8"), cipher.final()]);
++  return [VERSION, iv.toString("base64url"), cipher.getAuthTag().toString("base64url"), ct.toString("base64url")].join(".");
++}
++
++export function decryptSecret(stored: string, key: Buffer, userId: string): string {
++  const [version, iv, tag, ct] = stored.split(".");
++  if (version !== VERSION || !iv || !tag || ct === undefined) throw new Error("Unrecognised encrypted secret format.");
++  const decipher = createDecipheriv("aes-256-gcm", key, Buffer.from(iv, "base64url"));
++  decipher.setAAD(Buffer.from(userId));
++  decipher.setAuthTag(Buffer.from(tag, "base64url"));
++  return Buffer.concat([decipher.update(Buffer.from(ct, "base64url")), decipher.final()]).toString("utf8");
++}
++
++// ───────── Recovery codes ─────────
++
++export const RECOVERY_CODE_COUNT = 10;
++// No 0/o, 1/i/l, so codes are easy to read back from paper.
++const ALPHABET = "23456789abcdefghjkmnpqrstuvwxyz";
++
++/** Ten codes like `k7m2-x9qd-4trw` (about 59 bits each). */
++export function generateRecoveryCodes(count = RECOVERY_CODE_COUNT): string[] {
++  return Array.from({ length: count }, () => {
++    let s = "";
++    for (let i = 0; i < 12; i++) s += ALPHABET[randomInt(ALPHABET.length)];
++    return `${s.slice(0, 4)}-${s.slice(4, 8)}-${s.slice(8)}`;
++  });
++}
++
++export function normaliseRecoveryCode(input: string): string {
++  return input.toLowerCase().replace(/[\s-]/g, "");
++}
++
++/** Recovery codes are random and high-entropy, so a plain SHA-256 is enough. */
++export function hashRecoveryCode(input: string): string {
++  return createHash("sha256").update(`myt-recovery:${normaliseRecoveryCode(input)}`).digest("hex");
++}
++
++/** True if the input looks like a recovery code rather than a 6-digit app code. */
++export function looksLikeRecoveryCode(input: string): boolean {
++  const n = normaliseRecoveryCode(input);
++  return n.length === 12 && [...n].every((c) => ALPHABET.includes(c));
++}
+diff --git a/src/lib/auth/two-factor-data.ts b/src/lib/auth/two-factor-data.ts
+new file mode 100644
+index 0000000..eb7528b
+--- /dev/null
++++ b/src/lib/auth/two-factor-data.ts
+@@ -0,0 +1,20 @@
++import "server-only";
++import { db } from "@/lib/db";
++
++/**
++ * Database-only parts of two-factor sign-in, kept free of Next.js request APIs
++ * so scripts/reset-2fa.ts can use them. The rest is in ./two-factor.ts.
++ */
++
++/** RateLimit key that counts wrong codes for the lockout. */
++export const lockKey = (userId: string) => `2fa:${userId}`;
++
++/** Turns 2FA off and removes the secret, recovery codes, any pending sign-in and the wrong-code lock. */
++export async function clearTwoFactor(userId: string): Promise<void> {
++  await db.$transaction([
++    db.user.update({ where: { id: userId }, data: { totpSecretEnc: null, totpEnabledAt: null, totpLastStep: null } }),
++    db.recoveryCode.deleteMany({ where: { userId } }),
++    db.authToken.deleteMany({ where: { userId, type: "TWO_FACTOR_PENDING" } }),
++    db.rateLimit.deleteMany({ where: { key: lockKey(userId) } }),
++  ]);
++}
+diff --git a/src/lib/auth/two-factor.ts b/src/lib/auth/two-factor.ts
+new file mode 100644
+index 0000000..888edce
+--- /dev/null
++++ b/src/lib/auth/two-factor.ts
+@@ -0,0 +1,305 @@
++import "server-only";
++import { AsyncLocalStorage } from "node:async_hooks";
++import { cache } from "react";
++import { cookies, headers } from "next/headers";
++import { redirect } from "next/navigation";
++import { db } from "@/lib/db";
++import { env } from "@/lib/env";
++import { generateToken, sha256 } from "./tokens";
++import { SESSION_COOKIE, type SessionUser } from "./session";
++import { verifyTotp } from "./totp";
++import { lockKey } from "./two-factor-data";
++import { decryptSecret, encryptSecret, generateRecoveryCodes, hashRecoveryCode, looksLikeRecoveryCode, parseEncryptionKey } from "./two-factor-crypto";
++
++/**
++ * Two-factor sign-in (TOTP) for admin accounts.
++ *
++ * - Sign-in: after a correct password, a user with 2FA on gets a 5-minute,
++ *   single-use pending token (an AuthToken row + cookie) instead of a session,
++ *   and finishes at /login/verify with an app code or a recovery code.
++ * - Enforcement: every account that can open /admin must have 2FA on. Until it
++ *   does, admin pages redirect to /admin/security and admin Server Actions
++ *   refuse. Only ADMIN_2FA_ENFORCED=false turns this off, and only outside
++ *   production.
++ * - Brute force: 5 wrong codes lock the second step for 15 minutes (RateLimit table).
++ */
++
++export const SECURITY_PATH = "/admin/security";
++export const PENDING_COOKIE = process.env.NODE_ENV === "production" ? "__Host-myt_2fa" : "myt_2fa";
++const PENDING_TTL_MS = 5 * 60 * 1000;
++const MAX_FAILURES = 5;
++const LOCK_MINUTES = 15;
++export const ISSUER = "myT Mobiles";
++
++// ───────── Configuration ─────────
++
++let warnedIgnoredFlag = false;
++
++export function twoFactorEnforced(): boolean {
++  const e = env();
++  if (e.ADMIN_2FA_ENFORCED?.trim().toLowerCase() !== "false") return true;
++  if (e.NODE_ENV === "production") {
++    if (!warnedIgnoredFlag) console.warn("ADMIN_2FA_ENFORCED=false is ignored in production. Admin two-factor sign-in stays required.");
++    warnedIgnoredFlag = true;
++    return true;
++  }
++  return false;
++}
++
++/** Throws a clear error if TOTP_ENCRYPTION_KEY is missing or malformed. Never falls back to another key. */
++function encryptionKey(): Buffer {
++  return parseEncryptionKey(env().TOTP_ENCRYPTION_KEY);
++}
++
++export function encryptionKeyProblem(): string | null {
++  try {
++    encryptionKey();
++    return null;
++  } catch (e) {
++    return (e as Error).message;
++  }
++}
++
++export function encryptTotpSecret(secret: string, userId: string): string {
++  return encryptSecret(secret, encryptionKey(), userId);
++}
++
++export function decryptTotpSecret(stored: string, userId: string): string {
++  return decryptSecret(stored, encryptionKey(), userId);
++}
++
++// ───────── Status and enforcement ─────────
++
++export interface TwoFactorStatus {
++  enabled: boolean;
++  enabledAt: Date | null;
++  /** A secret was generated but not yet confirmed with a code. */
++  pendingSetup: boolean;
++  recoveryCodesLeft: number;
++}
++
++export const getTwoFactorStatus = cache(async (userId: string): Promise<TwoFactorStatus> => {
++  const u = await db.user.findUnique({
++    where: { id: userId },
++    select: { totpEnabledAt: true, totpSecretEnc: true, _count: { select: { recoveryCodes: { where: { usedAt: null } } } } },
++  });
++  return {
++    enabled: Boolean(u?.totpEnabledAt && u.totpSecretEnc),
++    enabledAt: u?.totpEnabledAt ?? null,
++    pendingSetup: Boolean(u && !u.totpEnabledAt && u.totpSecretEnc),
++    recoveryCodesLeft: u?._count.recoveryCodes ?? 0,
++  };
++});
++
++/** True when this admin must set up 2FA before using the rest of the admin panel. */
++export async function twoFactorSetupRequired(userId: string): Promise<boolean> {
++  return twoFactorEnforced() && !(await getTwoFactorStatus(userId)).enabled;
++}
++
++const exempt = new AsyncLocalStorage<boolean>();
++
++/** Runs an admin guard without the 2FA requirement. Only for the actions that set 2FA up. */
++export function withoutTwoFactorCheck<T>(fn: () => Promise<T>): Promise<T> {
++  return exempt.run(true, fn);
++}
++
++export class TwoFactorRequiredError extends Error {
++  constructor() {
++    super("Set up two-factor sign-in (Admin → Security) before making changes.");
++    this.name = "TwoFactorRequiredError";
++  }
++}
++
++/**
++ * Called by requireAdmin() ("page") and assertAdmin() ("action") once the
++ * user is known to be an admin. Pages redirect to the Security page; actions throw.
++ */
++export async function enforceTwoFactor(user: SessionUser, mode: "page" | "action"): Promise<void> {
++  if (exempt.getStore() || !(await twoFactorSetupRequired(user.id))) return;
++  if (mode === "action") throw new TwoFactorRequiredError();
++  // The page path comes from src/proxy.ts. Only page rendering is exempted by
++  // path: Server Actions can be posted to any URL, so they never are.
++  if ((await headers()).get("x-myt-pathname") === SECURITY_PATH) return;
++  redirect(SECURITY_PATH);
++}
++
++// ───────── Code checks with lockout ─────────
++
++export async function isTwoFactorLocked(userId: string): Promise<boolean> {
++  const rows = await db.$queryRaw<{ locked: boolean }[]>`
++    SELECT ("count" >= ${MAX_FAILURES} AND "windowStart" > now() - make_interval(mins => ${LOCK_MINUTES}::int)) AS "locked"
++    FROM "RateLimit" WHERE "key" = ${lockKey(userId)}`;
++  return rows[0]?.locked ?? false;
++}
++
++/** Counts a wrong code. The 5th within 15 minutes starts a 15-minute lock. Returns true if now locked. */
++async function recordFailure(userId: string): Promise<boolean> {
++  const rows = await db.$queryRaw<{ count: number }[]>`
++    INSERT INTO "RateLimit" ("key", "count", "windowStart") VALUES (${lockKey(userId)}, 1, now())
++    ON CONFLICT ("key") DO UPDATE SET
++      "count" = CASE WHEN "RateLimit"."windowStart" < now() - make_interval(mins => ${LOCK_MINUTES}::int)
++                     THEN 1 ELSE "RateLimit"."count" + 1 END,
++      "windowStart" = CASE WHEN "RateLimit"."windowStart" < now() - make_interval(mins => ${LOCK_MINUTES}::int)
++                             OR "RateLimit"."count" + 1 >= ${MAX_FAILURES}
++                     THEN now() ELSE "RateLimit"."windowStart" END
++    RETURNING "count"`;
++  return (rows[0]?.count ?? 0) >= MAX_FAILURES;
++}
++
++async function clearFailures(userId: string): Promise<void> {
++  await db.rateLimit.deleteMany({ where: { key: lockKey(userId) } });
++}
++
++export type CodeCheck = "ok" | "invalid" | "locked";
++
++export const CODE_MESSAGES: Record<Exclude<CodeCheck, "ok">, string> = {
++  invalid: "That code didn't work. Check the time on your phone is correct and try again.",
++  locked: `Too many wrong codes. Please try again in ${LOCK_MINUTES} minutes.`,
++};
++
++/** Accepts the step only if it is newer than the last used one, so a code works once. */
++async function claimStep(userId: string, step: number): Promise<boolean> {
++  const { count } = await db.user.updateMany({
++    where: { id: userId, OR: [{ totpLastStep: null }, { totpLastStep: { lt: step } }] },
++    data: { totpLastStep: step },
++  });
++  return count === 1;
++}
++
++async function consumeRecoveryCode(userId: string, input: string): Promise<boolean> {
++  const { count } = await db.recoveryCode.updateMany({
++    where: { userId, codeHash: hashRecoveryCode(input), usedAt: null },
++    data: { usedAt: new Date() },
++  });
++  return count === 1;
++}
++
++/**
++ * Checks an authenticator code (or, if allowed, a recovery code) for a user
++ * with 2FA on. Wrong codes count towards the lockout.
++ */
++export async function checkSecondFactor(userId: string, input: string, { allowRecovery = true } = {}): Promise<CodeCheck> {
++  if (await isTwoFactorLocked(userId)) return "locked";
++  const user = await db.user.findUnique({ where: { id: userId }, select: { totpSecretEnc: true, totpEnabledAt: true, totpLastStep: true } });
++  if (!user?.totpSecretEnc || !user.totpEnabledAt) return "invalid";
++
++  const code = input.trim();
++  let ok = false;
++  if (/^\d{3}\s?\d{3}$/.test(code)) {
++    const step = verifyTotp(decryptTotpSecret(user.totpSecretEnc, userId), code, { lastStep: user.totpLastStep });
++    ok = step !== null && (await claimStep(userId, step));
++  } else if (allowRecovery && looksLikeRecoveryCode(code)) {
++    ok = await consumeRecoveryCode(userId, code);
++  }
++  if (ok) {
++    await clearFailures(userId);
++    return "ok";
++  }
++  return (await recordFailure(userId)) ? "locked" : "invalid";
++}
++
++// ───────── Enrolment ─────────
++
++/** Stores a new, unconfirmed secret. Refuses if 2FA is already on. */
++export async function beginEnrolment(userId: string, secret: string): Promise<boolean> {
++  const { count } = await db.user.updateMany({
++    where: { id: userId, totpEnabledAt: null },
++    data: { totpSecretEnc: encryptTotpSecret(secret, userId), totpLastStep: null },
++  });
++  return count === 1;
++}
++
++/** Decrypted secret of an enrolment in progress (for the QR code), or null. */
++export async function pendingEnrolmentSecret(userId: string): Promise<string | null> {
++  const u = await db.user.findUnique({ where: { id: userId }, select: { totpSecretEnc: true, totpEnabledAt: true } });
++  if (!u?.totpSecretEnc || u.totpEnabledAt) return null;
++  return decryptTotpSecret(u.totpSecretEnc, userId);
++}
++
++/** Confirms enrolment with a first code. Returns the new recovery codes, or a failure. */
++export async function confirmEnrolment(userId: string, code: string): Promise<{ codes: string[] } | { error: CodeCheck }> {
++  if (await isTwoFactorLocked(userId)) return { error: "locked" };
++  const secret = await pendingEnrolmentSecret(userId);
++  const step = secret ? verifyTotp(secret, code) : null;
++  if (step === null) return { error: (await recordFailure(userId)) ? "locked" : "invalid" };
++  const { count } = await db.user.updateMany({
++    where: { id: userId, totpEnabledAt: null },
++    data: { totpEnabledAt: new Date(), totpLastStep: step },
++  });
++  if (count !== 1) return { error: "invalid" };
++  await clearFailures(userId);
++  await signOutOtherSessions(userId);
++  return { codes: await replaceRecoveryCodes(userId) };
++}
++
++export async function replaceRecoveryCodes(userId: string): Promise<string[]> {
++  const codes = generateRecoveryCodes();
++  await db.$transaction([
++    db.recoveryCode.deleteMany({ where: { userId } }),
++    db.recoveryCode.createMany({ data: codes.map((c) => ({ userId, codeHash: hashRecoveryCode(c) })) }),
++  ]);
++  return codes;
++}
++
++/** Sessions opened before 2FA was on were made with a password alone; end them. */
++async function signOutOtherSessions(userId: string): Promise<void> {
++  const token = (await cookies()).get(SESSION_COOKIE)?.value;
++  await db.session.deleteMany({ where: { userId, ...(token ? { id: { not: sha256(token) } } : {}) } });
++}
++
++export { clearTwoFactor } from "./two-factor-data";
++
++// ───────── Pending sign-in (between password and code) ─────────
++
++export function twoFactorRequiredAtSignIn(user: { totpEnabledAt: Date | null; totpSecretEnc: string | null }): boolean {
++  return Boolean(user.totpEnabledAt && user.totpSecretEnc);
++}
++
++/** Records that the password was correct and sets the short-lived pending cookie. */
++export async function startPendingSignIn(userId: string): Promise<void> {
++  const token = generateToken();
++  const expiresAt = new Date(Date.now() + PENDING_TTL_MS);
++  await db.$transaction([
++    db.authToken.deleteMany({ where: { userId, type: "TWO_FACTOR_PENDING" } }),
++    db.authToken.create({ data: { id: sha256(token), userId, type: "TWO_FACTOR_PENDING", expiresAt } }),
++  ]);
++  (await cookies()).set(PENDING_COOKIE, token, {
++    httpOnly: true,
++    secure: process.env.NODE_ENV === "production",
++    sameSite: "lax",
++    path: "/",
++    expires: expiresAt,
++  });
++}
++
++export interface PendingSignIn {
++  tokenId: string;
++  userId: string;
++  email: string;
++  role: SessionUser["role"];
++}
++
++export async function getPendingSignIn(): Promise<PendingSignIn | null> {
++  const token = (await cookies()).get(PENDING_COOKIE)?.value;
++  if (!token) return null;
++  const record = await db.authToken.findUnique({ where: { id: sha256(token) }, include: { user: { select: { email: true, role: true, isDisabled: true } } } });
++  if (!record || record.type !== "TWO_FACTOR_PENDING" || record.usedAt || record.expiresAt < new Date() || record.user.isDisabled) return null;
++  return { tokenId: record.id, userId: record.userId, email: record.user.email, role: record.user.role };
++}
++
++/** Marks the pending token used (once only) and clears its cookie. Returns false if it was already used or expired. */
++export async function consumePendingSignIn(tokenId: string): Promise<boolean> {
++  const { count } = await db.authToken.updateMany({
++    where: { id: tokenId, type: "TWO_FACTOR_PENDING", usedAt: null, expiresAt: { gt: new Date() } },
++    data: { usedAt: new Date() },
++  });
++  (await cookies()).delete(PENDING_COOKIE);
++  return count === 1;
++}
++
++export async function clearPendingSignIn(): Promise<void> {
++  const jar = await cookies();
++  const token = jar.get(PENDING_COOKIE)?.value;
++  if (token) await db.authToken.deleteMany({ where: { id: sha256(token), type: "TWO_FACTOR_PENDING" } });
++  jar.delete(PENDING_COOKIE);
++}
+diff --git a/src/lib/env.ts b/src/lib/env.ts
+index 0301ac7..40c0344 100644
+--- a/src/lib/env.ts
++++ b/src/lib/env.ts
+@@ -22,6 +22,11 @@ const schema = z.object({
+   EMAIL_FROM: z.string().optional(),
+ 
+   CRON_SECRET: z.string().min(16).optional(),
++
++  // Admin two-factor sign-in (src/lib/auth/two-factor.ts). The key is checked
++  // when 2FA is used, with a message saying how to create one.
++  TOTP_ENCRYPTION_KEY: z.string().optional(),
++  ADMIN_2FA_ENFORCED: z.string().optional(),
+ });
+ 
+ type Env = z.infer<typeof schema>;
+diff --git a/src/proxy.ts b/src/proxy.ts
+new file mode 100644
+index 0000000..2d1c3f7
+--- /dev/null
++++ b/src/proxy.ts
+@@ -0,0 +1,15 @@
++import { NextResponse, type NextRequest } from "next/server";
++
++/**
++ * Passes the admin page path to Server Components, which can't read it
++ * themselves. requireAdmin() uses it so the Security page stays reachable for
++ * an admin who still has to set up two-factor sign-in (src/lib/auth/two-factor.ts).
++ * Always overwritten here, so a client can't supply its own value.
++ */
++export function proxy(request: NextRequest) {
++  const headers = new Headers(request.headers);
++  headers.set("x-myt-pathname", request.nextUrl.pathname);
++  return NextResponse.next({ request: { headers } });
++}
++
++export const config = { matcher: ["/admin", "/admin/:path*"] };
+diff --git a/tests/e2e/checkout.spec.ts b/tests/e2e/checkout.spec.ts
+index 78e0f12..3827594 100644
+--- a/tests/e2e/checkout.spec.ts
++++ b/tests/e2e/checkout.spec.ts
+@@ -1,4 +1,4 @@
+-import { test, expect, PRODUCT_SLUG, ADMIN_EMAIL, ADMIN_PASSWORD } from "./fixtures";
++import { test, expect, PRODUCT_SLUG, ADMIN_EMAIL, ADMIN_PASSWORD, signInAsAdmin } from "./fixtures";
+ 
+ /**
+  * The full purchase path: guest cart → register (cart merges) → address with
+@@ -59,10 +59,7 @@ test.describe.serial("checkout and fulfilment", () => {
+     test.skip(!ADMIN_EMAIL || !ADMIN_PASSWORD, "Set ADMIN_EMAIL/ADMIN_PASSWORD (or E2E_ADMIN_*)");
+     test.skip(!orderNumber, "needs the order from the previous test");
+ 
+-    await page.goto("/login?next=/admin");
+-    await page.getByLabel("Email", { exact: true }).fill(ADMIN_EMAIL);
+-    await page.getByLabel("Password", { exact: true }).fill(ADMIN_PASSWORD);
+-    await page.getByRole("button", { name: "Sign in" }).click();
++    await signInAsAdmin(page);
+     await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
+ 
+     await page.goto(`/admin/orders?q=${orderNumber}`);
+@@ -87,12 +84,9 @@ test.describe.serial("checkout and fulfilment", () => {
+ 
+   test("admin pages load", async ({ page }) => {
+     test.skip(!ADMIN_EMAIL || !ADMIN_PASSWORD, "Set ADMIN_EMAIL/ADMIN_PASSWORD (or E2E_ADMIN_*)");
+-    await page.goto("/login?next=/admin");
+-    await page.getByLabel("Email", { exact: true }).fill(ADMIN_EMAIL);
+-    await page.getByLabel("Password", { exact: true }).fill(ADMIN_PASSWORD);
+-    await page.getByRole("button", { name: "Sign in" }).click();
++    await signInAsAdmin(page);
+     await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
+-    for (const path of ["/admin/orders", "/admin/products", "/admin/products/new", "/admin/inventory", "/admin/coupons", "/admin/banners", "/admin/categories", "/admin/customers", "/admin/reviews", "/admin/analytics", "/admin/settings"]) {
++    for (const path of ["/admin/orders", "/admin/products", "/admin/products/new", "/admin/inventory", "/admin/coupons", "/admin/banners", "/admin/categories", "/admin/customers", "/admin/reviews", "/admin/analytics", "/admin/settings", "/admin/security"]) {
+       const res = await page.goto(path);
+       expect(res?.status(), path).toBe(200);
+       await expect(page.locator("h1").first()).toBeVisible();
+diff --git a/tests/e2e/fixtures.ts b/tests/e2e/fixtures.ts
+index 71e3319..539578c 100644
+--- a/tests/e2e/fixtures.ts
++++ b/tests/e2e/fixtures.ts
+@@ -1,9 +1,54 @@
+-import { test as base, expect } from "@playwright/test";
++import { test as base, expect, type Page } from "@playwright/test";
++import { Client } from "pg";
++import { totpCode, totpStep } from "../../src/lib/auth/totp";
+ 
+ /** Product with plenty of stock in the seeded catalogue; override with E2E_PRODUCT_SLUG. */
+ export const PRODUCT_SLUG = process.env.E2E_PRODUCT_SLUG ?? "samsung-galaxy-a07-5g";
+ export const ADMIN_EMAIL = process.env.E2E_ADMIN_EMAIL ?? process.env.ADMIN_EMAIL ?? "";
+ export const ADMIN_PASSWORD = process.env.E2E_ADMIN_PASSWORD ?? process.env.ADMIN_PASSWORD ?? "";
++/** Authenticator secret that global-setup enrols for the e2e admin (2FA stays enforced in e2e). */
++export const ADMIN_TOTP_SECRET = process.env.E2E_ADMIN_TOTP_SECRET ?? "JBSWY3DPEHPK3PXPJBSWY3DPEHPK3PXP";
++
++/** Runs a query against the e2e database (the same DATABASE_URL the server under test uses). */
++export async function withDb<T>(fn: (client: Client) => Promise<T>): Promise<T> {
++  const client = new Client({ connectionString: process.env.DATABASE_URL });
++  await client.connect();
++  try {
++    return await fn(client);
++  } finally {
++    await client.end();
++  }
++}
++
++/**
++ * A code the server will accept now. The server refuses a step it has already
++ * seen (replay protection), so when the current step is used up, take the next
++ * one (accepted as clock drift) or wait for it.
++ */
++export async function freshTotpCode(email: string, secret: string): Promise<string> {
++  const last = await withDb(async (c) => {
++    const r = await c.query<{ totpLastStep: number | null }>(`SELECT "totpLastStep" FROM "User" WHERE email = $1`, [email.toLowerCase()]);
++    return r.rows[0]?.totpLastStep ?? null;
++  });
++  const step = Math.max(totpStep(), last === null ? 0 : last + 1);
++  while (step > totpStep() + 1) await new Promise((r) => setTimeout(r, 1000));
++  return totpCode(secret, step);
++}
++
++/** Signs in with email and password, then enters an authenticator code. */
++export async function signIn(page: Page, { email, password, secret, next = "/admin" }: { email: string; password: string; secret: string; next?: string }) {
++  await page.goto(`/login?next=${encodeURIComponent(next)}`);
++  await page.getByLabel("Email", { exact: true }).fill(email);
++  await page.getByLabel("Password", { exact: true }).fill(password);
++  await page.getByRole("button", { name: "Sign in" }).click();
++  await page.waitForURL(/\/login\/verify/);
++  await page.getByLabel("Code", { exact: true }).fill(await freshTotpCode(email, secret));
++  await page.getByRole("button", { name: "Verify" }).click();
++}
++
++export async function signInAsAdmin(page: Page, next = "/admin") {
++  await signIn(page, { email: ADMIN_EMAIL, password: ADMIN_PASSWORD, secret: ADMIN_TOTP_SECRET, next });
++}
+ 
+ /** Fails any test whose page throws or logs a console error. */
+ export const test = base.extend<{ browserErrors: string[] }>({
+diff --git a/tests/e2e/global-setup.ts b/tests/e2e/global-setup.ts
+index 64ac1ca..bf27b74 100644
+--- a/tests/e2e/global-setup.ts
++++ b/tests/e2e/global-setup.ts
+@@ -1,9 +1,14 @@
+ import "dotenv/config";
+ import { Client } from "pg";
++import { encryptSecret, parseEncryptionKey } from "../../src/lib/auth/two-factor-crypto";
++import { ADMIN_EMAIL, ADMIN_TOTP_SECRET } from "./fixtures";
+ 
+ /**
+  * Repeated local runs come from one IP and would trip the sign-up/login rate
+  * limits. E2E runs only against a disposable database, so clear them first.
++ *
++ * Admin two-factor sign-in stays enforced in e2e: the e2e admin is enrolled
++ * here with a known secret, and the sign-in helper computes its codes.
+  */
+ export default async function globalSetup() {
+   if (!process.env.DATABASE_URL) return;
+@@ -11,6 +16,16 @@ export default async function globalSetup() {
+   await client.connect();
+   try {
+     await client.query(`DELETE FROM "RateLimit"`);
++    if (ADMIN_EMAIL) {
++      const key = parseEncryptionKey(process.env.TOTP_ENCRYPTION_KEY); // must be the server's key
++      const { rows } = await client.query<{ id: string }>(`SELECT id FROM "User" WHERE email = $1`, [ADMIN_EMAIL.toLowerCase()]);
++      if (rows[0]) {
++        await client.query(`UPDATE "User" SET "totpSecretEnc" = $1, "totpEnabledAt" = now() WHERE id = $2`, [
++          encryptSecret(ADMIN_TOTP_SECRET, key, rows[0].id),
++          rows[0].id,
++        ]);
++      }
++    }
+   } finally {
+     await client.end();
+   }
+diff --git a/tests/e2e/two-factor.spec.ts b/tests/e2e/two-factor.spec.ts
+new file mode 100644
+index 0000000..c35cd7d
+--- /dev/null
++++ b/tests/e2e/two-factor.spec.ts
+@@ -0,0 +1,141 @@
++import AxeBuilder from "@axe-core/playwright";
++import type { Page } from "@playwright/test";
++import { test, expect, freshTotpCode, signIn, withDb } from "./fixtures";
++import { totpCode, totpStep } from "../../src/lib/auth/totp";
++
++/**
++ * Admin two-factor sign-in: a new admin is sent to Security, enrols with the
++ * setup key, then signs in with an app code and with a recovery code.
++ * Creates a throwaway admin account and deletes it at the end.
++ */
++const email = `e2e-2fa+${Date.now()}@example.com`;
++const password = "secret123A";
++let secret = "";
++let recoveryCodes: string[] = [];
++
++async function expectNoAxeViolations(page: Page) {
++  const { violations } = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]).analyze();
++  expect(violations.map((v) => `${v.id} (${v.impact}): ${v.nodes.length}× e.g. ${v.nodes[0]?.target.join(" ")}`)).toEqual([]);
++}
++
++async function signOut(page: Page) {
++  await page.getByRole("button", { name: "Sign out" }).click();
++  await page.waitForURL((u) => u.pathname === "/");
++}
++
++async function passwordStep(page: Page) {
++  await page.goto("/login?next=/admin");
++  await page.getByLabel("Email", { exact: true }).fill(email);
++  await page.getByLabel("Password", { exact: true }).fill(password);
++  await page.getByRole("button", { name: "Sign in" }).click();
++  await page.waitForURL(/\/login\/verify/);
++}
++
++test.describe.serial("admin two-factor sign-in", () => {
++  test.afterAll(async () => {
++    await withDb((c) => c.query(`DELETE FROM "User" WHERE email = $1`, [email]));
++  });
++
++  test("a new admin must enrol before using the admin panel", async ({ page }) => {
++    await page.goto("/register");
++    await page.getByLabel("Full name").fill("E2E Two Factor");
++    await page.getByLabel("Email", { exact: true }).fill(email);
++    await page.getByLabel("Password", { exact: true }).fill(password);
++    await page.getByLabel(/I agree/).check();
++    await page.getByRole("button", { name: "Create account" }).click();
++    await page.waitForURL(/\/account/);
++    await withDb((c) => c.query(`UPDATE "User" SET role = 'ADMIN' WHERE email = $1`, [email]));
++
++    // Every admin page redirects to Security, and only Security is in the menu.
++    await page.goto("/admin/orders");
++    await expect(page).toHaveURL(/\/admin\/security$/);
++    await expect(page.getByRole("heading", { name: "Security", level: 1 })).toBeVisible();
++    await expect(page.getByText("Admin accounts must use two-factor sign-in")).toBeVisible();
++    await expect(page.getByRole("navigation", { name: "Admin" }).getByRole("link", { name: "Orders" })).toHaveCount(0);
++
++    await page.getByRole("button", { name: "Set up two-factor sign-in" }).click();
++    const key = page.getByTestId("totp-setup-key");
++    await expect(key).toBeVisible();
++    await expect(page.getByRole("img", { name: /QR code/ })).toBeVisible();
++    await page.waitForLoadState("networkidle");
++    await expectNoAxeViolations(page);
++    secret = (await key.textContent())!.replace(/\s/g, "");
++    expect(secret).toMatch(/^[A-Z2-7]{32}$/);
++
++    // A wrong code is refused.
++    const right = totpCode(secret, totpStep());
++    await page.getByLabel("6-digit code from the app").fill(right === "123456" ? "654321" : "123456");
++    await page.getByRole("button", { name: "Turn on two-factor sign-in" }).click();
++    await expect(page.getByText("That code didn't work")).toBeVisible();
++
++    await page.getByLabel("6-digit code from the app").fill(totpCode(secret, totpStep()));
++    await page.getByRole("button", { name: "Turn on two-factor sign-in" }).click();
++    await expect(page.getByText("Save your recovery codes now")).toBeVisible();
++    recoveryCodes = await page.getByRole("list", { name: "Recovery codes" }).getByRole("listitem").allTextContents();
++    expect(recoveryCodes).toHaveLength(10);
++    await page.getByRole("button", { name: "I've saved my codes" }).click();
++    await expect(page.getByText("10 of 10 unused")).toBeVisible();
++    await expect(page.getByRole("navigation", { name: "Admin" }).getByRole("link", { name: "Orders" })).toBeVisible();
++
++    await page.goto("/admin");
++    await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
++    await signOut(page);
++  });
++
++  test("signs in with an authenticator code; a wrong code shows an error", async ({ page }) => {
++    await passwordStep(page);
++    await page.waitForLoadState("networkidle");
++    await expectNoAxeViolations(page);
++
++    // No session yet: the admin panel still asks to sign in.
++    const admin = await page.request.get("/admin", { maxRedirects: 0 });
++    expect(admin.headers()["location"] ?? "").toContain("/login");
++
++    await page.getByLabel("Code", { exact: true }).fill("000000");
++    await page.getByRole("button", { name: "Verify" }).click();
++    await expect(page.getByText("That code didn't work")).toBeVisible();
++
++    await page.getByLabel("Code", { exact: true }).fill(await freshTotpCode(email, secret));
++    await page.getByRole("button", { name: "Verify" }).click();
++    await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
++    await signOut(page);
++  });
++
++  test("signs in with a recovery code, which then stops working", async ({ page }) => {
++    await passwordStep(page);
++    await page.getByLabel("Code", { exact: true }).fill(recoveryCodes[0]);
++    await page.getByRole("button", { name: "Verify" }).click();
++    await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
++    await page.goto("/admin/security");
++    await expect(page.getByText("9 of 10 unused")).toBeVisible();
++    await signOut(page);
++
++    await passwordStep(page);
++    await page.getByLabel("Code", { exact: true }).fill(recoveryCodes[0]);
++    await page.getByRole("button", { name: "Verify" }).click();
++    await expect(page.getByText("That code didn't work")).toBeVisible();
++    await page.getByLabel("Code", { exact: true }).fill(recoveryCodes[1]);
++    await page.getByRole("button", { name: "Verify" }).click();
++    await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
++    await signOut(page);
++  });
++
++  test("locks the code step after 5 wrong codes", async ({ page }) => {
++    await passwordStep(page);
++    // Wait for each answer: the error text from the previous try is still on screen.
++    const tryCode = async (code: string) => {
++      await page.getByLabel("Code", { exact: true }).fill(code);
++      await Promise.all([page.waitForResponse((r) => r.request().method() === "POST"), page.getByRole("button", { name: "Verify" }).click()]);
++    };
++    for (let i = 0; i < 4; i++) {
++      await tryCode("zzzz-zzzz-zzzz");
++      await expect(page.getByText("That code didn't work")).toBeVisible();
++    }
++    await tryCode("zzzz-zzzz-zzzz");
++    await expect(page.getByText("Too many wrong codes")).toBeVisible();
++
++    // Even the right code is refused while locked.
++    await signIn(page, { email, password, secret });
++    await expect(page.getByText("Too many wrong codes")).toBeVisible();
++  });
++});
+diff --git a/tests/unit/totp.test.ts b/tests/unit/totp.test.ts
+new file mode 100644
+index 0000000..735ecee
+--- /dev/null
++++ b/tests/unit/totp.test.ts
+@@ -0,0 +1,103 @@
++import { describe, expect, it } from "vitest";
++import { base32Decode, base32Encode, formatManualKey, generateTotpSecret, otpauthUri, totpCode, totpStep, verifyTotp, type TotpAlgorithm } from "@/lib/auth/totp";
++
++const b32 = (ascii: string) => base32Encode(Buffer.from(ascii, "ascii"));
++
++// RFC 6238 Appendix B: 8-digit codes, 30-second steps, ASCII seeds per algorithm.
++const SEEDS: Record<TotpAlgorithm, string> = {
++  sha1: "12345678901234567890",
++  sha256: "12345678901234567890123456789012",
++  sha512: "1234567890123456789012345678901234567890123456789012345678901234",
++};
++const VECTORS: [number, Record<TotpAlgorithm, string>][] = [
++  [59, { sha1: "94287082", sha256: "46119246", sha512: "90693936" }],
++  [1111111109, { sha1: "07081804", sha256: "68084774", sha512: "25091201" }],
++  [1111111111, { sha1: "14050471", sha256: "67062674", sha512: "99943326" }],
++  [1234567890, { sha1: "89005924", sha256: "91819424", sha512: "93441116" }],
++  [2000000000, { sha1: "69279037", sha256: "90698825", sha512: "38618901" }],
++  [20000000000, { sha1: "65353130", sha256: "77737706", sha512: "47863826" }],
++];
++
++describe("TOTP (RFC 6238)", () => {
++  for (const [t, codes] of VECTORS) {
++    for (const algo of ["sha1", "sha256", "sha512"] as const) {
++      it(`${algo} at T=${t}`, () => {
++        expect(totpCode(b32(SEEDS[algo]), totpStep(t * 1000), 8, algo)).toBe(codes[algo]);
++      });
++    }
++  }
++
++  it("6-digit codes are the last 6 digits of the RFC values", () => {
++    expect(totpCode(b32(SEEDS.sha1), totpStep(59_000))).toBe("287082");
++    expect(totpCode(b32(SEEDS.sha1), totpStep(1111111109_000))).toBe("081804");
++  });
++});
++
++describe("base32", () => {
++  it("round-trips and matches RFC 4648", () => {
++    expect(base32Encode(Buffer.from("foobar"))).toBe("MZXW6YTBOI");
++    expect(base32Decode("MZXW6YTBOI").toString()).toBe("foobar");
++    expect(base32Decode("mzxw 6ytb-oi==").toString()).toBe("foobar");
++    const secret = generateTotpSecret();
++    expect(secret).toMatch(/^[A-Z2-7]{32}$/);
++    expect(base32Decode(secret)).toHaveLength(20);
++  });
++
++  it("rejects invalid characters", () => {
++    expect(() => base32Decode("ABC1")).toThrow();
++  });
++});
++
++describe("verifyTotp", () => {
++  const secret = b32(SEEDS.sha1);
++  const now = 1_700_000_000_000;
++  const step = totpStep(now);
++  const at = (s: number) => totpCode(secret, s);
++
++  it("accepts the current step and one step either side", () => {
++    expect(verifyTotp(secret, at(step), { nowMs: now })).toBe(step);
++    expect(verifyTotp(secret, at(step - 1), { nowMs: now })).toBe(step - 1);
++    expect(verifyTotp(secret, at(step + 1), { nowMs: now })).toBe(step + 1);
++  });
++
++  it("rejects codes outside the window", () => {
++    expect(verifyTotp(secret, at(step - 2), { nowMs: now })).toBeNull();
++    expect(verifyTotp(secret, at(step + 2), { nowMs: now })).toBeNull();
++  });
++
++  it("refuses a code from a step already used (replay)", () => {
++    expect(verifyTotp(secret, at(step), { nowMs: now, lastStep: step })).toBeNull();
++    expect(verifyTotp(secret, at(step - 1), { nowMs: now, lastStep: step - 1 })).toBeNull();
++    // A newer step is still fine.
++    expect(verifyTotp(secret, at(step + 1), { nowMs: now, lastStep: step })).toBe(step + 1);
++  });
++
++  it("ignores a space in the middle and rejects malformed input", () => {
++    const c = at(step);
++    expect(verifyTotp(secret, `${c.slice(0, 3)} ${c.slice(3)}`, { nowMs: now })).toBe(step);
++    expect(verifyTotp(secret, "", { nowMs: now })).toBeNull();
++    expect(verifyTotp(secret, "12345", { nowMs: now })).toBeNull();
++    expect(verifyTotp(secret, "abcdef", { nowMs: now })).toBeNull();
++  });
++
++  it("rejects a code made with another secret", () => {
++    expect(verifyTotp(generateTotpSecret(), at(step), { nowMs: now })).toBeNull();
++  });
++});
++
++describe("otpauth URI", () => {
++  it("has the parameters authenticator apps expect", () => {
++    const uri = otpauthUri({ secret: "JBSWY3DPEHPK3PXP", account: "owner@example.com", issuer: "myT Mobiles" });
++    expect(uri.startsWith("otpauth://totp/myT%20Mobiles:owner%40example.com?")).toBe(true);
++    const params = new URL(uri).searchParams;
++    expect(params.get("secret")).toBe("JBSWY3DPEHPK3PXP");
++    expect(params.get("issuer")).toBe("myT Mobiles");
++    expect(params.get("algorithm")).toBe("SHA1");
++    expect(params.get("digits")).toBe("6");
++    expect(params.get("period")).toBe("30");
++  });
++
++  it("formats the manual key in groups of four", () => {
++    expect(formatManualKey("JBSWY3DPEHPK3PXP")).toBe("JBSW Y3DP EHPK 3PXP");
++  });
++});
+diff --git a/tests/unit/two-factor.test.ts b/tests/unit/two-factor.test.ts
+new file mode 100644
+index 0000000..a6a706e
+--- /dev/null
++++ b/tests/unit/two-factor.test.ts
+@@ -0,0 +1,167 @@
++import { randomBytes } from "node:crypto";
++import { beforeEach, describe, expect, it, vi } from "vitest";
++import { generateTotpSecret, totpCode, totpStep } from "@/lib/auth/totp";
++import {
++  decryptSecret,
++  encryptSecret,
++  generateRecoveryCodes,
++  hashRecoveryCode,
++  looksLikeRecoveryCode,
++  normaliseRecoveryCode,
++  parseEncryptionKey,
++} from "@/lib/auth/two-factor-crypto";
++
++const KEY_B64 = randomBytes(32).toString("base64");
++
++describe("secret encryption (AES-256-GCM)", () => {
++  const key = parseEncryptionKey(KEY_B64);
++
++  it("round-trips", () => {
++    const secret = generateTotpSecret();
++    const enc = encryptSecret(secret, key, "user_1");
++    expect(enc).not.toContain(secret);
++    expect(enc.startsWith("v1.")).toBe(true);
++    expect(decryptSecret(enc, key, "user_1")).toBe(secret);
++  });
++
++  it("uses a fresh IV each time", () => {
++    expect(encryptSecret("SAME", key, "u")).not.toBe(encryptSecret("SAME", key, "u"));
++  });
++
++  it("fails with the wrong key, the wrong user or tampered data", () => {
++    const enc = encryptSecret("JBSWY3DPEHPK3PXP", key, "user_1");
++    expect(() => decryptSecret(enc, parseEncryptionKey(randomBytes(32).toString("base64")), "user_1")).toThrow();
++    expect(() => decryptSecret(enc, key, "user_2")).toThrow();
++    const parts = enc.split(".");
++    const ct = Buffer.from(parts[3], "base64url");
++    ct[0] ^= 1;
++    expect(() => decryptSecret([...parts.slice(0, 3), ct.toString("base64url")].join("."), key, "user_1")).toThrow();
++    expect(() => decryptSecret("garbage", key, "user_1")).toThrow();
++  });
++
++  it("refuses a missing or short key with a clear message", () => {
++    expect(() => parseEncryptionKey(undefined)).toThrow(/TOTP_ENCRYPTION_KEY is not set.*openssl rand -base64 32/);
++    expect(() => parseEncryptionKey("")).toThrow(/not set/);
++    expect(() => parseEncryptionKey(randomBytes(16).toString("base64"))).toThrow(/must be 32 bytes/);
++  });
++});
++
++describe("recovery codes", () => {
++  it("generates 10 distinct, readable codes", () => {
++    const codes = generateRecoveryCodes();
++    expect(codes).toHaveLength(10);
++    expect(new Set(codes).size).toBe(10);
++    for (const c of codes) {
++      expect(c).toMatch(/^[2-9a-hjkmnp-z]{4}-[2-9a-hjkmnp-z]{4}-[2-9a-hjkmnp-z]{4}$/);
++      expect(looksLikeRecoveryCode(c)).toBe(true);
++    }
++  });
++
++  it("hashes the normalised code, so case, spaces and dashes don't matter", () => {
++    const [code] = generateRecoveryCodes(1);
++    const h = hashRecoveryCode(code);
++    expect(h).toMatch(/^[0-9a-f]{64}$/);
++    expect(h).not.toContain(normaliseRecoveryCode(code));
++    expect(hashRecoveryCode(code.toUpperCase().replace(/-/g, " "))).toBe(h);
++    expect(hashRecoveryCode(generateRecoveryCodes(1)[0])).not.toBe(h);
++  });
++
++  it("tells recovery codes from app codes", () => {
++    expect(looksLikeRecoveryCode("123456")).toBe(false);
++    expect(looksLikeRecoveryCode("abcd-efgh-jkmn")).toBe(true);
++    expect(looksLikeRecoveryCode("abcd-efgh-jkm0")).toBe(false);
++  });
++});
++
++// ───────── checkSecondFactor against an in-memory database ─────────
++
++const store = vi.hoisted(() => ({
++  user: null as null | { id: string; totpSecretEnc: string | null; totpEnabledAt: Date | null; totpLastStep: number | null },
++  codes: [] as { userId: string; codeHash: string; usedAt: Date | null }[],
++  failures: 0,
++}));
++
++vi.mock("@/lib/env", () => ({ env: () => ({ TOTP_ENCRYPTION_KEY: KEY_B64, NODE_ENV: "test" }) }));
++vi.mock("next/headers", () => ({ cookies: vi.fn(), headers: vi.fn() }));
++vi.mock("next/navigation", () => ({ redirect: vi.fn() }));
++vi.mock("@/lib/db", () => {
++  type Where = { id?: string; userId?: string; codeHash?: string; usedAt?: null; OR?: { totpLastStep: null | { lt: number } }[] };
++  const db = {
++    user: {
++      findUnique: async () => store.user,
++      updateMany: async ({ where, data }: { where: Where; data: { totpLastStep: number } }) => {
++        const u = store.user;
++        if (!u || u.id !== where.id) return { count: 0 };
++        const fresh = u.totpLastStep === null || u.totpLastStep < data.totpLastStep;
++        if (!fresh) return { count: 0 };
++        u.totpLastStep = data.totpLastStep;
++        return { count: 1 };
++      },
++    },
++    recoveryCode: {
++      updateMany: async ({ where }: { where: Where }) => {
++        const row = store.codes.find((c) => c.userId === where.userId && c.codeHash === where.codeHash && c.usedAt === null);
++        if (!row) return { count: 0 };
++        row.usedAt = new Date();
++        return { count: 1 };
++      },
++    },
++    rateLimit: { deleteMany: async () => ((store.failures = 0), { count: 1 }) },
++    // Lockout queries: SELECT → locked?, INSERT → count a failure.
++    $queryRaw: async (sql: TemplateStringsArray) => {
++      if (sql.join("").includes("SELECT")) return [{ locked: store.failures >= 5 }];
++      store.failures += 1;
++      return [{ count: store.failures }];
++    },
++  };
++  return { db };
++});
++
++const { checkSecondFactor } = await import("@/lib/auth/two-factor");
++
++describe("checkSecondFactor", () => {
++  const secret = generateTotpSecret();
++  const codes = generateRecoveryCodes();
++
++  beforeEach(() => {
++    store.user = { id: "u1", totpSecretEnc: encryptSecret(secret, parseEncryptionKey(KEY_B64), "u1"), totpEnabledAt: new Date(), totpLastStep: null };
++    store.codes = codes.map((c) => ({ userId: "u1", codeHash: hashRecoveryCode(c), usedAt: null }));
++    store.failures = 0;
++  });
++
++  it("accepts the current app code once, then refuses it (replay)", async () => {
++    const step = totpStep();
++    const code = totpCode(secret, step);
++    expect(await checkSecondFactor("u1", code)).toBe("ok");
++    expect(store.user!.totpLastStep).toBe(step);
++    expect(await checkSecondFactor("u1", code)).toBe("invalid");
++  });
++
++  it("accepts a recovery code only once", async () => {
++    expect(await checkSecondFactor("u1", codes[3].toUpperCase())).toBe("ok");
++    expect(await checkSecondFactor("u1", codes[3])).toBe("invalid");
++    expect(await checkSecondFactor("u1", codes[4])).toBe("ok");
++  });
++
++  it("can refuse recovery codes where only an app code is allowed", async () => {
++    expect(await checkSecondFactor("u1", codes[0], { allowRecovery: false })).toBe("invalid");
++  });
++
++  it("locks after 5 wrong codes, even for a right one", async () => {
++    for (let i = 0; i < 4; i++) expect(await checkSecondFactor("u1", "zzzz-zzzz-zzzz")).toBe("invalid");
++    expect(await checkSecondFactor("u1", "zzzz-zzzz-zzzz")).toBe("locked");
++    expect(await checkSecondFactor("u1", totpCode(secret, totpStep()))).toBe("locked");
++  });
++
++  it("clears the failure count after a right code", async () => {
++    expect(await checkSecondFactor("u1", "zzzz-zzzz-zzzz")).toBe("invalid");
++    expect(store.failures).toBe(1);
++    expect(await checkSecondFactor("u1", codes[0])).toBe("ok");
++    expect(store.failures).toBe(0);
++  });
++
++  it("refuses everything when 2FA is not on", async () => {
++    store.user = { ...store.user!, totpEnabledAt: null };
++    expect(await checkSecondFactor("u1", totpCode(secret, totpStep()))).toBe("invalid");
++  });
++});

@@ -1,0 +1,189 @@
+{
+  "slug": "apple-ipad-9th-generation-wi-fi",
+  "name": "Apple iPad (9th generation) Wi-Fi",
+  "brand": "Apple",
+  "category": "tablets",
+  "condition": "NEW",
+  "status": "draft",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "iPad (9th generation) Wi-Fi with a 10.2-inch Retina display, A13 Bionic chip, Touch ID and 64 GB storage.",
+  "description": "The iPad (9th generation) has a 10.2-inch Retina display with True Tone and runs on the A13 Bionic chip. It supports Apple Pencil (1st generation) and the Smart Keyboard through the Smart Connector.\n\nThe front has a 12 MP Ultra Wide camera with Centre Stage for video calls, and the back has an 8 MP Wide camera. Apple quotes up to 10 hours of web browsing on Wi-Fi or video playback.\n\nThis is the Wi-Fi model with 64 GB storage. It has Touch ID in the Home button, a Lightning connector, a 3.5 mm headphone jack and stereo speakers.",
+  "highlights": [
+    "10.2-inch Retina display with True Tone",
+    "A13 Bionic chip",
+    "12 MP Ultra Wide front camera with Centre Stage, 8 MP rear camera",
+    "Touch ID, Apple Pencil (1st generation) support",
+    "Up to 10 hours battery life (Apple figure)",
+    "GST invoice with every order"
+  ],
+  "specs": [
+    {
+      "group": "Display",
+      "items": [
+        {
+          "label": "Size",
+          "value": "10.2-inch (diagonal) LED-backlit Multi-Touch display with IPS technology"
+        },
+        {
+          "label": "Resolution",
+          "value": "2160 x 1620 pixels at 264 ppi"
+        },
+        {
+          "label": "Features",
+          "value": "Retina display, True Tone, 500 nits brightness, fingerprint-resistant coating"
+        },
+        {
+          "label": "Pencil support",
+          "value": "Apple Pencil (1st generation)"
+        }
+      ]
+    },
+    {
+      "group": "Performance",
+      "items": [
+        {
+          "label": "Chip",
+          "value": "A13 Bionic chip with Neural Engine"
+        },
+        {
+          "label": "Storage",
+          "value": "64 GB"
+        },
+        {
+          "label": "Operating system",
+          "value": "iPadOS"
+        }
+      ]
+    },
+    {
+      "group": "Camera",
+      "items": [
+        {
+          "label": "Rear",
+          "value": "8 MP Wide camera, ƒ/2.4, 1080p HD video at 25 or 30 fps"
+        },
+        {
+          "label": "Front",
+          "value": "12 MP Ultra Wide camera, 122° field of view, ƒ/2.4, Centre Stage"
+        }
+      ]
+    },
+    {
+      "group": "Battery",
+      "items": [
+        {
+          "label": "Battery",
+          "value": "Built-in 32.4 Wh rechargeable lithium-polymer battery"
+        },
+        {
+          "label": "Battery life",
+          "value": "Up to 10 hours of surfing the web on Wi-Fi or watching video"
+        },
+        {
+          "label": "Charging",
+          "value": "Via power adapter or USB-C to computer system"
+        }
+      ]
+    },
+    {
+      "group": "Connectivity",
+      "items": [
+        {
+          "label": "Wi-Fi",
+          "value": "Wi-Fi 5 (802.11ac) with 2x2 MIMO"
+        },
+        {
+          "label": "Bluetooth",
+          "value": "Bluetooth 4.2"
+        },
+        {
+          "label": "Ports",
+          "value": "Lightning connector, 3.5 mm headphone jack, Smart Connector"
+        },
+        {
+          "label": "Audio",
+          "value": "Stereo speakers, dual microphones"
+        }
+      ]
+    },
+    {
+      "group": "Design",
+      "items": [
+        {
+          "label": "Colour",
+          "value": "Space Grey"
+        },
+        {
+          "label": "Dimensions",
+          "value": "250.6 x 174.1 x 7.5 mm"
+        },
+        {
+          "label": "Weight",
+          "value": "487 g (Wi-Fi model)"
+        },
+        {
+          "label": "Security",
+          "value": "Touch ID in the Home button"
+        }
+      ]
+    }
+  ],
+  "boxContents": [
+    "iPad (9th generation)",
+    "Lightning to USB-C Cable",
+    "20W USB-C Power Adapter"
+  ],
+  "keywords": [
+    "ipad",
+    "ipad 9th generation",
+    "apple ipad",
+    "ipad wifi",
+    "10.2 inch tablet",
+    "a13 bionic",
+    "64gb",
+    "tablet"
+  ],
+  "warranty": "1 year Apple limited warranty (hardware coverage), in addition to your rights under consumer law.",
+  "manufacturerInfo": null,
+  "countryOfOrigin": null,
+  "hsnCode": "84713010",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": "Apple iPad (9th generation) Wi-Fi 64 GB | myT Mobiles",
+  "seoDescription": "iPad (9th generation) Wi-Fi with 10.2-inch Retina display, A13 Bionic chip, Touch ID and 64 GB storage. GST invoice with every order.",
+  "variants": [
+    {
+      "sku": "APPLE-IPAD-9TH-GENERATION-WI-FI-64-SPACE-GREY",
+      "color": "Space Grey",
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": 64,
+      "mrp": 29900,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "APPLE iPAD 9tH GEN WIFI 64GB SPACE GREY",
+        "IPAD (9th GENERATION) WIFI 64 GB SPACE GRAY"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://support.apple.com/en-in/111898",
+      "usedFor": [
+        "specs",
+        "details",
+        "box"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.apple.com/in/applecare/",
+      "usedFor": [
+        "warranty"
+      ],
+      "retrievedAt": "2026-10-19"
+    }
+  ]
+}

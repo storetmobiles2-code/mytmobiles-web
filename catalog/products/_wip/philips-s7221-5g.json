@@ -1,0 +1,107 @@
+{
+  "slug": "philips-s7221-5g",
+  "name": "Philips S7221 5G",
+  "brand": "Philips",
+  "category": "smartphones",
+  "condition": "NEW",
+  "status": "live",
+  "featured": false,
+  "is5G": true,
+  "launchedAt": null,
+  "shortDescription": "Brand-new Philips S7221 5G in 3 colours, with GST invoice from myT Mobiles.",
+  "description": "Buy the Philips S7221 5G from myT Mobiles. Every order ships with a GST tax invoice, and you can choose Cash on Delivery or pay online. Prices shown include GST.",
+  "highlights": [
+    "5G connectivity",
+    "6 GB RAM · 128 GB storage",
+    "GST invoice with every order"
+  ],
+  "specs": [
+    {
+      "group": "Key facts",
+      "items": [
+        {
+          "label": "Brand",
+          "value": "Philips"
+        },
+        {
+          "label": "Model",
+          "value": "S7221 5G"
+        },
+        {
+          "label": "RAM options",
+          "value": "6 GB"
+        },
+        {
+          "label": "Storage options",
+          "value": "128 GB"
+        },
+        {
+          "label": "Network",
+          "value": "5G"
+        },
+        {
+          "label": "Colours",
+          "value": "Black, Blue, Gray"
+        },
+        {
+          "label": "Condition",
+          "value": "Brand new"
+        }
+      ]
+    }
+  ],
+  "boxContents": [],
+  "keywords": [
+    "philips",
+    "s7221",
+    "smartphone",
+    "5g"
+  ],
+  "warranty": "Manufacturer warranty as per brand policy.",
+  "manufacturerInfo": null,
+  "countryOfOrigin": null,
+  "hsnCode": "85171300",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": null,
+  "seoDescription": null,
+  "variants": [
+    {
+      "sku": "PHILIPS-S7221-5G-6-128-BLACK",
+      "color": "Black",
+      "colorHex": null,
+      "ramGb": 6,
+      "storageGb": 128,
+      "mrp": 20999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "PHILIPS S7221 5G 6/128 BLACK"
+      ]
+    },
+    {
+      "sku": "PHILIPS-S7221-5G-6-128-BLUE",
+      "color": "Blue",
+      "colorHex": null,
+      "ramGb": 6,
+      "storageGb": 128,
+      "mrp": 20999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "PHILIPS S7221 5G 6/128 BLUE"
+      ]
+    },
+    {
+      "sku": "PHILIPS-S7221-5G-6-128-GRAY",
+      "color": "Gray",
+      "colorHex": null,
+      "ramGb": 6,
+      "storageGb": 128,
+      "mrp": 20999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "PHILIPS S7221 5G 6/128 GRAY"
+      ]
+    }
+  ],
+  "sources": []
+}

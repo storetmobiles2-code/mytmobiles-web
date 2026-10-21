@@ -1,0 +1,85 @@
+{
+  "slug": "samsung-galaxy-s26-demo-unit",
+  "name": "Samsung Galaxy S26 (Demo Unit)",
+  "brand": "Samsung",
+  "category": "smartphones",
+  "condition": "DEMO",
+  "status": "live",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "Demo (display) unit of the Samsung Galaxy S26, sold open-box at a lower price.",
+  "description": "This is a demo (display) unit of the Samsung Galaxy S26 that was used for in-store demonstration. It may show light signs of handling. Please contact us before ordering if you'd like to know its exact condition, accessories included and remaining manufacturer warranty.",
+  "highlights": [
+    "12 GB RAM · 256 GB storage",
+    "Demo unit — priced below new"
+  ],
+  "specs": [
+    {
+      "group": "Key facts",
+      "items": [
+        {
+          "label": "Brand",
+          "value": "Samsung"
+        },
+        {
+          "label": "Model",
+          "value": "Galaxy S26"
+        },
+        {
+          "label": "RAM options",
+          "value": "12 GB"
+        },
+        {
+          "label": "Storage options",
+          "value": "256 GB"
+        },
+        {
+          "label": "Network",
+          "value": "As per model"
+        },
+        {
+          "label": "Colours",
+          "value": "Cobalt Violet"
+        },
+        {
+          "label": "Condition",
+          "value": "Demo / display unit (open box)"
+        }
+      ]
+    }
+  ],
+  "boxContents": [],
+  "keywords": [
+    "samsung",
+    "galaxy",
+    "s26",
+    "smartphone",
+    "demo",
+    "open",
+    "box"
+  ],
+  "warranty": "Manufacturer warranty as applicable from the original activation date — ask us for the remaining period.",
+  "manufacturerInfo": null,
+  "countryOfOrigin": null,
+  "hsnCode": "85171300",
+  "gstRatePercent": 18,
+  "returnWindowDays": 0,
+  "seoTitle": null,
+  "seoDescription": null,
+  "variants": [
+    {
+      "sku": "SAMSUNG-GALAXY-S26-DEMO-UNIT-12-256-COBALT-VIOLET",
+      "color": "Cobalt Violet",
+      "colorHex": null,
+      "ramGb": 12,
+      "storageGb": 256,
+      "mrp": 117999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY S26 12/256 COBALT VIOLET DEMO UNIT"
+      ]
+    }
+  ],
+  "sources": []
+}

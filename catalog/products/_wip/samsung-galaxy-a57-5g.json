@@ -1,0 +1,108 @@
+{
+  "slug": "samsung-galaxy-a57-5g",
+  "name": "Samsung Galaxy A57 5G",
+  "brand": "Samsung",
+  "category": "smartphones",
+  "condition": "NEW",
+  "status": "live",
+  "featured": false,
+  "is5G": true,
+  "launchedAt": null,
+  "shortDescription": "Brand-new Samsung Galaxy A57 5G in 2 colours, with GST invoice from myT Mobiles.",
+  "description": "Buy the Samsung Galaxy A57 5G from myT Mobiles. Every order ships with a GST tax invoice, and you can choose Cash on Delivery or pay online. Prices shown include GST.",
+  "highlights": [
+    "5G connectivity",
+    "8 GB/12 GB RAM · 256 GB storage",
+    "GST invoice with every order"
+  ],
+  "specs": [
+    {
+      "group": "Key facts",
+      "items": [
+        {
+          "label": "Brand",
+          "value": "Samsung"
+        },
+        {
+          "label": "Model",
+          "value": "Galaxy A57 5G"
+        },
+        {
+          "label": "RAM options",
+          "value": "8 GB / 12 GB"
+        },
+        {
+          "label": "Storage options",
+          "value": "256 GB"
+        },
+        {
+          "label": "Network",
+          "value": "5G"
+        },
+        {
+          "label": "Colours",
+          "value": "Awesome Lilac, Awesome Icy Blue"
+        },
+        {
+          "label": "Condition",
+          "value": "Brand new"
+        }
+      ]
+    }
+  ],
+  "boxContents": [],
+  "keywords": [
+    "samsung",
+    "galaxy",
+    "a57",
+    "smartphone",
+    "5g"
+  ],
+  "warranty": "Manufacturer warranty as per brand policy.",
+  "manufacturerInfo": null,
+  "countryOfOrigin": null,
+  "hsnCode": "85171300",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": null,
+  "seoDescription": null,
+  "variants": [
+    {
+      "sku": "SAMSUNG-GALAXY-A57-5G-8-256-AWESOME-LILAC",
+      "color": "Awesome Lilac",
+      "colorHex": null,
+      "ramGb": 8,
+      "storageGb": 256,
+      "mrp": 77999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY A57 5G 8/256 AWESOME LILAC"
+      ]
+    },
+    {
+      "sku": "SAMSUNG-GALAXY-A57-5G-12-256-AWESOME-ICY-BLUE",
+      "color": "Awesome Icy Blue",
+      "colorHex": null,
+      "ramGb": 12,
+      "storageGb": 256,
+      "mrp": 72499,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY A57 5G 12/256 AWESOME ICYBLUE"
+      ]
+    },
+    {
+      "sku": "SAMSUNG-GALAXY-A57-5G-12-256-AWESOME-LILAC",
+      "color": "Awesome Lilac",
+      "colorHex": null,
+      "ramGb": 12,
+      "storageGb": 256,
+      "mrp": 62499,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY A57 5G 12/256 AWESOME LILAC"
+      ]
+    }
+  ],
+  "sources": []
+}

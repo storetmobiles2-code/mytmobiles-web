@@ -4,7 +4,10 @@
 
 Online store for myT Mobiles (Next.js 16, Prisma 7, PostgreSQL). See README.md for setup and docs/agents.md for how the store is maintained.
 
+**Starting a new session? Read `docs/progress.md` first.** It lists what's done, what's unfinished and exactly how to pick it up.
+
 - House rules for catalogue, photos, pricing, legal disclosures and safety: `.claude/skills/store-rules/SKILL.md`. Load it before touching products or anything customers see.
+- How to change and test the code (local databases, quality gates, e2e, admin permissions and audit logging, parallel agents in worktrees): `.claude/skills/store-dev/SKILL.md`. Load it before writing or merging code.
 - Maintenance agents in `.claude/agents/`:
   - `product-onboarder`: new products
   - `catalog-editor`: changes to existing products
