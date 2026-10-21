@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { Client } from "pg";
 import type { Page } from "@playwright/test";
-import { test, expect, ADMIN_EMAIL, ADMIN_PASSWORD, PRODUCT_SLUG, STAFF_EMAIL, STAFF_PASSWORD } from "./fixtures";
+import { test, expect, ADMIN_EMAIL, ADMIN_PASSWORD, ADMIN_TOTP_SECRET, PRODUCT_SLUG, STAFF_EMAIL, STAFF_PASSWORD, STAFF_TOTP_SECRET, signIn as signInWith2fa } from "./fixtures";
 
 /**
  * Staff roles and the admin audit log. Writes to the database directly to
@@ -19,10 +19,7 @@ async function withDb<T>(fn: (db: Client) => Promise<T>): Promise<T> {
 }
 
 async function signIn(page: Page, email: string, password: string) {
-  await page.goto("/login?next=/admin");
-  await page.getByLabel("Email", { exact: true }).fill(email);
-  await page.getByLabel("Password", { exact: true }).fill(password);
-  await page.getByRole("button", { name: "Sign in" }).click();
+  await signInWith2fa(page, { email, password, secret: email === STAFF_EMAIL ? STAFF_TOTP_SECRET : ADMIN_TOTP_SECRET });
   await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
 }
 

@@ -1,5 +1,5 @@
 import type { Page } from "@playwright/test";
-import { expect, PRODUCT_SLUG, ADMIN_EMAIL, ADMIN_PASSWORD } from "./fixtures";
+import { expect, PRODUCT_SLUG, signInAsAdmin as signInWith2fa } from "./fixtures";
 
 /**
  * Shared steps from the checkout flow in checkout.spec.ts. Each places a real
@@ -44,10 +44,7 @@ export async function placeCodOrder(page: Page): Promise<string> {
 }
 
 export async function signInAsAdmin(page: Page) {
-  await page.goto("/login?next=/admin");
-  await page.getByLabel("Email", { exact: true }).fill(ADMIN_EMAIL);
-  await page.getByLabel("Password", { exact: true }).fill(ADMIN_PASSWORD);
-  await page.getByRole("button", { name: "Sign in" }).click();
+  await signInWith2fa(page);
   await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
 }
 
