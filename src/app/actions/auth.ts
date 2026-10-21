@@ -11,6 +11,7 @@ import { rateLimit } from "@/lib/rate-limit";
 import { emailSchema, fieldErrors, loginSchema, passwordSchema, registerSchema } from "@/lib/validation";
 import { sendPasswordResetEmail, sendVerificationEmail } from "@/lib/email/auth-emails";
 import { trackServer } from "@/lib/analytics";
+import { checkSecondFactor, clearPendingSignIn, CODE_MESSAGES, consumePendingSignIn, getPendingSignIn, startPendingSignIn, twoFactorRequiredAtSignIn } from "@/lib/auth/two-factor";
 
 export interface FormState {
   error?: string;
@@ -65,10 +66,42 @@ export async function login(_prev: FormState, fd: FormData): Promise<FormState> 
   if (!user || !valid) return { error: "Incorrect email or password.", values };
   if (user.isDisabled) return { error: "This account has been disabled. Please contact support.", values };
 
+  // Two-factor accounts get a 5-minute pending step, not a session, until they enter a code.
+  if (twoFactorRequiredAtSignIn(user)) {
+    await startPendingSignIn(user.id);
+    const next = safeNext(fd.get("next"), "");
+    redirect(`/login/verify${next ? `?next=${encodeURIComponent(next)}` : ""}`);
+  }
+
   await mergeGuestCart(user.id);
   await createSession(user.id);
   void trackServer({ name: "login", userId: user.id });
   redirect(safeNext(fd.get("next"), user.role === "ADMIN" ? "/admin" : "/account"));
+}
+
+/** Second step of sign-in: an authenticator code or a recovery code. */
+export async function verifyTwoFactor(_prev: FormState, fd: FormData): Promise<FormState> {
+  const pending = await getPendingSignIn();
+  if (!pending) return { error: "Your sign-in has expired. Please sign in again." };
+  if (!(await rateLimit(`2fa-ip:${await clientIp()}`, 30, 900))) return { error: "Too many attempts. Please wait 15 minutes." };
+  const code = String(fd.get("code") ?? "").trim();
+  if (!code) return { fieldErrors: { code: "Enter the 6-digit code or a recovery code." } };
+
+  const result = await checkSecondFactor(pending.userId, code);
+  // The pending step is kept so the message stays on screen; every code is refused while locked.
+  if (result === "locked") return { error: CODE_MESSAGES.locked };
+  if (result !== "ok") return { fieldErrors: { code: CODE_MESSAGES.invalid } };
+  if (!(await consumePendingSignIn(pending.tokenId))) return { error: "Your sign-in has expired. Please sign in again." };
+
+  await mergeGuestCart(pending.userId);
+  await createSession(pending.userId);
+  void trackServer({ name: "login", userId: pending.userId });
+  redirect(safeNext(fd.get("next"), pending.role === "ADMIN" ? "/admin" : "/account"));
+}
+
+export async function cancelTwoFactor(): Promise<void> {
+  await clearPendingSignIn();
+  redirect("/login");
 }
 
 export async function logout(): Promise<void> {
@@ -107,6 +140,12 @@ export async function resetPassword(_prev: FormState, fd: FormData): Promise<For
     db.authToken.update({ where: { id: record.id }, data: { usedAt: new Date() } }),
   ]);
   await destroyAllSessions(record.userId); // sign out everywhere
+  // A reset link proves the email address only; two-factor accounts still need a code.
+  const user = await db.user.findUniqueOrThrow({ where: { id: record.userId }, select: { totpEnabledAt: true, totpSecretEnc: true } });
+  if (twoFactorRequiredAtSignIn(user)) {
+    await startPendingSignIn(record.userId);
+    redirect(`/login/verify?next=${encodeURIComponent("/account?reset=1")}`);
+  }
   await createSession(record.userId);
   redirect("/account?reset=1");
 }

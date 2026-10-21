@@ -37,6 +37,12 @@ model User {
   updatedAt       DateTime  @updatedAt
   lastLoginAt     DateTime?
 
+  /// Two-factor sign-in (TOTP). The secret is AES-256-GCM encrypted with
+  /// TOTP_ENCRYPTION_KEY; totpLastStep blocks reuse of a code (src/lib/auth/two-factor.ts).
+  totpSecretEnc String?
+  totpEnabledAt DateTime?
+  totpLastStep  Int?
+
   sessions      Session[]
   authTokens    AuthToken[]
   addresses     Address[]
@@ -47,6 +53,7 @@ model User {
   redemptions   CouponRedemption[]
   orderEvents   OrderEvent[]
   inventoryLogs InventoryLog[]
+  recoveryCodes RecoveryCode[]
 }
 
 /// Server-side session. `id` is the SHA-256 of the random cookie token, so a
@@ -67,9 +74,11 @@ model Session {
 enum AuthTokenType {
   PASSWORD_RESET
   EMAIL_VERIFICATION
+  TWO_FACTOR_PENDING // password accepted, waiting for the second factor (5 minutes)
 }
 
-/// Single-use tokens for password reset / email verification. Only the hash is stored.
+/// Single-use tokens for password reset, email verification and the pending
+/// two-factor step of sign-in. Only the hash is stored.
 model AuthToken {
   id        String        @id // SHA-256 of the emailed token
   userId    String
@@ -80,6 +89,18 @@ model AuthToken {
   createdAt DateTime      @default(now())
 
   @@index([userId, type])
+}
+
+/// Single-use two-factor recovery codes. Only the SHA-256 hash is stored.
+model RecoveryCode {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  codeHash  String
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@unique([userId, codeHash])
 }
 
 enum AddressType {

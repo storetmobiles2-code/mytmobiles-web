@@ -22,6 +22,11 @@ const schema = z.object({
   EMAIL_FROM: z.string().optional(),
 
   CRON_SECRET: z.string().min(16).optional(),
+
+  // Admin two-factor sign-in (src/lib/auth/two-factor.ts). The key is checked
+  // when 2FA is used, with a message saying how to create one.
+  TOTP_ENCRYPTION_KEY: z.string().optional(),
+  ADMIN_2FA_ENFORCED: z.string().optional(),
 });
 
 type Env = z.infer<typeof schema>;

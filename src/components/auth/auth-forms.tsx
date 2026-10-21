@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useActionState } from "react";
-import { login, register, requestPasswordReset, resetPassword, type FormState } from "@/app/actions/auth";
+import { login, register, requestPasswordReset, resetPassword, verifyTwoFactor, type FormState } from "@/app/actions/auth";
 import { FormError, FormSuccess, TextField } from "@/components/ui/field";
 import { SubmitButton } from "./submit-button";
 import { DEMO } from "@/lib/demo";
@@ -27,6 +27,27 @@ export function LoginForm({ next }: { next?: string }) {
         <Link href="/forgot-password" className="text-sm font-semibold text-brand-700 hover:underline">Forgot password?</Link>
       </div>
       <SubmitButton pendingText="Signing in…">Sign in</SubmitButton>
+    </form>
+  );
+}
+
+export function TwoFactorForm({ next }: { next?: string }) {
+  const [state, action] = useActionState(DEMO ? previewAction : verifyTwoFactor, initial);
+  return (
+    <form action={action} className="space-y-4" noValidate>
+      <input type="hidden" name="next" value={next ?? ""} />
+      <FormError message={state.error} />
+      <TextField
+        label="Code"
+        name="code"
+        autoComplete="one-time-code"
+        autoCapitalize="none"
+        spellCheck={false}
+        required
+        error={state.fieldErrors?.code}
+        hint="Lost your phone? Enter one of your recovery codes instead."
+      />
+      <SubmitButton pendingText="Checking…">Verify</SubmitButton>
     </form>
   );
 }

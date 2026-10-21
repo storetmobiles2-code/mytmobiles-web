@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { BarChart3, Boxes, FolderTree, Image as ImageIcon, LayoutDashboard, MessageSquareText, Package, Settings, ShoppingCart, TicketPercent, Users } from "lucide-react";
+import { BarChart3, Boxes, FolderTree, Image as ImageIcon, LayoutDashboard, MessageSquareText, Package, Settings, ShieldCheck, ShoppingCart, TicketPercent, Users } from "lucide-react";
 import { requireAdmin } from "@/lib/auth/guards";
+import { twoFactorSetupRequired } from "@/lib/auth/two-factor";
 import { logout } from "@/app/actions/auth";
 import { Logo } from "@/components/brand/logo";
 
@@ -20,10 +21,13 @@ const NAV = [
   { href: "/admin/reviews", label: "Reviews", icon: MessageSquareText },
   { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
   { href: "/admin/settings", label: "Settings", icon: Settings },
+  { href: "/admin/security", label: "Security", icon: ShieldCheck },
 ];
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const user = await requireAdmin();
+  // Until 2FA is on, only the Security page is offered (the others redirect there).
+  const nav = (await twoFactorSetupRequired(user.id)) ? NAV.filter((n) => n.href === "/admin/security") : NAV;
   return (
     <div className="flex min-h-dvh flex-col bg-ink-50 lg:flex-row">
       <aside className="bg-brand-950 text-white lg:sticky lg:top-0 lg:h-dvh lg:w-60 lg:shrink-0">
@@ -32,7 +36,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           <p className="text-xs text-white/50 lg:mt-2">Admin · {user.name}</p>
         </div>
         <nav aria-label="Admin" className="no-scrollbar flex gap-1 overflow-x-auto px-3 pb-3 lg:flex-col lg:overflow-visible">
-          {NAV.map((n) => (
+          {nav.map((n) => (
             <Link key={n.href} href={n.href} className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium whitespace-nowrap text-white/75 hover:bg-white/10 hover:text-white">
               <n.icon className="h-4 w-4" aria-hidden="true" /> {n.label}
             </Link>

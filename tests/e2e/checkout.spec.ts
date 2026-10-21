@@ -1,4 +1,4 @@
-import { test, expect, PRODUCT_SLUG, ADMIN_EMAIL, ADMIN_PASSWORD } from "./fixtures";
+import { test, expect, PRODUCT_SLUG, ADMIN_EMAIL, ADMIN_PASSWORD, signInAsAdmin } from "./fixtures";
 
 /**
  * The full purchase path: guest cart → register (cart merges) → address with
@@ -59,10 +59,7 @@ test.describe.serial("checkout and fulfilment", () => {
     test.skip(!ADMIN_EMAIL || !ADMIN_PASSWORD, "Set ADMIN_EMAIL/ADMIN_PASSWORD (or E2E_ADMIN_*)");
     test.skip(!orderNumber, "needs the order from the previous test");
 
-    await page.goto("/login?next=/admin");
-    await page.getByLabel("Email", { exact: true }).fill(ADMIN_EMAIL);
-    await page.getByLabel("Password", { exact: true }).fill(ADMIN_PASSWORD);
-    await page.getByRole("button", { name: "Sign in" }).click();
+    await signInAsAdmin(page);
     await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
 
     await page.goto(`/admin/orders?q=${orderNumber}`);
@@ -87,12 +84,9 @@ test.describe.serial("checkout and fulfilment", () => {
 
   test("admin pages load", async ({ page }) => {
     test.skip(!ADMIN_EMAIL || !ADMIN_PASSWORD, "Set ADMIN_EMAIL/ADMIN_PASSWORD (or E2E_ADMIN_*)");
-    await page.goto("/login?next=/admin");
-    await page.getByLabel("Email", { exact: true }).fill(ADMIN_EMAIL);
-    await page.getByLabel("Password", { exact: true }).fill(ADMIN_PASSWORD);
-    await page.getByRole("button", { name: "Sign in" }).click();
+    await signInAsAdmin(page);
     await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
-    for (const path of ["/admin/orders", "/admin/products", "/admin/products/new", "/admin/inventory", "/admin/coupons", "/admin/banners", "/admin/categories", "/admin/customers", "/admin/reviews", "/admin/analytics", "/admin/settings"]) {
+    for (const path of ["/admin/orders", "/admin/products", "/admin/products/new", "/admin/inventory", "/admin/coupons", "/admin/banners", "/admin/categories", "/admin/customers", "/admin/reviews", "/admin/analytics", "/admin/settings", "/admin/security"]) {
       const res = await page.goto(path);
       expect(res?.status(), path).toBe(200);
       await expect(page.locator("h1").first()).toBeVisible();

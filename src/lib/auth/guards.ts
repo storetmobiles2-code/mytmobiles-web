@@ -1,6 +1,7 @@
 import "server-only";
 import { redirect } from "next/navigation";
 import { getCurrentUser, type SessionUser } from "./session";
+import { enforceTwoFactor } from "./two-factor";
 
 /** For pages: redirects to sign-in, preserving where the shopper was going. */
 export async function requireUser(returnTo: string): Promise<SessionUser> {
@@ -13,6 +14,7 @@ export async function requireAdmin(): Promise<SessionUser> {
   const user = await getCurrentUser();
   if (!user) redirect("/login?next=/admin");
   if (user.role !== "ADMIN") redirect("/");
+  await enforceTwoFactor(user, "page");
   return user;
 }
 
@@ -27,6 +29,7 @@ export class AuthError extends Error {
 export async function assertAdmin(): Promise<SessionUser> {
   const user = await getCurrentUser();
   if (!user || user.role !== "ADMIN") throw new AuthError("Not authorised.");
+  await enforceTwoFactor(user, "action");
   return user;
 }
 
