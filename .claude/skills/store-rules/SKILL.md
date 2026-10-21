@@ -75,6 +75,34 @@ Before a product goes live it must show:
 
 Store-level details are set by the owner in Admin → Settings: legal name, address, GSTIN, customer care, grievance officer. Never write fake reviews, ratings or "only 1 left" claims that aren't true. Never call a product "genuine", "original" or "authorised" unless the shop is an authorised dealer for that brand.
 
+## Catalogue research: legal details, MRP and content
+
+For an existing product, start from `npm run catalog -- export <slug>`. Change only what you researched, and record every page in `sources` with `usedFor` and the date.
+
+- **`manufacturerInfo`:** copy the brand's own legal block for that model exactly, keeping its labels ("Manufactured by: …; Imported by: …; Marketed by: …") and full addresses. Where to find it:
+  - Samsung per-SKU pages and Apple product-information pages carry it.
+  - Xiaomi only gives "Manufactured For: Xiaomi Technology India…" and says the maker is "as set out on the MRP label". Copy that wording and ask staff to read the box.
+  - Appliance stores often say "Marketed by" only, so record what's given.
+- **`countryOfOrigin`:** only from an official source for that model, never inferred from where the brand is based.
+- **`mrp`:**
+  - It must be the exact variant's MRP, not a "starting from" price.
+  - If it's below the selling price, don't set it; flag it.
+  - Demo and open-box units take the new product's MRP and legal details.
+- **Content:** write it in your own words from the official spec page, without copying marketing paragraphs:
+  - `shortDescription`: one sentence;
+  - `description`: 2–4 sentences;
+  - `highlights`: 3–6;
+  - grouped `specs`;
+  - `boxContents`;
+  - `warranty`: the brand's India warranty statement, or empty plus a staff note, never "as per brand policy";
+  - `keywords`: 4–10, no junk.
+
+  `catalog validate` rejects text left over from the stock-sheet import in live files.
+- **Discontinued models:** a global page or official press release for the same model code is fine for what it clearly states. Appliance brands' official PDF catalogues linked from their own site count as official.
+- **When pages disagree or the exact model is uncertain**, leave the field and list it under "Needs staff (read the box)".
+- **`status`:** set `live` only when `catalog validate <slug>` shows no errors. Otherwise set `draft`. For a product already in the store, `draft` means "this file doesn't change its visibility": it stays live exactly as now. `hidden` unpublishes it.
+- **Photos:** products whose photos come from the family pipeline (`catalog/reference.json`) leave `images` out of the product file. Validation counts the pipeline photos, and `apply` leaves them alone.
+
 ## Copy style
 
 Plain, factual Indian English. Short sentences. No hype or superlatives that aren't the brand's own verifiable claims ("best", "fastest"). Keep marketing names as the brand writes them ("Galaxy A57 5G", "REDMI Note 15"). Units: GB, mAh, Hz. Screen sizes: phones and tablets in inches with cm in brackets when the brand gives cm (e.g. "15.64 cm (6.2 inch)"), and TVs in both. Use ₹ with Indian digit grouping (₹1,29,999). Specs come only from official sources, never guessed.

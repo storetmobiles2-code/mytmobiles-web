@@ -1,0 +1,87 @@
+{
+  "slug": "tcl-s5500-80-cm-32-inch-full-hd-led-smart-google-tv-2024",
+  "name": "TCL S5500 80 cm (32 inch) Full HD LED Smart Google TV (2024)",
+  "brand": "TCL",
+  "category": "smart-tvs",
+  "condition": "NEW",
+  "status": "draft",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "Brand-new TCL S5500 80 cm (32 inch) Full HD LED Smart Google TV (2024), with GST invoice from myT Mobiles.",
+  "description": "Buy the TCL S5500 80 cm (32 inch) Full HD LED Smart Google TV (2024) from myT Mobiles. Every order ships with a GST tax invoice, and you can choose Cash on Delivery or pay online. Prices shown include GST.",
+  "highlights": [
+    "Screen size: 80 cm (32 inch)",
+    "Resolution: Full HD",
+    "GST invoice with every order"
+  ],
+  "specs": [
+    {
+      "group": "Key facts",
+      "items": [
+        {
+          "label": "Brand",
+          "value": "TCL"
+        },
+        {
+          "label": "Model",
+          "value": "S5500 80 cm (32 inch) Full HD LED Smart Google TV (2024)"
+        },
+        {
+          "label": "Screen size",
+          "value": "80 cm (32 inch)"
+        },
+        {
+          "label": "Resolution",
+          "value": "Full HD"
+        },
+        {
+          "label": "Platform",
+          "value": "Google TV"
+        },
+        {
+          "label": "Model year",
+          "value": "2024"
+        },
+        {
+          "label": "Condition",
+          "value": "Brand new"
+        }
+      ]
+    }
+  ],
+  "boxContents": [],
+  "keywords": [
+    "tcl",
+    "s5500",
+    "32 inch",
+    "full hd",
+    "led tv",
+    "smart tv",
+    "google tv",
+    "2024"
+  ],
+  "warranty": "Manufacturer warranty as per brand policy.",
+  "manufacturerInfo": null,
+  "countryOfOrigin": null,
+  "hsnCode": "85287217",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": null,
+  "seoDescription": null,
+  "variants": [
+    {
+      "sku": "TCL-S5500-80-CM-32-INCH-FULL-HD-LED-SMART-GOOGLE-TV-2024",
+      "color": null,
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": null,
+      "mrp": 14999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "TCL S5500 (32 inch) Full HD LED Smart Google TV 2024 Edition"
+      ]
+    }
+  ],
+  "sources": []
+}

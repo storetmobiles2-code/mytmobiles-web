@@ -6,17 +6,26 @@ import { ADMIN_CANCELLABLE, NEXT_STATUSES, ORDER_STATUS_LABEL, PAYMENT_STATUS_LA
 import { AdminPage, Panel } from "@/components/admin/ui";
 import { Badge } from "@/components/ui/misc";
 import { AdminCancelForm, AdvanceStatusForm, MarkRefundedForm, OrderNoteForm } from "@/components/admin/order-admin-forms";
+import { requirePermission } from "@/lib/auth/guards";
+import { cancelPermissions, hasPermission, statusChangePermission } from "@/lib/auth/permissions";
+import { AuditHistory } from "@/components/admin/audit-history";
 
 export const metadata = { title: "Order" };
 
 export default async function AdminOrderDetail(props: PageProps<"/admin/orders/[id]">) {
+  const viewer = await requirePermission("orders.view");
   const { id } = await props.params;
   const order = await db.order.findUnique({
     where: { id },
     include: { items: true, payments: { orderBy: { createdAt: "desc" } }, events: { orderBy: { createdAt: "desc" }, include: { actor: { select: { name: true } } } }, user: { select: { id: true, name: true, email: true, phone: true } } },
   });
   if (!order) notFound();
-  const next = NEXT_STATUSES[order.status] ?? [];
+  const can = (p: Parameters<typeof hasPermission>[1]) => hasPermission(viewer.role, p);
+  // Staff only see the actions their role allows (e.g. no refunds, no cancelling a paid online order).
+  const next = (NEXT_STATUSES[order.status] ?? []).filter((to) => can(statusChangePermission(to)));
+  const canCancel = ADMIN_CANCELLABLE.includes(order.status) && cancelPermissions(order).every(can);
+  const canMarkRefunded = order.paymentStatus === "REFUND_PENDING" && can("orders.refund");
+  const ownerOnly = (NEXT_STATUSES[order.status] ?? []).length > next.length || (ADMIN_CANCELLABLE.includes(order.status) && !canCancel) || (order.paymentStatus === "REFUND_PENDING" && !canMarkRefunded);
   return (
     <AdminPage
       title={`Order ${order.orderNumber}`}
@@ -25,7 +34,8 @@ export default async function AdminOrderDetail(props: PageProps<"/admin/orders/[
         <>
           <Badge tone={statusTone(order.status)}>{ORDER_STATUS_LABEL[order.status]}</Badge>
           <Badge tone={order.paymentStatus === "PAID" ? "success" : "neutral"}>{order.paymentMethod} · {PAYMENT_STATUS_LABEL[order.paymentStatus]}</Badge>
-          {order.invoiceNumber && <Link href={`/invoice/${order.id}`} target="_blank" className="rounded-lg border border-ink-300 bg-white px-3 py-1 text-sm font-semibold">Invoice {order.invoiceNumber}</Link>}
+          {order.invoiceNumber && can("orders.print") && <Link href={`/invoice/${order.id}`} target="_blank" className="rounded-lg border border-ink-300 bg-white px-3 py-1 text-sm font-semibold">Invoice {order.invoiceNumber}</Link>}
+          {can("orders.print") && order.status !== "PENDING_PAYMENT" && order.status !== "CANCELLED" && <Link href={`/packing-slip/${order.id}`} target="_blank" className="rounded-lg border border-ink-300 bg-white px-3 py-1 text-sm font-semibold">Packing slip</Link>}
         </>
       }
     >
@@ -65,21 +75,22 @@ export default async function AdminOrderDetail(props: PageProps<"/admin/orders/[
                 </li>
               ))}
             </ol>
-            <div className="mt-4 border-t border-ink-100 pt-4"><OrderNoteForm orderId={order.id} /></div>
+            {can("orders.update") && <div className="mt-4 border-t border-ink-100 pt-4"><OrderNoteForm orderId={order.id} /></div>}
           </Panel>
         </div>
         <div className="space-y-4">
-          {(next.length > 0 || ADMIN_CANCELLABLE.includes(order.status) || order.paymentStatus === "REFUND_PENDING") && (
+          {(next.length > 0 || canCancel || canMarkRefunded || ownerOnly) && (
             <Panel title="Actions">
               <div className="space-y-4">
                 <AdvanceStatusForm orderId={order.id} next={next} />
-                {order.paymentStatus === "REFUND_PENDING" && <MarkRefundedForm orderId={order.id} />}
-                {ADMIN_CANCELLABLE.includes(order.status) && <details className="rounded-xl border border-danger-600/20 p-3"><summary className="cursor-pointer text-sm font-semibold text-danger-700">Cancel this order</summary><div className="mt-3"><AdminCancelForm orderId={order.id} /></div></details>}
+                {canMarkRefunded && <MarkRefundedForm orderId={order.id} />}
+                {ownerOnly && <p className="rounded-lg bg-ink-50 px-3 py-2 text-sm text-ink-700">Refunds, returns and cancelling a paid online order are done by the store owner.</p>}
+                {canCancel && <details className="rounded-xl border border-danger-600/20 p-3"><summary className="cursor-pointer text-sm font-semibold text-danger-700">Cancel this order</summary><div className="mt-3"><AdminCancelForm orderId={order.id} /></div></details>}
               </div>
             </Panel>
           )}
           <Panel title="Customer">
-            <p className="text-sm font-semibold"><Link href={`/admin/customers/${order.user.id}`} className="text-brand-700 hover:underline">{order.user.name}</Link></p>
+            <p className="text-sm font-semibold">{can("customers.view") ? <Link href={`/admin/customers/${order.user.id}`} className="text-brand-700 hover:underline">{order.user.name}</Link> : order.user.name}</p>
             <p className="text-sm text-ink-500">{order.user.email}{order.user.phone ? ` · ${order.user.phone}` : ""}</p>
             <h3 className="mt-4 text-xs font-bold text-ink-500 uppercase">Ship to</h3>
             <p className="text-sm">{order.shipName} · {order.shipPhone}<br />{[order.shipLine1, order.shipLine2, order.shipLandmark, order.shipCity, `${order.shipState} ${order.shipPincode}`].filter(Boolean).join(", ")}</p>
@@ -102,6 +113,7 @@ export default async function AdminOrderDetail(props: PageProps<"/admin/orders/[
               ))}
             </ul>
           </Panel>
+          {can("audit.view") && <AuditHistory entityType="order" entityId={order.id} />}
         </div>
       </div>
     </AdminPage>

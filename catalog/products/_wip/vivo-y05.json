@@ -1,0 +1,222 @@
+{
+  "slug": "vivo-y05",
+  "name": "vivo Y05",
+  "brand": "vivo",
+  "category": "smartphones",
+  "condition": "NEW",
+  "status": "live",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "vivo Y05 with a 17.13 cm (6.74 inch) 120 Hz display, 6500 mAh battery, IP65 rating, 4 GB RAM and 64 GB storage.",
+  "description": "The vivo Y05 has a 17.13 cm (6.74 inch) HD+ LCD display with a refresh rate of up to 120 Hz and runs on the Unisoc T7225 octa-core processor with 4 GB RAM and 64 GB storage, expandable with a microSD card up to 2 TB.\n\nIt has a 6500 mAh battery (typical) with 15 W charging, an 8 MP rear camera and a 5 MP front camera, and is rated IP65 for dust and water jets. It runs OriginOS 6.0 based on Android 16, with a side-mounted fingerprint sensor.\n\nThis is a 4G phone with dual nano-SIM slots and a separate microSD slot. A charger, cable and phone case are in the box.",
+  "highlights": [
+    "17.13 cm (6.74 inch) LCD display, up to 120 Hz",
+    "6500 mAh battery (typical), 15 W charging",
+    "4 GB RAM · 64 GB storage, microSD up to 2 TB",
+    "8 MP rear camera, 5 MP front camera",
+    "IP65 dust and water resistance",
+    "GST invoice with every order"
+  ],
+  "specs": [
+    {
+      "group": "Display",
+      "items": [
+        {
+          "label": "Size",
+          "value": "17.13 cm (6.74 inches)"
+        },
+        {
+          "label": "Resolution",
+          "value": "1600 x 720"
+        },
+        {
+          "label": "Type",
+          "value": "LCD"
+        },
+        {
+          "label": "Refresh rate",
+          "value": "Up to 120 Hz"
+        },
+        {
+          "label": "Pixel density",
+          "value": "260 PPI"
+        }
+      ]
+    },
+    {
+      "group": "Performance",
+      "items": [
+        {
+          "label": "Processor",
+          "value": "T7225, octa-core (2 x 1.8 GHz + 6 x 1.8 GHz), 12 nm"
+        },
+        {
+          "label": "RAM",
+          "value": "4 GB LPDDR4X (plus 4 GB extended RAM)"
+        },
+        {
+          "label": "Storage",
+          "value": "64 GB eMMC 5.1, microSD up to 2 TB"
+        },
+        {
+          "label": "Operating system",
+          "value": "OriginOS 6.0, Android 16"
+        }
+      ]
+    },
+    {
+      "group": "Camera",
+      "items": [
+        {
+          "label": "Rear",
+          "value": "8 MP, f/2.0, with flash"
+        },
+        {
+          "label": "Front",
+          "value": "5 MP, f/2.2"
+        },
+        {
+          "label": "Video",
+          "value": "1080p and 720p"
+        }
+      ]
+    },
+    {
+      "group": "Battery",
+      "items": [
+        {
+          "label": "Capacity",
+          "value": "6500 mAh (typical), 6355 mAh (rated)"
+        },
+        {
+          "label": "Charging",
+          "value": "15 W"
+        },
+        {
+          "label": "Type",
+          "value": "Li-ion"
+        }
+      ]
+    },
+    {
+      "group": "Connectivity",
+      "items": [
+        {
+          "label": "Network",
+          "value": "4G (FDD-LTE B1/B3/B5/B8, TD-LTE B38/B40/B41)"
+        },
+        {
+          "label": "SIM",
+          "value": "2 nano SIMs + 1 microSD, dual SIM dual standby"
+        },
+        {
+          "label": "Wi-Fi",
+          "value": "2.4 GHz and 5 GHz"
+        },
+        {
+          "label": "Bluetooth",
+          "value": "Bluetooth 5.2"
+        },
+        {
+          "label": "Other",
+          "value": "USB 2.0, OTG, FM, GPS; no NFC"
+        }
+      ]
+    },
+    {
+      "group": "Design",
+      "items": [
+        {
+          "label": "Colours",
+          "value": "Midnight Blue, Champagne Gold"
+        },
+        {
+          "label": "Dimensions",
+          "value": "16.74 x 7.71 x 0.839 cm"
+        },
+        {
+          "label": "Weight",
+          "value": "209 g"
+        },
+        {
+          "label": "Water and dust resistance",
+          "value": "IP65"
+        },
+        {
+          "label": "Fingerprint sensor",
+          "value": "Side-mounted capacitive"
+        }
+      ]
+    }
+  ],
+  "boxContents": [
+    "Phone",
+    "Quick Start Guide",
+    "USB Cable",
+    "Charger",
+    "Eject Tool",
+    "Phone Case",
+    "Protective Film (applied)",
+    "Warranty Card"
+  ],
+  "keywords": [
+    "vivo y05",
+    "vivo",
+    "y05",
+    "vivo phone",
+    "6500mah",
+    "4gb 64gb",
+    "budget phone",
+    "smartphone"
+  ],
+  "warranty": "1 year manufacturer warranty on the handset; 6 months on the charger and data cable (per vivo India).",
+  "manufacturerInfo": "Manufacturer: vivo Mobile India Private Limited, PLOT NO 8, SECTOR-24, YAMUNA EXPRESSWAY AREA, GAUTAM BUDDHA NAGAR,UTTAR PRADESH - 201310, INDIA",
+  "countryOfOrigin": "India",
+  "hsnCode": "85171300",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": "vivo Y05 (4 GB + 64 GB) | myT Mobiles",
+  "seoDescription": "vivo Y05 with 6.74-inch 120 Hz display, 6500 mAh battery, IP65, 4 GB RAM and 64 GB storage. GST invoice with every order.",
+  "variants": [
+    {
+      "sku": "VIVO-Y05-4-64-CHAMPAGNE-GOLD",
+      "color": "Champagne Gold",
+      "colorHex": null,
+      "ramGb": 4,
+      "storageGb": 64,
+      "mrp": 34999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "VIVO Y05 4/64 CHAMPAGNE GOLD"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://shop.vivo.com/in/product/10355",
+      "usedFor": [
+        "legal",
+        "mrp"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.vivo.com/in/products/param/y05",
+      "usedFor": [
+        "specs",
+        "details",
+        "box",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.vivo.com/in/index/warrantyTerms",
+      "usedFor": [
+        "warranty"
+      ],
+      "retrievedAt": "2026-10-20"
+    }
+  ]
+}

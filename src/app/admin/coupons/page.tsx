@@ -4,6 +4,7 @@ import { saveCoupon } from "@/app/admin/actions/store";
 import { AdminPage, Panel, Table, td, th } from "@/components/admin/ui";
 import { ActionForm, Field, inputCls } from "@/components/admin/action-form";
 import { Badge } from "@/components/ui/misc";
+import { requirePermission } from "@/lib/auth/guards";
 
 export const metadata = { title: "Coupons" };
 
@@ -40,6 +41,7 @@ function CouponFields({ c, categories, brands }: { c?: CouponRow; categories: { 
 }
 
 export default async function CouponsPage() {
+  await requirePermission("coupons.manage");
   const [coupons, categories, brands] = await Promise.all([
     db.coupon.findMany({ orderBy: { createdAt: "desc" } }),
     db.category.findMany({ orderBy: { sortOrder: "asc" }, select: { id: true, name: true } }),

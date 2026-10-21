@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getCurrentUser } from "@/lib/auth/session";
 import { logout } from "@/app/actions/auth";
+import { canAccessAdmin } from "@/lib/auth/permissions";
 
 const links = [
   { href: "/account", label: "Overview" },
@@ -8,6 +9,7 @@ const links = [
   { href: "/account/addresses", label: "Addresses" },
   { href: "/account/profile", label: "Profile & security" },
   { href: "/wishlist", label: "Wishlist" },
+  { href: "/help/grievance", label: "Complaints" },
 ];
 
 export default async function AccountLayout({ children }: { children: React.ReactNode }) {
@@ -26,7 +28,7 @@ export default async function AccountLayout({ children }: { children: React.Reac
               {links.map((l) => (
                 <Link key={l.href} href={l.href} className="rounded-lg px-3 py-2 text-sm font-medium whitespace-nowrap text-ink-700 hover:bg-ink-100">{l.label}</Link>
               ))}
-              {user.role === "ADMIN" && <Link href="/admin" className="rounded-lg px-3 py-2 text-sm font-semibold whitespace-nowrap text-brand-700 hover:bg-brand-50">Admin dashboard</Link>}
+              {canAccessAdmin(user.role) && <Link href="/admin" className="rounded-lg px-3 py-2 text-sm font-semibold whitespace-nowrap text-brand-700 hover:bg-brand-50">Admin dashboard</Link>}
               <form action={logout}>
                 <button className="w-full rounded-lg px-3 py-2 text-left text-sm font-medium whitespace-nowrap text-ink-500 hover:bg-ink-100">Sign out</button>
               </form>

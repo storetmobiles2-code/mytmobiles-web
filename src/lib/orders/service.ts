@@ -16,6 +16,7 @@ import { ADMIN_CANCELLABLE, canTransition, CUSTOMER_CANCELLABLE } from "./status
 import type { Prisma } from "@/generated/prisma/client";
 import type { OrderStatus, PaymentMethod } from "@/generated/prisma/enums";
 import type { SessionUser } from "@/lib/auth/session";
+import { canAccessAdmin } from "@/lib/auth/permissions";
 
 export class OrderError extends Error {
   constructor(message: string) {
@@ -458,7 +459,7 @@ export async function cancelOrder(
       data: { status: "CANCELLED", cancelledAt: new Date(), cancelReason: opts.reason.slice(0, 500), paymentExpiresAt: null },
     });
     if (claim.count !== 1) throw new OrderError("The order was updated by someone else. Please refresh.");
-    const ids = await restock(tx, orderId, `Order cancelled: ${opts.reason}`.slice(0, 190), opts.actor?.role === "ADMIN" ? opts.actor.id : null);
+    const ids = await restock(tx, orderId, `Order cancelled: ${opts.reason}`.slice(0, 190), opts.actor && canAccessAdmin(opts.actor.role) ? opts.actor.id : null);
     await releaseCoupon(tx, orderId);
     await tx.payment.updateMany({ where: { orderId, status: "PENDING" }, data: { status: "FAILED", failureReason: "Order cancelled" } });
     await tx.orderEvent.create({

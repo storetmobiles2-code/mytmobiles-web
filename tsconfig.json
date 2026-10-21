@@ -41,6 +41,7 @@
   "exclude": [
     "node_modules",
     ".next-demo",
-    "demo-site"
+    "demo-site",
+    ".claude/worktrees"
   ]
 }

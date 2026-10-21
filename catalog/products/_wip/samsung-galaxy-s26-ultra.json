@@ -1,0 +1,95 @@
+{
+  "slug": "samsung-galaxy-s26-ultra",
+  "name": "Samsung Galaxy S26 Ultra",
+  "brand": "Samsung",
+  "category": "smartphones",
+  "condition": "NEW",
+  "status": "live",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "Brand-new Samsung Galaxy S26 Ultra in 2 colours, with GST invoice from myT Mobiles.",
+  "description": "Buy the Samsung Galaxy S26 Ultra from myT Mobiles. Every order ships with a GST tax invoice, and you can choose Cash on Delivery or pay online. Prices shown include GST.",
+  "highlights": [
+    "12 GB RAM · 256 GB/512 GB storage",
+    "GST invoice with every order"
+  ],
+  "specs": [
+    {
+      "group": "Key facts",
+      "items": [
+        {
+          "label": "Brand",
+          "value": "Samsung"
+        },
+        {
+          "label": "Model",
+          "value": "Galaxy S26 Ultra"
+        },
+        {
+          "label": "RAM options",
+          "value": "12 GB"
+        },
+        {
+          "label": "Storage options",
+          "value": "256 GB / 512 GB"
+        },
+        {
+          "label": "Network",
+          "value": "As per model"
+        },
+        {
+          "label": "Colours",
+          "value": "Cobalt Violet, Sky Blue"
+        },
+        {
+          "label": "Condition",
+          "value": "Brand new"
+        }
+      ]
+    }
+  ],
+  "boxContents": [],
+  "keywords": [
+    "samsung",
+    "galaxy",
+    "s26",
+    "ultra",
+    "smartphone"
+  ],
+  "warranty": "Manufacturer warranty as per brand policy.",
+  "manufacturerInfo": null,
+  "countryOfOrigin": null,
+  "hsnCode": "85171300",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": null,
+  "seoDescription": null,
+  "variants": [
+    {
+      "sku": "SAMSUNG-GALAXY-S26-ULTRA-12-256-COBALT-VIOLET",
+      "color": "Cobalt Violet",
+      "colorHex": null,
+      "ramGb": 12,
+      "storageGb": 256,
+      "mrp": 169999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG S26 ULTRA 12/256 GB COBALT VIOLET"
+      ]
+    },
+    {
+      "sku": "SAMSUNG-GALAXY-S26-ULTRA-12-512-SKY-BLUE",
+      "color": "Sky Blue",
+      "colorHex": null,
+      "ramGb": 12,
+      "storageGb": 512,
+      "mrp": 189999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY S26 ULTRA 12/512 SKY BLUE"
+      ]
+    }
+  ],
+  "sources": []
+}

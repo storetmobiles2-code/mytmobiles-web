@@ -4,6 +4,7 @@ import { test as base, expect } from "@playwright/test";
 export const PRODUCT_SLUG = process.env.E2E_PRODUCT_SLUG ?? "samsung-galaxy-a07-5g";
 export const ADMIN_EMAIL = process.env.E2E_ADMIN_EMAIL ?? process.env.ADMIN_EMAIL ?? "";
 export const ADMIN_PASSWORD = process.env.E2E_ADMIN_PASSWORD ?? process.env.ADMIN_PASSWORD ?? "";
+export { STAFF_EMAIL, STAFF_PASSWORD } from "./accounts";
 
 /** Fails any test whose page throws or logs a console error. */
 export const test = base.extend<{ browserErrors: string[] }>({

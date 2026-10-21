@@ -111,6 +111,9 @@ export default async function OrderDetailPage(props: PageProps<"/account/orders/
               <div className="flex justify-between text-xs text-ink-500"><dt>Includes GST</dt><dd>{formatINR(order.cgst + order.sgst + order.igst)}</dd></div>
             </dl>
           </section>
+          <p className="px-1 text-sm text-ink-500">
+            Problem with this order? <Link href={`/help/grievance?order=${encodeURIComponent(order.orderNumber)}`} className="font-semibold text-brand-700 hover:underline">File a complaint</Link>
+          </p>
         </aside>
       </div>
     </div>

@@ -1,0 +1,208 @@
+{
+  "slug": "vivo-y31-5g-demo-unit",
+  "name": "vivo Y31 5G (Demo Unit)",
+  "brand": "vivo",
+  "category": "smartphones",
+  "condition": "DEMO",
+  "status": "live",
+  "featured": false,
+  "is5G": true,
+  "launchedAt": null,
+  "shortDescription": "Open-box demo unit of the vivo Y31 5G with a 16.96 cm (6.68 inch) 120 Hz display, 6500 mAh battery with 44 W charging, IP68 and IP69, 4 GB RAM and 128 GB storage.",
+  "description": "This is a demo (display) unit of the vivo Y31 5G that was used for in-store demonstration. It may show light signs of handling. Please contact us before ordering if you'd like to know its exact condition, accessories included and remaining manufacturer warranty.\n\nThe vivo Y31 5G has a 16.96 cm (6.68 inch) HD+ LCD display with up to 120 Hz refresh rate and runs on the Snapdragon 4 Gen 2 processor with 4 GB RAM and 128 GB storage, expandable up to 2 TB. It has a 6500 mAh battery (typical) with 44 W charging, a 50 MP rear camera and an 8 MP front camera, and is rated IP68 and IP69. It runs Funtouch OS 15 based on Android 15.",
+  "highlights": [
+    "Demo unit — priced below new",
+    "5G with Snapdragon 4 Gen 2 processor",
+    "16.96 cm (6.68 inch) LCD display, up to 120 Hz",
+    "6500 mAh battery (typical), 44 W charging",
+    "50 MP rear camera, 8 MP front camera",
+    "IP68 and IP69 rated"
+  ],
+  "specs": [
+    {
+      "group": "Display",
+      "items": [
+        {
+          "label": "Size",
+          "value": "16.96 cm (6.68 inches)"
+        },
+        {
+          "label": "Resolution",
+          "value": "1608 x 720"
+        },
+        {
+          "label": "Type",
+          "value": "LCD"
+        },
+        {
+          "label": "Refresh rate",
+          "value": "Up to 120 Hz"
+        },
+        {
+          "label": "Brightness",
+          "value": "1000 nits (HBM)"
+        }
+      ]
+    },
+    {
+      "group": "Performance",
+      "items": [
+        {
+          "label": "Processor",
+          "value": "Snapdragon 4 Gen 2, octa-core (2 x 2.2 GHz + 6 x 1.95 GHz), 4 nm"
+        },
+        {
+          "label": "RAM",
+          "value": "4 GB LPDDR4X (plus 4 GB extended RAM)"
+        },
+        {
+          "label": "Storage",
+          "value": "128 GB eMMC 5.1, microSD up to 2 TB"
+        },
+        {
+          "label": "Operating system",
+          "value": "Funtouch OS 15, Android 15"
+        }
+      ]
+    },
+    {
+      "group": "Camera",
+      "items": [
+        {
+          "label": "Rear",
+          "value": "50 MP (f/1.8) + 0.08 MP (f/3.0), with flash"
+        },
+        {
+          "label": "Front",
+          "value": "8 MP, f/2.0"
+        }
+      ]
+    },
+    {
+      "group": "Battery",
+      "items": [
+        {
+          "label": "Capacity",
+          "value": "6500 mAh (typical)"
+        },
+        {
+          "label": "Charging",
+          "value": "44 W"
+        },
+        {
+          "label": "Type",
+          "value": "Li-ion"
+        }
+      ]
+    },
+    {
+      "group": "Connectivity",
+      "items": [
+        {
+          "label": "Network",
+          "value": "5G, dual SIM dual standby"
+        },
+        {
+          "label": "SIM",
+          "value": "1 nano SIM + 1 nano SIM / microSD"
+        },
+        {
+          "label": "Wi-Fi",
+          "value": "2.4 GHz / 5 GHz"
+        },
+        {
+          "label": "Bluetooth",
+          "value": "Bluetooth 4.2"
+        },
+        {
+          "label": "Other",
+          "value": "USB Type-C (USB 2.0), OTG, GPS; no NFC"
+        }
+      ]
+    },
+    {
+      "group": "Design",
+      "items": [
+        {
+          "label": "Dimensions",
+          "value": "16.614 x 7.701 x 0.839 cm"
+        },
+        {
+          "label": "Weight",
+          "value": "209 g"
+        },
+        {
+          "label": "Water and dust resistance",
+          "value": "IP68 and IP69"
+        },
+        {
+          "label": "Fingerprint sensor",
+          "value": "Side-mounted capacitive"
+        },
+        {
+          "label": "Condition",
+          "value": "Demo / display unit (open box)"
+        }
+      ]
+    }
+  ],
+  "boxContents": [],
+  "keywords": [
+    "vivo y31 5g",
+    "vivo",
+    "y31",
+    "5g phone",
+    "demo unit",
+    "open box",
+    "6500mah",
+    "snapdragon 4 gen 2"
+  ],
+  "warranty": "vivo's 1 year handset warranty (6 months on charger and data cable) runs from the original activation date. Ask us for the remaining period.",
+  "manufacturerInfo": "Manufacturer: vivo Mobile India Private Limited, PLOT NO 8, SECTOR-24, YAMUNA EXPRESSWAY AREA, GAUTAM BUDDHA NAGAR,UTTAR PRADESH - 201310, INDIA",
+  "countryOfOrigin": "India",
+  "hsnCode": "85171300",
+  "gstRatePercent": 18,
+  "returnWindowDays": 0,
+  "seoTitle": "vivo Y31 5G (Demo Unit) | myT Mobiles",
+  "seoDescription": "Open-box demo unit of the vivo Y31 5G: 6.68-inch 120 Hz display, Snapdragon 4 Gen 2, 6500 mAh battery, IP68/IP69, 4 GB + 128 GB.",
+  "variants": [
+    {
+      "sku": "VIVO-Y31-5G-DEMO-UNIT-4-128-RED-ROSE",
+      "color": "Red Rose",
+      "colorHex": null,
+      "ramGb": 4,
+      "storageGb": 128,
+      "mrp": 25999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "VIVO Y31 5G 4/128 RED ROSE DEMO UNIT"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://shop.vivo.com/in/product/10359",
+      "usedFor": [
+        "legal",
+        "mrp"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.vivo.com/in/products/param/y31-5g",
+      "usedFor": [
+        "specs",
+        "details",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.vivo.com/in/index/warrantyTerms",
+      "usedFor": [
+        "warranty"
+      ],
+      "retrievedAt": "2026-10-20"
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "slug": "xiaomi-smart-tv-a-series-80-cm-32-inch-google-tv",
+  "name": "Xiaomi Smart TV A Series 80 cm (32 inch) Google TV",
+  "brand": "Xiaomi",
+  "category": "smart-tvs",
+  "condition": "NEW",
+  "status": "draft",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "Brand-new Xiaomi Smart TV A Series 80 cm (32 inch) Google TV, with GST invoice from myT Mobiles.",
+  "description": "Buy the Xiaomi Smart TV A Series 80 cm (32 inch) Google TV from myT Mobiles. Every order ships with a GST tax invoice, and you can choose Cash on Delivery or pay online. Prices shown include GST.",
+  "highlights": [
+    "Screen size: 80 cm (32 inch)",
+    "Platform: Google TV",
+    "GST invoice with every order"
+  ],
+  "specs": [
+    {
+      "group": "Key facts",
+      "items": [
+        {
+          "label": "Brand",
+          "value": "Xiaomi"
+        },
+        {
+          "label": "Model",
+          "value": "Smart TV A Series 80 cm (32 inch) Google TV"
+        },
+        {
+          "label": "Screen size",
+          "value": "80 cm (32 inch)"
+        },
+        {
+          "label": "Platform",
+          "value": "Google TV"
+        },
+        {
+          "label": "Condition",
+          "value": "Brand new"
+        }
+      ]
+    }
+  ],
+  "boxContents": [],
+  "keywords": [
+    "xiaomi",
+    "smart",
+    "tv",
+    "series",
+    "32",
+    "google",
+    "a series",
+    "32 inch",
+    "google tv"
+  ],
+  "warranty": "Manufacturer warranty as per brand policy.",
+  "manufacturerInfo": "Manufactured For: Xiaomi Technology India Private Limited, Building Orchid, Block E, Embassy Tech Village, Marathahalli-Sarjapur Outer Ring Road, Devarabisanahalli, Bengaluru, Karnataka-560103; Manufactured By: As set out on the MRP label of the Product; Imported By: As set out on the MRP label of the Product",
+  "countryOfOrigin": "India",
+  "hsnCode": "85287217",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": null,
+  "seoDescription": null,
+  "variants": [
+    {
+      "sku": "XIAOMI-SMART-TV-A-SERIES-80-CM-32-INCH-GOOGLE-TV",
+      "color": null,
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": null,
+      "mrp": 24999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "XIAOMI SMART TV A SERIES 32 INCHES GOOGLE TV"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.mi.com/in/product/xiaomi-smart-tv-a-series/buy/",
+      "usedFor": [
+        "mrp",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.mi.com/in/product/xiaomi-smart-tv-a-series-2024/buy/",
+      "usedFor": [
+        "mrp",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.mi.com/in/product/xiaomi-smart-tv-a-series-2025/buy/",
+      "usedFor": [
+        "mrp",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://in-go.buy.mi.com/in/v2/item/productdetail?from=pc&tag=xiaomi-smart-tv-a-series",
+      "usedFor": [
+        "mrp",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://in-go.buy.mi.com/in/v2/item/productdetail?from=pc&tag=xiaomi-smart-tv-a-series-2024",
+      "usedFor": [
+        "mrp",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://in-go.buy.mi.com/in/v2/item/productdetail?from=pc&tag=xiaomi-smart-tv-a-series-2025",
+      "usedFor": [
+        "mrp",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    }
+  ]
+}

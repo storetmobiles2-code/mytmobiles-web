@@ -32,3 +32,18 @@ export async function sendVerificationEmail(to: string, name: string, token: str
     }),
   });
 }
+
+export async function sendStaffInviteEmail(to: string, name: string, token: string, roleLabel: string, invitedBy: string) {
+  const url = siteUrl(`/reset-password?token=${encodeURIComponent(token)}`);
+  return sendMail({
+    to,
+    subject: "You've been added to the myT Mobiles admin",
+    text: `Hi ${name},\n\n${invitedBy} has added you to the myT Mobiles admin as ${roleLabel}. Set your password with this link (valid for 3 days, one use only):\n${url}\n\nAfter that, sign in at ${siteUrl("/login?next=/admin")}.\n\nIf you weren't expecting this, you can ignore this email.`,
+    html: emailLayout({
+      storeName: "myT Mobiles",
+      preheader: "Set your password to start using the admin",
+      heading: "Set your admin password",
+      bodyHtml: `<p>Hi ${escapeHtml(name)},</p><p>${escapeHtml(invitedBy)} has added you to the myT Mobiles admin as <strong>${escapeHtml(roleLabel)}</strong>. Set your password to get started. This link is valid for 3 days and works once.</p>${button(url, "Set my password")}<p style="color:#6b6b80;font-size:13px">If you weren't expecting this, you can ignore this email.</p>`,
+    }),
+  });
+}

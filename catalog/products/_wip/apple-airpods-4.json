@@ -1,0 +1,168 @@
+{
+  "slug": "apple-airpods-4",
+  "name": "Apple AirPods 4",
+  "brand": "Apple",
+  "category": "audio",
+  "condition": "NEW",
+  "status": "draft",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "Apple AirPods 4 wireless earbuds with the H2 chip, Personalised Spatial Audio, IP54 rating and a USB-C charging case.",
+  "description": "AirPods 4 are open-fit wireless earbuds with Apple's H2 headphone chip. They support Personalised Spatial Audio with dynamic head tracking, Adaptive EQ and Voice Isolation for calls.\n\nThe earbuds and case are rated IP54 for dust, sweat and water resistance, and connect over Bluetooth 5.3. The charging case uses a USB-C connector; a USB-C charge cable is not included in the box.\n\nApple quotes up to 5 hours of listening per charge and up to 30 hours with the case (on the Active Noise Cancellation model, with noise control off).",
+  "highlights": [
+    "Apple H2 headphone chip",
+    "Personalised Spatial Audio with dynamic head tracking",
+    "Voice Isolation for calls",
+    "IP54 dust, sweat and water resistance",
+    "USB-C charging case",
+    "GST invoice with every order"
+  ],
+  "specs": [
+    {
+      "group": "Audio",
+      "items": [
+        {
+          "label": "Driver",
+          "value": "Custom high-excursion Apple driver"
+        },
+        {
+          "label": "Amplifier",
+          "value": "Custom high dynamic range amplifier"
+        },
+        {
+          "label": "Features",
+          "value": "Personalised Spatial Audio with dynamic head tracking, Adaptive EQ, Voice Isolation"
+        }
+      ]
+    },
+    {
+      "group": "Chip and sensors",
+      "items": [
+        {
+          "label": "Chip",
+          "value": "H2 headphone chip"
+        },
+        {
+          "label": "Microphones",
+          "value": "Dual beamforming microphones, inward-facing microphone"
+        },
+        {
+          "label": "Sensors",
+          "value": "Optical in-ear sensor, motion-detecting and speech-detecting accelerometers, force sensor"
+        }
+      ]
+    },
+    {
+      "group": "Battery",
+      "items": [
+        {
+          "label": "Earbuds",
+          "value": "Up to 5 hours of listening time on a single charge (Apple figure)"
+        },
+        {
+          "label": "With case",
+          "value": "Up to 30 hours of listening time (Apple figure)"
+        },
+        {
+          "label": "Quick charge",
+          "value": "5 minutes in the case gives around 1 hour of listening time"
+        }
+      ]
+    },
+    {
+      "group": "Connectivity",
+      "items": [
+        {
+          "label": "Bluetooth",
+          "value": "Bluetooth 5.3"
+        },
+        {
+          "label": "Case connector",
+          "value": "USB-C"
+        }
+      ]
+    },
+    {
+      "group": "Design",
+      "items": [
+        {
+          "label": "Water resistance",
+          "value": "IP54 dust, sweat and water resistant"
+        },
+        {
+          "label": "Each earbud",
+          "value": "30.2 x 18.3 x 18.1 mm, 4.3 g"
+        },
+        {
+          "label": "Case dimensions",
+          "value": "46.2 x 50.1 x 21.2 mm"
+        }
+      ]
+    }
+  ],
+  "boxContents": [
+    "AirPods 4 earbuds",
+    "USB-C charging case",
+    "Documentation"
+  ],
+  "keywords": [
+    "airpods 4",
+    "airpods",
+    "apple airpods",
+    "apple earbuds",
+    "wireless earbuds",
+    "tws",
+    "bluetooth earbuds",
+    "usb-c"
+  ],
+  "warranty": "1 year Apple limited warranty, in addition to your rights under consumer law.",
+  "manufacturerInfo": null,
+  "countryOfOrigin": null,
+  "hsnCode": "85183000",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": "Apple AirPods 4 | myT Mobiles",
+  "seoDescription": "Apple AirPods 4 with H2 chip, Personalised Spatial Audio, IP54 rating and USB-C charging case. GST invoice with every order.",
+  "variants": [
+    {
+      "sku": "APPLE-AIRPODS-4",
+      "color": null,
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": null,
+      "mrp": 12900,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "APPLE AIRPODS 4TH GEN"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://support.apple.com/en-in/121203",
+      "usedFor": [
+        "specs",
+        "details",
+        "box"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://support.apple.com/en-in/121204",
+      "usedFor": [
+        "specs",
+        "details",
+        "box"
+      ],
+      "retrievedAt": "2026-10-19"
+    },
+    {
+      "url": "https://www.apple.com/in/shop/buy-airpods/airpods-4",
+      "usedFor": [
+        "warranty"
+      ],
+      "retrievedAt": "2026-10-15"
+    }
+  ]
+}

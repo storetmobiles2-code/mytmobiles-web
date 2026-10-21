@@ -7,12 +7,16 @@ import { AdminPage, FilterTabs, Table, td, th } from "@/components/admin/ui";
 import { ActiveToggle } from "@/components/admin/product-forms";
 import { Badge, Pagination } from "@/components/ui/misc";
 import { ButtonLink } from "@/components/ui/button";
+import { requirePermission } from "@/lib/auth/guards";
+import { hasPermission } from "@/lib/auth/permissions";
 
 export const metadata = { title: "Products" };
 const PER = 40;
 
 export default async function AdminProducts(props: PageProps<"/admin/products">) {
+  const viewer = await requirePermission("products.view");
   const sp = await props.searchParams;
+  const canEdit = hasPermission(viewer.role, "products.edit");
   const filter = typeof sp.filter === "string" ? sp.filter : "live";
   const q = typeof sp.q === "string" ? sp.q.trim().slice(0, 80) : "";
   const page = Math.max(1, Number(sp.page) || 1);
@@ -45,7 +49,7 @@ export default async function AdminProducts(props: PageProps<"/admin/products">)
     ["live", "Live"], ["hidden-in-stock", "Hidden but in stock"], ["no-images", "Live without images"], ["out-of-stock", "Live, sold out"], ["demo", "Demo units"], ["hidden", "Hidden"], ["all", "All"],
   ].map(([key, label]) => ({ key, label, count: count[key], href: `/admin/products?filter=${key}${q ? `&q=${encodeURIComponent(q)}` : ""}` }));
   return (
-    <AdminPage title="Products" description={`${total} products`} actions={<ButtonLink href="/admin/products/new">New product</ButtonLink>}>
+    <AdminPage title="Products" description={`${total} products`} actions={canEdit ? <ButtonLink href="/admin/products/new">New product</ButtonLink> : undefined}>
       <form className="flex gap-2" action="/admin/products">
         <input type="hidden" name="filter" value={filter} />
         <input name="q" defaultValue={q} placeholder="Search name, SKU or stock-sheet name" className="h-10 w-full max-w-md rounded-xl border border-ink-300 px-3 text-sm" />
@@ -66,7 +70,7 @@ export default async function AdminProducts(props: PageProps<"/admin/products">)
               <td className={td}>{p.category.name}</td>
               <td className={td}>{formatINR(p.priceFrom)}</td>
               <td className={td}>{p.variants.reduce((s, v) => s + v.stock, 0)} <span className="text-xs text-ink-500">({p.variants.length} variants)</span></td>
-              <td className={td}><ActiveToggle productId={p.id} active={p.isActive} /></td>
+              <td className={td}>{canEdit ? <ActiveToggle productId={p.id} active={p.isActive} /> : <Badge tone={p.isActive ? "success" : "neutral"}>{p.isActive ? "Live" : "Hidden"}</Badge>}</td>
             </tr>
           ))}
           {products.length === 0 && <tr><td className={td} colSpan={5}>No products.</td></tr>}

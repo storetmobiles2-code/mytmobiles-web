@@ -4,10 +4,12 @@ import { setReviewStatus } from "@/app/admin/actions/store";
 import { AdminPage, Panel } from "@/components/admin/ui";
 import { ActionButton } from "@/components/admin/action-form";
 import { Badge } from "@/components/ui/misc";
+import { requirePermission } from "@/lib/auth/guards";
 
 export const metadata = { title: "Reviews" };
 
 export default async function ReviewsPage() {
+  await requirePermission("reviews.moderate");
   const reviews = await db.review.findMany({ orderBy: { createdAt: "desc" }, take: 100, include: { product: { select: { name: true, slug: true } }, user: { select: { name: true, email: true } } } });
   return (
     <AdminPage title="Reviews" description="Only customers with a delivered order can review. Hide reviews that are abusive or off-topic — not ones that are merely negative.">

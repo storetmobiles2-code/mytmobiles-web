@@ -1,0 +1,301 @@
+{
+  "slug": "apple-iphone-17",
+  "name": "Apple iPhone 17",
+  "brand": "Apple",
+  "category": "smartphones",
+  "condition": "NEW",
+  "status": "live",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "iPhone 17 with a 6.3-inch (15.93 cm) Super Retina XDR display up to 120 Hz, A19 chip, 48 MP Dual Fusion camera and 256 GB storage.",
+  "description": "The iPhone 17 has a 15.93 cm (6.3-inch) Super Retina XDR OLED display with ProMotion up to 120 Hz, an Always-On display and the Dynamic Island. It runs on the A19 chip with a 6-core CPU and 5-core GPU.\n\nOn the back is a 48 MP Dual Fusion camera system (48 MP Fusion Main and 48 MP Fusion Ultra Wide), and the front has an 18 MP Center Stage camera. Both record 4K Dolby Vision video at up to 60 fps.\n\nIt has an aluminium design with Ceramic Shield 2 on the front, is rated IP68, and supports 5G, Wi-Fi 7, Bluetooth 6, USB-C and MagSafe and Qi2 wireless charging up to 25 W. Apple quotes up to 30 hours of video playback. A USB-C charge cable is in the box; the power adapter is sold separately.",
+  "highlights": [
+    "15.93 cm (6.3-inch) Super Retina XDR display, ProMotion up to 120 Hz",
+    "A19 chip",
+    "48 MP Fusion Main + 48 MP Fusion Ultra Wide rear cameras, 18 MP front camera",
+    "256 GB storage",
+    "IP68, USB-C, MagSafe and Qi2 charging up to 25 W",
+    "GST invoice with every order"
+  ],
+  "specs": [
+    {
+      "group": "Display",
+      "items": [
+        {
+          "label": "Size",
+          "value": "15.93 cm (6.3-inch) all-screen OLED"
+        },
+        {
+          "label": "Type",
+          "value": "Super Retina XDR, Dynamic Island, Always-On display"
+        },
+        {
+          "label": "Resolution",
+          "value": "2622 x 1206 pixels at 460 ppi"
+        },
+        {
+          "label": "Refresh rate",
+          "value": "ProMotion, adaptive up to 120 Hz"
+        },
+        {
+          "label": "Brightness",
+          "value": "1,000 nits max (typical); 1,600 nits peak (HDR); 3,000 nits peak (outdoor)"
+        }
+      ]
+    },
+    {
+      "group": "Performance",
+      "items": [
+        {
+          "label": "Chip",
+          "value": "A19 chip"
+        },
+        {
+          "label": "CPU",
+          "value": "6-core (2 performance, 4 efficiency cores)"
+        },
+        {
+          "label": "GPU",
+          "value": "5-core GPU with Neural Accelerators"
+        },
+        {
+          "label": "Neural Engine",
+          "value": "16-core"
+        },
+        {
+          "label": "Storage",
+          "value": "256 GB"
+        },
+        {
+          "label": "Operating system",
+          "value": "iOS"
+        }
+      ]
+    },
+    {
+      "group": "Camera",
+      "items": [
+        {
+          "label": "Rear",
+          "value": "48 MP Fusion Main (ƒ/1.6, sensor-shift OIS) + 48 MP Fusion Ultra Wide (ƒ/2.2, 120°)"
+        },
+        {
+          "label": "Zoom",
+          "value": "2x optical-quality Telephoto option; digital zoom up to 10x"
+        },
+        {
+          "label": "Front",
+          "value": "18 MP Center Stage camera, ƒ/1.9, autofocus"
+        },
+        {
+          "label": "Video",
+          "value": "4K Dolby Vision at 24, 25, 30 or 60 fps; Cinematic mode up to 4K at 30 fps"
+        }
+      ]
+    },
+    {
+      "group": "Battery and charging",
+      "items": [
+        {
+          "label": "Video playback",
+          "value": "Up to 30 hours (up to 27 hours streamed)"
+        },
+        {
+          "label": "Fast charging",
+          "value": "Up to 50% in 20 minutes with a 40 W adapter or higher (sold separately)"
+        },
+        {
+          "label": "Wireless",
+          "value": "MagSafe and Qi2 wireless charging up to 25 W"
+        },
+        {
+          "label": "Connector",
+          "value": "USB-C (USB 2, up to 480 Mbps)"
+        }
+      ]
+    },
+    {
+      "group": "Connectivity",
+      "items": [
+        {
+          "label": "Network",
+          "value": "5G (sub-6 GHz), Gigabit LTE"
+        },
+        {
+          "label": "Wi-Fi",
+          "value": "Wi-Fi 7 (802.11be) with 2x2 MIMO"
+        },
+        {
+          "label": "Bluetooth",
+          "value": "Bluetooth 6"
+        },
+        {
+          "label": "Other",
+          "value": "NFC with reader mode, second-generation Ultra Wideband chip, Thread"
+        },
+        {
+          "label": "SIM",
+          "value": "Dual SIM (nano-SIM and eSIM); dual eSIM support"
+        },
+        {
+          "label": "Location",
+          "value": "Dual-frequency GPS (GPS, GLONASS, Galileo, QZSS, BeiDou and NavIC)"
+        }
+      ]
+    },
+    {
+      "group": "Design",
+      "items": [
+        {
+          "label": "Build",
+          "value": "Aluminium design, Ceramic Shield 2 front, colour-infused glass back (Black, Mist Blue, Sage, Lavender)"
+        },
+        {
+          "label": "Colours",
+          "value": "Black, White, Mist Blue, Sage, Lavender"
+        },
+        {
+          "label": "Water and dust resistance",
+          "value": "IP68 (maximum depth of 6 metres up to 30 minutes)"
+        },
+        {
+          "label": "Dimensions",
+          "value": "149.6 x 71.5 x 7.95 mm"
+        },
+        {
+          "label": "Weight",
+          "value": "177 g"
+        },
+        {
+          "label": "Security",
+          "value": "Face ID"
+        }
+      ]
+    }
+  ],
+  "boxContents": [
+    "iPhone 17",
+    "USB-C Charge Cable (1 m)",
+    "Documentation"
+  ],
+  "keywords": [
+    "iphone 17",
+    "iphone",
+    "apple",
+    "apple iphone",
+    "a19",
+    "256gb",
+    "5g phone",
+    "ios"
+  ],
+  "warranty": "1 year Apple limited warranty (hardware coverage), in addition to your rights under consumer law.",
+  "manufacturerInfo": "Manufacturer: APPLE INC, ONE APPLE PARK WAY, CUPERTINO, CA 95014, USA; Importer: APPLE INDIA PRIVATE. LTD.,13TH FLOOR, PRESTIGE MINSK SQUARE, MUNICIPAL NO. 6, CUBBON ROAD, BENGALURU, KARNATAKA - 560 001 INDIA; Packer: APPLE INDIA PRIVATE. LTD.,13TH FLOOR, PRESTIGE MINSK SQUARE, MUNICIPAL NO. 6, CUBBON ROAD, BENGALURU, KARNATAKA - 560 001 INDIA",
+  "countryOfOrigin": "India, China",
+  "hsnCode": "85171300",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": "Apple iPhone 17 (256 GB) | myT Mobiles",
+  "seoDescription": "iPhone 17 with 6.3-inch 120 Hz display, A19 chip, 48 MP Dual Fusion camera and 256 GB storage. GST invoice with every order.",
+  "variants": [
+    {
+      "sku": "APPLE-IPHONE-17-256-BLACK",
+      "color": "Black",
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": 256,
+      "mrp": 82900,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "APPLE IPHONE 17 BLACK 256 GB"
+      ]
+    },
+    {
+      "sku": "APPLE-IPHONE-17-256-LAVENDER",
+      "color": "Lavender",
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": 256,
+      "mrp": 82900,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "APPLE IPHONE 17 LAVENDER 256 GB"
+      ]
+    },
+    {
+      "sku": "APPLE-IPHONE-17-256-MIST-BLUE",
+      "color": "Mist Blue",
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": 256,
+      "mrp": 82900,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "APPLE IPHONE 17 MIST BLUE 256 GB"
+      ]
+    },
+    {
+      "sku": "APPLE-IPHONE-17-256-SAGE",
+      "color": "Sage",
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": 256,
+      "mrp": 82900,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "APPLE IPHONE 17 SAGE 256 GB"
+      ]
+    },
+    {
+      "sku": "APPLE-IPHONE-17-256-WHITE",
+      "color": "White",
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": 256,
+      "mrp": 82900,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "APPLE IPHONE 17 WHITE 256 GB"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.apple.com/in/shop/api/product/legalmetrology?product=MG6J4HN/A",
+      "usedFor": [
+        "legal"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.apple.com/in/shop/buy-iphone/iphone-17",
+      "usedFor": [
+        "mrp"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.apple.com/in/newsroom/2025/09/apple-introduces-iphone-17/",
+      "usedFor": [
+        "mrp"
+      ],
+      "retrievedAt": "2026-10-19"
+    },
+    {
+      "url": "https://www.apple.com/in/iphone-17/specs/",
+      "usedFor": [
+        "specs",
+        "details",
+        "box"
+      ],
+      "retrievedAt": "2026-10-15"
+    },
+    {
+      "url": "https://www.apple.com/in/applecare/",
+      "usedFor": [
+        "warranty"
+      ],
+      "retrievedAt": "2026-10-19"
+    }
+  ]
+}

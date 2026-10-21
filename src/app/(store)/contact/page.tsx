@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { getSettings } from "@/lib/settings";
 import { PolicyPage } from "@/components/layout/policy-page";
+import { GrievanceOfficerCard } from "@/components/grievance/grievance-officer";
 
 export const metadata: Metadata = { title: "Contact us", alternates: { canonical: "/contact" } };
 export const revalidate = 600;
@@ -20,6 +21,8 @@ export default async function ContactPage() {
       </ul>
       {!s.supportPhone && !s.supportEmail && !address && <p>Our contact details are being updated. For order help, open your order in <Link href="/account/orders">My orders</Link>.</p>}
       <p>For order-related queries, please keep your order number (e.g. MYT-261004-XXXXXX) handy.</p>
+      <GrievanceOfficerCard officer={{ name: s.grievanceOfficerName, designation: s.grievanceOfficerDesignation, email: s.grievanceOfficerEmail, phone: s.grievanceOfficerPhone }} />
+      <p>Not happy with how we handled something? <Link href="/help/grievance">File a complaint</Link> and you&apos;ll get a ticket number to track it. We acknowledge complaints within 48 hours and resolve them within one month.</p>
     </PolicyPage>
   );
 }

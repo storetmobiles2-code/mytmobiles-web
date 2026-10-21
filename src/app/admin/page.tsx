@@ -3,18 +3,23 @@ import { AlertTriangle } from "lucide-react";
 import { db } from "@/lib/db";
 import { daysAgo } from "@/lib/time";
 import { getSettings, setupGaps } from "@/lib/settings";
+import { grievanceCounts } from "@/lib/grievances/service";
 import { razorpayConfigured, smtpConfigured } from "@/lib/env";
 import { formatINR } from "@/lib/money";
 import { ORDER_STATUS_LABEL, statusTone } from "@/lib/orders/status";
 import { AdminPage, Panel, Stat, Table, td, th } from "@/components/admin/ui";
 import { Badge } from "@/components/ui/misc";
+import { requirePermission } from "@/lib/auth/guards";
+import { hasPermission } from "@/lib/auth/permissions";
 
 export default async function AdminDashboard() {
+  const viewer = await requirePermission("dashboard.view");
+  const showRevenue = hasPermission(viewer.role, "analytics.view");
   const since30 = daysAgo(30);
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const countedStatuses = { notIn: ["CANCELLED", "PENDING_PAYMENT"] as ("CANCELLED" | "PENDING_PAYMENT")[] };
-  const [settings, rev30, revToday, toPack, toShip, returns, lowStock, recent, funnelRows] = await Promise.all([
+  const [settings, rev30, revToday, toPack, toShip, returns, lowStock, recent, funnelRows, complaints] = await Promise.all([
     getSettings(),
     db.order.aggregate({ where: { placedAt: { gte: since30 }, status: countedStatuses }, _sum: { total: true }, _count: true }),
     db.order.aggregate({ where: { placedAt: { gte: today }, status: countedStatuses }, _sum: { total: true }, _count: true }),
@@ -24,6 +29,7 @@ export default async function AdminDashboard() {
     db.productVariant.count({ where: { isActive: true, product: { isActive: true }, stock: { lte: 2 } } }),
     db.order.findMany({ orderBy: { placedAt: "desc" }, take: 8, select: { id: true, orderNumber: true, shipName: true, total: true, status: true, paymentMethod: true, placedAt: true } }),
     db.analyticsEvent.groupBy({ by: ["name"], where: { createdAt: { gte: since30 }, name: { in: ["view_item", "add_to_cart", "begin_checkout", "purchase"] } }, _count: { _all: true } }),
+    grievanceCounts(),
   ]);
   const gaps = setupGaps(settings);
   if (!razorpayConfigured()) gaps.push("Razorpay keys (RAZORPAY_KEY_ID / RAZORPAY_KEY_SECRET) — online payments are hidden until set");
@@ -33,7 +39,7 @@ export default async function AdminDashboard() {
 
   return (
     <AdminPage title="Dashboard">
-      {gaps.length > 0 && (
+      {gaps.length > 0 && hasPermission(viewer.role, "settings.manage") && (
         <div className="rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
           <p className="flex items-center gap-2 font-bold"><AlertTriangle className="h-4 w-4" aria-hidden="true" /> Finish setting up before going live</p>
           <ul className="mt-2 list-disc space-y-1 pl-6">{gaps.map((g) => <li key={g}>{g}</li>)}</ul>
@@ -41,14 +47,24 @@ export default async function AdminDashboard() {
         </div>
       )}
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <Stat label="Today" value={formatINR(revToday._sum.total ?? 0)} hint={`${revToday._count} orders`} />
-        <Stat label="Last 30 days" value={formatINR(rev30._sum.total ?? 0)} hint={`${rev30._count} orders · AOV ${formatINR(aov)}`} />
+        {showRevenue ? (
+          <>
+            <Stat label="Today" value={formatINR(revToday._sum.total ?? 0)} hint={`${revToday._count} orders`} />
+            <Stat label="Last 30 days" value={formatINR(rev30._sum.total ?? 0)} hint={`${rev30._count} orders · AOV ${formatINR(aov)}`} />
+          </>
+        ) : (
+          <>
+            <Stat label="Orders today" value={revToday._count} href="/admin/orders" />
+            <Stat label="Orders, last 30 days" value={rev30._count} />
+          </>
+        )}
         <Stat label="To pack" value={toPack} hint="Confirmed orders" href="/admin/orders?status=CONFIRMED" />
         <Stat label="To ship" value={toShip} hint="Packed orders" href="/admin/orders?status=PACKED" />
         <Stat label="Return requests" value={returns} href="/admin/orders?status=RETURN_REQUESTED" />
         <Stat label="Low stock variants" value={lowStock} hint="≤ 2 units, live products" href="/admin/inventory?filter=low" />
+        <Stat label="Open complaints" value={complaints.open} hint={complaints.overdue ? `${complaints.overdue} overdue` : "None overdue"} href={complaints.overdue ? "/admin/grievances?status=OVERDUE" : "/admin/grievances"} />
       </div>
-      <div className="grid gap-4 xl:grid-cols-[1.5fr_1fr]">
+      <div className={showRevenue ? "grid grid-cols-[minmax(0,1fr)] gap-4 xl:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]" : "grid grid-cols-[minmax(0,1fr)] gap-4"}>
         <Panel title="Recent orders" actions={<Link href="/admin/orders" className="text-sm font-semibold text-brand-700">All orders</Link>}>
           <Table>
             <thead><tr><th className={th}>Order</th><th className={th}>Customer</th><th className={th}>Total</th><th className={th}>Status</th></tr></thead>
@@ -65,7 +81,7 @@ export default async function AdminDashboard() {
             </tbody>
           </Table>
         </Panel>
-        <Panel title="Conversion funnel (30 days)">
+        {showRevenue && <Panel title="Conversion funnel (30 days)">
           <ol className="space-y-3">
             {funnel.map((f, i) => {
               const base = funnel[0].count || 1;
@@ -79,7 +95,7 @@ export default async function AdminDashboard() {
             })}
           </ol>
           <p className="mt-4 text-xs text-ink-500">First-party, cookie-less events. See <Link href="/admin/analytics" className="underline">Analytics</Link> for top products and searches.</p>
-        </Panel>
+        </Panel>}
       </div>
     </AdminPage>
   );

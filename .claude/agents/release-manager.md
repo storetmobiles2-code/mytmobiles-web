@@ -5,6 +5,7 @@ tools: Read, Write, Edit, Glob, Grep, Bash, WebFetch, WebSearch
 model: inherit
 skills:
   - store-rules
+  - store-dev
 color: red
 ---
 

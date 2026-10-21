@@ -1,0 +1,159 @@
+{
+  "slug": "crompton-marvel-neo-40-l-air-cooler",
+  "name": "Crompton Marvel Neo 40 L Air Cooler",
+  "brand": "Crompton",
+  "category": "air-coolers",
+  "condition": "NEW",
+  "status": "live",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "Crompton Marvel Neo 40-litre personal air cooler with honeycomb pads, auto-swing louvres and a 165 W rating.",
+  "description": "The Crompton Marvel Neo 40 L is a compact air cooler for small and medium rooms. It uses high-density honeycomb cooling pads and has auto-swing louvres with 4-way air deflection.\n\nIt has a separate ice chamber, Crompton's Everlast pump and three fan speeds, and is rated at 165 W. The white plastic body measures 49 x 38 x 91.5 cm (D x W x H) and weighs 10 kg. Crompton gives a 1-year warranty.",
+  "highlights": [
+    "40-litre water tank",
+    "High-density honeycomb cooling pads",
+    "Auto-swing louvres with 4-way air deflection",
+    "Ice chamber and Everlast pump",
+    "165 W power rating, 3 speeds",
+    "1-year warranty (per Crompton)"
+  ],
+  "specs": [
+    {
+      "group": "Cooling",
+      "items": [
+        {
+          "label": "Type",
+          "value": "Personal air cooler"
+        },
+        {
+          "label": "Tank capacity",
+          "value": "40 litres"
+        },
+        {
+          "label": "Cooling pads",
+          "value": "High-density honeycomb"
+        },
+        {
+          "label": "Air direction",
+          "value": "Auto-swing louvres, 4-way air deflection"
+        },
+        {
+          "label": "Ice chamber",
+          "value": "Yes"
+        },
+        {
+          "label": "Pump",
+          "value": "Everlast pump"
+        }
+      ]
+    },
+    {
+      "group": "Power and controls",
+      "items": [
+        {
+          "label": "Power consumption",
+          "value": "165 W"
+        },
+        {
+          "label": "Fan speeds",
+          "value": "3"
+        }
+      ]
+    },
+    {
+      "group": "Design",
+      "items": [
+        {
+          "label": "Colour",
+          "value": "White"
+        },
+        {
+          "label": "Body material",
+          "value": "Plastic"
+        },
+        {
+          "label": "Dimensions (D x W x H)",
+          "value": "49 x 38 x 91.5 cm"
+        },
+        {
+          "label": "Weight",
+          "value": "10 kg"
+        },
+        {
+          "label": "Wheels",
+          "value": "4 push-type wheels"
+        }
+      ]
+    },
+    {
+      "group": "General",
+      "items": [
+        {
+          "label": "Brand",
+          "value": "Crompton"
+        },
+        {
+          "label": "Model code",
+          "value": "ACGC-MARVELNEO40"
+        },
+        {
+          "label": "Warranty",
+          "value": "1 year"
+        }
+      ]
+    }
+  ],
+  "boxContents": [
+    "Air cooler",
+    "4 push-type wheels",
+    "Warranty card",
+    "Instruction manual"
+  ],
+  "keywords": [
+    "crompton",
+    "marvel neo",
+    "marvel neo 40",
+    "40 litre",
+    "air cooler",
+    "personal cooler",
+    "honeycomb cooler",
+    "acgc-marvelneo40"
+  ],
+  "warranty": "1 year manufacturer warranty (per Crompton)",
+  "manufacturerInfo": "Manufacturer contact information: Crompton Greaves Consumer Electricals Limited, 05GBD, Godrej Business District, Pirojshanagar, Vikhroli West, Mumbai, Maharashtra 400079",
+  "countryOfOrigin": "India",
+  "hsnCode": "84796000",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": null,
+  "seoDescription": null,
+  "variants": [
+    {
+      "sku": "CROMPTON-MARVEL-NEO-40-L-AIR-COOLER",
+      "color": null,
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": null,
+      "mrp": 9500,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "CROMPTON MARVEL NEO 40L AIR COOLER"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.crompton.co.in/products/crompton-marvel-neo?variant=46667000054064",
+      "usedFor": [
+        "details",
+        "specs",
+        "mrp",
+        "legal",
+        "warranty",
+        "box"
+      ],
+      "retrievedAt": "2026-10-15"
+    }
+  ]
+}

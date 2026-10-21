@@ -5,12 +5,15 @@
  *
  * Lists what needs a person today: orders waiting to be packed or shipped,
  * deliveries running late, returns and refunds pending, payments stuck,
+ * complaints open or past their deadlines,
  * low stock, and whether the site and its scheduled job are healthy.
  */
 import "dotenv/config";
 import { db } from "@/lib/db";
 import { formatINR } from "@/lib/money";
 import { setupGaps } from "@/lib/settings";
+import { GRIEVANCE_CATEGORY_LABEL, grievanceFlags } from "@/lib/grievances/rules";
+import { overdueCandidatesWhere } from "@/lib/grievances/service";
 
 const args = process.argv.slice(2);
 const flag = (n: string) => args.includes(`--${n}`);
@@ -46,7 +49,7 @@ async function main() {
     rows.map((o) => `${o.orderNumber} · ${formatINR(o.total)} · ${o.shipName} · placed ${o.placedAt.toISOString().slice(0, 16).replace("T", " ")} UTC`);
   const orderSel = { orderNumber: true, total: true, placedAt: true, shipName: true } as const;
 
-  const [toPack, toShip, late, returns, refunds, stuckPayments, lowStock, settings, last24, last7] = await Promise.all([
+  const [toPack, toShip, late, returns, refunds, stuckPayments, lowStock, settings, last24, last7, openComplaints, complaintCandidates] = await Promise.all([
     db.order.findMany({ where: { status: "CONFIRMED", confirmedAt: { lt: hoursAgo(24) } }, select: orderSel, orderBy: { placedAt: "asc" } }),
     db.order.findMany({ where: { status: "PACKED", updatedAt: { lt: hoursAgo(24) } }, select: orderSel, orderBy: { placedAt: "asc" } }),
     db.order.findMany({ where: { status: { in: ["SHIPPED", "OUT_FOR_DELIVERY"] }, estimatedDeliveryTo: { lt: now } }, select: { ...orderSel, courierName: true, trackingNumber: true } }),
@@ -61,6 +64,12 @@ async function main() {
     db.storeSettings.findUnique({ where: { id: "store" } }),
     db.order.aggregate({ where: { placedAt: { gte: hoursAgo(24) }, status: { notIn: ["CANCELLED", "PENDING_PAYMENT"] } }, _sum: { total: true }, _count: true }),
     db.order.aggregate({ where: { placedAt: { gte: hoursAgo(24 * 7) }, status: { notIn: ["CANCELLED", "PENDING_PAYMENT"] } }, _sum: { total: true }, _count: true }),
+    db.grievance.count({ where: { status: { in: ["OPEN", "IN_PROGRESS"] } } }),
+    db.grievance.findMany({
+      where: overdueCandidatesWhere(now),
+      select: { ticket: true, name: true, category: true, status: true, createdAt: true, acknowledgedAt: true },
+      orderBy: { createdAt: "asc" },
+    }),
   ]);
 
   const items: Item[] = [];
@@ -69,6 +78,13 @@ async function main() {
   add("urgent", "Packed over 24 h ago and not shipped", list(toShip));
   add("urgent", "Payment window over but order still pending (is the cron running?)", list(stuckPayments));
   add("today", "Past the promised delivery date", late.map((o) => `${list([o])[0]} · ${o.courierName ?? "?"} ${o.trackingNumber ?? ""}`));
+  // Consumer Protection (E-Commerce) Rules, 2020: acknowledge within 48 hours, resolve within one month.
+  const complaint = (g: (typeof complaintCandidates)[number]) =>
+    `${g.ticket} · ${GRIEVANCE_CATEGORY_LABEL[g.category]} · ${g.name} · received ${g.createdAt.toISOString().slice(0, 16).replace("T", " ")} UTC`;
+  const flagged = complaintCandidates.map((g) => ({ g, f: grievanceFlags(g, now) }));
+  add("urgent", "Complaints not acknowledged within 48 h", flagged.filter((x) => x.f.ackOverdue).map((x) => complaint(x.g)));
+  add("urgent", "Complaints unresolved past the one-month deadline", flagged.filter((x) => x.f.resolveOverdue).map((x) => complaint(x.g)));
+  if (openComplaints) items.push({ severity: "today", title: `Open complaints: ${openComplaints}`, detail: [] });
   add("today", "Return requests to review", returns.map((o) => `${list([o])[0]} · "${o.returnReason ?? ""}"`));
   add("today", "Refunds pending", refunds.map((o) => `${list([o])[0]} · ${o.paymentMethod === "COD" ? "COD: pay by bank transfer, then mark refunded" : "Razorpay refund in progress"}`));
   // A single shop holds one or two units of most models, so list sell-outs and just count the rest.

@@ -6,12 +6,14 @@ import { formatINR } from "@/lib/money";
 import { ORDER_STATUS_LABEL, PAYMENT_STATUS_LABEL, statusTone } from "@/lib/orders/status";
 import { AdminPage, FilterTabs, Table, td, th } from "@/components/admin/ui";
 import { Badge, Pagination } from "@/components/ui/misc";
+import { requirePermission } from "@/lib/auth/guards";
 
 export const metadata = { title: "Orders" };
 const PER = 30;
 const TABS: (OrderStatus | "ALL")[] = ["ALL", "PENDING_PAYMENT", "CONFIRMED", "PACKED", "SHIPPED", "OUT_FOR_DELIVERY", "DELIVERED", "RETURN_REQUESTED", "RETURNED", "CANCELLED"];
 
 export default async function AdminOrders(props: PageProps<"/admin/orders">) {
+  await requirePermission("orders.view");
   const sp = await props.searchParams;
   const status = TABS.includes(sp.status as OrderStatus) ? (sp.status as OrderStatus | "ALL") : "ALL";
   const q = typeof sp.q === "string" ? sp.q.trim().slice(0, 60) : "";

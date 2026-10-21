@@ -1,0 +1,168 @@
+{
+  "slug": "samsung-galaxy-a06-5g",
+  "name": "Samsung Galaxy A06 5G",
+  "brand": "Samsung",
+  "category": "smartphones",
+  "condition": "NEW",
+  "status": "live",
+  "featured": false,
+  "is5G": true,
+  "launchedAt": null,
+  "shortDescription": "Brand-new Samsung Galaxy A06 5G in 3 colours, with GST invoice from myT Mobiles.",
+  "description": "Buy the Samsung Galaxy A06 5G from myT Mobiles. Every order ships with a GST tax invoice, and you can choose Cash on Delivery or pay online. Prices shown include GST.",
+  "highlights": [
+    "5G connectivity",
+    "4 GB/6 GB RAM · 64 GB/128 GB storage",
+    "GST invoice with every order"
+  ],
+  "specs": [
+    {
+      "group": "Key facts",
+      "items": [
+        {
+          "label": "Brand",
+          "value": "Samsung"
+        },
+        {
+          "label": "Model",
+          "value": "Galaxy A06 5G"
+        },
+        {
+          "label": "RAM options",
+          "value": "4 GB / 6 GB"
+        },
+        {
+          "label": "Storage options",
+          "value": "64 GB / 128 GB"
+        },
+        {
+          "label": "Network",
+          "value": "5G"
+        },
+        {
+          "label": "Colours",
+          "value": "Black, Light Gray, Light Green"
+        },
+        {
+          "label": "Condition",
+          "value": "Brand new"
+        }
+      ]
+    }
+  ],
+  "boxContents": [],
+  "keywords": [
+    "samsung",
+    "galaxy",
+    "a06",
+    "smartphone",
+    "5g"
+  ],
+  "warranty": "Manufacturer warranty as per brand policy.",
+  "manufacturerInfo": null,
+  "countryOfOrigin": null,
+  "hsnCode": "85171300",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": null,
+  "seoDescription": null,
+  "variants": [
+    {
+      "sku": "SAMSUNG-GALAXY-A06-5G-4-64-BLACK",
+      "color": "Black",
+      "colorHex": null,
+      "ramGb": 4,
+      "storageGb": 64,
+      "mrp": 15999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY A06 5G 4/64 BLACK"
+      ]
+    },
+    {
+      "sku": "SAMSUNG-GALAXY-A06-5G-4-64-LIGHT-GRAY",
+      "color": "Light Gray",
+      "colorHex": null,
+      "ramGb": 4,
+      "storageGb": 64,
+      "mrp": 15999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY A06 5G 4/64 LIGHT GRAY"
+      ]
+    },
+    {
+      "sku": "SAMSUNG-GALAXY-A06-5G-4-64-LIGHT-GREEN",
+      "color": "Light Green",
+      "colorHex": null,
+      "ramGb": 4,
+      "storageGb": 64,
+      "mrp": 14999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY A06 5G 4/64 LIGHT GREEN"
+      ]
+    },
+    {
+      "sku": "SAMSUNG-GALAXY-A06-5G-4-128-BLACK",
+      "color": "Black",
+      "colorHex": null,
+      "ramGb": 4,
+      "storageGb": 128,
+      "mrp": 23999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY A06 5G 4/128 BLACK"
+      ]
+    },
+    {
+      "sku": "SAMSUNG-GALAXY-A06-5G-4-128-LIGHT-GRAY",
+      "color": "Light Gray",
+      "colorHex": null,
+      "ramGb": 4,
+      "storageGb": 128,
+      "mrp": 23999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY A06 5G 4/128 LIGHT GRAY"
+      ]
+    },
+    {
+      "sku": "SAMSUNG-GALAXY-A06-5G-4-128-LIGHT-GREEN",
+      "color": "Light Green",
+      "colorHex": null,
+      "ramGb": 4,
+      "storageGb": 128,
+      "mrp": 23999,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY A06 5G 4/128 LIGHT GREEN"
+      ]
+    },
+    {
+      "sku": "SAMSUNG-GALAXY-A06-5G-6-128-BLACK",
+      "color": "Black",
+      "colorHex": null,
+      "ramGb": 6,
+      "storageGb": 128,
+      "mrp": 17499,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY A06 5G 6/128 BLACK"
+      ]
+    },
+    {
+      "sku": "SAMSUNG-GALAXY-A06-5G-6-128-LIGHT-GREEN",
+      "color": "Light Green",
+      "colorHex": null,
+      "ramGb": 6,
+      "storageGb": 128,
+      "mrp": 17499,
+      "maxPerOrder": 3,
+      "stockSheetNames": [
+        "SAMSUNG GALAXY A06 5G 6/128 LIGHT GREEN"
+      ]
+    }
+  ],
+  "sources": []
+}
