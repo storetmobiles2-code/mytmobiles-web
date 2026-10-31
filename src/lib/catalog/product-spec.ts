@@ -212,7 +212,7 @@ export function checkSpec(
   need(Boolean(spec.manufacturerInfo), "manufacturerInfo", "Manufacturer/importer name and address is a Legal Metrology declaration");
   need(Boolean(spec.countryOfOrigin), "countryOfOrigin", "Country of origin is a Legal Metrology declaration");
   if (live && shownImages.length) {
-    for (const c of colours) if (!shownImages.some((im) => im.color === c || im.color === null)) warn("images", `No image for colour "${c}" — shoppers will see another colour's photo`);
+    for (const c of colours) if (!shownImages.some((im) => im.color === c || im.color === null)) warn("images", `No image for colour "${c}" — shoppers will see "Photo coming soon" for it`);
   }
   return { spec, problems };
 }
