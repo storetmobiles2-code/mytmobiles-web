@@ -26,6 +26,7 @@ import { slugify } from "@/lib/slug";
 import { audit, CATALOG_CLI_ACTOR } from "@/lib/admin/audit";
 import type { AuditChanges } from "@/lib/admin/audit-diff";
 import { contactSheet, download, optimise, optimiseSpinFrame, pool, SIZE, SPIN_SIZE } from "./lib/image-pipeline";
+import { assessImage, blockingIssues, ISSUE_TEXT, readRejected } from "./lib/image-quality";
 
 const ROOT = process.cwd();
 const SPEC_DIR = path.join(ROOT, "catalog/products");
@@ -275,6 +276,19 @@ async function cmdImages() {
   if (banned.length) {
     printProblems(slug, banned);
     throw new Error("Fix the image list first");
+  }
+  // Quality gate: reviewed rejections, and sources that fail a blocking check for their view.
+  const rejectedUrls = readRejected(ROOT);
+  const refused: string[] = [];
+  await pool(spec.images ?? [], 6, async (img, i) => {
+    const reason = rejectedUrls.get(img.url);
+    if (reason) return void refused.push(`images.${i}: rejected in review (${reason})`);
+    const block = blockingIssues(await assessImage(await download(img.url)), img.view);
+    if (block.length) refused.push(`images.${i} (${img.view ?? "no view"}): ${block.map((b) => ISSUE_TEXT[b]).join("; ")}`);
+  });
+  if (refused.length) {
+    for (const r of refused.sort()) console.log(`  ✗ ${slug} › ${r}`);
+    throw new Error("Remove these images from the product file (or give a close-up the view \"detail\"), then run images again");
   }
   const dir = path.join(ROOT, "public", IMAGE_DIR, slug);
   fs.rmSync(dir, { recursive: true, force: true });
