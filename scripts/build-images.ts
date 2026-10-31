@@ -6,8 +6,13 @@
  *   npm run images:build -- --sheets  # also write labelled contact sheets for visual QA
  *
  * Output
- *   public/images/products/<family-slug>/<colour-slug>-<n>.webp   1200×1200, white background
+ *   public/images/products/<family-slug>/<colour-slug>-<n>-<hash>.webp   1200×1200, white background
  *   catalog/images.lock.json   file → { source URL, page, credit, licence, dimensions }
+ *
+ * The trailing hash is a content fingerprint (contentFingerprint() in lib/image-pipeline.ts), not
+ * a counter: it changes whenever that slot's picture changes, even though the slot's position (and
+ * so the rest of the filename) is reused across a rebuild. Without it, a stale browser or Next.js
+ * image-optimizer cache can go on serving the old picture at that URL indefinitely.
  *
  * Images are trimmed of surrounding whitespace and centred on a square canvas
  * with padding — no other edits are made (no retouching, no watermark removal).
@@ -20,7 +25,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { slugify } from "../src/lib/slug";
-import { contactSheet, download, optimise, optimiseSpinFrame, pool, SIZE, SPIN_SIZE } from "./lib/image-pipeline";
+import { contactSheet, contentFingerprint, download, optimise, optimiseSpinFrame, pool, SIZE, SPIN_SIZE } from "./lib/image-pipeline";
 import { assessImage, blockingIssues, ISSUE_TEXT, readRejected } from "./lib/image-quality";
 
 export interface LockedSpin {
@@ -86,7 +91,6 @@ async function main() {
       const accepted = images.filter((img) => !rejectedUrls.has(img.url));
       rejected += images.length - accepted.length;
       const results = await pool(accepted, 6, async (img, i) => {
-        const rel = `/images/products/${slug}/${slugify(color) || "default"}-${i + 1}.webp`;
         let out: Buffer;
         try {
           const source = await download(img.url);
@@ -105,6 +109,10 @@ async function main() {
           console.warn(`! ${familyKey} / ${color} #${i + 1}: source unreachable (${(err as Error).message}); kept the previous build`);
           out = kept;
         }
+        // The fingerprint busts the browser's and Next's image-optimizer caches whenever this
+        // slot's content changes, even though a rejection or a reorder can reuse its old position
+        // (and so its old filename) for different content.
+        const rel = `/images/products/${slug}/${slugify(color) || "default"}-${i + 1}-${contentFingerprint(out)}.webp`;
         await fs.writeFile(path.join(ROOT, "public", rel), out);
         return { file: rel, width: SIZE, height: SIZE, view: img.view ?? null, sourceUrl: img.url, sourcePage: img.sourcePage ?? fam.sourcePage, credit: img.credit, license: img.license } satisfies LockedImage;
       });
@@ -126,8 +134,9 @@ async function main() {
       const dir = `/images/products/${slug}/360/${slugify(color) || "default"}`;
       await fs.mkdir(path.join(ROOT, "public", dir), { recursive: true });
       const files = await pool(spin.frames, 8, async (url, i) => {
-        const rel = `${dir}/${String(i + 1).padStart(3, "0")}.webp`;
-        await fs.writeFile(path.join(ROOT, "public", rel), await optimiseSpinFrame(await download(url)));
+        const out = await optimiseSpinFrame(await download(url));
+        const rel = `${dir}/${String(i + 1).padStart(3, "0")}-${contentFingerprint(out)}.webp`;
+        await fs.writeFile(path.join(ROOT, "public", rel), out);
         return rel;
       }).catch((err) => {
         console.error(`✗ ${familyKey} / ${color} 360: ${(err as Error).message}`);
