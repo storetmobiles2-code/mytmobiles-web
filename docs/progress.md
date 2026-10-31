@@ -1,6 +1,6 @@
 # Progress and handoff
 
-**Last updated:** 31 October 2026. **In review:** the Accessories section (branch `feat/accessories`, see "Accessories" below). The POS stock sync is a separate branch (`feat/pos-stock-sync`). Other open items are the code gaps under "Next code work" and the decisions and shop checks for the owner and staff.
+**Last updated:** 31 October 2026. Accessories (#6), the POS stock sync (#7) and the CI runner pin (#8) are merged. **In review:** the product-photo quality review (branch `feat/image-quality`, see "Product photos" below). Other open items are the code gaps under "Next code work" and the decisions and shop checks for the owner and staff.
 
 In a new session, read this first, then `CLAUDE.md`, `.claude/skills/store-rules/SKILL.md` and `.claude/skills/store-dev/SKILL.md`. The code graph builds itself at session start (see "Code graph" in `CLAUDE.md`).
 
@@ -77,6 +77,34 @@ The owner's myBillBook login has two companies. The second, "T MOBILES", holds 1
 - **Smart Home, Trimmers, Keyboards (3):** ECHO DOT 4th GEN (2); PHILIPS BEARD TRIMMER SERIES 3000 (1); PEBBLE DIGIT002 keyboard and mouse combo (1).
 
 Brand stores (boAt, Fire-Boltt, Pebble, Noise and others) often lack the legal block. Those products stay `draft` until staff read the manufacturer or importer, the country of origin and the MRP off the box.
+
+## Product photos: quality review (31 October 2026)
+
+All 401 gallery images were reviewed against the new quality bar (store-rules → Photos → Quality bar). **75 were rejected**: clipped composite close-ups (the iPhone 17 "angle" shots), phones on lettering banners and backdrop panels, multi-panel collages, text-heavy marketing panels (most cooler galleries), tiny-product scenes and soft enlargements. Each one is listed with its reason in `catalog/images.rejected.json`, and the image builds refuse them.
+
+- `npm run images:audit` re-checks every image and writes labelled contact sheets to `.cache/sheets/audit/`.
+- The build now keeps an image's previous version when the brand's server is down. Philips' image server returned HTTP 500 for the S7221 photos on 31 October.
+
+**Photograph in the shop** (no official image meets the bar). Upload in Admin → Products, credit "Photographed in store":
+- **Redmi Pad 2 Pro 5G** (Graphite Gray, Quick Silver): Xiaomi India shows only promo panels, and the global site's clean shot is the Wi-Fi model.
+- **vivo Y11 5G demo unit** (Midnight Blue): vivo's only image was a dark banner. Its product file is now `draft`, so it stays on sale with "Photo coming soon".
+- **OnePlus 65U1S TV:** a front view. Only two room shots remain.
+
+**Galleries now down to one image per colour** (more official views wanted):
+- iPhone 17, all colours: Apple's other views are clipped or soft.
+- Crompton Marvel Neo 40L, Crompton Zelus DAC43, Orient Tornado 52L and 88L, Orient Ultimo 88L: the rest were marketing panels.
+- Galaxy A27 (Black, Light Pink), A37 (Awesome Charcoal) and A57 (Awesome Lilac): one group shot each.
+
+## 360° views
+
+The viewer is built and works on the live site and on the GitHub Pages demo; both were checked locally on 31 October with a test sequence. **No product has a spin yet**, because the house rules accept only a real frame sequence:
+- **Brand frame sets:** none found for the models we stock. Samsung's "360° colours viewer" is an interactive 3D model, Apple and vivo publish none, and Xiaomi and OPPO pages have only stills. The rules don't allow turning a 3D model or video into a spin.
+- **In the shop** (the practical route):
+  1. Put the unit on a turntable against a plain white background, with the camera fixed and the lighting even.
+  2. Take 24–36 photos at equal steps for one full turn.
+  3. Upload them in Admin → Products → "360° view", choosing the colour, with credit "Photographed in store".
+
+  Start with the best-selling phones in stock.
 
 ## Next code work
 
