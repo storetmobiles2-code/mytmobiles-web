@@ -10,6 +10,7 @@ import { notifySessionChanged } from "@/components/layout/session-provider";
 import { track } from "@/lib/analytics-client";
 import { Price } from "@/components/ui/price";
 import { cn } from "@/lib/cn";
+import { galleryForColor } from "@/lib/catalog/variant-gallery";
 import { ProductGallery } from "./product-gallery";
 import { WishlistButton } from "./wishlist-button";
 
@@ -78,10 +79,7 @@ export function PurchasePanel({ productId, name, variants, images, spins = [], h
   const pickMem = (m: string) => choose(variants.find((v) => memKey(v) === m && v.color === selected.color) ?? variants.find((v) => memKey(v) === m && v.stock > 0) ?? variants.find((v) => memKey(v) === m));
 
   const spin = useMemo(() => spins.find((s) => s.color === selected.color) ?? spins.find((s) => s.color === null) ?? null, [spins, selected.color]);
-  const gallery = useMemo(() => {
-    const own = images.filter((i) => i.color === selected.color);
-    return own.length ? own : images.filter((i) => !i.color).length ? images.filter((i) => !i.color) : images;
-  }, [images, selected.color]);
+  const gallery = useMemo(() => galleryForColor(images, selected.color), [images, selected.color]);
 
   const max = Math.max(1, Math.min(selected.stock, selected.maxPerOrder));
   const inStock = selected.stock > 0;
