@@ -2,7 +2,7 @@
 name: product-onboarder
 description: Adds a new product to the myT Mobiles store end to end — researches official specs, MRP and legal details, sources and verifies official photos, writes the product file, and opens a pull request for review. Use when a new model arrives, when a stock import creates a hidden product, or when asked to "add", "list" or "onboard" a product.
 tools: Read, Write, Edit, Glob, Grep, Bash, WebSearch, WebFetch
-model: inherit
+model: sonnet
 skills:
   - store-rules
 color: green

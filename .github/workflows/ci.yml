@@ -11,6 +11,22 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # Secrets in the full git history (gitleaks) and known vulnerabilities in dependencies (Trivy).
+  # Pinned CLI images: the gitleaks GitHub Action needs a paid licence on organisation repositories.
+  security:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Secrets (gitleaks)
+        run: docker run --rm -v "$PWD:/repo" ghcr.io/gitleaks/gitleaks:v8.30.1 git /repo --config /repo/.gitleaks.toml --redact --no-banner
+      - name: Dependencies, critical (Trivy, fails the build)
+        run: docker run --rm -v "$PWD:/repo" aquasec/trivy:0.76.1 fs --scanners vuln --severity CRITICAL --ignore-unfixed --exit-code 1 --quiet /repo
+      - name: Dependencies, high (Trivy, report only)
+        run: docker run --rm -v "$PWD:/repo" aquasec/trivy:0.76.1 fs --scanners vuln --severity HIGH --ignore-unfixed --exit-code 0 --quiet /repo
+
   checks:
     # Pinned: Playwright 1.56 cannot install Chromium on ubuntu-latest (Ubuntu 26.04).
     runs-on: ubuntu-24.04

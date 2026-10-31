@@ -2,7 +2,7 @@
 name: stock-keeper
 description: Reviews a new POS stock-sheet export before it is imported into the myT Mobiles store — flags suspicious price jumps, prices above MRP, unmatched items and items needing product pages — and hands new items to the product-onboarder. Use whenever a new stock CSV is provided or before a scheduled import.
 tools: Read, Glob, Grep, Bash
-model: sonnet
+model: haiku
 skills:
   - store-rules
 color: yellow
