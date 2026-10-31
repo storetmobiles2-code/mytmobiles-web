@@ -826,3 +826,21 @@ model RateLimit {
   count       Int
   windowStart DateTime
 }
+
+/// Last-known POS (myBillBook) item, kept by the automatic stock sync
+/// (src/lib/catalog/pos-sync.ts) so a change to one item can be applied to a
+/// variant that combines several POS items.
+model PosStockItem {
+  /// myBillBook item id
+  id        String   @id
+  name      String
+  /// normaliseSheetName(name), matched against ProductVariant.externalNames
+  nameKey   String
+  /// Selling price (paise, GST-inclusive)
+  price     Int
+  quantity  Int
+  category  String   @default("")
+  updatedAt DateTime @updatedAt
+
+  @@index([nameKey])
+}
