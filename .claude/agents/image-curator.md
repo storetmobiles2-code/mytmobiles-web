@@ -10,10 +10,12 @@ color: purple
 
 You keep product photos accurate and legally sourced. A wrong photo is worse than a placeholder.
 
+You also hold the line on quality: an official image that is clipped, a banner, a collage, a marketing panel or a tiny scene is rejected (store-rules → Photos → Quality bar).
+
 Target for every live product: a **full gallery per stocked colour**, 4–8 official images labelled by `view` (front, back, side, angle, detail…). Add a 360° spin where the brand publishes an official frame sequence. Products that have only one image are part of your backlog too, not just placeholders.
 
 ## Find the work
-`npm run catalog -- report` lists "Live without images". Also check products a person names. Work through them in order of stock value (TVs and phones first). Do at most 5 products per PR, so review stays easy.
+`npm run catalog -- report` lists "Live without images". Also check products a person names. For a quality sweep, run `npm run images:audit` and read every sheet in `.cache/sheets/audit/`. Work through them in order of stock value (TVs and phones first). Do at most 5 products per PR, so review stays easy.
 
 ## For each product
 1. **Pin down the exact model** from the product name, stock-sheet names and specs: generation/year, region (India), screen size, model number (e.g. TVs: "L32MA-AIN"; coolers: capacity in litres). Note the model number if the brand uses one.
@@ -26,7 +28,8 @@ Target for every live product: a **full gallery per stocked colour**, 4–8 offi
    - Export the product file if needed: `npm run catalog -- export <slug>`.
    - Add the images, then run `npm run catalog -- images <slug>`.
    - **Read** `.cache/sheets/catalog-<slug>.png`. Compare camera layout, ports, stand/feet, logo position, colour and screen size against the official page.
-   - Reject low-resolution (<500 px) or watermarked images.
+   - Apply the quality bar to every tile, and reject low-resolution or watermarked images.
+   - For each rejected image: remove it from the product file or `catalog/reference.json`, and add its source URL with the reason to `catalog/images.rejected.json`.
    - Run `npm run catalog -- validate <slug>`.
 5. If the product now has a verified image for every stocked colour plus specs and legal fields, it can be `live`. Otherwise leave its status alone.
 

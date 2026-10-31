@@ -46,9 +46,26 @@ The hero (first image) should show the single device. If the brand's only clean 
 - **Never** use Amazon, Flipkart, Croma, Reliance Digital, Vijay Sales, Tata CLiQ, marketplaces, review sites (GSMArena, 91mobiles, Smartprix…) or Google Images results. `catalog validate` rejects known retailer domains, but the rule applies to any site.
 - The photo must show the **exact** model, generation, colour and variant. When pages disagree (e.g. two models share colour names), use no photo.
 - Don't remove watermarks or crop out logos. The pipeline only pads, trims whitespace and resizes.
-- After `npm run catalog -- images <slug>`, open `.cache/sheets/catalog-<slug>.png` with the Read tool and check every tile: model, camera layout, colour and labels. If anything is doubtful, remove that image.
+- After `npm run catalog -- images <slug>`, open `.cache/sheets/catalog-<slug>.png` with the Read tool and check every tile: model, camera layout, colour, labels and the quality bar below. If anything is doubtful, remove that image.
 - Record `credit` (e.g. "© Samsung Electronics") and `license`, e.g. "Official manufacturer product image © <Brand>, from the brand's official India website. Used unmodified (resized/padded only) for product identification by a retailer."
 - A clearly labelled "Photo coming soon" placeholder is better than a wrong or unlicensed photo.
+
+### Quality bar
+
+An official image can still be wrong for the gallery. Reject it when it is:
+- **clipped:** the product is cut off by the edge of the picture, or ends in a straight line inside it (a composite close-up of two phones cut at the bottom). Close-ups are fine only as a sharp, labelled `detail` after the full views.
+- **a banner or backdrop panel:** the product on a coloured block, a lettering banner ("Blue", "Black") or a gradient panel, rather than cut out on white;
+- **a collage:** several panels in one picture (a model plus mini detail shots);
+- **a marketing panel:** headlines, feature icons or spec text laid over or around the product ("Beat the heat", "World's largest battery"). Text the brand renders on the phone's own screen is acceptable;
+- **a scene where the product is small:** dark mood shots, room sets or sunsets in which the product is hard to see. A lifestyle image must show the product clearly;
+- **soft:** enlarged from a small source (the audit flags sources under 700 px).
+
+The first image of each colour must show the whole product: `front` or `front-back`, never a close-up or a scene.
+
+How it is enforced:
+- `npm run images:audit [filter]` checks every gallery image and writes labelled contact sheets to `.cache/sheets/audit/`. It flags crops, photo backgrounds and small sources automatically. Read every sheet: clipped close-ups, collages and text panels need eyes.
+- Rejected images go in `catalog/images.rejected.json` with the reason. `npm run images:build` and `npm run catalog -- images` refuse them, and images with a photo background in a front, back, side or angle slot, so they can't come back with a later edit.
+- When a product is left with no image that meets the bar, keep the placeholder and add it to the in-store photo list in `docs/progress.md`.
 - To preview a proposed set before adding it: `npx tsx scripts/images-preview.ts <proposal.json>` writes labelled contact sheets to `.cache/sheets/preview/`.
 
 ### Where official galleries live

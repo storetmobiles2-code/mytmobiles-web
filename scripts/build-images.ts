@@ -11,11 +11,17 @@
  *
  * Images are trimmed of surrounding whitespace and centred on a square canvas
  * with padding — no other edits are made (no retouching, no watermark removal).
+ *
+ * Quality gate: images listed in catalog/images.rejected.json, and images whose
+ * source fails a blocking check for their view (scripts/lib/image-quality.ts),
+ * are left out. When a source can't be downloaded, the previous build of that
+ * image is kept rather than dropped.
  */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { slugify } from "../src/lib/slug";
 import { contactSheet, download, optimise, optimiseSpinFrame, pool, SIZE, SPIN_SIZE } from "./lib/image-pipeline";
+import { assessImage, blockingIssues, ISSUE_TEXT, readRejected } from "./lib/image-quality";
 
 export interface LockedSpin {
   frames: string[];
@@ -58,6 +64,17 @@ async function main() {
   let ok = 0;
   let frames = 0;
   let failed = 0;
+  let rejected = 0;
+  const rejectedUrls = readRejected(ROOT);
+  // The previous build, kept in memory so an image whose source is unreachable today isn't lost.
+  const previousLock: Record<string, Record<string, LockedImage[]>> = JSON.parse(await fs.readFile(path.join(ROOT, "catalog/images.lock.json"), "utf8").catch(() => "{}"));
+  const previous = new Map<string, Buffer>();
+  for (const colours of Object.values(previousLock))
+    for (const list of Object.values(colours))
+      for (const img of list) {
+        const buf = await fs.readFile(path.join(ROOT, "public", img.file)).catch(() => null);
+        if (buf) previous.set(img.sourceUrl, buf);
+      }
   // Rebuilt from the (cached) downloads every time, so removed images don't linger.
   await fs.rm(OUT, { recursive: true, force: true });
   for (const [familyKey, fam] of Object.entries(ref.families)) {
@@ -66,18 +83,36 @@ async function main() {
     await fs.mkdir(path.join(OUT, slug), { recursive: true });
     for (const [color, images] of Object.entries(fam.images)) {
       if (color.startsWith("?")) continue; // unverified colour assignment — excluded until mapped
-      const results = await pool(images, 6, async (img, i) => {
+      const accepted = images.filter((img) => !rejectedUrls.has(img.url));
+      rejected += images.length - accepted.length;
+      const results = await pool(accepted, 6, async (img, i) => {
+        const rel = `/images/products/${slug}/${slugify(color) || "default"}-${i + 1}.webp`;
+        let out: Buffer;
         try {
-          const out = await optimise(await download(img.url));
-          const rel = `/images/products/${slug}/${slugify(color) || "default"}-${i + 1}.webp`;
-          await fs.writeFile(path.join(ROOT, "public", rel), out);
-          return { file: rel, width: SIZE, height: SIZE, view: img.view ?? null, sourceUrl: img.url, sourcePage: img.sourcePage ?? fam.sourcePage, credit: img.credit, license: img.license } satisfies LockedImage;
+          const source = await download(img.url);
+          const block = blockingIssues(await assessImage(source), img.view);
+          if (block.length) {
+            console.error(`✗ ${familyKey} / ${color} #${i + 1} (${img.view ?? "no view"}) rejected: ${block.map((b) => ISSUE_TEXT[b]).join("; ")}`);
+            return "rejected" as const;
+          }
+          out = await optimise(source);
         } catch (err) {
-          console.error(`✗ ${familyKey} / ${color} #${i + 1}: ${(err as Error).message}`);
-          return null;
+          const kept = previous.get(img.url);
+          if (!kept) {
+            console.error(`✗ ${familyKey} / ${color} #${i + 1}: ${(err as Error).message}`);
+            return null;
+          }
+          console.warn(`! ${familyKey} / ${color} #${i + 1}: source unreachable (${(err as Error).message}); kept the previous build`);
+          out = kept;
         }
+        await fs.writeFile(path.join(ROOT, "public", rel), out);
+        return { file: rel, width: SIZE, height: SIZE, view: img.view ?? null, sourceUrl: img.url, sourcePage: img.sourcePage ?? fam.sourcePage, credit: img.credit, license: img.license } satisfies LockedImage;
       });
       for (const r of results) {
+        if (r === "rejected") {
+          rejected++;
+          continue;
+        }
         if (!r) {
           failed++;
           continue;
@@ -110,7 +145,7 @@ async function main() {
   }
   await fs.writeFile(path.join(ROOT, "catalog/images.lock.json"), JSON.stringify(lock, null, 2) + "\n");
   await fs.writeFile(path.join(ROOT, "catalog/spins.lock.json"), JSON.stringify(spinLock, null, 2) + "\n");
-  console.log(`✓ ${ok} images and ${frames} 360° frames written, ${failed} failed`);
+  console.log(`✓ ${ok} images and ${frames} 360° frames written, ${rejected} rejected, ${failed} failed`);
   if (failed) process.exitCode = 1;
 }
 

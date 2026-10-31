@@ -16,6 +16,7 @@
     "db:seed": "prisma db seed",
     "images:build": "tsx scripts/build-images.ts",
     "images:sync": "tsx scripts/sync-images.ts",
+    "images:audit": "tsx scripts/audit-images.ts",
     "demo:build": "tsx scripts/build-demo.ts",
     "catalog": "node --conditions=react-server --import tsx scripts/catalog.ts",
     "ops": "node --conditions=react-server --import tsx scripts/ops.ts",
