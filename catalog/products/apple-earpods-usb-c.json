@@ -1,0 +1,168 @@
+{
+  "slug": "apple-earpods-usb-c",
+  "name": "Apple EarPods (USB-C)",
+  "brand": "Apple",
+  "category": "audio",
+  "condition": "NEW",
+  "status": "live",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "Apple's wired EarPods with a USB-C connector and an in-line remote for volume, playback and calls.",
+  "description": "Wired earphones shaped to the geometry of the ear, with a USB-C connector for iPhone 15 and later, iPad and Mac models with USB-C. The built-in remote adjusts volume, controls music and video, and answers or ends calls.\n\nApple states they resist sweat and water.",
+  "highlights": [
+    "USB-C connector",
+    "In-line remote with microphone",
+    "Control volume, playback and calls",
+    "Sweat and water resistant (Apple's claim)"
+  ],
+  "specs": [
+    {
+      "group": "General",
+      "items": [
+        {
+          "label": "Part number",
+          "value": "MYQY3ZM/A"
+        },
+        {
+          "label": "Type",
+          "value": "Wired earphones"
+        },
+        {
+          "label": "Connector",
+          "value": "USB-C"
+        },
+        {
+          "label": "Remote",
+          "value": "Built-in remote with microphone"
+        }
+      ]
+    },
+    {
+      "group": "Compatibility",
+      "items": [
+        {
+          "label": "iPhone",
+          "value": "iPhone models with USB-C running iOS 17 or later"
+        },
+        {
+          "label": "iPad",
+          "value": "iPad models with USB-C running iPadOS 16.4 or later"
+        },
+        {
+          "label": "Mac",
+          "value": "Mac models with USB-C running macOS Monterey 12.6 or later"
+        }
+      ]
+    }
+  ],
+  "boxContents": [
+    "EarPods with USB-C connector"
+  ],
+  "keywords": [
+    "earpods",
+    "apple earphones",
+    "usb-c earphones",
+    "wired earphones",
+    "iphone earphones"
+  ],
+  "warranty": "1 year Apple limited warranty for accessories, from the date of purchase, in addition to your rights under consumer law.",
+  "manufacturerInfo": "Manufacturer: APPLE INC, ONE APPLE PARK WAY, CUPERTINO, CA 95014, USA; Importer: APPLE INDIA PRIVATE. LTD.,13TH FLOOR, PRESTIGE MINSK SQUARE, MUNICIPAL NO. 6, CUBBON ROAD, BENGALURU, KARNATAKA - 560 001 INDIA; Packer: APPLE INDIA PRIVATE. LTD.,13TH FLOOR, PRESTIGE MINSK SQUARE, MUNICIPAL NO. 6, CUBBON ROAD, BENGALURU, KARNATAKA - 560 001 INDIA",
+  "countryOfOrigin": "Vietnam",
+  "hsnCode": "85183000",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": null,
+  "seoDescription": null,
+  "variants": [
+    {
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": null,
+      "maxPerOrder": 3,
+      "sku": "APPLE-EARPODS-USB-C",
+      "color": null,
+      "mrp": 2190,
+      "stockSheetNames": [
+        "Apple EarPods (USB-C)"
+      ]
+    }
+  ],
+  "images": [
+    {
+      "color": null,
+      "view": "front",
+      "url": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MTJY3?wid=1200&hei=1200&fmt=png-alpha",
+      "sourcePage": "https://www.apple.com/in/shop/product/myqy3zm/a/earpods-usb-c",
+      "credit": "© Apple Inc.",
+      "license": "Official manufacturer product image © Apple Inc., from the brand's official India store (apple.com/in, part MYQY3ZM/A). Used unmodified (resized/padded only) for product identification by a retailer."
+    },
+    {
+      "color": null,
+      "view": "back",
+      "url": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MTJY3_AV3?wid=1200&hei=1200&fmt=png-alpha",
+      "sourcePage": "https://www.apple.com/in/shop/product/myqy3zm/a/earpods-usb-c",
+      "credit": "© Apple Inc.",
+      "license": "Official manufacturer product image © Apple Inc., from the brand's official India store (apple.com/in, part MYQY3ZM/A). Used unmodified (resized/padded only) for product identification by a retailer."
+    },
+    {
+      "color": null,
+      "view": "side",
+      "url": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MTJY3_AV2?wid=1200&hei=1200&fmt=png-alpha",
+      "sourcePage": "https://www.apple.com/in/shop/product/myqy3zm/a/earpods-usb-c",
+      "credit": "© Apple Inc.",
+      "license": "Official manufacturer product image © Apple Inc., from the brand's official India store (apple.com/in, part MYQY3ZM/A). Used unmodified (resized/padded only) for product identification by a retailer."
+    },
+    {
+      "color": null,
+      "view": "angle",
+      "url": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MTJY3_AV1?wid=1200&hei=1200&fmt=png-alpha",
+      "sourcePage": "https://www.apple.com/in/shop/product/myqy3zm/a/earpods-usb-c",
+      "credit": "© Apple Inc.",
+      "license": "Official manufacturer product image © Apple Inc., from the brand's official India store (apple.com/in, part MYQY3ZM/A). Used unmodified (resized/padded only) for product identification by a retailer."
+    },
+    {
+      "color": null,
+      "view": "detail",
+      "url": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MTJY3_AV4?wid=1200&hei=1200&fmt=png-alpha",
+      "sourcePage": "https://www.apple.com/in/shop/product/myqy3zm/a/earpods-usb-c",
+      "credit": "© Apple Inc.",
+      "license": "Official manufacturer product image © Apple Inc., from the brand's official India store (apple.com/in, part MYQY3ZM/A). Used unmodified (resized/padded only) for product identification by a retailer."
+    },
+    {
+      "color": null,
+      "view": "detail",
+      "url": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MTJY3_AV5?wid=1200&hei=1200&fmt=png-alpha",
+      "sourcePage": "https://www.apple.com/in/shop/product/myqy3zm/a/earpods-usb-c",
+      "credit": "© Apple Inc.",
+      "license": "Official manufacturer product image © Apple Inc., from the brand's official India store (apple.com/in, part MYQY3ZM/A). Used unmodified (resized/padded only) for product identification by a retailer."
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.apple.com/in/shop/product/myqy3zm/a/earpods-usb-c",
+      "usedFor": [
+        "details",
+        "specs",
+        "mrp",
+        "images",
+        "box"
+      ],
+      "retrievedAt": "2026-10-31"
+    },
+    {
+      "url": "https://www.apple.com/in/shop/api/product/legalmetrology?product=MYQY3ZM/A",
+      "usedFor": [
+        "legal"
+      ],
+      "retrievedAt": "2026-10-31"
+    },
+    {
+      "url": "https://www.apple.com/in/legal/warranty/products/accessory-warranty-english.html",
+      "usedFor": [
+        "warranty"
+      ],
+      "retrievedAt": "2026-10-31"
+    }
+  ]
+}

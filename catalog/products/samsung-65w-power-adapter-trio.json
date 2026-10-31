@@ -1,0 +1,159 @@
+{
+  "slug": "samsung-65w-power-adapter-trio",
+  "name": "Samsung 65W Power Adapter Trio (without cable)",
+  "brand": "Samsung",
+  "category": "chargers",
+  "condition": "NEW",
+  "status": "live",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "Samsung's three-port 65W travel adapter (two USB-C, one USB-A) for charging up to three devices at once.",
+  "description": "A wall charger with two USB-C ports and one USB-A port. The main USB-C port gives up to 65W over USB PD 3.0 and 45W Super Fast Charging 2.0 for supported Galaxy phones; the second USB-C port gives up to 25W and the USB-A port up to 15W.\n\nPower is shared when several devices charge together. No cable is included.",
+  "highlights": [
+    "Two USB-C ports and one USB-A port",
+    "Up to 65W from the main USB-C port (PD 3.0)",
+    "Super Fast Charging 2.0 (45W) for supported Galaxy models",
+    "Charges up to three devices at once"
+  ],
+  "specs": [
+    {
+      "group": "General",
+      "items": [
+        {
+          "label": "Model",
+          "value": "EP-T6530NBNG"
+        },
+        {
+          "label": "Colour",
+          "value": "Black"
+        },
+        {
+          "label": "Ports",
+          "value": "USB-C x2, USB-A"
+        },
+        {
+          "label": "USB-C1",
+          "value": "Super Fast Charging 2.0 max. 45W, PD 3.0 PDO max. 65W, PPS max. 45W"
+        },
+        {
+          "label": "USB-C2",
+          "value": "Super Fast Charging max. 25W, PD 3.0 max. 25W"
+        },
+        {
+          "label": "USB-A",
+          "value": "AFC/QC fast charging max. 15W"
+        }
+      ]
+    },
+    {
+      "group": "Power",
+      "items": [
+        {
+          "label": "Input",
+          "value": "100–240 V"
+        },
+        {
+          "label": "Shared output",
+          "value": "C1+C2: 40W + 25W; C1+A: 50W + 15W; C1+C2+A: 35W + 25W + 5W (Samsung figures)"
+        }
+      ]
+    },
+    {
+      "group": "Physical",
+      "items": [
+        {
+          "label": "Dimensions",
+          "value": "5.75 x 3.0 x 8.4 cm"
+        },
+        {
+          "label": "Weight",
+          "value": "177.5 g"
+        }
+      ]
+    }
+  ],
+  "boxContents": [
+    "Power adapter",
+    "Quick start guide"
+  ],
+  "keywords": [
+    "samsung 65w",
+    "65w charger",
+    "trio charger",
+    "multi port charger",
+    "usb-c charger",
+    "samsung adapter"
+  ],
+  "warranty": "6 months Samsung India warranty from the date of purchase, serviced at Samsung authorised service centres.",
+  "manufacturerInfo": "Manufactured by: Samsung Electronics VIETNAM Co. Ltd., Yen Phong Industrial Park, Yen Trung Commune, Yen Phong District, Bac Ninh Province, VIETNAM; Imported by: Samsung India Electronics Pvt. Ltd. having its Registered Office at: 6th Floor, DLF Centre, Sansad Marg, New Delhi – 110001",
+  "countryOfOrigin": "Vietnam",
+  "hsnCode": "85044030",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": null,
+  "seoDescription": null,
+  "variants": [
+    {
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": null,
+      "maxPerOrder": 3,
+      "sku": "SAMSUNG-EP-T6530-BLACK",
+      "color": "Black",
+      "mrp": 4499,
+      "stockSheetNames": [
+        "SAMSUNG 65W PD POWER ADAPTER TRIO"
+      ]
+    }
+  ],
+  "images": [
+    {
+      "color": "Black",
+      "view": "front",
+      "url": "https://images.samsung.com/is/image/samsung/p6pim/in/ep-t6530nbngin/gallery/in-65w-power-adapter-trio-ep-t6530-ep-t6530nbngin-539529006",
+      "sourcePage": "https://www.samsung.com/in/mobile-accessories/65w-power-adapter-trio-black-ep-t6530nbngin/",
+      "credit": "© Samsung Electronics",
+      "license": "Official manufacturer product image © Samsung, from the brand's official India website (EP-T6530NBNGIN gallery). Used unmodified (resized/padded only) for product identification by a retailer."
+    },
+    {
+      "color": "Black",
+      "view": "angle",
+      "url": "https://images.samsung.com/is/image/samsung/p6pim/in/ep-t6530nbngin/gallery/in-65w-power-adapter-trio-ep-t6530-ep-t6530nbngin-539529052",
+      "sourcePage": "https://www.samsung.com/in/mobile-accessories/65w-power-adapter-trio-black-ep-t6530nbngin/",
+      "credit": "© Samsung Electronics",
+      "license": "Official manufacturer product image © Samsung, from the brand's official India website (EP-T6530NBNGIN gallery). Used unmodified (resized/padded only) for product identification by a retailer."
+    },
+    {
+      "color": "Black",
+      "view": "detail",
+      "url": "https://images.samsung.com/is/image/samsung/p6pim/in/ep-t6530nbngin/gallery/in-65w-power-adapter-trio-ep-t6530-ep-t6530nbngin-539529079",
+      "sourcePage": "https://www.samsung.com/in/mobile-accessories/65w-power-adapter-trio-black-ep-t6530nbngin/",
+      "credit": "© Samsung Electronics",
+      "license": "Official manufacturer product image © Samsung, from the brand's official India website (EP-T6530NBNGIN gallery). Used unmodified (resized/padded only) for product identification by a retailer."
+    },
+    {
+      "color": "Black",
+      "view": "box",
+      "url": "https://images.samsung.com/is/image/samsung/p6pim/in/ep-t6530nbngin/gallery/in-65w-power-adapter-trio-ep-t6530-ep-t6530nbngin-552213150",
+      "sourcePage": "https://www.samsung.com/in/mobile-accessories/65w-power-adapter-trio-black-ep-t6530nbngin/",
+      "credit": "© Samsung Electronics",
+      "license": "Official manufacturer product image © Samsung, from the brand's official India website (EP-T6530NBNGIN gallery). Used unmodified (resized/padded only) for product identification by a retailer."
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.samsung.com/in/mobile-accessories/65w-power-adapter-trio-black-ep-t6530nbngin/",
+      "usedFor": [
+        "details",
+        "specs",
+        "mrp",
+        "images",
+        "legal",
+        "warranty",
+        "box"
+      ],
+      "retrievedAt": "2026-10-31"
+    }
+  ]
+}

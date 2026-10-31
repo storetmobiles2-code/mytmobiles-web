@@ -1,0 +1,146 @@
+{
+  "slug": "apple-20w-usb-c-power-adapter",
+  "name": "Apple 20W USB-C Power Adapter",
+  "brand": "Apple",
+  "category": "chargers",
+  "condition": "NEW",
+  "status": "live",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "Apple's 20W USB-C wall charger for fast charging iPhone and charging iPad. Cable sold separately.",
+  "description": "A compact wall charger with one USB-C port and up to 20W output. With a USB-C charge cable it fast-charges iPhone 8 and later; Apple quotes up to 50% battery in around 35 minutes.\n\nIt also suits iPad Pro and iPad Air. Only the adapter is in the box, so use it with a USB-C or USB-C to Lightning cable.",
+  "highlights": [
+    "Up to 20W output over USB-C",
+    "Fast charging for iPhone 8 and later",
+    "Also charges iPad Pro and iPad Air",
+    "Compact single-port design"
+  ],
+  "specs": [
+    {
+      "group": "General",
+      "items": [
+        {
+          "label": "Model",
+          "value": "A2305"
+        },
+        {
+          "label": "Part number",
+          "value": "MUVR3HN/A"
+        },
+        {
+          "label": "Output",
+          "value": "20W"
+        },
+        {
+          "label": "Port",
+          "value": "USB-C"
+        }
+      ]
+    },
+    {
+      "group": "Compatibility",
+      "items": [
+        {
+          "label": "iPhone",
+          "value": "iPhone 8 and later support fast charging (Apple figure: up to 50% in around 35 minutes)"
+        },
+        {
+          "label": "iPad",
+          "value": "iPad Pro and iPad Air"
+        },
+        {
+          "label": "Cable",
+          "value": "Not included; use a USB-C or USB-C to Lightning cable"
+        }
+      ]
+    }
+  ],
+  "boxContents": [
+    "Apple 20W USB-C Power Adapter"
+  ],
+  "keywords": [
+    "apple 20w",
+    "20w charger",
+    "usb-c charger",
+    "iphone charger",
+    "power adapter",
+    "fast charger",
+    "apple adapter"
+  ],
+  "warranty": "1 year Apple limited warranty for accessories, from the date of purchase, in addition to your rights under consumer law.",
+  "manufacturerInfo": "Manufacturer: APPLE INC, ONE APPLE PARK WAY, CUPERTINO, CA 95014, USA; Importer: APPLE INDIA PRIVATE. LTD.,13TH FLOOR, PRESTIGE MINSK SQUARE, MUNICIPAL NO. 6, CUBBON ROAD, BENGALURU, KARNATAKA - 560 001 INDIA; Packer: APPLE INDIA PRIVATE. LTD.,13TH FLOOR, PRESTIGE MINSK SQUARE, MUNICIPAL NO. 6, CUBBON ROAD, BENGALURU, KARNATAKA - 560 001 INDIA",
+  "countryOfOrigin": "China, India",
+  "hsnCode": "85044030",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": null,
+  "seoDescription": null,
+  "variants": [
+    {
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": null,
+      "maxPerOrder": 3,
+      "sku": "APPLE-20W-USB-C-ADAPTER",
+      "color": null,
+      "mrp": 2190,
+      "stockSheetNames": [
+        "APPLE 20W USB-C POWER ADAPTER"
+      ]
+    }
+  ],
+  "images": [
+    {
+      "color": null,
+      "view": "front",
+      "url": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MUVR3_AV1?wid=1200&hei=1200&fmt=png-alpha",
+      "sourcePage": "https://www.apple.com/in/shop/product/muvr3hn/a/20w-usb-c-power-adapter",
+      "credit": "© Apple Inc.",
+      "license": "Official manufacturer product image © Apple Inc., from the brand's official India store (apple.com/in, part MUVR3HN/A). Used unmodified (resized/padded only) for product identification by a retailer."
+    },
+    {
+      "color": null,
+      "view": "angle",
+      "url": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MUVR3?wid=1200&hei=1200&fmt=png-alpha",
+      "sourcePage": "https://www.apple.com/in/shop/product/muvr3hn/a/20w-usb-c-power-adapter",
+      "credit": "© Apple Inc.",
+      "license": "Official manufacturer product image © Apple Inc., from the brand's official India store (apple.com/in, part MUVR3HN/A). Used unmodified (resized/padded only) for product identification by a retailer."
+    },
+    {
+      "color": null,
+      "view": "detail",
+      "url": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MUVR3_AV2?wid=1200&hei=1200&fmt=png-alpha",
+      "sourcePage": "https://www.apple.com/in/shop/product/muvr3hn/a/20w-usb-c-power-adapter",
+      "credit": "© Apple Inc.",
+      "license": "Official manufacturer product image © Apple Inc., from the brand's official India store (apple.com/in, part MUVR3HN/A). Used unmodified (resized/padded only) for product identification by a retailer."
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.apple.com/in/shop/product/muvr3hn/a/20w-usb-c-power-adapter",
+      "usedFor": [
+        "details",
+        "specs",
+        "mrp",
+        "images",
+        "box"
+      ],
+      "retrievedAt": "2026-10-31"
+    },
+    {
+      "url": "https://www.apple.com/in/shop/api/product/legalmetrology?product=MUVR3HN/A",
+      "usedFor": [
+        "legal"
+      ],
+      "retrievedAt": "2026-10-31"
+    },
+    {
+      "url": "https://www.apple.com/in/legal/warranty/products/accessory-warranty-english.html",
+      "usedFor": [
+        "warranty"
+      ],
+      "retrievedAt": "2026-10-31"
+    }
+  ]
+}

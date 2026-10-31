@@ -1,0 +1,124 @@
+{
+  "slug": "samsung-25w-usb-c-power-adapter",
+  "name": "Samsung 25W USB-C Power Adapter (without cable)",
+  "brand": "Samsung",
+  "category": "chargers",
+  "condition": "NEW",
+  "status": "draft",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "Samsung's 25W USB-C travel adapter with Super Fast Charging. Cable not included.",
+  "description": "A compact USB-C wall charger with up to 25W output for Samsung Super Fast Charging on most recent Galaxy phones, and USB Power Delivery 3.0 (PPS) for other USB-C devices.\n\nSamsung makes it with GaN technology, which keeps it small. Only the adapter is in the box.",
+  "highlights": [
+    "Up to 25W Super Fast Charging",
+    "USB PD 3.0 with PPS",
+    "Compact GaN design",
+    "Standby power below 5 mW"
+  ],
+  "specs": [
+    {
+      "group": "General",
+      "items": [
+        {
+          "label": "Model",
+          "value": "EP-T2510"
+        },
+        {
+          "label": "Interface",
+          "value": "USB-C"
+        },
+        {
+          "label": "Features",
+          "value": "Super Fast Charging max. 25W, PD 3.0 PPS max. 25W, standby power below 5 mW"
+        }
+      ]
+    },
+    {
+      "group": "Power",
+      "items": [
+        {
+          "label": "Input",
+          "value": "100–240 V"
+        },
+        {
+          "label": "Output (fast charge)",
+          "value": "PDO 9 V / PPS 5–11 V"
+        },
+        {
+          "label": "Current (fast charge)",
+          "value": "PDO 2.77 A (9 V) / PPS 2.25 A"
+        }
+      ]
+    },
+    {
+      "group": "Physical",
+      "items": [
+        {
+          "label": "Dimensions",
+          "value": "46.0 x 26.2 x 68.9 mm"
+        },
+        {
+          "label": "Weight",
+          "value": "73 g"
+        }
+      ]
+    }
+  ],
+  "boxContents": [
+    "Wall charger",
+    "Leaflet"
+  ],
+  "keywords": [
+    "samsung 25w",
+    "25w charger",
+    "super fast charging",
+    "usb-c charger",
+    "samsung adapter",
+    "galaxy charger"
+  ],
+  "warranty": "6 months Samsung India warranty from the date of purchase, serviced at Samsung authorised service centres.",
+  "manufacturerInfo": "Manufactured by: Dongyang Electric And Power India Pvt. Ltd., B-31, Echotech 2 Extension, Greater Noida, UP 201310; Imported by: Samsung India Electronics Pvt. Ltd. having its Registered Office at: 6th Floor, DLF Centre, Sansad Marg, New Delhi – 110001",
+  "countryOfOrigin": "India",
+  "hsnCode": "85044030",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": null,
+  "seoDescription": null,
+  "variants": [
+    {
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": null,
+      "maxPerOrder": 3,
+      "sku": "SAMSUNG-EP-T2510N",
+      "color": null,
+      "mrp": 1699,
+      "stockSheetNames": [
+        "SAMSUNG 25W PD ADAPTER USB-C"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.samsung.com/in/mobile-accessories/25w-power-adapter-white-ep-t2510nwngin/",
+      "usedFor": [
+        "details",
+        "specs",
+        "mrp",
+        "legal",
+        "warranty",
+        "box"
+      ],
+      "retrievedAt": "2026-10-31"
+    },
+    {
+      "url": "https://www.samsung.com/in/mobile-accessories/25w-power-adapter-black-ep-t2510nbngin/",
+      "usedFor": [
+        "mrp",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-31"
+    }
+  ]
+}

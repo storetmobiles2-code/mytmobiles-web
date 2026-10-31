@@ -1,0 +1,128 @@
+{
+  "slug": "apple-60w-usb-c-charge-cable-1m",
+  "name": "Apple 60W USB-C Charge Cable (1 m)",
+  "brand": "Apple",
+  "category": "cables",
+  "condition": "NEW",
+  "status": "live",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "Apple's 1-metre woven USB-C to USB-C cable for charging at up to 60W and syncing at USB 2 speeds.",
+  "description": "A 1-metre woven cable with USB-C connectors on both ends. It charges at up to 60W and transfers data at USB 2 speeds, so it suits iPhone 15 and later, iPad and Mac models with USB-C.\n\nPair it with a USB-C power adapter (sold separately) for fast charging.",
+  "highlights": [
+    "USB-C to USB-C, 1 metre",
+    "Charges at up to 60W",
+    "Data transfer at USB 2 speeds",
+    "Woven design"
+  ],
+  "specs": [
+    {
+      "group": "General",
+      "items": [
+        {
+          "label": "Part number",
+          "value": "MW493ZM/A"
+        },
+        {
+          "label": "Connectors",
+          "value": "USB-C to USB-C"
+        },
+        {
+          "label": "Length",
+          "value": "1 m"
+        },
+        {
+          "label": "Charging",
+          "value": "Up to 60W"
+        },
+        {
+          "label": "Data",
+          "value": "USB 2 speeds"
+        },
+        {
+          "label": "Design",
+          "value": "Woven"
+        }
+      ]
+    }
+  ],
+  "boxContents": [
+    "Apple 60W USB-C Charge Cable (1 m)"
+  ],
+  "keywords": [
+    "apple usb-c cable",
+    "60w cable",
+    "usb-c to usb-c",
+    "charge cable",
+    "iphone cable",
+    "woven cable"
+  ],
+  "warranty": "1 year Apple limited warranty for accessories, from the date of purchase, in addition to your rights under consumer law.",
+  "manufacturerInfo": "Manufacturer: APPLE INC, ONE APPLE PARK WAY, CUPERTINO, CA 95014, USA; Importer: APPLE INDIA PRIVATE. LTD.,13TH FLOOR, PRESTIGE MINSK SQUARE, MUNICIPAL NO. 6, CUBBON ROAD, BENGALURU, KARNATAKA - 560 001 INDIA; Packer: APPLE INDIA PRIVATE. LTD.,13TH FLOOR, PRESTIGE MINSK SQUARE, MUNICIPAL NO. 6, CUBBON ROAD, BENGALURU, KARNATAKA - 560 001 INDIA",
+  "countryOfOrigin": "China",
+  "hsnCode": "85444299",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": null,
+  "seoDescription": null,
+  "variants": [
+    {
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": null,
+      "maxPerOrder": 3,
+      "sku": "APPLE-60W-USB-C-CABLE-1M",
+      "color": null,
+      "mrp": 2190,
+      "stockSheetNames": [
+        "APPLE 60W USB-C Charge Cable (1m)"
+      ]
+    }
+  ],
+  "images": [
+    {
+      "color": null,
+      "view": "front",
+      "url": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MQKJ3?wid=1200&hei=1200&fmt=png-alpha",
+      "sourcePage": "https://www.apple.com/in/shop/product/mw493zm/a/60w-usb-c-charge-cable-1m",
+      "credit": "© Apple Inc.",
+      "license": "Official manufacturer product image © Apple Inc., from the brand's official India store (apple.com/in, part MW493ZM/A). Used unmodified (resized/padded only) for product identification by a retailer."
+    },
+    {
+      "color": null,
+      "view": "detail",
+      "url": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MQKJ3_AV1?wid=1200&hei=1200&fmt=png-alpha",
+      "sourcePage": "https://www.apple.com/in/shop/product/mw493zm/a/60w-usb-c-charge-cable-1m",
+      "credit": "© Apple Inc.",
+      "license": "Official manufacturer product image © Apple Inc., from the brand's official India store (apple.com/in, part MW493ZM/A). Used unmodified (resized/padded only) for product identification by a retailer."
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.apple.com/in/shop/product/mw493zm/a/60w-usb-c-charge-cable-1m",
+      "usedFor": [
+        "details",
+        "specs",
+        "mrp",
+        "images",
+        "box"
+      ],
+      "retrievedAt": "2026-10-31"
+    },
+    {
+      "url": "https://www.apple.com/in/shop/api/product/legalmetrology?product=MW493ZM/A",
+      "usedFor": [
+        "legal"
+      ],
+      "retrievedAt": "2026-10-31"
+    },
+    {
+      "url": "https://www.apple.com/in/legal/warranty/products/accessory-warranty-english.html",
+      "usedFor": [
+        "warranty"
+      ],
+      "retrievedAt": "2026-10-31"
+    }
+  ]
+}

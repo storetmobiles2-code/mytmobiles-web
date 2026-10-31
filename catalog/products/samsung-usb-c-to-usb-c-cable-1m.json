@@ -1,0 +1,96 @@
+{
+  "slug": "samsung-usb-c-to-usb-c-cable-1m",
+  "name": "Samsung USB-C to USB-C Cable (1 m, 3A)",
+  "brand": "Samsung",
+  "category": "cables",
+  "condition": "NEW",
+  "status": "draft",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "Samsung's 1-metre USB-C to USB-C cable, rated up to 3A, for charging and data.",
+  "description": "A 1-metre USB-C to USB-C cable rated up to 3A, with USB 2.0 data. It suits 25W Super Fast Charging with a Samsung 25W adapter.",
+  "highlights": [
+    "USB-C to USB-C, 1 metre",
+    "Rated up to 3A",
+    "USB 2.0 data"
+  ],
+  "specs": [
+    {
+      "group": "General",
+      "items": [
+        {
+          "label": "Model",
+          "value": "EP-DA705"
+        },
+        {
+          "label": "Interface",
+          "value": "USB Type-C to Type-C"
+        },
+        {
+          "label": "Rating",
+          "value": "Max. 3A, USB 2.0"
+        },
+        {
+          "label": "Length",
+          "value": "1 m"
+        },
+        {
+          "label": "Weight",
+          "value": "22.2 g"
+        }
+      ]
+    }
+  ],
+  "boxContents": [
+    "USB-C to USB-C cable"
+  ],
+  "keywords": [
+    "samsung cable",
+    "usb-c cable",
+    "type-c cable",
+    "c to c cable",
+    "charging cable"
+  ],
+  "warranty": "6 months Samsung India warranty from the date of purchase, serviced at Samsung authorised service centres.",
+  "manufacturerInfo": null,
+  "countryOfOrigin": null,
+  "hsnCode": "85444299",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": null,
+  "seoDescription": null,
+  "variants": [
+    {
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": null,
+      "maxPerOrder": 3,
+      "sku": "SAMSUNG-EP-DA705",
+      "color": null,
+      "mrp": 599,
+      "stockSheetNames": [
+        "SAMSUNG USB CABLE TYPE-C TO TYPE-C"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.samsung.com/in/mobile-accessories/c-to-c-cable-da705b-ep-da705bwegin/",
+      "usedFor": [
+        "details",
+        "specs",
+        "mrp",
+        "warranty"
+      ],
+      "retrievedAt": "2026-10-31"
+    },
+    {
+      "url": "https://www.samsung.com/in/mobile-accessories/c-to-c-cable-da705b-ep-da705bbegin/",
+      "usedFor": [
+        "mrp"
+      ],
+      "retrievedAt": "2026-10-31"
+    }
+  ]
+}

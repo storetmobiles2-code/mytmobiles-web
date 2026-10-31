@@ -1,0 +1,167 @@
+{
+  "slug": "samsung-45w-usb-c-power-adapter",
+  "name": "Samsung 45W USB-C Power Adapter (without cable)",
+  "brand": "Samsung",
+  "category": "chargers",
+  "condition": "NEW",
+  "status": "live",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "Samsung's 45W USB-C travel adapter with Super Fast Charging 2.0. Cable not included.",
+  "description": "A single-port USB-C wall charger with up to 45W output. It supports Samsung Super Fast Charging 2.0 on models such as the Galaxy S22 Ultra, S23 Ultra and S24 Ultra, and Super Fast Charging on most recent Galaxy phones and tablets.\n\nIt also follows USB Power Delivery 3.0 (PDO/PPS), so it charges other USB-C devices. Only the adapter is in the box.",
+  "highlights": [
+    "Up to 45W output over USB-C",
+    "Super Fast Charging 2.0 for supported Galaxy models",
+    "USB PD 3.0 with PPS",
+    "Standby power below 5 mW"
+  ],
+  "specs": [
+    {
+      "group": "General",
+      "items": [
+        {
+          "label": "Model",
+          "value": "EP-T4511NBNG"
+        },
+        {
+          "label": "Colour",
+          "value": "Black"
+        },
+        {
+          "label": "Interface",
+          "value": "USB-C"
+        },
+        {
+          "label": "Features",
+          "value": "Super Fast Charging 2.0 max. 45W, PD 3.0 PDO/PPS max. 45W"
+        }
+      ]
+    },
+    {
+      "group": "Power",
+      "items": [
+        {
+          "label": "Input",
+          "value": "100–240 V"
+        },
+        {
+          "label": "Output (fast charge)",
+          "value": "PDO 9 V, 15 V, 20 V; PPS 5.0–20.0 V"
+        },
+        {
+          "label": "Current (fast charge)",
+          "value": "PDO 3 A (9 V, 15 V), 2.25 A (20 V); PPS 2.25 A"
+        }
+      ]
+    },
+    {
+      "group": "Physical",
+      "items": [
+        {
+          "label": "Dimensions",
+          "value": "4.35 x 8.21 x 2.8 cm"
+        },
+        {
+          "label": "Weight",
+          "value": "135.77 g"
+        }
+      ]
+    },
+    {
+      "group": "Compatibility",
+      "items": [
+        {
+          "label": "Super Fast Charging 2.0",
+          "value": "Galaxy Note10+, S20 Ultra, S22+, S22 Ultra, S23+, S23 Ultra, S24+, S24 Ultra, Galaxy Tab S7 and later"
+        },
+        {
+          "label": "Super Fast Charging",
+          "value": "Galaxy S10 5G, Note10, Z Fold2, Z Flip3 and later; Galaxy A and M models listed by Samsung"
+        }
+      ]
+    }
+  ],
+  "boxContents": [
+    "Power adapter"
+  ],
+  "keywords": [
+    "samsung 45w",
+    "45w charger",
+    "super fast charging",
+    "usb-c charger",
+    "samsung adapter",
+    "galaxy charger"
+  ],
+  "warranty": "6 months Samsung India warranty from the date of purchase, serviced at Samsung authorised service centres.",
+  "manufacturerInfo": "Manufactured by: DONGYANG E&P VIETNAM CO., LTD., NHAN HOA WARD, MY HAO DISTRICT, HUNG YEN PROVINCE, VIETNAM; Imported by: Samsung India Electronics Pvt. Ltd. having its Registered Office at: 6th Floor, DLF Centre, Sansad Marg, New Delhi – 110001",
+  "countryOfOrigin": "Vietnam",
+  "hsnCode": "85044030",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": null,
+  "seoDescription": null,
+  "variants": [
+    {
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": null,
+      "maxPerOrder": 3,
+      "sku": "SAMSUNG-EP-T4511-BLACK",
+      "color": "Black",
+      "mrp": 3499,
+      "stockSheetNames": [
+        "SAMSUNG 45W POWER ADAPTER"
+      ]
+    }
+  ],
+  "images": [
+    {
+      "color": "Black",
+      "view": "front",
+      "url": "https://images.samsung.com/is/image/samsung/p6pim/in/ep-t4511nbngin/gallery/in-45w-power-adapter-ep-t4511-537088-ep-t4511nbngin-544968448",
+      "sourcePage": "https://www.samsung.com/in/mobile-accessories/45w-power-adapter-black-ep-t4511nbngin/",
+      "credit": "© Samsung Electronics",
+      "license": "Official manufacturer product image © Samsung, from the brand's official India website (EP-T4511NBNGIN gallery). Used unmodified (resized/padded only) for product identification by a retailer."
+    },
+    {
+      "color": "Black",
+      "view": "angle",
+      "url": "https://images.samsung.com/is/image/samsung/p6pim/in/ep-t4511nbngin/gallery/in-45w-power-adapter-ep-t4511-537088-ep-t4511nbngin-544968447",
+      "sourcePage": "https://www.samsung.com/in/mobile-accessories/45w-power-adapter-black-ep-t4511nbngin/",
+      "credit": "© Samsung Electronics",
+      "license": "Official manufacturer product image © Samsung, from the brand's official India website (EP-T4511NBNGIN gallery). Used unmodified (resized/padded only) for product identification by a retailer."
+    },
+    {
+      "color": "Black",
+      "view": "detail",
+      "url": "https://images.samsung.com/is/image/samsung/p6pim/in/ep-t4511nbngin/gallery/in-45w-power-adapter-ep-t4511-537088-ep-t4511nbngin-544968418",
+      "sourcePage": "https://www.samsung.com/in/mobile-accessories/45w-power-adapter-black-ep-t4511nbngin/",
+      "credit": "© Samsung Electronics",
+      "license": "Official manufacturer product image © Samsung, from the brand's official India website (EP-T4511NBNGIN gallery). Used unmodified (resized/padded only) for product identification by a retailer."
+    },
+    {
+      "color": "Black",
+      "view": "box",
+      "url": "https://images.samsung.com/is/image/samsung/p6pim/in/ep-t4511nbngin/gallery/in-45w-power-adapter-ep-t4511-ep-t4511nbngin-552471337",
+      "sourcePage": "https://www.samsung.com/in/mobile-accessories/45w-power-adapter-black-ep-t4511nbngin/",
+      "credit": "© Samsung Electronics",
+      "license": "Official manufacturer product image © Samsung, from the brand's official India website (EP-T4511NBNGIN gallery). Used unmodified (resized/padded only) for product identification by a retailer."
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.samsung.com/in/mobile-accessories/45w-power-adapter-black-ep-t4511nbngin/",
+      "usedFor": [
+        "details",
+        "specs",
+        "mrp",
+        "images",
+        "legal",
+        "warranty",
+        "box"
+      ],
+      "retrievedAt": "2026-10-31"
+    }
+  ]
+}
