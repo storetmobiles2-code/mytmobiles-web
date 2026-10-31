@@ -1,4 +1,258 @@
 {
+  "apple-20w-usb-c-power-adapter": [
+    {
+      "file": "/images/catalog/apple-20w-usb-c-power-adapter/default-1.webp",
+      "width": 1200,
+      "height": 1200,
+      "color": null,
+      "view": "front",
+      "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MUVR3_AV1?wid=1200&hei=1200&fmt=png-alpha",
+      "sourcePage": "https://www.apple.com/in/shop/product/muvr3hn/a/20w-usb-c-power-adapter",
+      "credit": "© Apple Inc.",
+      "license": "Official manufacturer product image © Apple Inc., from the brand's official India store (apple.com/in, part MUVR3HN/A). Used unmodified (resized/padded only) for product identification by a retailer."
+    },
+    {
+      "file": "/images/catalog/apple-20w-usb-c-power-adapter/default-2.webp",
+      "width": 1200,
+      "height": 1200,
+      "color": null,
+      "view": "angle",
+      "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MUVR3?wid=1200&hei=1200&fmt=png-alpha",
+      "sourcePage": "https://www.apple.com/in/shop/product/muvr3hn/a/20w-usb-c-power-adapter",
+      "credit": "© Apple Inc.",
+      "license": "Official manufacturer product image © Apple Inc., from the brand's official India store (apple.com/in, part MUVR3HN/A). Used unmodified (resized/padded only) for product identification by a retailer."
+    },
+    {
+      "file": "/images/catalog/apple-20w-usb-c-power-adapter/default-3.webp",
+      "width": 1200,
+      "height": 1200,
+      "color": null,
+      "view": "detail",
+      "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MUVR3_AV2?wid=1200&hei=1200&fmt=png-alpha",
+      "sourcePage": "https://www.apple.com/in/shop/product/muvr3hn/a/20w-usb-c-power-adapter",
+      "credit": "© Apple Inc.",
+      "license": "Official manufacturer product image © Apple Inc., from the brand's official India store (apple.com/in, part MUVR3HN/A). Used unmodified (resized/padded only) for product identification by a retailer."
+    }
+  ],
+  "apple-60w-usb-c-charge-cable-1m": [
+    {
+      "file": "/images/catalog/apple-60w-usb-c-charge-cable-1m/default-1.webp",
+      "width": 1200,
+      "height": 1200,
+      "color": null,
+      "view": "front",
+      "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MQKJ3?wid=1200&hei=1200&fmt=png-alpha",
+      "sourcePage": "https://www.apple.com/in/shop/product/mw493zm/a/60w-usb-c-charge-cable-1m",
+      "credit": "© Apple Inc.",
+      "license": "Official manufacturer product image © Apple Inc., from the brand's official India store (apple.com/in, part MW493ZM/A). Used unmodified (resized/padded only) for product identification by a retailer."
+    },
+    {
+      "file": "/images/catalog/apple-60w-usb-c-charge-cable-1m/default-2.webp",
+      "width": 1200,
+      "height": 1200,
+      "color": null,
+      "view": "detail",
+      "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MQKJ3_AV1?wid=1200&hei=1200&fmt=png-alpha",
+      "sourcePage": "https://www.apple.com/in/shop/product/mw493zm/a/60w-usb-c-charge-cable-1m",
+      "credit": "© Apple Inc.",
+      "license": "Official manufacturer product image © Apple Inc., from the brand's official India store (apple.com/in, part MW493ZM/A). Used unmodified (resized/padded only) for product identification by a retailer."
+    }
+  ],
+  "apple-earpods-usb-c": [
+    {
+      "file": "/images/catalog/apple-earpods-usb-c/default-1.webp",
+      "width": 1200,
+      "height": 1200,
+      "color": null,
+      "view": "front",
+      "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MTJY3?wid=1200&hei=1200&fmt=png-alpha",
+      "sourcePage": "https://www.apple.com/in/shop/product/myqy3zm/a/earpods-usb-c",
+      "credit": "© Apple Inc.",
+      "license": "Official manufacturer product image © Apple Inc., from the brand's official India store (apple.com/in, part MYQY3ZM/A). Used unmodified (resized/padded only) for product identification by a retailer."
+    },
+    {
+      "file": "/images/catalog/apple-earpods-usb-c/default-2.webp",
+      "width": 1200,
+      "height": 1200,
+      "color": null,
+      "view": "back",
+      "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MTJY3_AV3?wid=1200&hei=1200&fmt=png-alpha",
+      "sourcePage": "https://www.apple.com/in/shop/product/myqy3zm/a/earpods-usb-c",
+      "credit": "© Apple Inc.",
+      "license": "Official manufacturer product image © Apple Inc., from the brand's official India store (apple.com/in, part MYQY3ZM/A). Used unmodified (resized/padded only) for product identification by a retailer."
+    },
+    {
+      "file": "/images/catalog/apple-earpods-usb-c/default-3.webp",
+      "width": 1200,
+      "height": 1200,
+      "color": null,
+      "view": "side",
+      "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MTJY3_AV2?wid=1200&hei=1200&fmt=png-alpha",
+      "sourcePage": "https://www.apple.com/in/shop/product/myqy3zm/a/earpods-usb-c",
+      "credit": "© Apple Inc.",
+      "license": "Official manufacturer product image © Apple Inc., from the brand's official India store (apple.com/in, part MYQY3ZM/A). Used unmodified (resized/padded only) for product identification by a retailer."
+    },
+    {
+      "file": "/images/catalog/apple-earpods-usb-c/default-4.webp",
+      "width": 1200,
+      "height": 1200,
+      "color": null,
+      "view": "angle",
+      "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MTJY3_AV1?wid=1200&hei=1200&fmt=png-alpha",
+      "sourcePage": "https://www.apple.com/in/shop/product/myqy3zm/a/earpods-usb-c",
+      "credit": "© Apple Inc.",
+      "license": "Official manufacturer product image © Apple Inc., from the brand's official India store (apple.com/in, part MYQY3ZM/A). Used unmodified (resized/padded only) for product identification by a retailer."
+    },
+    {
+      "file": "/images/catalog/apple-earpods-usb-c/default-5.webp",
+      "width": 1200,
+      "height": 1200,
+      "color": null,
+      "view": "detail",
+      "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MTJY3_AV4?wid=1200&hei=1200&fmt=png-alpha",
+      "sourcePage": "https://www.apple.com/in/shop/product/myqy3zm/a/earpods-usb-c",
+      "credit": "© Apple Inc.",
+      "license": "Official manufacturer product image © Apple Inc., from the brand's official India store (apple.com/in, part MYQY3ZM/A). Used unmodified (resized/padded only) for product identification by a retailer."
+    },
+    {
+      "file": "/images/catalog/apple-earpods-usb-c/default-6.webp",
+      "width": 1200,
+      "height": 1200,
+      "color": null,
+      "view": "detail",
+      "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MTJY3_AV5?wid=1200&hei=1200&fmt=png-alpha",
+      "sourcePage": "https://www.apple.com/in/shop/product/myqy3zm/a/earpods-usb-c",
+      "credit": "© Apple Inc.",
+      "license": "Official manufacturer product image © Apple Inc., from the brand's official India store (apple.com/in, part MYQY3ZM/A). Used unmodified (resized/padded only) for product identification by a retailer."
+    }
+  ],
+  "apple-usb-c-to-lightning-cable-1m": [
+    {
+      "file": "/images/catalog/apple-usb-c-to-lightning-cable-1m/default-1.webp",
+      "width": 1200,
+      "height": 1200,
+      "color": null,
+      "view": "front",
+      "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MM0A3?wid=1200&hei=1200&fmt=png-alpha",
+      "sourcePage": "https://www.apple.com/in/shop/product/muq93zm/a/usb-c-to-lightning-cable-1m",
+      "credit": "© Apple Inc.",
+      "license": "Official manufacturer product image © Apple Inc., from the brand's official India store (apple.com/in, part MUQ93ZM/A). Used unmodified (resized/padded only) for product identification by a retailer."
+    },
+    {
+      "file": "/images/catalog/apple-usb-c-to-lightning-cable-1m/default-2.webp",
+      "width": 1200,
+      "height": 1200,
+      "color": null,
+      "view": "detail",
+      "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MM0A3_AV2?wid=1200&hei=1200&fmt=png-alpha",
+      "sourcePage": "https://www.apple.com/in/shop/product/muq93zm/a/usb-c-to-lightning-cable-1m",
+      "credit": "© Apple Inc.",
+      "license": "Official manufacturer product image © Apple Inc., from the brand's official India store (apple.com/in, part MUQ93ZM/A). Used unmodified (resized/padded only) for product identification by a retailer."
+    },
+    {
+      "file": "/images/catalog/apple-usb-c-to-lightning-cable-1m/default-3.webp",
+      "width": 1200,
+      "height": 1200,
+      "color": null,
+      "view": "detail",
+      "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MM0A3_AV3?wid=1200&hei=1200&fmt=png-alpha",
+      "sourcePage": "https://www.apple.com/in/shop/product/muq93zm/a/usb-c-to-lightning-cable-1m",
+      "credit": "© Apple Inc.",
+      "license": "Official manufacturer product image © Apple Inc., from the brand's official India store (apple.com/in, part MUQ93ZM/A). Used unmodified (resized/padded only) for product identification by a retailer."
+    }
+  ],
+  "samsung-45w-usb-c-power-adapter": [
+    {
+      "file": "/images/catalog/samsung-45w-usb-c-power-adapter/black-1.webp",
+      "width": 1200,
+      "height": 1200,
+      "color": "Black",
+      "view": "front",
+      "sourceUrl": "https://images.samsung.com/is/image/samsung/p6pim/in/ep-t4511nbngin/gallery/in-45w-power-adapter-ep-t4511-537088-ep-t4511nbngin-544968448",
+      "sourcePage": "https://www.samsung.com/in/mobile-accessories/45w-power-adapter-black-ep-t4511nbngin/",
+      "credit": "© Samsung Electronics",
+      "license": "Official manufacturer product image © Samsung, from the brand's official India website (EP-T4511NBNGIN gallery). Used unmodified (resized/padded only) for product identification by a retailer."
+    },
+    {
+      "file": "/images/catalog/samsung-45w-usb-c-power-adapter/black-2.webp",
+      "width": 1200,
+      "height": 1200,
+      "color": "Black",
+      "view": "angle",
+      "sourceUrl": "https://images.samsung.com/is/image/samsung/p6pim/in/ep-t4511nbngin/gallery/in-45w-power-adapter-ep-t4511-537088-ep-t4511nbngin-544968447",
+      "sourcePage": "https://www.samsung.com/in/mobile-accessories/45w-power-adapter-black-ep-t4511nbngin/",
+      "credit": "© Samsung Electronics",
+      "license": "Official manufacturer product image © Samsung, from the brand's official India website (EP-T4511NBNGIN gallery). Used unmodified (resized/padded only) for product identification by a retailer."
+    },
+    {
+      "file": "/images/catalog/samsung-45w-usb-c-power-adapter/black-3.webp",
+      "width": 1200,
+      "height": 1200,
+      "color": "Black",
+      "view": "detail",
+      "sourceUrl": "https://images.samsung.com/is/image/samsung/p6pim/in/ep-t4511nbngin/gallery/in-45w-power-adapter-ep-t4511-537088-ep-t4511nbngin-544968418",
+      "sourcePage": "https://www.samsung.com/in/mobile-accessories/45w-power-adapter-black-ep-t4511nbngin/",
+      "credit": "© Samsung Electronics",
+      "license": "Official manufacturer product image © Samsung, from the brand's official India website (EP-T4511NBNGIN gallery). Used unmodified (resized/padded only) for product identification by a retailer."
+    },
+    {
+      "file": "/images/catalog/samsung-45w-usb-c-power-adapter/black-4.webp",
+      "width": 1200,
+      "height": 1200,
+      "color": "Black",
+      "view": "box",
+      "sourceUrl": "https://images.samsung.com/is/image/samsung/p6pim/in/ep-t4511nbngin/gallery/in-45w-power-adapter-ep-t4511-ep-t4511nbngin-552471337",
+      "sourcePage": "https://www.samsung.com/in/mobile-accessories/45w-power-adapter-black-ep-t4511nbngin/",
+      "credit": "© Samsung Electronics",
+      "license": "Official manufacturer product image © Samsung, from the brand's official India website (EP-T4511NBNGIN gallery). Used unmodified (resized/padded only) for product identification by a retailer."
+    }
+  ],
+  "samsung-65w-power-adapter-trio": [
+    {
+      "file": "/images/catalog/samsung-65w-power-adapter-trio/black-1.webp",
+      "width": 1200,
+      "height": 1200,
+      "color": "Black",
+      "view": "front",
+      "sourceUrl": "https://images.samsung.com/is/image/samsung/p6pim/in/ep-t6530nbngin/gallery/in-65w-power-adapter-trio-ep-t6530-ep-t6530nbngin-539529006",
+      "sourcePage": "https://www.samsung.com/in/mobile-accessories/65w-power-adapter-trio-black-ep-t6530nbngin/",
+      "credit": "© Samsung Electronics",
+      "license": "Official manufacturer product image © Samsung, from the brand's official India website (EP-T6530NBNGIN gallery). Used unmodified (resized/padded only) for product identification by a retailer."
+    },
+    {
+      "file": "/images/catalog/samsung-65w-power-adapter-trio/black-2.webp",
+      "width": 1200,
+      "height": 1200,
+      "color": "Black",
+      "view": "angle",
+      "sourceUrl": "https://images.samsung.com/is/image/samsung/p6pim/in/ep-t6530nbngin/gallery/in-65w-power-adapter-trio-ep-t6530-ep-t6530nbngin-539529052",
+      "sourcePage": "https://www.samsung.com/in/mobile-accessories/65w-power-adapter-trio-black-ep-t6530nbngin/",
+      "credit": "© Samsung Electronics",
+      "license": "Official manufacturer product image © Samsung, from the brand's official India website (EP-T6530NBNGIN gallery). Used unmodified (resized/padded only) for product identification by a retailer."
+    },
+    {
+      "file": "/images/catalog/samsung-65w-power-adapter-trio/black-3.webp",
+      "width": 1200,
+      "height": 1200,
+      "color": "Black",
+      "view": "detail",
+      "sourceUrl": "https://images.samsung.com/is/image/samsung/p6pim/in/ep-t6530nbngin/gallery/in-65w-power-adapter-trio-ep-t6530-ep-t6530nbngin-539529079",
+      "sourcePage": "https://www.samsung.com/in/mobile-accessories/65w-power-adapter-trio-black-ep-t6530nbngin/",
+      "credit": "© Samsung Electronics",
+      "license": "Official manufacturer product image © Samsung, from the brand's official India website (EP-T6530NBNGIN gallery). Used unmodified (resized/padded only) for product identification by a retailer."
+    },
+    {
+      "file": "/images/catalog/samsung-65w-power-adapter-trio/black-4.webp",
+      "width": 1200,
+      "height": 1200,
+      "color": "Black",
+      "view": "box",
+      "sourceUrl": "https://images.samsung.com/is/image/samsung/p6pim/in/ep-t6530nbngin/gallery/in-65w-power-adapter-trio-ep-t6530-ep-t6530nbngin-552213150",
+      "sourcePage": "https://www.samsung.com/in/mobile-accessories/65w-power-adapter-trio-black-ep-t6530nbngin/",
+      "credit": "© Samsung Electronics",
+      "license": "Official manufacturer product image © Samsung, from the brand's official India website (EP-T6530NBNGIN gallery). Used unmodified (resized/padded only) for product identification by a retailer."
+    }
+  ],
   "samsung-galaxy-s25": [
     {
       "file": "/images/catalog/samsung-galaxy-s25/navy-1.webp",

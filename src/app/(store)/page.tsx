@@ -25,9 +25,14 @@ async function getHomeData() {
     db.product.findMany({ where: { ...live, condition: "NEW", discountPct: { gt: 0 } }, select: cardSelect, orderBy: [{ discountPct: "desc" }, { priceFrom: "asc" }], take: 12 }),
     db.product.findMany({ where: { ...live, condition: "DEMO" }, select: cardSelect, orderBy: { priceFrom: "asc" }, take: 12 }),
     db.category.findMany({
-      where: { isActive: true, parentId: null, products: { some: { isActive: true } } },
+      where: { isActive: true, parentId: null, OR: [{ products: { some: { isActive: true } } }, { children: { some: { isActive: true, products: { some: { isActive: true } } } } }] },
       orderBy: { sortOrder: "asc" },
-      select: { name: true, slug: true, _count: { select: { products: { where: { isActive: true } } } } },
+      select: {
+        name: true,
+        slug: true,
+        _count: { select: { products: { where: { isActive: true } } } },
+        children: { where: { isActive: true }, select: { _count: { select: { products: { where: { isActive: true } } } } } },
+      },
     }),
     db.product.groupBy({ by: ["brandId"], where: { ...live, condition: "NEW", category: { slug: "smartphones" } }, _count: { _all: true }, orderBy: { _count: { brandId: "desc" } }, take: 2 }),
   ]);
@@ -40,11 +45,20 @@ async function getHomeData() {
     }),
   );
   const appliances = await db.product.findMany({ where: { ...live, category: { slug: { in: ["smart-tvs", "air-coolers"] } } }, select: cardSelect, orderBy: [{ priceFrom: "asc" }], take: 12 });
-  return { banners, deals, openBox, categories, brandRails, appliances };
+  const accessories = await db.product.findMany({ where: { ...live, category: { parent: { slug: "accessories" } } }, select: cardSelect, orderBy: [{ isFeatured: "desc" }, { images: { _count: "desc" } }, { priceFrom: "asc" }], take: 12 });
+  return {
+    banners,
+    deals,
+    openBox,
+    categories: categories.map(({ children, _count, ...c }) => ({ ...c, products: _count.products + children.reduce((n, k) => n + k._count.products, 0) })),
+    brandRails,
+    appliances,
+    accessories,
+  };
 }
 
 export default async function HomePage() {
-  const [{ banners, deals, openBox, categories, brandRails, appliances }, nav, settings] = await Promise.all([getHomeData(), getNavData(), getPublicSettings()]);
+  const [{ banners, deals, openBox, categories, brandRails, appliances, accessories }, nav, settings] = await Promise.all([getHomeData(), getNavData(), getPublicSettings()]);
   const site = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
   const trust = [
     { icon: Truck, title: settings.freeShippingThreshold > 0 ? `Free delivery over ${formatINR(settings.freeShippingThreshold)}` : "Free delivery", text: "Check delivery dates by pincode" },
@@ -64,7 +78,7 @@ export default async function HomePage() {
           potentialAction: { "@type": "SearchAction", target: `${site}/search?q={search_term_string}`, "query-input": "required name=search_term_string" },
         }}
       />
-      <h1 className="sr-only">myT Mobiles — mobiles, smart TVs and air coolers</h1>
+      <h1 className="sr-only">myT Mobiles — mobiles, smart TVs, air coolers and accessories</h1>
       <div className="container-page space-y-12 pt-4 sm:pt-6">
         <HeroCarousel slides={banners} />
 
@@ -78,7 +92,7 @@ export default async function HomePage() {
                     <CategoryIcon slug={c.slug} />
                   </span>
                   <span className="text-sm font-semibold text-ink-900">{c.name}</span>
-                  <span className="-mt-1.5 text-xs text-ink-500">{c._count.products} products</span>
+                  <span className="-mt-1.5 text-xs text-ink-500">{c.products} products</span>
                 </Link>
               </li>
             ))}
@@ -131,6 +145,13 @@ export default async function HomePage() {
           <section>
             <SectionHeading title="TVs & air coolers" subtitle="Home appliances in stock" href="/c/smart-tvs" linkLabel="All TVs" />
             <ProductRail products={appliances} />
+          </section>
+        )}
+
+        {accessories.length > 0 && (
+          <section>
+            <SectionHeading title="Accessories" subtitle="Chargers, cables, power banks and speakers" href="/c/accessories" linkLabel="All accessories" />
+            <ProductRail products={accessories} />
           </section>
         )}
 

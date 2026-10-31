@@ -101,15 +101,29 @@ export interface CatalogProduct {
   spins: CatalogSpin[];
 }
 
-export const KIND_META: Record<CatalogKind, { category: string; hsn: string; returnDays: number; noun: string }> = {
-  phone: { category: "smartphones", hsn: "85171300", returnDays: 7, noun: "smartphone" },
-  tablet: { category: "tablets", hsn: "84713010", returnDays: 7, noun: "tablet" },
-  tv: { category: "smart-tvs", hsn: "85287217", returnDays: 7, noun: "smart TV" },
-  "air-cooler": { category: "air-coolers", hsn: "84796000", returnDays: 7, noun: "air cooler" },
-  audio: { category: "audio", hsn: "85183000", returnDays: 7, noun: "audio product" },
-  watch: { category: "smartwatches", hsn: "85176290", returnDays: 7, noun: "smartwatch" },
-  laptop: { category: "laptops", hsn: "84713010", returnDays: 7, noun: "laptop" },
-  printer: { category: "printers", hsn: "84433290", returnDays: 7, noun: "printer" },
+/**
+ * Default category, HSN code, GST rate and return window per kind. Product files can
+ * override HSN and GST per product. The accessory HSN codes and rates are proposals
+ * awaiting the accountant's confirmation (see docs/progress.md).
+ */
+export const KIND_META: Record<CatalogKind, { category: string; hsn: string; gstRateBps: number; returnDays: number; noun: string }> = {
+  phone: { category: "smartphones", hsn: "85171300", gstRateBps: 1800, returnDays: 7, noun: "smartphone" },
+  "feature-phone": { category: "keypad-phones", hsn: "85171400", gstRateBps: 1800, returnDays: 7, noun: "keypad phone" },
+  tablet: { category: "tablets", hsn: "84713010", gstRateBps: 1800, returnDays: 7, noun: "tablet" },
+  tv: { category: "smart-tvs", hsn: "85287217", gstRateBps: 1800, returnDays: 7, noun: "smart TV" },
+  "air-cooler": { category: "air-coolers", hsn: "84796000", gstRateBps: 1800, returnDays: 7, noun: "air cooler" },
+  audio: { category: "audio", hsn: "85183000", gstRateBps: 1800, returnDays: 7, noun: "audio product" },
+  watch: { category: "smartwatches", hsn: "85176290", gstRateBps: 1800, returnDays: 7, noun: "smartwatch" },
+  laptop: { category: "laptops", hsn: "84713010", gstRateBps: 1800, returnDays: 7, noun: "laptop" },
+  printer: { category: "printers", hsn: "84433290", gstRateBps: 1800, returnDays: 7, noun: "printer" },
+  charger: { category: "chargers", hsn: "85044030", gstRateBps: 1800, returnDays: 7, noun: "charger" },
+  cable: { category: "cables", hsn: "85444299", gstRateBps: 1800, returnDays: 7, noun: "cable" },
+  "power-bank": { category: "power-banks", hsn: "85076000", gstRateBps: 1800, returnDays: 7, noun: "power bank" },
+  speaker: { category: "speakers", hsn: "85182200", gstRateBps: 1800, returnDays: 7, noun: "speaker" },
+  "smart-home": { category: "smart-home", hsn: "85176290", gstRateBps: 1800, returnDays: 7, noun: "smart home device" },
+  "security-camera": { category: "security-cameras", hsn: "85258900", gstRateBps: 1800, returnDays: 7, noun: "security camera" },
+  grooming: { category: "grooming", hsn: "85102000", gstRateBps: 1800, returnDays: 7, noun: "trimmer" },
+  keyboard: { category: "keyboards", hsn: "84716060", gstRateBps: 1800, returnDays: 7, noun: "keyboard" },
 };
 
 const BRAND_IN_NAME = new Set(["Redmi", "POCO"]);
@@ -243,7 +257,6 @@ export function buildCatalog(input: CatalogInputs): { products: CatalogProduct[]
     const colors = [...new Set(variants.map((v) => v.color))];
     const images = imagesFor(input.images, familyKey, colors, baseName);
     const spins = spinsFor(input.spins ?? {}, familyKey, colors);
-    const totalStock = variants.reduce((s, v) => s + v.stock, 0);
     const rams = [...new Set(variants.map((v) => v.ram).filter(Boolean))];
     const storages = [...new Set(variants.map((v) => v.storage).filter(Boolean))];
 
@@ -284,7 +297,8 @@ export function buildCatalog(input: CatalogInputs): { products: CatalogProduct[]
       kind: parsed.kind,
       condition: isDemo ? "DEMO" : "NEW",
       is5G: anyFiveG,
-      isActive: totalStock > 0,
+      // A ₹0 price on the sheet is a POS data error, never a price: such rows don't make a product live.
+      isActive: variants.some((v) => v.stock > 0 && v.price > 0),
       shortDescription,
       description,
       highlights,
@@ -295,7 +309,7 @@ export function buildCatalog(input: CatalogInputs): { products: CatalogProduct[]
         : "Manufacturer warranty as per brand policy.",
       returnWindowDays: isDemo ? 0 : meta.returnDays,
       hsnCode: meta.hsn,
-      gstRateBps: 1800,
+      gstRateBps: meta.gstRateBps,
       manufacturerInfo: ref?.legal?.manufacturer || null,
       countryOfOrigin: ref?.legal?.countryOfOrigin || null,
       variants,

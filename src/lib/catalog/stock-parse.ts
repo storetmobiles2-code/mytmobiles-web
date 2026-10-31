@@ -10,7 +10,24 @@
  * new export can be matched and applied without retyping products.
  */
 
-export type CatalogKind = "phone" | "tablet" | "tv" | "air-cooler" | "audio" | "watch" | "laptop" | "printer";
+export type CatalogKind =
+  | "phone"
+  | "feature-phone"
+  | "tablet"
+  | "tv"
+  | "air-cooler"
+  | "audio"
+  | "watch"
+  | "laptop"
+  | "printer"
+  | "charger"
+  | "cable"
+  | "power-bank"
+  | "speaker"
+  | "smart-home"
+  | "security-camera"
+  | "grooming"
+  | "keyboard";
 
 export interface ParsedStockName {
   brand: string;
@@ -60,9 +77,10 @@ const BRAND_PREFIXES: [RegExp, string][] = [
   [/^(VIVO\b|V\d{2}E?\b|Y\d{2,3}[A-Z]?\b)/, "vivo"],
   [/^IQOO\b/, "iQOO"],
   [/^OPPO\b/, "OPPO"],
-  [/^ONE ?PLUS\b/, "OnePlus"],
+  [/^(ONE ?PLUS|ONPLUS)\b/, "OnePlus"],
   [/^(REALME|NARZO)\b/, "realme"],
   [/^(MOTO|MOTOROLA)\b/, "Motorola"],
+  [/^MI\b/, "Xiaomi"],
   [/^NOTHING\b/, "Nothing"],
   [/^CMF\b/, "CMF by Nothing"],
   [/^GOOGLE\b/, "Google"],
@@ -81,10 +99,40 @@ const BRAND_PREFIXES: [RegExp, string][] = [
   [/^HINDWARE\b/, "Hindware"],
   [/^LIVPURE\b/, "Livpure"],
   [/^SYMPHONY\b/, "Symphony"],
+  // Accessories and keypad phones (the T MOBILES company in myBillBook)
+  [/^BOAT\b/, "boAt"],
+  [/^FIRE[- ]?BOLT{1,2}\b/, "Fire-Boltt"],
+  [/^PEBBLE\b/, "Pebble"],
+  [/^NOISE\b/, "Noise"],
+  [/^(ZEBRONICS|ZEBRINICS)\b/, "Zebronics"],
+  [/^JBL\b/, "JBL"],
+  [/^(GO ?BOULT|BOULT)\b/, "Boult"],
+  [/^HAMMER\b/, "Hammer"],
+  [/^INTEX\b/, "Intex"],
+  [/^BLAUPUNKT\b/, "Blaupunkt"],
+  [/^GOVO\b/, "GOVO"],
+  [/^MIVI\b/, "Mivi"],
+  [/^STUFFCOOL\b/, "Stuffcool"],
+  [/^GIZMORE\b/, "Gizmore"],
+  [/^SKULLCANDY\b/, "Skullcandy"],
+  [/^BEATXP\b/, "beatXP"],
+  [/^SHKOD\b/, "SHKOD"],
+  [/^TAGG\b/, "Tagg"],
+  [/^MINIX\b/, "Minix"],
+  [/^HMD\b/, "HMD"],
+  [/^NOKIA\b/, "Nokia"],
+  [/^LAVA\b/, "Lava"],
+  [/^KARBONN\b/, "Karbonn"],
+  [/^ITEL\b/, "itel"],
+  [/^KECHAODA\b/, "Kechaoda"],
+  [/^MICROMAX\b/, "Micromax"],
+  [/^(AMAZON|ECHO|FIRE TV)\b/, "Amazon"],
+  [/^GM\b/, "GM"],
 ];
 
 /** Tokens to strip from the start of the model once the brand is known. */
-const BRAND_TOKENS = /^(APPLE|SAMSUNG|XIAOMI|VIVO|IQOO|OPPO|ONE ?PLUS|REALME|MOTOROLA|MOTO|NOTHING|GOOGLE|INFINIX|PHILIPS|HP|CELLECOR|TCL|FASTRACK|CROMPTON|VOLTAS|ORIENT|KENSTAR|BAJAJ|BLUESTAR|HINDWARE|LIVPURE|SYMPHONY)\s+/;
+const BRAND_TOKENS =
+  /^(APPLE|SAMSUNG|XIAOMI|MI|VIVO|IQOO|OPPO|ONE ?PLUS|ONPLUS|REALME|MOTOROLA|MOTO|CMF NOTHING|NOTHING|GOOGLE|INFINIX|PHILIPS|HP|CELLECOR|TCL|FASTRACK|CROMPTON|VOLTAS|ORIENT|KENSTAR|BAJAJ|BLUESTAR|HINDWARE|LIVPURE|SYMPHONY|BOAT|FIRE[- ]?BOLT{1,2}|PEBBLE|NOISE|ZEBRONICS|ZEBRINICS|JBL|GO ?BOULT|BOULT|HAMMER|INTEX|BLAUPUNKT|GOVO|MIVI|STUFFCOOL|GIZMORE|SKULLCANDY|BEATXP|SHKOD|TAGG|MINIX|HMD|NOKIA|LAVA|KARBONN|ITEL|KECHAODA|MICROMAX|AMAZON|GM)\s+/;
 
 const SMALL_WORDS = new Set(["and", "of", "the", "with", "for", "in"]);
 
@@ -113,18 +161,64 @@ function prettyModel(brand: string, modelUpper: string): string {
   return m;
 }
 
+/** POS (myBillBook) category names → kind. Checked before the item name. */
+const CATEGORY_KINDS: [RegExp, CatalogKind][] = [
+  [/KEYPAD|FEATURE PHONE/, "feature-phone"],
+  [/AIR ?COOLER/, "air-cooler"],
+  [/SMART TV/, "tv"],
+  [/WATCH/, "watch"],
+  [/LAPTOP/, "laptop"],
+  [/PRINTER/, "printer"],
+  [/ADAPTER|ADAPTOR|CHARGER/, "charger"],
+  [/CABLE/, "cable"],
+  [/POWER ?BANK/, "power-bank"],
+  [/SPEAKER|SOUND ?BAR/, "speaker"],
+  [/ALEXA|SMART HOME|STREAMING/, "smart-home"],
+  [/SECURITY|CCTV/, "security-camera"],
+  [/TRIMMER|GROOMING/, "grooming"],
+  [/KEYBOARD|MOUSE/, "keyboard"],
+  [/AIRPODS|HEADPHONE|EARPHONE|EARBUDS|\bBUDS\b|NECKBAND/, "audio"],
+];
+
+/** Item names → kind, for rows whose category says nothing (empty, a brand or a distributor). Order matters. */
+const NAME_KINDS: [RegExp, CatalogKind][] = [
+  [/\bCOOLER\b/, "air-cooler"],
+  [/\b(ECHO|ALEXA|FIRE TV)\b/, "smart-home"],
+  [/\bSECURITY CAMERA\b|\bCCTV\b/, "security-camera"],
+  [/\b(TV|TELEVISION)\b/, "tv"],
+  [/\b(SMART ?WATCH|WATCH)\b/, "watch"],
+  [/\bLAPTOP\b/, "laptop"],
+  [/\bPRINTER\b/, "printer"],
+  [/\b(KEYPAD|FEATURE PHONE)\b/, "feature-phone"],
+  [/\bPOWER ?BANK\b/, "power-bank"],
+  // "FAST CHARGER WITH CABLE" is a charger; a cable on its own says CABLE without CHARGER/ADAPTER.
+  [/\b(CHARGER|ADAPTER|ADAPTOR)\b/, "charger"],
+  [/\bCABLE\b/, "cable"],
+  [/\b(SOUND ?BAR|SPEAKER|HOME THEATRE|SUBWOOFER)\b/, "speaker"],
+  [/\b(TRIMMER|SHAVER|GROOMING)\b/, "grooming"],
+  [/\b(KEYBOARD|MOUSE)\b/, "keyboard"],
+  [/\b(AIRPODS|EARPODS|AIRDOPES|BUDS|EARBUDS|HEADPHONES?|EARPHONES?|HEADSET|NECKBAND|BULLETS)\b/, "audio"],
+];
+
+/** Keypad phone model codes when the name doesn't say "keypad". */
+const FEATURE_PHONE_MODEL = /^(PHILIPS E\d{4}|SAMSUNG GURU|NOKIA 1\d{2}\b|HMD 1\d{2}\b|LAVA (A\d|GEM|HERO)|KARBONN (K\d|BHARAT|JUMBO)|ITEL (\d{4}|POWER)|KECHAODA|MICROMAX J\d)/;
+
+/** Brands that only make one kind of product the shop stocks. */
+const BRAND_KINDS: Record<string, CatalogKind> = { "Fire-Boltt": "watch" };
+
 function classify(brand: string, upper: string, sheetCategory: string): CatalogKind {
   const cat = sheetCategory.toUpperCase();
-  if (cat.includes("AIRCOOLER") || /\bCOOLER\b/.test(upper)) return "air-cooler";
-  if (cat.includes("SMART TV") || /\b(TV|TELEVISION)\b/.test(upper)) return "tv";
-  if (cat.includes("WATCH") || /\bWATCH\b/.test(upper)) return "watch";
-  if (cat.includes("LAPTOP") || /\bLAPTOP\b/.test(upper)) return "laptop";
-  if (cat.includes("PRINTER") || /\bPRINTER\b/.test(upper)) return "printer";
-  if (/\bAIRPODS|BUDS|EARBUDS|HEADPHONE/.test(upper)) return "audio";
+  const byCategory = CATEGORY_KINDS.find(([re]) => re.test(cat));
+  if (byCategory) return byCategory[1];
+  const byName = NAME_KINDS.find(([re]) => re.test(upper));
+  if (byName) return byName[1];
+  if (FEATURE_PHONE_MODEL.test(upper)) return "feature-phone";
   if (/\b(IPAD|TAB|PAD)\b/.test(upper) || /\bTAB A\d/.test(upper)) return "tablet";
-  void brand;
-  return "phone";
+  return BRAND_KINDS[brand] ?? "phone";
 }
+
+/** Kinds whose names carry RAM/storage ("8/128", "2/16 GB"). Accessories don't. */
+const HAS_MEMORY = new Set<CatalogKind>(["phone", "tablet", "watch", "laptop", "feature-phone"]);
 
 export function normaliseSheetName(raw: string): string {
   let s = raw.toUpperCase().replace(/[“”"]/g, '"').replace(/\s+/g, " ").trim();
@@ -136,7 +230,8 @@ export function normaliseSheetName(raw: string): string {
 
 /** Parses one stock-sheet item name. Returns null when the brand can't be identified. */
 export function parseStockName(rawName: string, sheetCategory = ""): ParsedStockName | null {
-  let s = normaliseSheetName(rawName);
+  // A literal "|" in a name is a separator ("GOVO GOSURROUND 900 | 200W …"); "|" below marks where RAM/storage was.
+  let s = normaliseSheetName(rawName).replace(/\s*\|\s*/g, " ");
 
   const isDemo = /\bDEMO( UNIT| PHONE)?\b/.test(s);
   s = s.replace(/\bDEMO( UNIT| PHONE)?\b/g, " ");
@@ -156,7 +251,7 @@ export function parseStockName(rawName: string, sheetCategory = ""): ParsedStock
     /\b(\d{1,2})\s*GB RAM\s*(\d{2,4})\s*GB ROM\b/,
     /\b(\d{1,2})\/(\d{2,4})\s*(GB)?\b/,
   ];
-  if (kind !== "tv" && kind !== "air-cooler" && kind !== "printer") {
+  if (HAS_MEMORY.has(kind)) {
     for (const re of memPatterns) {
       const m = s.match(re);
       if (m) {
@@ -195,6 +290,11 @@ export function parseStockName(rawName: string, sheetCategory = ""): ParsedStock
   } else if (kind === "phone" || kind === "tablet") {
     // No memory token (e.g. "REDMI NOTE 12 PRO 5G GLACIER BLUE"): colour can't be separated reliably.
     modelPart = s.replace(BRAND_TOKENS, "");
+  } else if (brand === "Philips" && kind === "feature-phone" && /^PHILIPS E\d{4}[A-Z]?\s+\S/.test(s)) {
+    // Philips keypad phones: "PHILIPS E2112S COOL GRAY" → model E2112S, colour Cool Gray
+    const m = s.match(/^PHILIPS (E\d{4}[A-Z]?)\s+(.+)$/)!;
+    modelPart = m[1];
+    colorPart = m[2].replace(/\bGRY\b/, "GRAY");
   } else {
     modelPart = s.replace(BRAND_TOKENS, "");
   }
@@ -204,7 +304,7 @@ export function parseStockName(rawName: string, sheetCategory = ""): ParsedStock
   // OnePlus "CE3 LITE" → "NORD CE3 LITE"; "NORD CE 3" → "NORD CE3"
   if (brand === "OnePlus") modelPart = modelPart.replace(/^CE\s?(\d)/, "NORD CE$1").replace(/NORD CE (\d)/, "NORD CE$1");
   // Nothing: "(3A) PRO" / "3A PRO" → "PHONE (3A) PRO"
-  if (brand === "Nothing") modelPart = modelPart.replace(/^(?:PHONE\s*)?\(?(\d+[A-Z]?)\)?/, "PHONE ($1)");
+  if (brand === "Nothing" && kind === "phone") modelPart = modelPart.replace(/^(?:PHONE\s*)?\(?(\d+[A-Z]?)\)?/, "PHONE ($1)");
   if (brand === "iQOO") modelPart = modelPart.replace(/^IQOO\s+/, "");
   if (brand === "realme") modelPart = modelPart.replace(/^REALME\s+/, "");
   if (brand === "Redmi" && !modelPart.startsWith("REDMI")) modelPart = modelPart; // already stripped by BRAND_TOKENS? keep
@@ -217,7 +317,7 @@ export function parseStockName(rawName: string, sheetCategory = ""): ParsedStock
   modelPart = modelPart.replace(/\b(5G\+?|4G|LTE)\b/g, " ").replace(/\s+/g, " ").trim();
 
   const color = colorPart.replace(/\bCOLOU?R\b/g, "").replace(/[()]/g, "").replace(/\s+/g, " ").trim();
-  const modelUpper = network === "4G" && kind === "phone" ? `${modelPart} 4G` : modelPart;
+  const modelUpper = network === "4G" && (kind === "phone" || kind === "feature-phone") ? `${modelPart} 4G` : modelPart;
   const model = prettyModel(brand, modelUpper);
 
   return {

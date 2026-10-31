@@ -1,0 +1,142 @@
+{
+  "slug": "samsung-type-c-earphones",
+  "name": "Samsung Type-C Earphones (EO-IC100)",
+  "brand": "Samsung",
+  "category": "audio",
+  "condition": "NEW",
+  "status": "draft",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "Samsung's wired USB-C earphones with a two-way driver, fabric cable, in-line remote and microphone.",
+  "description": "Wired earphones with a USB-C plug for Galaxy phones and tablets without a 3.5 mm jack. Each earpiece has a two-way driver (11 mm and 8 mm), and the fabric cable carries a remote with volume buttons, a play/pause and call button, and a microphone.\n\nS, M and L ear tips come in the box. There is no active noise cancellation.",
+  "highlights": [
+    "USB-C plug",
+    "Two-way driver (11 mm + 8 mm)",
+    "In-line remote and microphone",
+    "Fabric cable",
+    "S/M/L ear tips"
+  ],
+  "specs": [
+    {
+      "group": "Sound",
+      "items": [
+        {
+          "label": "Driver",
+          "value": "2-way (11 mm / 8 mm)"
+        },
+        {
+          "label": "Impedance",
+          "value": "32 Ω"
+        },
+        {
+          "label": "Frequency response",
+          "value": "20 Hz – 20 kHz"
+        },
+        {
+          "label": "Sensitivity",
+          "value": "94.3 dB ±3 dB (-10 dBFS input)"
+        },
+        {
+          "label": "Active noise cancellation",
+          "value": "No"
+        }
+      ]
+    },
+    {
+      "group": "Controls",
+      "items": [
+        {
+          "label": "Buttons",
+          "value": "Volume up/down, play/pause and call"
+        },
+        {
+          "label": "Microphone",
+          "value": "Yes"
+        },
+        {
+          "label": "Calls",
+          "value": "Answer, mute/reject"
+        }
+      ]
+    },
+    {
+      "group": "General",
+      "items": [
+        {
+          "label": "Model",
+          "value": "EO-IC100"
+        },
+        {
+          "label": "Cable",
+          "value": "Fabric"
+        },
+        {
+          "label": "Weight",
+          "value": "18.35 g"
+        },
+        {
+          "label": "Compatibility",
+          "value": "Samsung devices without a 3.5 mm jack, e.g. Galaxy Note10, Tab S6"
+        }
+      ]
+    }
+  ],
+  "boxContents": [
+    "Earphones",
+    "Ear tips (S/M/L)",
+    "Leaflet"
+  ],
+  "keywords": [
+    "samsung earphones",
+    "type-c earphones",
+    "usb-c earphones",
+    "wired earphones",
+    "eo-ic100",
+    "galaxy earphones"
+  ],
+  "warranty": "6 months Samsung India warranty from the date of purchase, serviced at Samsung authorised service centres.",
+  "manufacturerInfo": "Manufactured by: Samsung Electronics VIETNAM Co., Ltd., Yen Phong Industrial Park, Yen Trung Commune, Yen Phong District, Bac Ninh Province, VIETNAM; Imported by: Samsung India Electronics Pvt. Ltd. having its Registered Office at: 6th Floor, DLF Centre, Sansad Marg, New Delhi - 110001",
+  "countryOfOrigin": "Vietnam",
+  "hsnCode": "85183000",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": null,
+  "seoDescription": null,
+  "variants": [
+    {
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": null,
+      "maxPerOrder": 3,
+      "sku": "SAMSUNG-EO-IC100",
+      "color": null,
+      "mrp": 1999,
+      "stockSheetNames": [
+        "Samsung Original Type-C Earphone"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.samsung.com/in/mobile-accessories/samsung-type-c-earphones-black-eo-ic100bbegin/",
+      "usedFor": [
+        "details",
+        "specs",
+        "mrp",
+        "legal",
+        "warranty",
+        "box"
+      ],
+      "retrievedAt": "2026-10-31"
+    },
+    {
+      "url": "https://www.samsung.com/in/mobile-accessories/samsung-type-c-earphones-white-eo-ic100bwegin/",
+      "usedFor": [
+        "mrp",
+        "legal"
+      ],
+      "retrievedAt": "2026-10-31"
+    }
+  ]
+}

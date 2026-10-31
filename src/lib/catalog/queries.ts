@@ -66,6 +66,7 @@ export function buildWhere(f: ListingFilters, scope: ListingScope = {}): Prisma.
   if (scope.condition) and.push({ condition: scope.condition });
   if (f.condition) and.push({ condition: f.condition === "demo" ? "DEMO" : "NEW" });
   if (f.q) and.push(searchWhere(f.q));
+  if (f.types.length) and.push({ category: { slug: { in: f.types } } });
   if (f.brands.length) and.push({ brand: { slug: { in: f.brands } } });
   if (f.only5G) and.push({ is5G: true });
   if (f.inStock) and.push({ inStock: true });
@@ -127,8 +128,11 @@ export async function listProducts(f: ListingFilters, scope: ListingScope = {}) 
 }
 
 export interface Facets {
+  /** Categories in scope with products, when the scope spans more than one (e.g. Accessories → Chargers, Cables …) */
+  types: { slug: string; name: string; count: number }[];
   brands: { slug: string; name: string; count: number }[];
   hasDemo: boolean;
+  has5G: boolean;
   ram: number[];
   storage: number[];
   priceMin: number;
@@ -146,14 +150,25 @@ export async function listingFacets(scope: ListingScope & { q?: string }): Promi
       ...(scope.q ? [searchWhere(scope.q)] : []),
     ],
   };
-  const [brandGroups, variants, demoCount] = await Promise.all([
+  const [brandGroups, categoryGroups, variants, demoCount, fiveGCount] = await Promise.all([
     db.product.groupBy({ by: ["brandId"], where, _count: { _all: true } }),
+    scope.categoryIds && scope.categoryIds.length > 1 ? db.product.groupBy({ by: ["categoryId"], where, _count: { _all: true } }) : Promise.resolve([]),
     db.productVariant.findMany({
       where: { isActive: true, product: where },
       select: { ramGb: true, storageGb: true, price: true },
     }),
     db.product.count({ where: { AND: [where, { condition: "DEMO" }] } }),
+    db.product.count({ where: { AND: [where, { is5G: true }] } }),
   ]);
+  const typeCounts = new Map(categoryGroups.map((g) => [g.categoryId, g._count._all]));
+  const types =
+    typeCounts.size > 1
+      ? (await db.category.findMany({ where: { id: { in: [...typeCounts.keys()] } }, select: { id: true, slug: true, name: true }, orderBy: { sortOrder: "asc" } })).map((c) => ({
+          slug: c.slug,
+          name: c.name,
+          count: typeCounts.get(c.id) ?? 0,
+        }))
+      : [];
   const brands = await db.brand.findMany({
     where: { id: { in: brandGroups.map((g) => g.brandId) } },
     select: { id: true, slug: true, name: true },
@@ -163,8 +178,10 @@ export async function listingFacets(scope: ListingScope & { q?: string }): Promi
   const uniq = (xs: (number | null)[]) => [...new Set(xs.filter((x): x is number => x !== null))].sort((a, b) => a - b);
   const prices = variants.map((v) => v.price);
   return {
+    types,
     brands: brands.map((b) => ({ slug: b.slug, name: b.name, count: counts.get(b.id) ?? 0 })),
     hasDemo: demoCount > 0,
+    has5G: fiveGCount > 0,
     ram: uniq(variants.map((v) => v.ramGb)),
     storage: uniq(variants.map((v) => v.storageGb)),
     priceMin: prices.length ? Math.floor(Math.min(...prices) / 100) : 0,
@@ -256,7 +273,7 @@ export async function refreshProductAggregates(productIds: string[], tx: Prisma.
 export async function demoListingMeta(ids: string[]) {
   const rows = await db.product.findMany({
     where: { id: { in: ids } },
-    select: { id: true, keywords: true, variants: { where: { isActive: true }, select: { price: true, ramGb: true, storageGb: true } } },
+    select: { id: true, keywords: true, category: { select: { slug: true } }, variants: { where: { isActive: true }, select: { price: true, ramGb: true, storageGb: true } } },
   });
-  return Object.fromEntries(rows.map((r) => [r.id, { keywords: r.keywords, variants: r.variants }]));
+  return Object.fromEntries(rows.map((r) => [r.id, { keywords: r.keywords, category: r.category.slug, variants: r.variants }]));
 }

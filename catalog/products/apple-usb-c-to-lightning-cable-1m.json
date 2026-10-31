@@ -1,0 +1,135 @@
+{
+  "slug": "apple-usb-c-to-lightning-cable-1m",
+  "name": "Apple USB-C to Lightning Cable (1 m)",
+  "brand": "Apple",
+  "category": "cables",
+  "condition": "NEW",
+  "status": "draft",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "Apple's 1-metre USB-C to Lightning cable for charging and syncing iPhone and iPad with a Lightning port.",
+  "description": "Connects a Lightning iPhone or iPad to a USB-C power adapter or computer for charging and syncing. With an Apple USB-C power adapter of 18W or more it supports fast charging on compatible iPhone and iPad models.\n\nThe cable is 1 metre long.",
+  "highlights": [
+    "USB-C to Lightning, 1 metre",
+    "Fast charging with an 18W or higher USB-C adapter",
+    "Charge and sync Lightning iPhone and iPad"
+  ],
+  "specs": [
+    {
+      "group": "General",
+      "items": [
+        {
+          "label": "Part number",
+          "value": "MUQ93ZM/A"
+        },
+        {
+          "label": "Connectors",
+          "value": "USB-C to Lightning"
+        },
+        {
+          "label": "Length",
+          "value": "1 m"
+        }
+      ]
+    },
+    {
+      "group": "Compatibility",
+      "items": [
+        {
+          "label": "iPhone",
+          "value": "iPhone 14 and earlier models with a Lightning port"
+        },
+        {
+          "label": "Fast charging",
+          "value": "With Apple 18W, 20W, 29W, 30W, 61W, 87W or 96W USB-C power adapters"
+        }
+      ]
+    }
+  ],
+  "boxContents": [
+    "Apple USB-C to Lightning Cable (1 m)"
+  ],
+  "keywords": [
+    "lightning cable",
+    "usb-c to lightning",
+    "iphone cable",
+    "apple cable",
+    "charging cable"
+  ],
+  "warranty": "1 year Apple limited warranty for accessories, from the date of purchase, in addition to your rights under consumer law.",
+  "manufacturerInfo": "Manufacturer: APPLE INC, ONE APPLE PARK WAY, CUPERTINO, CA 95014, USA; Importer: APPLE INDIA PRIVATE. LTD.,13TH FLOOR, PRESTIGE MINSK SQUARE, MUNICIPAL NO. 6, CUBBON ROAD, BENGALURU, KARNATAKA - 560 001 INDIA; Packer: APPLE INDIA PRIVATE. LTD.,13TH FLOOR, PRESTIGE MINSK SQUARE, MUNICIPAL NO. 6, CUBBON ROAD, BENGALURU, KARNATAKA - 560 001 INDIA",
+  "countryOfOrigin": "Vietnam",
+  "hsnCode": "85444299",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": null,
+  "seoDescription": null,
+  "variants": [
+    {
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": null,
+      "maxPerOrder": 3,
+      "sku": "APPLE-USB-C-LIGHTNING-1M",
+      "color": null,
+      "mrp": 2190,
+      "stockSheetNames": [
+        "APPLE USB-C TO LIGHTNING"
+      ]
+    }
+  ],
+  "images": [
+    {
+      "color": null,
+      "view": "front",
+      "url": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MM0A3?wid=1200&hei=1200&fmt=png-alpha",
+      "sourcePage": "https://www.apple.com/in/shop/product/muq93zm/a/usb-c-to-lightning-cable-1m",
+      "credit": "© Apple Inc.",
+      "license": "Official manufacturer product image © Apple Inc., from the brand's official India store (apple.com/in, part MUQ93ZM/A). Used unmodified (resized/padded only) for product identification by a retailer."
+    },
+    {
+      "color": null,
+      "view": "detail",
+      "url": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MM0A3_AV2?wid=1200&hei=1200&fmt=png-alpha",
+      "sourcePage": "https://www.apple.com/in/shop/product/muq93zm/a/usb-c-to-lightning-cable-1m",
+      "credit": "© Apple Inc.",
+      "license": "Official manufacturer product image © Apple Inc., from the brand's official India store (apple.com/in, part MUQ93ZM/A). Used unmodified (resized/padded only) for product identification by a retailer."
+    },
+    {
+      "color": null,
+      "view": "detail",
+      "url": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MM0A3_AV3?wid=1200&hei=1200&fmt=png-alpha",
+      "sourcePage": "https://www.apple.com/in/shop/product/muq93zm/a/usb-c-to-lightning-cable-1m",
+      "credit": "© Apple Inc.",
+      "license": "Official manufacturer product image © Apple Inc., from the brand's official India store (apple.com/in, part MUQ93ZM/A). Used unmodified (resized/padded only) for product identification by a retailer."
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.apple.com/in/shop/product/muq93zm/a/usb-c-to-lightning-cable-1m",
+      "usedFor": [
+        "details",
+        "specs",
+        "mrp",
+        "images",
+        "box"
+      ],
+      "retrievedAt": "2026-10-31"
+    },
+    {
+      "url": "https://www.apple.com/in/shop/api/product/legalmetrology?product=MUQ93ZM/A",
+      "usedFor": [
+        "legal"
+      ],
+      "retrievedAt": "2026-10-31"
+    },
+    {
+      "url": "https://www.apple.com/in/legal/warranty/products/accessory-warranty-english.html",
+      "usedFor": [
+        "warranty"
+      ],
+      "retrievedAt": "2026-10-31"
+    }
+  ]
+}

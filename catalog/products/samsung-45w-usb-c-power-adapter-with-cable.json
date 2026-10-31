@@ -1,0 +1,76 @@
+{
+  "slug": "samsung-45w-usb-c-power-adapter-with-cable",
+  "name": "Samsung 45W USB-C Power Adapter with Cable",
+  "brand": "Samsung",
+  "category": "chargers",
+  "condition": "NEW",
+  "status": "draft",
+  "featured": false,
+  "is5G": false,
+  "launchedAt": null,
+  "shortDescription": "Samsung's 45W USB-C travel adapter with Super Fast Charging 2.0, sold with a USB-C cable.",
+  "description": "A single-port USB-C wall charger with up to 45W output and Samsung Super Fast Charging 2.0 for supported Galaxy models, sold with a USB-C cable.",
+  "highlights": [
+    "Up to 45W output over USB-C",
+    "Super Fast Charging 2.0 for supported Galaxy models",
+    "USB-C cable in the box"
+  ],
+  "specs": [
+    {
+      "group": "General",
+      "items": [
+        {
+          "label": "Interface",
+          "value": "USB-C"
+        },
+        {
+          "label": "Output",
+          "value": "Up to 45W"
+        }
+      ]
+    }
+  ],
+  "boxContents": [
+    "Power adapter",
+    "USB-C cable"
+  ],
+  "keywords": [
+    "samsung 45w",
+    "45w charger",
+    "charger with cable",
+    "super fast charging",
+    "samsung adapter"
+  ],
+  "warranty": "6 months Samsung India warranty from the date of purchase, serviced at Samsung authorised service centres.",
+  "manufacturerInfo": null,
+  "countryOfOrigin": null,
+  "hsnCode": "85044030",
+  "gstRatePercent": 18,
+  "returnWindowDays": 7,
+  "seoTitle": null,
+  "seoDescription": null,
+  "variants": [
+    {
+      "colorHex": null,
+      "ramGb": null,
+      "storageGb": null,
+      "maxPerOrder": 3,
+      "sku": "SAMSUNG-45W-WITH-CABLE",
+      "color": null,
+      "mrp": 3499,
+      "stockSheetNames": [
+        "SAMSUNG 45 W Type-C Travel Adaptor with Cable"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.samsung.com/in/mobile-accessories/45w-power-adapter-black-ep-t4511nbngin/",
+      "usedFor": [
+        "details",
+        "warranty"
+      ],
+      "retrievedAt": "2026-10-31"
+    }
+  ]
+}

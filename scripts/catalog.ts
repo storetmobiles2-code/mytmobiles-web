@@ -21,7 +21,7 @@ import { checkSpec, type ProductSpec, type SpecProblem } from "@/lib/catalog/pro
 import { refreshProductAggregates } from "@/lib/catalog/queries";
 import { planStockImport } from "@/lib/catalog/stock-import";
 import { parseStockCsv } from "@/lib/catalog/csv";
-import { buildCatalog, type CatalogImage } from "@/lib/catalog/build-catalog";
+import { buildCatalog, KIND_META, type CatalogImage } from "@/lib/catalog/build-catalog";
 import { slugify } from "@/lib/slug";
 import { audit, CATALOG_CLI_ACTOR } from "@/lib/admin/audit";
 import type { AuditChanges } from "@/lib/admin/audit-diff";
@@ -92,7 +92,7 @@ const writeJson = (file: string, data: unknown) => {
   fs.writeFileSync(file, JSON.stringify(data, null, 2) + "\n");
 };
 const allSlugs = () =>
-  fs.existsSync(SPEC_DIR) ? fs.readdirSync(SPEC_DIR).filter((f) => f.endsWith(".json") && f !== "images.lock.json" && !f.startsWith("_")).map((f) => f.slice(0, -5)).sort() : [];
+  fs.existsSync(SPEC_DIR) ? fs.readdirSync(SPEC_DIR).filter((f) => f.endsWith(".json") && !f.endsWith(".lock.json") && !f.startsWith("_")).map((f) => f.slice(0, -5)).sort() : [];
 
 let pipeline: Map<string, CatalogImage[]> | null = null;
 /** Photos each product gets from the family pipeline (catalog/reference.json → images.lock.json). */
@@ -140,6 +140,7 @@ function cmdNew() {
   if (!slug || !brand || !name) throw new Error('Usage: catalog new <slug> --brand "Samsung" --name "Samsung Galaxy A57 5G" [--category smartphones]');
   if (fs.existsSync(specFile(slug))) throw new Error(`catalog/products/${slug}.json already exists`);
   const today = new Date().toISOString().slice(0, 10);
+  const meta = Object.values(KIND_META).find((m) => m.category === category);
   writeJson(specFile(slug), {
     slug,
     name,
@@ -158,9 +159,9 @@ function cmdNew() {
     warranty: "1 year manufacturer warranty",
     manufacturerInfo: null,
     countryOfOrigin: null,
-    hsnCode: "85171300",
-    gstRatePercent: 18,
-    returnWindowDays: 7,
+    hsnCode: meta?.hsn ?? "85171300",
+    gstRatePercent: (meta?.gstRateBps ?? 1800) / 100,
+    returnWindowDays: meta?.returnDays ?? 7,
     variants: [{ sku: `${slug.toUpperCase().replace(/[^A-Z0-9]+/g, "-")}-1`, color: null, colorHex: null, ramGb: null, storageGb: null, mrp: 1, stockSheetNames: [] }],
     images: [],
     sources: [{ url: "https://TODO-official-product-page", usedFor: ["details", "specs", "mrp", "images", "legal"], retrievedAt: today }],
@@ -305,7 +306,7 @@ async function cmdImages() {
   const spinLock = readSpinLock();
   if (spins.length) spinLock[slug] = spins;
   else delete spinLock[slug];
-  writeJson(SPIN_LOCK_FILE, sortedJson(spinLock));
+  if (Object.keys(spinLock).length || fs.existsSync(SPIN_LOCK_FILE)) writeJson(SPIN_LOCK_FILE, sortedJson(spinLock));
   const lock = readLock();
   const images = entries.filter((e) => e.sourceUrl);
   if (images.length) lock[slug] = images;

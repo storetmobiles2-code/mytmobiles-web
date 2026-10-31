@@ -9,7 +9,7 @@ The store is maintained by a small team of Claude Code agents working alongside 
 | `product-onboarder` | New products, end to end: specs, MRP, legal details, official photos, product page | New stock arrives; "New product" issue | No. Opens a PR |
 | `catalog-editor` | Changes to existing products: MRP, specs, colours, variants, hide/show | "Product change" issue; brand price revision | No. Opens a PR |
 | `image-curator` | Fills "Photo coming soon" placeholders and fixes wrong photos, from official sources only | Weekly backlog; a reported wrong photo | No. Opens a PR |
-| `stock-keeper` | Reviews each POS stock-sheet export before import: typos, price jumps, items above MRP, new items | Every stock export | No. Staff import in Admin |
+| `stock-keeper` | Reviews each POS stock-sheet export before import: typos, price jumps, items above MRP, new items. Knows the two POS sources (below) | Every stock export | No. Staff import in Admin |
 | `ops-monitor` | Daily brief: orders to pack/ship, late deliveries, returns, refunds, stuck payments, sell-outs, site health | Every morning | No. Read-only |
 | `site-auditor` | Weekly audit: broken pages, Lighthouse, accessibility, SEO, structured data, legal disclosures | Weekly; before campaigns | No. Report PR |
 | `release-manager` | Code changes, dependency and security updates, deploy checks, rollbacks | Monthly; on advisories; CI failure | No. Opens PRs |
@@ -38,6 +38,19 @@ Staff                   import the stock CSV in Admin → the product shows its 
 ```
 
 The selling price and stock always come from the POS export. The product file adds MRP, details, legal information and photos. Both sides match on the stock-sheet item names (`stockSheetNames`).
+
+### Two POS sources
+
+The shop's myBillBook login has two companies, and the store takes price and stock from both:
+
+| myBillBook company | Holds | Stock sheet in the repo |
+|---|---|---|
+| Phones company | Smartphones, tablets, TVs, air coolers | `catalog/stock-sheet.csv` |
+| "T MOBILES" | Accessories (chargers, cables, power banks, speakers…), audio, smartwatches, keypad phones | `catalog/stock-sheet-accessories.csv` |
+
+- The POS sync (separate pull request) pulls both companies and updates variants whose `stockSheetNames` match, adding up stock when the same item is in both. It never creates products, so every accessory needs a product file first.
+- When staff import CSVs by hand in Admin instead, they import both companies' rows together in one file. Otherwise an item kept in both companies gets only one company's quantity.
+- A new local, CI or demo database is seeded from both sheets. Sheet items whose product file uses a different slug are left for `catalog apply`, as in production.
 
 ## How to give agents work
 
