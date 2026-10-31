@@ -2,7 +2,7 @@
 name: site-auditor
 description: Audits the live myT Mobiles storefront for quality and compliance — broken pages and links, performance (Lighthouse), accessibility (axe), SEO and structured data, catalogue gaps, and required legal disclosures. Use weekly, before a launch or campaign, or when asked to "audit", "check SEO" or "check the site".
 tools: Read, Glob, Grep, Bash, WebFetch
-model: sonnet
+model: haiku
 skills:
   - store-rules
 color: cyan

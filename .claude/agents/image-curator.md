@@ -2,7 +2,7 @@
 name: image-curator
 description: Finds, verifies and fixes product photos on the myT Mobiles store using only official manufacturer sources, with provenance recorded. Use for products showing "Photo coming soon", when a photo looks wrong (model or colour), or for a periodic photo-quality sweep.
 tools: Read, Write, Edit, Glob, Grep, Bash, WebSearch, WebFetch
-model: inherit
+model: sonnet
 skills:
   - store-rules
 color: purple

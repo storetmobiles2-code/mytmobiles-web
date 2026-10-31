@@ -5,16 +5,17 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
+export PATH="$HOME/.local/bin:$PATH"
+# graphifyy needs Python 3.10+; macOS ships 3.9, so install through uv with its own Python.
 if ! command -v graphify >/dev/null 2>&1; then
-  if command -v uv >/dev/null 2>&1; then
-    uv tool install --quiet "graphifyy[sql]" >/dev/null 2>&1 || true
-  else
-    pip install --quiet "graphifyy[sql]" >/dev/null 2>&1 || true
+  if ! command -v uv >/dev/null 2>&1; then
+    echo "graphify: not installed, and installing it needs uv (Python 3.10+). Run: brew install uv  (or see https://docs.astral.sh/uv/)"
+    exit 0
   fi
-  export PATH="$HOME/.local/bin:$PATH"
+  uv tool install --quiet --python 3.12 "graphifyy[sql,mcp]" >/dev/null 2>&1 || true
 fi
 if ! command -v graphify >/dev/null 2>&1; then
-  echo "graphify: not installed (no network?); skipping the code graph. Install with: uv tool install \"graphifyy[sql]\""
+  echo "graphify: install failed (no network?); skipping the code graph. Try: uv tool install --python 3.12 \"graphifyy[sql,mcp]\""
   exit 0
 fi
 

@@ -1,0 +1,12 @@
+# gitleaks: secret scanning for every pull request (CI job "security").
+# Default rules, plus an allowlist for values that are deliberately public.
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Test-only values in CI and tests"
+# CRON_SECRET and TOTP_ENCRYPTION_KEY for the throwaway CI environment in .github/workflows/ci.yml
+regexes = [
+  '''ci-cron-secret-0123456789abcdef''',
+  '''SWfHsKmZrILcXM8UDHTWYvYSwbCIEF9dCQxqBkAUcHI=''',
+]

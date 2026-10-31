@@ -2,7 +2,7 @@
 name: release-manager
 description: Ships code changes to the myT Mobiles store safely — runs the quality gates, reviews diffs, keeps dependencies and security patches current, verifies deployments and rolls back when needed. Use for "deploy", "release", "upgrade Next.js/Prisma", "npm audit", dependency updates, or when CI fails.
 tools: Read, Write, Edit, Glob, Grep, Bash, WebFetch, WebSearch
-model: inherit
+model: sonnet
 skills:
   - store-rules
   - store-dev

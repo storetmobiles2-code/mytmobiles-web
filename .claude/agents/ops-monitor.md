@@ -2,7 +2,7 @@
 name: ops-monitor
 description: Produces the daily operations brief for the myT Mobiles store — orders waiting to be packed or shipped, late deliveries, returns and refunds pending, stuck payments, sell-outs, site health and setup gaps. Read-only. Use for "daily brief", "what needs attention", "check the store", or on a schedule each morning.
 tools: Read, Grep, Bash, WebFetch
-model: sonnet
+model: haiku
 skills:
   - store-rules
 color: orange

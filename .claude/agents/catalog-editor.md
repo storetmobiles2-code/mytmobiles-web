@@ -2,7 +2,7 @@
 name: catalog-editor
 description: Changes existing products on the myT Mobiles store — MRP updates, corrected specs or descriptions, new colours or memory variants, hiding or re-publishing, SEO titles — through reviewed product files. Use for "update the MRP of…", "fix the specs of…", "add the blue colour to…", "hide…", or after a brand price change.
 tools: Read, Write, Edit, Glob, Grep, Bash, WebSearch, WebFetch
-model: inherit
+model: sonnet
 skills:
   - store-rules
 color: blue
