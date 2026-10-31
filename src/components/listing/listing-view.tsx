@@ -9,6 +9,27 @@ import { Breadcrumbs, EmptyState, Pagination, type Crumb } from "@/components/ui
 import { ButtonLink } from "@/components/ui/button";
 import { FiltersForm, SortSelect } from "./filters-form";
 import { JsonLd } from "@/components/seo/json-ld";
+import type { Facets } from "@/lib/catalog/queries";
+
+/** Links to the sub-categories that have products, e.g. Accessories → Chargers & Adapters, Cables … */
+function SubcategoryLinks({ subcategories, facets }: { subcategories: { slug: string; name: string }[]; facets: Facets }) {
+  const counts = new Map(facets.types.map((t) => [t.slug, t.count]));
+  const shown = subcategories.filter((c) => counts.has(c.slug));
+  if (!shown.length) return null;
+  return (
+    <nav aria-label="Shop by type" className="mt-4">
+      <ul className="flex flex-wrap gap-2">
+        {shown.map((c) => (
+          <li key={c.slug}>
+            <Link href={`/c/${c.slug}`} className="inline-flex h-9 items-center gap-1.5 rounded-full border border-ink-300 bg-white px-3.5 text-sm font-semibold text-ink-700 hover:border-brand-400 hover:text-brand-700">
+              {c.name} <span className="font-normal text-ink-500">({counts.get(c.slug)})</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+}
 
 export async function ListingView({
   title,
@@ -17,6 +38,7 @@ export async function ListingView({
   basePath,
   filters,
   scope,
+  subcategories = [],
   showBrandFilter = true,
   showConditionFilter = true,
 }: {
@@ -26,10 +48,12 @@ export async function ListingView({
   basePath: string;
   filters: ListingFilters;
   scope: ListingScope;
+  /** Child categories of this page's category, linked above the products */
+  subcategories?: { slug: string; name: string }[];
   showBrandFilter?: boolean;
   showConditionFilter?: boolean;
 }) {
-  if (DEMO) return <DemoListingView {...{ title, description, crumbs, basePath, scope, showBrandFilter, showConditionFilter }} />;
+  if (DEMO) return <DemoListingView {...{ title, description, crumbs, basePath, scope, subcategories, showBrandFilter, showConditionFilter }} />;
   const [{ items, total, pages }, facets] = await Promise.all([listProducts(filters, scope), listingFacets({ ...scope, q: filters.q })]);
   const active = activeFilterCount(filters);
   const hrefFor = (page: number) => {
@@ -62,6 +86,7 @@ export async function ListingView({
           <SortSelect value={filters.sort} />
         </div>
       </div>
+      <SubcategoryLinks subcategories={subcategories} facets={facets} />
 
       <div className="mt-6 grid gap-6 lg:grid-cols-[240px_1fr]">
         <aside className="hidden lg:block">
@@ -102,6 +127,7 @@ async function DemoListingView({
   crumbs,
   basePath,
   scope,
+  subcategories,
   showBrandFilter,
   showConditionFilter,
 }: {
@@ -110,6 +136,7 @@ async function DemoListingView({
   crumbs: Crumb[];
   basePath: string;
   scope: ListingScope;
+  subcategories: { slug: string; name: string }[];
   showBrandFilter: boolean;
   showConditionFilter: boolean;
 }) {
@@ -118,7 +145,7 @@ async function DemoListingView({
   return (
     <div className="container-page py-6">
       <Breadcrumbs items={crumbs} />
-      <DemoListing title={title} description={description} basePath={basePath} items={items} meta={meta} facets={facets} showBrandFilter={showBrandFilter} showConditionFilter={showConditionFilter} />
+      <DemoListing afterHeading={<SubcategoryLinks subcategories={subcategories} facets={facets} />} title={title} description={description} basePath={basePath} items={items} meta={meta} facets={facets} showBrandFilter={showBrandFilter} showConditionFilter={showConditionFilter} />
     </div>
   );
 }

@@ -14,6 +14,8 @@ export type SortKey = keyof typeof SORTS;
 
 export interface ListingFilters {
   q?: string;
+  /** Sub-category slugs ("Type"), on pages whose category has sub-categories */
+  types: string[];
   brands: string[];
   minPrice?: number; // rupees
   maxPrice?: number; // rupees
@@ -47,6 +49,7 @@ export function parseFilters(sp: SP): ListingFilters {
   const page = Math.max(1, Math.min(500, Math.floor(num(sp.page) ?? 1)));
   return {
     q: first(sp.q)?.trim().slice(0, 100) || undefined,
+    types: list(sp.type).map((t) => t.toLowerCase()),
     brands: list(sp.brand).map((b) => b.toLowerCase()),
     minPrice: num(sp.min),
     maxPrice: num(sp.max),
@@ -65,6 +68,7 @@ export function parseFilters(sp: SP): ListingFilters {
 export function filtersToSearchParams(f: Partial<ListingFilters>): URLSearchParams {
   const p = new URLSearchParams();
   if (f.q) p.set("q", f.q);
+  if (f.types?.length) p.set("type", f.types.join(","));
   if (f.brands?.length) p.set("brand", f.brands.join(","));
   if (f.minPrice !== undefined) p.set("min", String(f.minPrice));
   if (f.maxPrice !== undefined) p.set("max", String(f.maxPrice));
@@ -82,6 +86,7 @@ export function filtersToSearchParams(f: Partial<ListingFilters>): URLSearchPara
 
 export function activeFilterCount(f: ListingFilters): number {
   return (
+    f.types.length +
     f.brands.length +
     f.ram.length +
     f.storage.length +

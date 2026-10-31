@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useSyncExternalStore } from "react";
+import { useMemo, useSyncExternalStore, type ReactNode } from "react";
 import { SearchX } from "lucide-react";
 import { activeFilterCount, parseFilters, type ListingFilters } from "@/lib/catalog/filters";
 import type { Facets, ProductCardData } from "@/lib/catalog/queries";
@@ -11,6 +11,7 @@ import { FiltersForm, SortSelect } from "./filters-form";
 
 export interface DemoListingMeta {
   keywords: string[];
+  category: string;
   variants: { price: number; ramGb: number | null; storageGb: number | null }[];
 }
 
@@ -20,6 +21,7 @@ function apply(items: ProductCardData[], meta: Record<string, DemoListingMeta>, 
     const m = meta[p.id];
     if (f.q && !matchesQuery({ name: p.name, brand: p.brand, keywords: m?.keywords ?? [] }, f.q)) return false;
     if (f.condition && p.condition !== (f.condition === "demo" ? "DEMO" : "NEW")) return false;
+    if (f.types.length && !(m && f.types.includes(m.category))) return false;
     if (f.brands.length && !f.brands.includes(p.brand.slug)) return false;
     if (f.only5G && !p.is5G) return false;
     if (f.inStock && !p.inStock) return false;
@@ -77,7 +79,9 @@ export function DemoListing({
   facets,
   showBrandFilter,
   showConditionFilter,
+  afterHeading,
 }: {
+  afterHeading?: ReactNode;
   title: string;
   description?: string;
   basePath: string;
@@ -114,6 +118,7 @@ export function DemoListing({
           <SortSelect key={`s-${query}`} value={filters.sort} />
         </div>
       </div>
+      {afterHeading}
 
       <div className="mt-6 grid gap-6 lg:grid-cols-[240px_1fr]">
         <aside className="hidden lg:block">

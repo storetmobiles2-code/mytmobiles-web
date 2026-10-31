@@ -31,6 +31,7 @@ export default async function CategoryPage(props: PageProps<"/c/[slug]">) {
       basePath={`/c/${category.slug}`}
       filters={filters}
       scope={{ categoryIds: [category.id, ...category.children.map((c) => c.id)] }}
+      subcategories={category.children}
     />
   );
 }

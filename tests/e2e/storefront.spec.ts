@@ -21,7 +21,7 @@ test.describe("storefront", () => {
 
   test("search with no results shows an empty state", async ({ page }) => {
     await page.goto("/search?q=zzzzqqq");
-    await expect(page.getByText(/No products|no results|nothing/i).first()).toBeVisible();
+    await expect(page.getByText("No products match these filters")).toBeVisible();
   });
 
   test("category page sorts by price", async ({ page }) => {
@@ -32,6 +32,37 @@ test.describe("storefront", () => {
       .evaluateAll((els) => els.map((e) => Number(e.getAttribute("data-price"))));
     expect(prices.length).toBeGreaterThan(1);
     expect([...prices].sort((a, b) => a - b)).toEqual(prices);
+  });
+
+  test("accessories: reachable from the home page, with sub-categories and type and brand filters", async ({ page, isMobile }) => {
+    await page.goto("/");
+    await page.locator('section[aria-labelledby="cats"] a[href="/c/accessories"]').click();
+    await page.waitForURL(/\/c\/accessories$/);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Accessories");
+    const types = page.getByRole("navigation", { name: "Shop by type" });
+    await expect(types.getByRole("link", { name: /Chargers & Adapters/ })).toBeVisible();
+    await expect(types.getByRole("link", { name: /Power Banks/ })).toBeVisible();
+
+    if (isMobile) await page.getByRole("button", { name: "Filters" }).click();
+    const filters = page.getByRole(isMobile ? "dialog" : "form", { name: "Filters" });
+    await expect(filters.getByRole("group", { name: "Type" })).toBeVisible();
+    await expect(filters.getByRole("group", { name: "Brand" })).toBeVisible();
+    await expect(filters.getByText("5G phones")).toHaveCount(0);
+    await filters.getByRole("checkbox", { name: /Power Banks/ }).check();
+    if (isMobile) await filters.getByRole("button", { name: "Show results" }).click();
+    await page.waitForURL(/type=power-banks/);
+    const names = await page.locator('section[aria-labelledby="products-heading"] a[href^="/p/"]').allInnerTexts();
+    expect(names.length).toBeGreaterThan(0);
+    expect(names.join(" ")).toMatch(/power ?bank/i);
+  });
+
+  test("accessories and keypad phones fit a 390 px screen without sideways scroll", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    for (const path of ["/c/accessories", "/c/chargers", "/c/keypad-phones", "/c/smartphones", "/"]) {
+      await page.goto(path);
+      const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+      expect(overflow, path).toBeLessThanOrEqual(0);
+    }
   });
 
   test("product page has price, variants, delivery check and structured data", async ({ page }) => {

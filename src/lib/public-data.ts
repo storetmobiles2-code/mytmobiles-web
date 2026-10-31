@@ -9,7 +9,8 @@ import { db } from "./db";
 export const getNavData = unstable_cache(
   async () => {
     const categories = await db.category.findMany({
-      where: { isActive: true, parentId: null, products: { some: { isActive: true } } },
+      // A parent such as Accessories holds its products in sub-categories.
+      where: { isActive: true, parentId: null, OR: [{ products: { some: { isActive: true } } }, { children: { some: { isActive: true, products: { some: { isActive: true } } } } }] },
       orderBy: { sortOrder: "asc" },
       select: { name: true, slug: true },
     });

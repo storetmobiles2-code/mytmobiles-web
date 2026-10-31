@@ -15,7 +15,7 @@ function toQuery(form: HTMLFormElement): string {
   for (const [k, v] of fd.entries()) {
     const val = String(v).trim();
     if (!val) continue;
-    if (["brand", "ram", "storage"].includes(k)) (multi[k] ??= []).push(val);
+    if (["type", "brand", "ram", "storage"].includes(k)) (multi[k] ??= []).push(val);
     else p.set(k, val);
   }
   for (const [k, vals] of Object.entries(multi)) p.set(k, vals.join(","));
@@ -62,6 +62,13 @@ export function FiltersForm({ filters, facets, mode, showBrand = true, showCondi
     <>
       {filters.q && <input type="hidden" name="q" value={filters.q} />}
       <input type="hidden" name="sort" value={filters.sort} />
+      {facets.types.length > 1 && (
+        <Group title="Type">
+          {facets.types.map((t) => (
+            <Check key={t.slug} name="type" value={t.slug} checked={filters.types.includes(t.slug)} label={<>{t.name} <span className="text-ink-500">({t.count})</span></>} />
+          ))}
+        </Group>
+      )}
       {showBrand && facets.brands.length > 1 && (
         <Group title="Brand">
           {facets.brands.map((b) => (
@@ -104,7 +111,7 @@ export function FiltersForm({ filters, facets, mode, showBrand = true, showCondi
       </Group>
       <Group title="More">
         <Check name="instock" value="1" checked={filters.inStock} label="In stock only" />
-        <Check name="5g" value="1" checked={filters.only5G} label="5G phones" />
+        {facets.has5G && <Check name="5g" value="1" checked={filters.only5G} label="5G phones" />}
         {showCondition && facets.hasDemo && (
           <>
             <Check name="condition" value="new" checked={filters.condition === "new"} label="New only (hide demo units)" />

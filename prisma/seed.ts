@@ -5,8 +5,10 @@
  *
  * - Creates categories, store settings, homepage banners and the first admin
  *   account (from ADMIN_EMAIL / ADMIN_PASSWORD) if they don't exist.
- * - Imports the catalogue from catalog/stock-sheet.csv **only into an empty
- *   database**. Afterwards, stock & prices are maintained from the admin panel
+ * - Imports the catalogue from the POS stock sheets **only into an empty
+ *   database**: catalog/stock-sheet.csv (phones, TVs, coolers) and
+ *   catalog/stock-sheet-accessories.csv (the "T MOBILES" company: accessories,
+ *   smartwatches and keypad phones). Afterwards, stock & prices are maintained from the admin panel
  *   (Admin → Inventory → Import stock CSV), so re-running the seed never
  *   overwrites live inventory.
  */
@@ -24,8 +26,9 @@ const db = new PrismaClient({ adapter: new PrismaPg({ connectionString: process.
 const ROOT = process.cwd();
 const readJson = (f: string) => JSON.parse(fs.readFileSync(path.join(ROOT, f), "utf8"));
 
-const CATEGORIES = [
+const CATEGORIES: { slug: string; name: string; description: string; sortOrder: number; parent?: string }[] = [
   { slug: "smartphones", name: "Mobiles", description: "5G smartphones from Samsung, Redmi, Apple, OPPO, vivo and more.", sortOrder: 1 },
+  { slug: "keypad-phones", name: "Keypad Phones", description: "Keypad (feature) phones from Philips, Nokia, HMD, Lava, itel and more.", sortOrder: 1, parent: "smartphones" },
   { slug: "tablets", name: "Tablets", description: "Tablets for work, study and entertainment.", sortOrder: 2 },
   { slug: "smart-tvs", name: "Smart TVs", description: "HD, Full HD and 4K smart TVs.", sortOrder: 3 },
   { slug: "air-coolers", name: "Air Coolers", description: "Desert, personal and tower air coolers.", sortOrder: 4 },
@@ -33,7 +36,19 @@ const CATEGORIES = [
   { slug: "smartwatches", name: "Smartwatches", description: "Smartwatches and fitness wearables.", sortOrder: 6 },
   { slug: "laptops", name: "Laptops", description: "Laptops for home and office.", sortOrder: 7 },
   { slug: "printers", name: "Printers", description: "Ink tank and multifunction printers.", sortOrder: 8 },
+  { slug: "accessories", name: "Accessories", description: "Chargers, cables, power banks, speakers and more.", sortOrder: 9 },
+  { slug: "chargers", name: "Chargers & Adapters", description: "Wall chargers and power adapters.", sortOrder: 1, parent: "accessories" },
+  { slug: "cables", name: "Cables", description: "USB-C, Lightning and fast-charging cables.", sortOrder: 2, parent: "accessories" },
+  { slug: "power-banks", name: "Power Banks", description: "Portable power banks.", sortOrder: 3, parent: "accessories" },
+  { slug: "speakers", name: "Speakers & Soundbars", description: "Bluetooth speakers, soundbars and home theatre.", sortOrder: 4, parent: "accessories" },
+  { slug: "smart-home", name: "Smart Home", description: "Smart speakers and streaming devices.", sortOrder: 5, parent: "accessories" },
+  { slug: "security-cameras", name: "Security Cameras", description: "Home security cameras.", sortOrder: 6, parent: "accessories" },
+  { slug: "grooming", name: "Trimmers", description: "Beard trimmers and grooming.", sortOrder: 7, parent: "accessories" },
+  { slug: "keyboards", name: "Keyboards & Mice", description: "Wireless keyboards and mice.", sortOrder: 8, parent: "accessories" },
 ];
+
+/** The POS stock sheets, one per myBillBook company. */
+const STOCK_SHEETS = ["catalog/stock-sheet.csv", "catalog/stock-sheet-accessories.csv"];
 
 function hashPassword(password: string): Promise<string> {
   const N = 131072, r = 8, p = 1;
@@ -45,10 +60,14 @@ function hashPassword(password: string): Promise<string> {
   );
 }
 
+/** Creates missing categories (parents first). Existing ones are left as the owner set them in Admin. */
 async function seedCategories() {
-  for (const c of CATEGORIES) {
-    const hsn = Object.values(KIND_META).find((m) => m.category === c.slug)?.hsn;
-    await db.category.upsert({ where: { slug: c.slug }, update: {}, create: { ...c, hsnCode: hsn, gstRateBps: 1800 } });
+  const ids = new Map<string, string>();
+  for (const { parent, ...c } of CATEGORIES) {
+    const meta = Object.values(KIND_META).find((m) => m.category === c.slug);
+    const parentId = parent ? ids.get(parent) : undefined;
+    const row = await db.category.upsert({ where: { slug: c.slug }, update: {}, create: { ...c, parentId, hsnCode: meta?.hsn, gstRateBps: meta?.gstRateBps ?? 1800 } });
+    ids.set(c.slug, row.id);
   }
 }
 
@@ -78,8 +97,11 @@ async function seedCatalog() {
     console.log(`= catalogue already has ${count} products — skipping import (use Admin → Inventory → Import stock CSV).`);
     return;
   }
-  const { rows, errors } = parseStockCsv(fs.readFileSync(path.join(ROOT, "catalog/stock-sheet.csv"), "utf8"));
-  if (errors.length) console.warn(`! ${errors.length} stock rows skipped`, errors.slice(0, 5));
+  const rows = STOCK_SHEETS.filter((f) => fs.existsSync(path.join(ROOT, f))).flatMap((f) => {
+    const { rows, errors } = parseStockCsv(fs.readFileSync(path.join(ROOT, f), "utf8"));
+    if (errors.length) console.warn(`! ${f}: ${errors.length} stock rows skipped`, errors.slice(0, 5));
+    return rows;
+  });
   const { products, unparsed } = buildCatalog({
     rows,
     reference: readJson("catalog/reference.json").families,
@@ -165,7 +187,7 @@ async function seedCatalog() {
   }
   // Opening stock as an auditable inventory entry.
   const variants = await db.productVariant.findMany({ where: { stock: { gt: 0 } }, select: { id: true, stock: true } });
-  await db.inventoryLog.createMany({ data: variants.map((v) => ({ variantId: v.id, delta: v.stock, reason: "Opening stock (catalog/stock-sheet.csv)" })) });
+  await db.inventoryLog.createMany({ data: variants.map((v) => ({ variantId: v.id, delta: v.stock, reason: "Opening stock (POS stock sheets)" })) });
   console.log(`+ imported ${n} products (${products.filter((p) => p.isActive).length} live, rest hidden until restocked)`);
 }
 

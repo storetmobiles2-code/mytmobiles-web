@@ -2,7 +2,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { test, expect, PRODUCT_SLUG } from "./fixtures";
 
 /** WCAG 2.1 A/AA checks with axe-core on the main shopper-facing pages. */
-const PAGES = ["/", `/p/${PRODUCT_SLUG}`, "/c/smartphones", "/search?q=samsung", "/cart", "/login", "/register", "/offers", "/help/returns", "/help/grievance", "/contact"];
+const PAGES = ["/", `/p/${PRODUCT_SLUG}`, "/c/smartphones", "/c/accessories", "/search?q=samsung", "/cart", "/login", "/register", "/offers", "/help/returns", "/help/grievance", "/contact"];
 
 for (const path of PAGES) {
   test(`no WCAG A/AA violations on ${path}`, async ({ page }) => {
