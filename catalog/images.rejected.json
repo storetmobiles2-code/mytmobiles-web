@@ -1,6 +1,6 @@
 {
   "$comment": "Official images reviewed and rejected for the product galleries (source URL → reason). npm run images:build and catalog images skip them. See store-rules → Photos → Quality bar.",
-  "reviewedAt": "2026-10-31",
+  "reviewedAt": "2026-11-01",
   "images": {
     "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-17-finish-select-black-202509_AV2?wid=1448&hei=1080&fmt=png-alpha": {
       "product": "APPLE|IPHONE 17",
@@ -336,6 +336,96 @@
       "product": "REDMI|PAD 2 PRO",
       "color": "Graphite Grey",
       "reason": "promo panel with a large 'World's largest battery' banner over the product"
+    },
+    "https://images.samsung.com/is/image/samsung/p6pim/in/sm-a376edgdins/gallery/in-galaxy-a37-5g-sm-a376-sm-a376edgdins-551650318": {
+      "product": "SAMSUNG|GALAXY A37",
+      "color": "Awesome Gray Green",
+      "reason": "brand's marketing graphic spelling the model name in large type across the screen, not a real home-screen/UI — the clean 'back' view is now the hero"
+    },
+    "https://images.samsung.com/is/image/samsung/p6pim/in/sm-a376edgdins/gallery/in-galaxy-a37-5g-sm-a376-sm-a376edgdins-551650334": {
+      "product": "SAMSUNG|GALAXY A37",
+      "color": "Awesome Gray Green",
+      "reason": "brand's marketing graphic spelling the model name in large type across the screen, not a real home-screen/UI — the clean 'back' view is now the hero"
+    },
+    "https://images.samsung.com/is/image/samsung/p6pim/in/sm-a376edgdins/gallery/in-galaxy-a37-5g-sm-a376-sm-a376edgdins-551650351": {
+      "product": "SAMSUNG|GALAXY A37",
+      "color": "Awesome Gray Green",
+      "reason": "front-angled view showing the brand's model-name graphic across the screen (marketing art, not the device's UI)"
+    },
+    "https://images.samsung.com/is/image/samsung/p6pim/in/sm-a376elvdins/gallery/in-galaxy-a37-5g-sm-a376-sm-a376elvdins-551651363": {
+      "product": "SAMSUNG|GALAXY A37",
+      "color": "Awesome Lavender",
+      "reason": "brand's marketing graphic spelling the model name in large type across the screen, not a real home-screen/UI — the clean 'back' view is now the hero"
+    },
+    "https://images.samsung.com/is/image/samsung/p6pim/in/sm-a376elvdins/gallery/in-galaxy-a37-5g-sm-a376-sm-a376elvdins-551651430": {
+      "product": "SAMSUNG|GALAXY A37",
+      "color": "Awesome Lavender",
+      "reason": "brand's marketing graphic spelling the model name in large type across the screen, not a real home-screen/UI — the clean 'back' view is now the hero"
+    },
+    "https://images.samsung.com/is/image/samsung/p6pim/in/sm-a376elvdins/gallery/in-galaxy-a37-5g-sm-a376-sm-a376elvdins-551651434": {
+      "product": "SAMSUNG|GALAXY A37",
+      "color": "Awesome Lavender",
+      "reason": "front-angled view showing the brand's model-name graphic across the screen (marketing art, not the device's UI)"
+    },
+    "https://images.samsung.com/is/image/samsung/p6pim/in/sm-a576bdbfins/gallery/in-galaxy-a57-5g-sm-a576-sm-a576bdbfins-551691003": {
+      "product": "SAMSUNG|GALAXY A57",
+      "color": "Awesome Navy",
+      "reason": "brand's marketing graphic spelling the model name in large type across the screen, not a real home-screen/UI — the clean 'back' view is now the hero"
+    },
+    "https://images.samsung.com/is/image/samsung/p6pim/in/sm-a576bdbfins/gallery/in-galaxy-a57-5g-sm-a576-sm-a576bdbfins-551691006": {
+      "product": "SAMSUNG|GALAXY A57",
+      "color": "Awesome Navy",
+      "reason": "brand's marketing graphic spelling the model name in large type across the screen, not a real home-screen/UI — the clean 'back' view is now the hero"
+    },
+    "https://images.samsung.com/is/image/samsung/p6pim/in/sm-a576bdbfins/gallery/in-galaxy-a57-5g-sm-a576-sm-a576bdbfins-551691009": {
+      "product": "SAMSUNG|GALAXY A57",
+      "color": "Awesome Navy",
+      "reason": "front-angled view showing the brand's model-name graphic across the screen (marketing art, not the device's UI)"
+    },
+    "https://images.samsung.com/is/image/samsung/p6pim/in/sm-a576blbfins/gallery/in-galaxy-a57-5g-sm-a576-sm-a576blbfins-551691118": {
+      "product": "SAMSUNG|GALAXY A57",
+      "color": "Awesome Icy Blue",
+      "reason": "brand's marketing graphic spelling the model name in large type across the screen, not a real home-screen/UI — the clean 'back' view is now the hero"
+    },
+    "https://images.samsung.com/is/image/samsung/p6pim/in/sm-a576blbfins/gallery/in-galaxy-a57-5g-sm-a576-sm-a576blbfins-551691190": {
+      "product": "SAMSUNG|GALAXY A57",
+      "color": "Awesome Icy Blue",
+      "reason": "brand's marketing graphic spelling the model name in large type across the screen, not a real home-screen/UI — the clean 'back' view is now the hero"
+    },
+    "https://images.samsung.com/is/image/samsung/p6pim/in/sm-a576blbfins/gallery/in-galaxy-a57-5g-sm-a576-sm-a576blbfins-551691195": {
+      "product": "SAMSUNG|GALAXY A57",
+      "color": "Awesome Icy Blue",
+      "reason": "front-angled view showing the brand's model-name graphic across the screen (marketing art, not the device's UI)"
+    },
+    "https://images.samsung.com/is/image/samsung/p6pim/in/sm-e176blvains/gallery/in-galaxy-f17-sm-f176-sm-e176blvains-549222048": {
+      "product": "SAMSUNG|GALAXY F17",
+      "color": "Violet Pop",
+      "reason": "brand's marketing graphic spelling the model name in large type across the screen, not a real home-screen/UI — the clean 'back' view is now the hero"
+    },
+    "https://images.samsung.com/is/image/samsung/p6pim/in/sm-e176blvains/gallery/in-galaxy-f17-sm-f176-sm-e176blvains-549222096": {
+      "product": "SAMSUNG|GALAXY F17",
+      "color": "Violet Pop",
+      "reason": "brand's marketing graphic spelling the model name in large type across the screen, not a real home-screen/UI — the clean 'back' view is now the hero"
+    },
+    "https://images.samsung.com/is/image/samsung/p6pim/in/sm-e176blvains/gallery/in-galaxy-f17-sm-f176-sm-e176blvains-549222122": {
+      "product": "SAMSUNG|GALAXY F17",
+      "color": "Violet Pop",
+      "reason": "front-angled view showing the brand's model-name graphic across the screen (marketing art, not the device's UI)"
+    },
+    "https://images.samsung.com/is/image/samsung/p6pim/in/sm-e176bzkains/gallery/in-galaxy-f17-sm-f176-sm-e176bzkains-549222428": {
+      "product": "SAMSUNG|GALAXY F17",
+      "color": "Neo Black",
+      "reason": "brand's marketing graphic spelling the model name in large type across the screen, not a real home-screen/UI — the clean 'back' view is now the hero"
+    },
+    "https://images.samsung.com/is/image/samsung/p6pim/in/sm-e176bzkains/gallery/in-galaxy-f17-sm-f176-sm-e176bzkains-549222435": {
+      "product": "SAMSUNG|GALAXY F17",
+      "color": "Neo Black",
+      "reason": "brand's marketing graphic spelling the model name in large type across the screen, not a real home-screen/UI — the clean 'back' view is now the hero"
+    },
+    "https://images.samsung.com/is/image/samsung/p6pim/in/sm-e176bzkains/gallery/in-galaxy-f17-sm-f176-sm-e176bzkains-549222457": {
+      "product": "SAMSUNG|GALAXY F17",
+      "color": "Neo Black",
+      "reason": "front-angled view showing the brand's model-name graphic across the screen (marketing art, not the device's UI)"
     },
     "https://in-exstatic-vivofs.vivo.com/gdHFRinHEMrj3yPG/product/1779864135233/zip/img/y11-color-img2-lg-x2.jpg": {
       "product": "VIVO|Y05",

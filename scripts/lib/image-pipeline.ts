@@ -34,6 +34,19 @@ export async function download(url: string): Promise<Buffer> {
   }
 }
 
+/**
+ * Short content fingerprint for a filename. A gallery slot's numbered filename
+ * (e.g. "-1.webp") gets reused whenever that position's image changes — a
+ * rejection reorders the rest, a brand updates its photo — and the browser's
+ * and Next.js's image-optimizer caches key purely on the URL, so an unchanged
+ * filename with new bytes behind it can go on serving the old picture
+ * indefinitely. Appending this fingerprint makes the URL itself change
+ * whenever the content does, which busts every cache automatically.
+ */
+export function contentFingerprint(input: Buffer): string {
+  return crypto.createHash("sha1").update(input).digest("hex").slice(0, 8);
+}
+
 export async function optimise(input: Buffer): Promise<Buffer> {
   const flat = await sharp(input).flatten({ background: "#ffffff" }).toBuffer();
   const trimmed = await sharp(flat).trim({ background: "#ffffff", threshold: 12 }).toBuffer();

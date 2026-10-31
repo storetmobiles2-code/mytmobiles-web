@@ -20,6 +20,7 @@ import { PrismaClient } from "../src/generated/prisma/client";
 import { parseStockCsv } from "../src/lib/catalog/csv";
 import { buildCatalog } from "../src/lib/catalog/build-catalog";
 import { normaliseSheetName } from "../src/lib/catalog/stock-parse";
+import { repointStaleImage } from "./lib/image-paths";
 
 const db = new PrismaClient({ adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }) });
 const ROOT = process.cwd();
@@ -83,7 +84,45 @@ async function main() {
     ]);
   }
   console.log(`${changed} product(s) ${apply ? "updated" : "to update"}; ${unmatched} catalogue product(s) not in the database.`);
-  if (changed && !apply) console.log("Re-run with --apply to write. Restart the app (or wait for revalidation) to see changes.");
+  const repointed = await repointCopies(apply);
+  if ((changed || repointed) && !apply) console.log("Re-run with --apply to write. Restart the app (or wait for revalidation) to see changes.");
+}
+
+/**
+ * Banners, categories and order items keep a copy of a product image's path. A rebuild that
+ * renames or reorders images leaves those copies pointing at a missing file, so each one is
+ * repointed at the current first image of the same colour (see scripts/lib/image-paths.ts).
+ */
+async function repointCopies(apply: boolean): Promise<number> {
+  const listFolder = (url: string) => {
+    const dir = path.join(ROOT, "public", url.slice(0, url.lastIndexOf("/")));
+    return fs.existsSync(dir) ? fs.readdirSync(dir) : [];
+  };
+  const isStale = (url: string | null): url is string =>
+    !!url && (url.startsWith(MANAGED) || url.startsWith("/images/catalog/")) && !fs.existsSync(path.join(ROOT, "public", url));
+
+  const copies = [
+    ...(await db.banner.findMany({ select: { id: true, imageUrl: true } })).map((r) => ({ table: "banner" as const, ...r })),
+    ...(await db.category.findMany({ select: { id: true, imageUrl: true } })).map((r) => ({ table: "category" as const, ...r })),
+    ...(await db.orderItem.findMany({ where: { imageUrl: { startsWith: "/images/" } }, select: { id: true, imageUrl: true } })).map((r) => ({ table: "orderItem" as const, ...r })),
+  ].filter((c) => isStale(c.imageUrl));
+
+  let repointed = 0;
+  for (const c of copies) {
+    const to = repointStaleImage(c.imageUrl!, listFolder(c.imageUrl!));
+    if (!to) {
+      console.log(`! ${c.table} ${c.id}: ${c.imageUrl} no longer exists and that colour has no image now; set it in Admin`);
+      continue;
+    }
+    repointed++;
+    console.log(`${apply ? "~" : "would repoint"} ${c.table} ${c.id}: ${c.imageUrl} → ${to}`);
+    if (!apply) continue;
+    if (c.table === "banner") await db.banner.update({ where: { id: c.id }, data: { imageUrl: to } });
+    else if (c.table === "category") await db.category.update({ where: { id: c.id }, data: { imageUrl: to } });
+    else await db.orderItem.update({ where: { id: c.id }, data: { imageUrl: to } });
+  }
+  if (copies.length) console.log(`${repointed} stored image path(s) ${apply ? "repointed" : "to repoint"}.`);
+  return repointed;
 }
 
 main()

@@ -1,6 +1,6 @@
 # Progress and handoff
 
-**Last updated:** 31 October 2026. Accessories (#6), the POS stock sync (#7) and the CI runner pin (#8) are merged. **In review:** the product-photo quality review (branch `feat/image-quality`, see "Product photos" below). Other open items are the code gaps under "Next code work" and the decisions and shop checks for the owner and staff.
+**Last updated:** 31 October 2026. Accessories (#6), the POS stock sync (#7) and the CI runner pin (#8) are merged. **In review:** the product-photo quality review (branch `feat/image-quality`, see "Product photos" below) and a gallery fix for colours without photos (`fix/variant-gallery-color-fallback`). Other open items are the code gaps under "Next code work" and the decisions and shop checks for the owner and staff.
 
 In a new session, read this first, then `CLAUDE.md`, `.claude/skills/store-rules/SKILL.md` and `.claude/skills/store-dev/SKILL.md`. The code graph builds itself at session start (see "Code graph" in `CLAUDE.md`).
 
@@ -80,10 +80,19 @@ Brand stores (boAt, Fire-Boltt, Pebble, Noise and others) often lack the legal b
 
 ## Product photos: quality review (31 October 2026)
 
-All 401 gallery images were reviewed against the new quality bar (store-rules → Photos → Quality bar). **75 were rejected**: clipped composite close-ups (the iPhone 17 "angle" shots), phones on lettering banners and backdrop panels, multi-panel collages, text-heavy marketing panels (most cooler galleries), tiny-product scenes and soft enlargements. Each one is listed with its reason in `catalog/images.rejected.json`, and the image builds refuse them.
+All 401 gallery images were reviewed against the new quality bar (store-rules → Photos → Quality bar). **93 were rejected**:
+- clipped composite close-ups (the iPhone 17 "angle" shots);
+- phones on lettering banners and backdrop panels, and multi-panel collages;
+- text-heavy marketing panels (most cooler galleries);
+- the model name spelled across the screen in large type (Galaxy A37, A57 and F17 front, front-back and front-angle shots, 18 images, found on 1 November). Their clean back view is now the main image;
+- tiny-product scenes and soft enlargements.
 
-- `npm run images:audit` re-checks every image and writes labelled contact sheets to `.cache/sheets/audit/`.
+Each one is listed with its reason in `catalog/images.rejected.json`, and the image builds refuse them.
+
+- `npm run images:audit` re-checks every image and writes labelled contact sheets to `.cache/sheets/audit/`. It can't see text drawn on a phone's screen, so read the screens on every sheet.
 - The build now keeps an image's previous version when the brand's server is down. Philips' image server returned HTTP 500 for the S7221 photos on 31 October.
+- **Image filenames carry a content fingerprint** (`black-1-2b1aff9a.webp`). Before, a rejection renumbered the remaining images, so `-1.webp` could become a different picture and browsers and the Next.js image cache went on showing the old one. A changed picture now always gets a new URL.
+- **`npm run images:sync -- --apply` also repoints copies** of image paths kept in banners, categories and order items, to the first current image of the same colour. Run it after every `images:build` on any database that already has data, including production.
 
 **Photograph in the shop** (no official image meets the bar). Upload in Admin → Products, credit "Photographed in store":
 - **Redmi Pad 2 Pro 5G** (Graphite Gray, Quick Silver): Xiaomi India shows only promo panels, and the global site's clean shot is the Wi-Fi model.

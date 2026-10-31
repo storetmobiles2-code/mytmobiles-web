@@ -25,7 +25,7 @@ import { buildCatalog, KIND_META, type CatalogImage } from "@/lib/catalog/build-
 import { slugify } from "@/lib/slug";
 import { audit, CATALOG_CLI_ACTOR } from "@/lib/admin/audit";
 import type { AuditChanges } from "@/lib/admin/audit-diff";
-import { contactSheet, download, optimise, optimiseSpinFrame, pool, SIZE, SPIN_SIZE } from "./lib/image-pipeline";
+import { contactSheet, contentFingerprint, download, optimise, optimiseSpinFrame, pool, SIZE, SPIN_SIZE } from "./lib/image-pipeline";
 import { assessImage, blockingIssues, ISSUE_TEXT, readRejected } from "./lib/image-quality";
 
 const ROOT = process.cwd();
@@ -298,8 +298,10 @@ async function cmdImages() {
   for (const img of spec.images ?? []) {
     const key = slugify(img.color ?? "") || "default";
     counts[key] = (counts[key] ?? 0) + 1;
-    const rel = `${IMAGE_DIR}/${slug}/${key}-${counts[key]}.webp`;
     const out = await optimise(await download(img.url));
+    // The fingerprint busts the browser's and Next's image-optimizer caches whenever a position's
+    // content changes — editing the product file's image list can reuse a slot's old filename.
+    const rel = `${IMAGE_DIR}/${slug}/${key}-${counts[key]}-${contentFingerprint(out)}.webp`;
     fs.writeFileSync(path.join(ROOT, "public", rel), out);
     entries.push({ file: rel, width: SIZE, height: SIZE, color: img.color, view: img.view, sourceUrl: img.url, sourcePage: img.sourcePage, credit: img.credit, license: img.license });
     console.log(`  ✓ ${rel}${img.view ? ` (${img.view})` : ""}  ←  ${img.url}`);
@@ -309,8 +311,9 @@ async function cmdImages() {
     const sub = `${IMAGE_DIR}/${slug}/360/${slugify(sp.color ?? "") || "default"}`;
     fs.mkdirSync(path.join(ROOT, "public", sub), { recursive: true });
     const frames = await pool(sp.frames, 8, async (u, i) => {
-      const rel = `${sub}/${String(i + 1).padStart(3, "0")}.webp`;
-      fs.writeFileSync(path.join(ROOT, "public", rel), await optimiseSpinFrame(await download(u)));
+      const out = await optimiseSpinFrame(await download(u));
+      const rel = `${sub}/${String(i + 1).padStart(3, "0")}-${contentFingerprint(out)}.webp`;
+      fs.writeFileSync(path.join(ROOT, "public", rel), out);
       return rel;
     });
     spins.push({ color: sp.color, frames, width: SPIN_SIZE, height: SPIN_SIZE, sourcePage: sp.sourcePage, credit: sp.credit, license: sp.license, sourceFrames: sp.frames });

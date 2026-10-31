@@ -56,14 +56,14 @@ An official image can still be wrong for the gallery. Reject it when it is:
 - **clipped:** the product is cut off by the edge of the picture, or ends in a straight line inside it (a composite close-up of two phones cut at the bottom). Close-ups are fine only as a sharp, labelled `detail` after the full views.
 - **a banner or backdrop panel:** the product on a coloured block, a lettering banner ("Blue", "Black") or a gradient panel, rather than cut out on white;
 - **a collage:** several panels in one picture (a model plus mini detail shots);
-- **a marketing panel:** headlines, feature icons or spec text laid over or around the product ("Beat the heat", "World's largest battery"). Text the brand renders on the phone's own screen is acceptable;
+- **a marketing panel:** headlines, feature icons or spec text laid over or around the product ("Beat the heat", "World's largest battery"), **including when it's rendered inside the phone's own screen** — a brand's hero shot that spells the model name across the display in large type ("Galaxy A37 5G") is a marketing graphic, not the device, and is rejected the same as a banner outside the product. A screen showing an actual home screen, app or a plain wallpaper (abstract colour/shape, no readable brand copy) is fine;
 - **a scene where the product is small:** dark mood shots, room sets or sunsets in which the product is hard to see. A lifestyle image must show the product clearly;
 - **soft:** enlarged from a small source (the audit flags sources under 700 px).
 
-The first image of each colour must show the whole product: `front` or `front-back`, never a close-up or a scene.
+The first image of each colour must show the whole product: `front` or `front-back`, never a close-up or a scene. If the brand's only `front`/`front-back` image fails the marketing-panel check above, use the next full-product view (usually `back`) as the hero instead — don't drop the colour to a close-up or no hero at all.
 
 How it is enforced:
-- `npm run images:audit [filter]` checks every gallery image and writes labelled contact sheets to `.cache/sheets/audit/`. It flags crops, photo backgrounds and small sources automatically. Read every sheet: clipped close-ups, collages and text panels need eyes.
+- `npm run images:audit [filter]` checks every gallery image and writes labelled contact sheets to `.cache/sheets/audit/`. It flags crops, photo backgrounds and small sources automatically. **It cannot see marketing text rendered on a screen** (that's inside the product's own silhouette, not the white margin it measures) — read every sheet and check the screen content itself, not just the product's outline. Clipped close-ups, collages, on-screen text panels and text-heavy wallpapers all need eyes.
 - Rejected images go in `catalog/images.rejected.json` with the reason. `npm run images:build` and `npm run catalog -- images` refuse them, and images with a photo background in a front, back, side or angle slot, so they can't come back with a later edit.
 - When a product is left with no image that meets the bar, keep the placeholder and add it to the in-store photo list in `docs/progress.md`.
 - To preview a proposed set before adding it: `npx tsx scripts/images-preview.ts <proposal.json>` writes labelled contact sheets to `.cache/sheets/preview/`.
