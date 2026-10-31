@@ -111,6 +111,19 @@ async function seedCatalog() {
   });
   if (unparsed.length) console.warn(`! ${unparsed.length} rows not recognised:`, unparsed.map((u) => u.name));
 
+  // A product file that claims these sheet names under its own slug creates the product with `catalog apply`,
+  // as in production. Seeding it here under the sheet-derived slug would make apply refuse the file.
+  const claimedBy = new Map<string, string>();
+  for (const f of fs.readdirSync(path.join(ROOT, "catalog/products")).filter((f) => f.endsWith(".json") && !f.endsWith(".lock.json"))) {
+    const spec = readJson(`catalog/products/${f}`) as { slug: string; variants: { stockSheetNames?: string[] }[] };
+    for (const v of spec.variants) for (const n of v.stockSheetNames ?? []) claimedBy.set(n.toUpperCase(), spec.slug);
+  }
+  const leftForApply = products.filter((p) => {
+    const owners = p.variants.flatMap((v) => v.externalNames).map((n) => claimedBy.get(n.toUpperCase()));
+    return owners.some((o) => o && o !== p.slug);
+  });
+  if (leftForApply.length) console.log(`= ${leftForApply.length} products left for catalog apply (their product files use another slug)`);
+
   const categories = new Map((await db.category.findMany()).map((c) => [c.slug, c.id]));
   const brandIds = new Map<string, string>();
   for (const name of [...new Set(products.map((p) => p.brand))].sort()) {
@@ -119,7 +132,8 @@ async function seedCatalog() {
   }
 
   let n = 0;
-  for (const p of products) {
+  const seeded = products.filter((p) => !leftForApply.includes(p));
+  for (const p of seeded) {
     const buyable = p.variants.filter((v) => v.stock > 0);
     const cheapest = [...(buyable.length ? buyable : p.variants)].sort((a, b) => a.price - b.price)[0];
     const discountPct = p.variants.reduce((m, v) => Math.max(m, v.mrp > v.price ? Math.floor(((v.mrp - v.price) / v.mrp) * 100) : 0), 0);
@@ -188,7 +202,7 @@ async function seedCatalog() {
   // Opening stock as an auditable inventory entry.
   const variants = await db.productVariant.findMany({ where: { stock: { gt: 0 } }, select: { id: true, stock: true } });
   await db.inventoryLog.createMany({ data: variants.map((v) => ({ variantId: v.id, delta: v.stock, reason: "Opening stock (POS stock sheets)" })) });
-  console.log(`+ imported ${n} products (${products.filter((p) => p.isActive).length} live, rest hidden until restocked)`);
+  console.log(`+ imported ${n} products (${seeded.filter((p) => p.isActive).length} live, rest hidden until restocked)`);
 }
 
 async function seedBanners() {

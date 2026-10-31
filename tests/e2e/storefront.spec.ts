@@ -21,7 +21,7 @@ test.describe("storefront", () => {
 
   test("search with no results shows an empty state", async ({ page }) => {
     await page.goto("/search?q=zzzzqqq");
-    await expect(page.getByText("No products match these filters")).toBeVisible();
+    await expect(page.getByText("No products match these filters").locator("visible=true").first()).toBeVisible();
   });
 
   test("category page sorts by price", async ({ page }) => {

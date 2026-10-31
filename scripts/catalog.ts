@@ -92,7 +92,7 @@ const writeJson = (file: string, data: unknown) => {
   fs.writeFileSync(file, JSON.stringify(data, null, 2) + "\n");
 };
 const allSlugs = () =>
-  fs.existsSync(SPEC_DIR) ? fs.readdirSync(SPEC_DIR).filter((f) => f.endsWith(".json") && f !== "images.lock.json" && !f.startsWith("_")).map((f) => f.slice(0, -5)).sort() : [];
+  fs.existsSync(SPEC_DIR) ? fs.readdirSync(SPEC_DIR).filter((f) => f.endsWith(".json") && !f.endsWith(".lock.json") && !f.startsWith("_")).map((f) => f.slice(0, -5)).sort() : [];
 
 let pipeline: Map<string, CatalogImage[]> | null = null;
 /** Photos each product gets from the family pipeline (catalog/reference.json → images.lock.json). */
@@ -306,7 +306,7 @@ async function cmdImages() {
   const spinLock = readSpinLock();
   if (spins.length) spinLock[slug] = spins;
   else delete spinLock[slug];
-  writeJson(SPIN_LOCK_FILE, sortedJson(spinLock));
+  if (Object.keys(spinLock).length || fs.existsSync(SPIN_LOCK_FILE)) writeJson(SPIN_LOCK_FILE, sortedJson(spinLock));
   const lock = readLock();
   const images = entries.filter((e) => e.sourceUrl);
   if (images.length) lock[slug] = images;
