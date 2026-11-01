@@ -33,7 +33,7 @@ const env = { ...process.env, NEXT_PUBLIC_DEMO: "1", NEXT_PUBLIC_BASE_PATH: BASE
 /** Pages that can't work without a server, or aren't part of the shop front. */
 const SKIP = [/^\/admin/, /^\/api\//, /^\/account/, /^\/invoice/, /^\/packing-slip/, /^\/order-confirmation/, /^\/p\/[^/]+\/review/, /^\/reset-password/, /^\/verify-email/, /^\/media\//, /^\/_next\//];
 const SEEDS = ["/", "/search", "/cart", "/checkout", "/wishlist", "/login", "/register", "/forgot-password", "/offers", "/open-box", "/c/accessories", "/c/keypad-phones", "/about", "/contact", "/privacy", "/terms", "/help/shipping", "/help/returns", "/help/payments", "/help/grievance"];
-const FILES = ["/demo-data.json", "/manifest.webmanifest", "/icon.png", "/apple-icon.png"];
+const FILES = ["/demo-data.json", "/manifest.webmanifest", "/icon.png", "/apple-icon.png", "/favicon.ico"];
 
 function run(cmd: string, args: string[]): Promise<void> {
   return new Promise((resolve, reject) => {
