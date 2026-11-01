@@ -39,14 +39,16 @@ async function requestInfo(): Promise<{ ip: string | null; userAgent: string | n
 }
 
 /**
- * Records who changed what. Never throws into the caller: the change has
- * already happened, so a logging failure is reported and the request goes on.
+ * Records who changed what and returns the entry's id (null if it couldn't be
+ * recorded). Never throws into the caller: the change has already happened, so
+ * a logging failure is reported and the request goes on.
  */
-export async function audit(entry: AuditEntry): Promise<void> {
+export async function audit(entry: AuditEntry): Promise<string | null> {
   try {
     const req = entry.ip !== undefined || entry.userAgent !== undefined ? { ip: entry.ip ?? null, userAgent: entry.userAgent ?? null } : await requestInfo();
     const changes = cleanChanges(entry.changes);
-    await db.auditLog.create({
+    const row = await db.auditLog.create({
+      select: { id: true },
       data: {
         actorId: entry.actor?.id ?? null,
         actorEmail: (entry.actor?.email ?? SYSTEM_ACTOR.email).slice(0, 190),
@@ -59,7 +61,9 @@ export async function audit(entry: AuditEntry): Promise<void> {
         userAgent: req.userAgent,
       },
     });
+    return row.id;
   } catch (err) {
     console.error(`[audit] could not record ${entry.action} on ${entry.entityType} ${entry.entityId ?? ""}`, err);
+    return null;
   }
 }

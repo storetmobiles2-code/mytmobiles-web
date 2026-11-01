@@ -5,8 +5,10 @@ useDefault = true
 
 [allowlist]
 description = "Test-only values in CI and tests"
-# CRON_SECRET and TOTP_ENCRYPTION_KEY for the throwaway CI environment in .github/workflows/ci.yml
+# CRON_SECRET, TOTP_ENCRYPTION_KEY, POS_SYNC_SECRET and HARNESS_SECRET for the throwaway CI environment in .github/workflows/ci.yml
 regexes = [
   '''ci-cron-secret-0123456789abcdef''',
   '''SWfHsKmZrILcXM8UDHTWYvYSwbCIEF9dCQxqBkAUcHI=''',
+  '''ci-pos-sync-secret-0123456789abcdef01''',
+  '''ci-harness-secret-0123456789abcdef012''',
 ]

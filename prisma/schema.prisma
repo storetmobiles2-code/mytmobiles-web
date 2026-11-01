@@ -262,6 +262,7 @@ model ProductVariant {
   cartItems     CartItem[]
   orderItems    OrderItem[]
   inventoryLogs InventoryLog[]
+  priceHolds    PriceHold[]
 
   @@index([productId])
   @@index([price])
@@ -270,22 +271,22 @@ model ProductVariant {
 /// Product imagery. `color` scopes an image to the variants of that colour;
 /// null means the image applies to every variant.
 model ProductImage {
-  id          String   @id @default(cuid())
-  productId   String
-  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  color       String?
-  url         String
-  alt         String
-  width       Int
-  height      Int
-  sortOrder   Int      @default(0)
+  id        String   @id @default(cuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  color     String?
+  url       String
+  alt       String
+  width     Int
+  height    Int
+  sortOrder Int      @default(0)
   /// Which view this shows: front, back, front-back, side, angle, detail, lifestyle, box.
-  view        String?
+  view      String?
   /// Provenance — where the image came from and on what terms.
-  sourceUrl   String?
-  credit      String?
-  license     String?
-  createdAt   DateTime @default(now())
+  sourceUrl String?
+  credit    String?
+  license   String?
+  createdAt DateTime @default(now())
 
   @@index([productId, color])
 }
@@ -443,26 +444,26 @@ enum BannerPlacement {
 /// Merchandising banners. Rendered as composed layouts (gradient + product
 /// cut-out + copy) so new campaigns don't need a designer for every slot.
 model Banner {
-  id          String          @id @default(cuid())
-  placement   BannerPlacement @default(HERO)
-  eyebrow     String?
-  title       String
-  subtitle    String?
-  ctaLabel    String          @default("Shop now")
-  href        String
-  imageUrl    String?
-  imageAlt    String?
+  id        String          @id @default(cuid())
+  placement BannerPlacement @default(HERO)
+  eyebrow   String?
+  title     String
+  subtitle  String?
+  ctaLabel  String          @default("Shop now")
+  href      String
+  imageUrl  String?
+  imageAlt  String?
   /// CSS colours for the background gradient
-  bgFrom      String          @default("#0A0A0B")
-  bgTo        String          @default("#5E0A31")
+  bgFrom    String          @default("#0A0A0B")
+  bgTo      String          @default("#5E0A31")
   /// "light" text on dark background or "dark" text on light background
-  textTone    String          @default("light")
-  sortOrder   Int             @default(0)
-  isActive    Boolean         @default(true)
-  startsAt    DateTime?
-  endsAt      DateTime?
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
+  textTone  String          @default("light")
+  sortOrder Int             @default(0)
+  isActive  Boolean         @default(true)
+  startsAt  DateTime?
+  endsAt    DateTime?
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
 }
 
 // ───────────────────────────── Orders ─────────────────────────────
@@ -516,18 +517,18 @@ model Order {
   buyerCompany String?
 
   // Money (paise)
-  mrpTotal      Int
-  subtotal      Int
-  couponCode    String?
+  mrpTotal       Int
+  subtotal       Int
+  couponCode     String?
   couponDiscount Int     @default(0)
-  shippingFee   Int     @default(0)
-  codFee        Int     @default(0)
-  total         Int
-  taxableValue  Int
-  cgst          Int     @default(0)
-  sgst          Int     @default(0)
-  igst          Int     @default(0)
-  isInterState  Boolean
+  shippingFee    Int     @default(0)
+  codFee         Int     @default(0)
+  total          Int
+  taxableValue   Int
+  cgst           Int     @default(0)
+  sgst           Int     @default(0)
+  igst           Int     @default(0)
+  isInterState   Boolean
 
   estimatedDeliveryFrom DateTime?
   estimatedDeliveryTo   DateTime?
@@ -543,7 +544,7 @@ model Order {
   adminNotes   String?
 
   /// Prevents duplicate orders on double-submit
-  idempotencyKey String? @unique
+  idempotencyKey   String?   @unique
   /// Online payments not completed by this time are auto-cancelled and restocked
   paymentExpiresAt DateTime?
 
@@ -658,19 +659,19 @@ model Counter {
 /// Singleton row (id = "store"). Everything a store manager may need to
 /// change without a deploy.
 model StoreSettings {
-  id                    String   @id @default("store")
-  storeName             String   @default("myT Mobiles")
-  legalName             String   @default("")
-  gstin                 String   @default("")
-  supportEmail          String   @default("")
-  supportPhone          String   @default("")
-  addressLine1          String   @default("")
-  addressLine2          String   @default("")
-  city                  String   @default("")
+  id            String @id @default("store")
+  storeName     String @default("myT Mobiles")
+  legalName     String @default("")
+  gstin         String @default("")
+  supportEmail  String @default("")
+  supportPhone  String @default("")
+  addressLine1  String @default("")
+  addressLine2  String @default("")
+  city          String @default("")
   /// State name of the dispatch location — decides CGST+SGST vs IGST
-  state                 String   @default("")
-  pincode               String   @default("")
-  invoicePrefix         String   @default("MYT")
+  state         String @default("")
+  pincode       String @default("")
+  invoicePrefix String @default("MYT")
 
   /// Grievance officer, published on the site as required by Rule 4(4) of the
   /// Consumer Protection (E-Commerce) Rules, 2020
@@ -679,13 +680,13 @@ model StoreSettings {
   grievanceOfficerEmail       String @default("")
   grievanceOfficerPhone       String @default("")
 
-  freeShippingThreshold Int      @default(49900)
-  shippingFee           Int      @default(4900)
-  codEnabled            Boolean  @default(true)
-  codFee                Int      @default(0)
-  codMaxOrderValue      Int      @default(5000000)
+  freeShippingThreshold Int     @default(49900)
+  shippingFee           Int     @default(4900)
+  codEnabled            Boolean @default(true)
+  codFee                Int     @default(0)
+  codMaxOrderValue      Int     @default(5000000)
   /// Online payment window before an unpaid order is released
-  paymentWindowMinutes  Int      @default(30)
+  paymentWindowMinutes  Int     @default(30)
 
   /// Delivery-day estimates by distance band
   deliveryDaysLocal     Int      @default(1)
@@ -767,12 +768,12 @@ model GrievanceEvent {
 }
 
 model PincodeInfo {
-  pincode   String   @id
-  isValid   Boolean
-  district  String?
-  state     String?
+  pincode    String   @id
+  isValid    Boolean
+  district   String?
+  state      String?
   postOffice String?
-  fetchedAt DateTime @default(now())
+  fetchedAt  DateTime @default(now())
 }
 
 // ───────────────────────────── Platform ─────────────────────────────
@@ -796,23 +797,23 @@ model AnalyticsEvent {
 /// Who changed what in the admin (and the catalogue CLI), and when. Append-only:
 /// kept at least one year and never deleted by the app.
 model AuditLog {
-  id          String   @id @default(cuid())
+  id         String   @id @default(cuid())
   /// Null for system jobs and the catalogue CLI
-  actorId     String?
-  actor       User?    @relation(fields: [actorId], references: [id], onDelete: SetNull)
+  actorId    String?
+  actor      User?    @relation(fields: [actorId], references: [id], onDelete: SetNull)
   /// Snapshot, so the entry stays readable if the account changes or goes
-  actorEmail  String
+  actorEmail String
   /// e.g. order.status_changed, product.price_changed, settings.updated
-  action      String
+  action     String
   /// e.g. order, product, coupon, settings, user
-  entityType  String
-  entityId    String?
-  summary     String
+  entityType String
+  entityId   String?
+  summary    String
   /// { field: { before, after } } for changed fields only. Never secrets.
-  changes     Json?
-  ip          String?
-  userAgent   String?
-  createdAt   DateTime @default(now())
+  changes    Json?
+  ip         String?
+  userAgent  String?
+  createdAt  DateTime @default(now())
 
   @@index([entityType, entityId])
   @@index([createdAt])
@@ -843,4 +844,39 @@ model PosStockItem {
   updatedAt DateTime @updatedAt
 
   @@index([nameKey])
+}
+
+enum PriceHoldStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  /// A newer price for the same variant arrived, or the price changed by other means
+  SUPERSEDED
+}
+
+/// A POS price change the sync didn't apply (src/lib/catalog/price-guard.ts):
+/// ₹0, above MRP, below the shop's margin floor, or a move over the size cap.
+/// The owner approves or rejects it in Admin → Inventory or through the
+/// approval bot. ₹0 and above-MRP holds can only be rejected.
+model PriceHold {
+  id          String          @id @default(cuid())
+  variantId   String
+  variant     ProductVariant  @relation(fields: [variantId], references: [id], onDelete: Cascade)
+  /// Snapshot, so the hold stays readable if the SKU is renamed
+  sku         String
+  /// Paise, GST-inclusive: the price when the hold was made, and the POS price that was held
+  priceBefore Int
+  priceAfter  Int
+  /// MRP at the time of the hold (paise)
+  mrp         Int
+  /// PriceHoldReason: zero-price | above-mrp | below-margin | large-change
+  reason      String
+  status      PriceHoldStatus @default(PENDING)
+  /// Who decided: an admin's email, or "discord:<user>" for the approval bot
+  decidedBy   String?
+  decidedAt   DateTime?
+  createdAt   DateTime        @default(now())
+
+  @@index([status, createdAt])
+  @@index([variantId, status])
 }

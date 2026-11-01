@@ -2,6 +2,7 @@
 
 import { useActionState, useState } from "react";
 import { adjustStock, applyStockImportAction, previewStockImport, type ImportState } from "@/app/admin/actions/inventory";
+import { decideHeldPrice } from "@/app/admin/actions/price-holds";
 import { SubmitButton } from "@/components/auth/submit-button";
 import { FormError, FormSuccess } from "@/components/ui/field";
 
@@ -22,6 +23,26 @@ export function AdjustStockForm({ variantId, stock }: { variantId: string; stock
       {state.error && <span className="text-danger-700">{state.error}</span>}
       {state.ok && <span className="text-mint-700">{state.ok}</span>}
     </form>
+  );
+}
+
+/** Approve / reject buttons for one held POS price. ₹0 and above-MRP prices can only be rejected. */
+export function HeldPriceDecision({ id, approvable }: { id: string; approvable: boolean }) {
+  const [state, action] = useActionState(decideHeldPrice, {});
+  if (state.ok) return <span className="text-sm text-mint-700">{state.ok}</span>;
+  const button = (decision: "approve" | "reject", label: string) => (
+    <form action={action}>
+      <input type="hidden" name="id" value={id} />
+      <input type="hidden" name="decision" value={decision} />
+      <SubmitButton variant={decision === "approve" ? "primary" : "outline"} className="h-8 w-auto px-3 text-sm" pendingText="…">{label}</SubmitButton>
+    </form>
+  );
+  return (
+    <div className="flex flex-wrap items-center gap-2 text-sm">
+      {approvable && button("approve", "Approve")}
+      {button("reject", approvable ? "Reject" : "Keep current price")}
+      {state.error && <span className="text-danger-700">{state.error}</span>}
+    </div>
   );
 }
 

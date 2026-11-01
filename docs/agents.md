@@ -48,7 +48,8 @@ The shop's myBillBook login has two companies, and the store takes price and sto
 | Phones company | Smartphones, tablets, TVs, air coolers | `catalog/stock-sheet.csv` |
 | "T MOBILES" | Accessories (chargers, cables, power banks, speakers…), audio, smartwatches, keypad phones | `catalog/stock-sheet-accessories.csv` |
 
-- The POS sync (separate pull request) pulls both companies and updates variants whose `stockSheetNames` match, adding up stock when the same item is in both. It never creates products, so every accessory needs a product file first.
+- The POS sync pulls both companies and updates variants whose `stockSheetNames` match, adding up stock when the same item is in both. It never creates products, so every accessory needs a product file first.
+- **Price gates.** Stock always applies, but a POS price is **held** instead of applied when it is ₹0, above MRP, below the shop's margin floor (checked on the shop side, so cost never reaches the store), or more than 15% away from the current price. Held prices appear in **Admin → Inventory → Held prices** and in the daily ops brief. The owner approves or rejects them there or through the Discord approval bot (`/api/sync/held-prices`, bearer `HARNESS_SECRET`). ₹0 and above-MRP prices can only be rejected and fixed in the POS. After a sync, the canary can undo its prices with `POST /api/sync/pos-stock/rollback` and the sync's `auditId`; stock is never rolled back.
 - When staff import CSVs by hand in Admin instead, they import both companies' rows together in one file. Otherwise an item kept in both companies gets only one company's quantity.
 - A new local, CI or demo database is seeded from both sheets. Sheet items whose product file uses a different slug are left for `catalog apply`, as in production.
 
