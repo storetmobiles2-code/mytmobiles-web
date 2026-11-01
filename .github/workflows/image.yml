@@ -1,0 +1,105 @@
+# Builds the production images on every merge to main and pushes them to the
+# private GitHub registry. The i3 server only pulls them (myt-orchestrator:
+# harness/i3/stack/deploy.sh), so nothing heavy is built on the shop's machine.
+#
+#   ghcr.io/<owner>/mytmobiles:<sha>          the store (Next.js standalone)
+#   ghcr.io/<owner>/mytmobiles-migrate:<sha>  migrations + first-time seed
+#   …:main                                    the latest build of main
+#
+# The build pre-renders pages from a database. It uses a throwaway Postgres on
+# the runner, seeded from this repository (catalogue only, no customer data);
+# the server revalidates the pages from the real database after a deploy.
+#
+# Skipped until the repository variable SITE_URL is set: the public URL is
+# inlined into the browser bundle at build time.
+name: Image
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: image-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: vars.SITE_URL != ''
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      packages: write
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: myt
+          POSTGRES_PASSWORD: ci_password
+          POSTGRES_DB: mytmobiles
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U myt" --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      DATABASE_URL: postgresql://myt:ci_password@localhost:5432/mytmobiles
+      NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL }}
+      # Test-only values for seeding the throwaway build database (same as ci.yml)
+      CRON_SECRET: ci-cron-secret-0123456789abcdef
+      ADMIN_EMAIL: admin@ci.example.com
+      ADMIN_PASSWORD: CiAdminPass!2026
+      TOTP_ENCRYPTION_KEY: "SWfHsKmZrILcXM8UDHTWYvYSwbCIEF9dCQxqBkAUcHI="
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Build database (throwaway, seeded from the repository)
+        run: npx prisma migrate deploy && npx prisma db seed
+      - name: Image names
+        id: names
+        run: |
+          owner="${GITHUB_REPOSITORY_OWNER,,}"
+          echo "app=ghcr.io/$owner/mytmobiles" >> "$GITHUB_OUTPUT"
+          echo "migrate=ghcr.io/$owner/mytmobiles-migrate" >> "$GITHUB_OUTPUT"
+      - name: Build the store image
+        env:
+          GA_ID: ${{ vars.NEXT_PUBLIC_GA_MEASUREMENT_ID }}
+        run: |
+          DOCKER_BUILDKIT=1 docker build --network=host \
+            --secret id=database_url,env=DATABASE_URL \
+            --build-arg NEXT_PUBLIC_SITE_URL="$NEXT_PUBLIC_SITE_URL" \
+            --build-arg NEXT_PUBLIC_GA_MEASUREMENT_ID="$GA_ID" \
+            --label org.opencontainers.image.revision="$GITHUB_SHA" \
+            --label org.opencontainers.image.source="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY" \
+            -t "${{ steps.names.outputs.app }}:$GITHUB_SHA" -t "${{ steps.names.outputs.app }}:main" .
+      - name: Build the migrate image
+        run: |
+          DOCKER_BUILDKIT=1 docker build --target migrate \
+            --label org.opencontainers.image.revision="$GITHUB_SHA" \
+            --label org.opencontainers.image.source="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY" \
+            -t "${{ steps.names.outputs.migrate }}:$GITHUB_SHA" -t "${{ steps.names.outputs.migrate }}:main" .
+      - name: Scan the store image (Trivy, critical fails)
+        run: |
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:0.76.1 \
+            image --scanners vuln --severity CRITICAL --ignore-unfixed --exit-code 1 --quiet \
+            "${{ steps.names.outputs.app }}:$GITHUB_SHA"
+      - name: Push to GitHub Container Registry
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+          for image in "${{ steps.names.outputs.app }}" "${{ steps.names.outputs.migrate }}"; do
+            docker push "$image:$GITHUB_SHA"
+            docker push "$image:main"
+          done
+      - name: Digests for deploy.sh
+        run: |
+          {
+            echo "### Images for $GITHUB_SHA"
+            for image in "${{ steps.names.outputs.app }}" "${{ steps.names.outputs.migrate }}"; do
+              echo "- \`$(docker inspect --format '{{index .RepoDigests 0}}' "$image:$GITHUB_SHA")\`"
+            done
+            echo
+            echo "Deploy on the i3: \`./deploy.sh $GITHUB_SHA\`"
+          } >> "$GITHUB_STEP_SUMMARY"
