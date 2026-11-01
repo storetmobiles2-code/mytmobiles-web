@@ -22,6 +22,8 @@ const schema = z.object({
   EMAIL_FROM: z.string().optional(),
 
   CRON_SECRET: z.string().min(16).optional(),
+  // Narrow alternative to CRON_SECRET: authorises only GET /api/cron/expire-orders (for the sync container).
+  EXPIRE_ORDERS_SECRET: z.string().min(32).optional(),
   // Bearer secret for POST /api/sync/pos-stock (myBillBook stock sync).
   POS_SYNC_SECRET: z.string().min(32).optional(),
   // Bearer secret for the approval bot: list and decide held POS prices (/api/sync/held-prices).
