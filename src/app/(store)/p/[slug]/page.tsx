@@ -148,12 +148,13 @@ export default async function ProductPage(props: PageProps<"/p/[slug]">) {
               </dl>
             </div>
           ))}
-          {/* Legal Metrology (Packaged Commodities) Rules: manufacturer/importer and country of origin */}
+          {/* Legal Metrology (Packaged Commodities) Rules: manufacturer/importer, country of origin and net quantity */}
           <h3 className="mt-4 mb-2 text-xs font-bold tracking-wide text-ink-500 uppercase">Warranty and legal details</h3>
           <dl className="divide-y divide-ink-100 rounded-xl border border-ink-100">
             {[
               ["Warranty", product.warranty],
               ["Country of origin", product.countryOfOrigin],
+              ["Net quantity", product.netQuantity],
               ["Manufacturer / importer", product.manufacturerInfo],
             ]
               .filter((row): row is [string, string] => Boolean(row[1]))

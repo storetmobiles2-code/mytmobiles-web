@@ -194,6 +194,8 @@ model Product {
   /// Legal Metrology (E-Commerce) disclosures
   manufacturerInfo String?
   countryOfOrigin  String?
+  /// Net quantity as printed on the pack, e.g. "1 N" or "1 unit". From the box label, never inferred.
+  netQuantity      String?
   hsnCode          String
   gstRateBps       Int              @default(1800)
   returnWindowDays Int              @default(7)
