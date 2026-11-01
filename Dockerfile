@@ -33,6 +33,9 @@ ARG NEXT_PUBLIC_GA_MEASUREMENT_ID=""
 ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL \
     NEXT_PUBLIC_GA_MEASUREMENT_ID=$NEXT_PUBLIC_GA_MEASUREMENT_ID \
     NEXT_OUTPUT=standalone
+# Optional build-heap cap, e.g. --build-arg NODE_OPTIONS=--max-old-space-size=2048; builder stage only, never reaches runner.
+ARG NODE_OPTIONS=""
+ENV NODE_OPTIONS=$NODE_OPTIONS
 RUN --mount=type=secret,id=database_url,required=true \
     DATABASE_URL="$(cat /run/secrets/database_url)" npm run build
 

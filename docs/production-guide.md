@@ -60,7 +60,7 @@ What it takes to set up, run and maintain the store as a real business in India.
    - add the live keys;
    - create the webhook `https://<domain>/api/payments/razorpay/webhook` with the events `payment.captured`, `payment.failed`, `order.paid`, `refund.processed` and `refund.failed`;
    - set `RAZORPAY_WEBHOOK_SECRET`.
-6. Cron: call `/api/cron/expire-orders` every 5–10 minutes. Either use Vercel Cron (Pro plan) or set `CRON_VIA_GITHUB=true` (see docs/agents.md).
+6. Cron: call `/api/cron/expire-orders` every 5–10 minutes. Either use Vercel Cron (Pro plan) or set `CRON_VIA_GITHUB=true` (see docs/agents.md). A scheduler that only needs order expiry (such as the sync container on the server) can send the narrower `EXPIRE_ORDERS_SECRET` as its bearer token instead of `CRON_SECRET`; it works on `/api/cron/expire-orders` only.
 7. GitHub (see docs/agents.md → Setup):
    - branch protection on `main`;
    - the production environment and its secrets;
