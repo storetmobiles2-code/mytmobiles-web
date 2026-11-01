@@ -24,6 +24,8 @@ const schema = z.object({
   CRON_SECRET: z.string().min(16).optional(),
   // Bearer secret for POST /api/sync/pos-stock (myBillBook stock sync).
   POS_SYNC_SECRET: z.string().min(32).optional(),
+  // Bearer secret for the approval bot: list and decide held POS prices (/api/sync/held-prices).
+  HARNESS_SECRET: z.string().min(32).optional(),
 
   // Admin two-factor sign-in (src/lib/auth/two-factor.ts). The key is checked
   // when 2FA is used, with a message saying how to create one.

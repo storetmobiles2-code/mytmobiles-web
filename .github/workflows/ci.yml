@@ -45,6 +45,9 @@ jobs:
       DATABASE_URL: postgresql://myt:ci_password@localhost:5432/mytmobiles
       NEXT_PUBLIC_SITE_URL: http://localhost:3100
       CRON_SECRET: ci-cron-secret-0123456789abcdef
+      # Test-only bearer secrets for the POS sync and approval-bot endpoints (tests/e2e/pos-sync.spec.ts)
+      POS_SYNC_SECRET: ci-pos-sync-secret-0123456789abcdef01
+      HARNESS_SECRET: ci-harness-secret-0123456789abcdef012
       ADMIN_EMAIL: admin@ci.example.com
       ADMIN_PASSWORD: CiAdminPass!2026
       # Test-only key for admin two-factor secrets in the throwaway CI database

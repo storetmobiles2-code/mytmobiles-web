@@ -3,7 +3,8 @@ import type { Prisma } from "@/generated/prisma/client";
 import { db } from "@/lib/db";
 import { formatINR } from "@/lib/money";
 import { AdminPage, FilterTabs, Panel, Table, td, th } from "@/components/admin/ui";
-import { AdjustStockForm, StockImport } from "@/components/admin/inventory-forms";
+import { AdjustStockForm, HeldPriceDecision, StockImport } from "@/components/admin/inventory-forms";
+import { pendingPriceHolds } from "@/lib/catalog/price-holds";
 import { Pagination } from "@/components/ui/misc";
 import { requirePermission } from "@/lib/auth/guards";
 import { hasPermission } from "@/lib/auth/permissions";
@@ -15,6 +16,7 @@ export default async function InventoryPage(props: PageProps<"/admin/inventory">
   const viewer = await requirePermission("products.view");
   const sp = await props.searchParams;
   const canAdjust = hasPermission(viewer.role, "inventory.adjust");
+  const canDecide = hasPermission(viewer.role, "products.edit");
   const filter = typeof sp.filter === "string" ? sp.filter : "live";
   const q = typeof sp.q === "string" ? sp.q.trim().slice(0, 60) : "";
   const page = Math.max(1, Number(sp.page) || 1);
@@ -25,13 +27,34 @@ export default async function InventoryPage(props: PageProps<"/admin/inventory">
     all: {},
   };
   const where: Prisma.ProductVariantWhereInput = { ...(base[filter] ?? base.live), ...(q ? { OR: [{ sku: { contains: q, mode: "insensitive" } }, { product: { name: { contains: q, mode: "insensitive" } } }] } : {}) };
-  const [variants, total, logs] = await Promise.all([
+  const [variants, total, logs, holds] = await Promise.all([
     db.productVariant.findMany({ where, orderBy: [{ stock: "asc" }, { sku: "asc" }], skip: (page - 1) * PER, take: PER, include: { product: { select: { id: true, name: true, isActive: true } } } }),
     db.productVariant.count({ where }),
     db.inventoryLog.findMany({ orderBy: { createdAt: "desc" }, take: 15, include: { variant: { select: { sku: true } }, actor: { select: { name: true } } } }),
+    pendingPriceHolds(),
   ]);
   return (
     <AdminPage title="Inventory">
+      {holds.length > 0 && (
+        <Panel title={`Held prices (${holds.length})`}>
+          <p className="mb-3 text-sm text-ink-600">The POS sync didn&apos;t apply these prices: they were ₹0, above MRP, below the shop&apos;s margin floor, or a change of more than 15%. The current price stays until you approve. ₹0 and above-MRP prices can only be fixed in the POS (or with an MRP change).</p>
+          <Table>
+            <thead><tr><th className={th}>Product</th><th className={th}>Current</th><th className={th}>POS price</th><th className={th}>MRP</th><th className={th}>Why held</th>{canDecide && <th className={th}>Decision</th>}</tr></thead>
+            <tbody>
+              {holds.map((h) => (
+                <tr key={h.id}>
+                  <td className={td}><Link href={`/admin/products/${h.variant.product.id}`} className="hover:text-brand-700">{h.variant.product.name}</Link><span className="block font-mono text-xs text-ink-500">{h.sku}</span></td>
+                  <td className={td}>{formatINR(h.variant.price)}</td>
+                  <td className={`${td} font-bold`}>{formatINR(h.priceAfter)}</td>
+                  <td className={td}>{formatINR(h.variant.mrp)}</td>
+                  <td className={td}>{h.label}<span className="block text-xs text-ink-500">{h.createdAt.toLocaleString("en-IN", { timeZone: "Asia/Kolkata", dateStyle: "medium", timeStyle: "short" })}</span></td>
+                  {canDecide && <td className={td}><HeldPriceDecision id={h.id} approvable={h.approvable} /></td>}
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </Panel>
+      )}
       {hasPermission(viewer.role, "inventory.import") && <Panel title="Import stock sheet"><StockImport /></Panel>}
       <form className="flex gap-2" action="/admin/inventory">
         <input type="hidden" name="filter" value={filter} />

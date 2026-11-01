@@ -23,8 +23,8 @@ The store runs on a 3-tier harness. **No frontier model runs in a repetitive loo
 ## Gates on POS prices
 
 1. **Gate 1, back office:** the myBillBook token belongs to a view-only staff account. Nothing writes back to myBillBook. Renewing the token needs the owner's OTP sign-in; the bot reminds them before it expires.
-2. **Gate 2, policy** (server-side, `src/lib/catalog/price-guard.ts`): no ₹0 price, nothing above MRP, no automatic move over 15% (the code still says 20% until milestone M2 lands). Below-margin prices are held: the margin is checked on the shop side, so cost price never reaches the web server. A held price waits for the owner's approval in Discord or Admin; `above-mrp` and `zero-price` can never be approved, only fixed in the POS or with an MRP pull request.
-3. **Gate 3, canary:** after a sync that changed anything, a read-only probe checks health, product pages and their rendered price. On failure it rolls back **prices only**, for SKUs whose price hasn't changed since. Stock is never rolled back, because it reflects the shelf. The probe never places orders: a test order would reserve stock and use up a GST invoice number.
+2. **Gate 2, policy** (server-side, `src/lib/catalog/price-guard.ts`): no ₹0 price, nothing above MRP, no automatic move over 15%. Below-margin prices are held: the margin is checked on the shop side, so cost price never reaches the web server. A held price is stored as a `PriceHold` and waits for the owner's approval in Discord (`/api/sync/held-prices`, `HARNESS_SECRET`) or Admin → Inventory → Held prices; `above-mrp` and `zero-price` can never be approved, only fixed in the POS or with an MRP pull request.
+3. **Gate 3, canary:** after a sync that changed anything, a read-only probe checks health, product pages and their rendered price. On failure it calls `POST /api/sync/pos-stock/rollback` with the sync's `auditId`, which rolls back **prices only**, for SKUs whose price hasn't changed since. Stock is never rolled back, because it reflects the shelf. The probe never places orders: a test order would reserve stock and use up a GST invoice number.
 
 ## The i3 host
 

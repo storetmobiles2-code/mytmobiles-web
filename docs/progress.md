@@ -115,6 +115,14 @@ The viewer is built and works on the live site and on the GitHub Pages demo; bot
 
   Start with the best-selling phones in stock.
 
+## POS price gates (1 November 2026)
+
+The automatic myBillBook sync now **holds** a price instead of applying it when it's ₹0, above MRP, below the shop's margin floor, or a change of more than 15% (it was 20%).
+- **Where holds show:** each hold is a `PriceHold` row, shown in **Admin → Inventory → Held prices** (owner approves or rejects) and in `npm run ops -- report`.
+- **Approval bot endpoints:** `GET /api/sync/held-prices` and `POST /api/sync/held-prices/<id>`, with bearer `HARNESS_SECRET` (new; set it in the host's environment).
+- **Canary rollback:** `POST /api/sync/pos-stock/rollback {auditId}` restores the prices of one sync, leaving SKUs changed since then alone. The sync's response now includes `auditId` and the changed `{sku, slug, price}`.
+- **Not yet:** the shop-side margin check and canary (in the harness, milestone M3), the Discord bot (M4), and the Net Quantity field (next small PR).
+
 ## Next code work
 
 These are the remaining gaps from `docs/production-guide.md` §9:
