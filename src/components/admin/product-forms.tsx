@@ -25,6 +25,7 @@ export interface ProductFormValues {
   returnWindowDays?: number;
   manufacturerInfo?: string | null;
   countryOfOrigin?: string | null;
+  netQuantity?: string | null;
   seoTitle?: string | null;
   seoDescription?: string | null;
   highlights?: string[];
@@ -75,6 +76,7 @@ export function ProductForm({ values, brands, categories }: { values: ProductFor
         </SelectField>
         <TextField label="Return window (days)" name="returnWindowDays" type="number" min={0} max={30} defaultValue={values.returnWindowDays ?? 7} />
         <TextField label="Country of origin" name="countryOfOrigin" defaultValue={values.countryOfOrigin ?? ""} optional />
+        <TextField label="Net quantity" name="netQuantity" defaultValue={values.netQuantity ?? ""} optional hint='As printed on the box, e.g. "1 N"' />
       </div>
       <TextField label="Manufacturer / importer / packer details" name="manufacturerInfo" defaultValue={values.manufacturerInfo ?? ""} optional hint="Required disclosure under Legal Metrology (Packaged Commodities) Rules" />
       <TextField label="Search keywords (comma separated)" name="keywords" defaultValue={values.keywords?.join(", ")} optional />

@@ -100,6 +100,8 @@ export const productSpecSchema = z.object({
   /** Legal Metrology: manufacturer/packer/importer name and address. */
   manufacturerInfo: z.string().trim().min(5).max(500).nullable().default(null),
   countryOfOrigin: z.string().trim().min(2).max(60).nullable().default(null),
+  /** Legal Metrology: net quantity exactly as printed on the pack (e.g. "1 N"). */
+  netQuantity: z.string().trim().min(1).max(60).nullable().default(null),
   hsnCode: z.string().regex(/^\d{4,8}$/, "HSN must be 4–8 digits"),
   gstRatePercent: z.literal([...GST_RATES_PERCENT]),
   returnWindowDays: z.number().int().min(0).max(30).default(7),
@@ -211,6 +213,8 @@ export function checkSpec(
   need(spec.specs.length > 0, "specs", "Add a specifications table before going live");
   need(Boolean(spec.manufacturerInfo), "manufacturerInfo", "Manufacturer/importer name and address is a Legal Metrology declaration");
   need(Boolean(spec.countryOfOrigin), "countryOfOrigin", "Country of origin is a Legal Metrology declaration");
+  // A warning, not an error, until staff have read the boxes of the products already live.
+  if (live && !spec.netQuantity) warn("netQuantity", 'Net quantity is a Legal Metrology declaration: copy it from the box (e.g. "1 N")');
   if (live && shownImages.length) {
     for (const c of colours) if (!shownImages.some((im) => im.color === c || im.color === null)) warn("images", `No image for colour "${c}" — shoppers will see "Photo coming soon" for it`);
   }

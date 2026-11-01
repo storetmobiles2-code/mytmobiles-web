@@ -40,6 +40,7 @@ const productSchema = z.object({
   returnWindowDays: z.coerce.number().int().min(0).max(30),
   manufacturerInfo: z.string().trim().max(500).optional(),
   countryOfOrigin: z.string().trim().max(60).optional(),
+  netQuantity: z.string().trim().max(60).optional(),
   seoTitle: z.string().trim().max(70).optional(),
   seoDescription: z.string().trim().max(170).optional(),
 });
@@ -64,6 +65,7 @@ export async function saveProduct(_prev: AdminResult, fd: FormData): Promise<Adm
     warranty: p.warranty || null,
     manufacturerInfo: p.manufacturerInfo || null,
     countryOfOrigin: p.countryOfOrigin || null,
+    netQuantity: p.netQuantity || null,
     seoTitle: p.seoTitle || null,
     seoDescription: p.seoDescription || null,
     highlights: lines(fd.get("highlights")).slice(0, 12),
