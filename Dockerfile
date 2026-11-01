@@ -21,6 +21,9 @@ WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
 
 FROM base AS deps
+# Prisma's CLI and schema engine need OpenSSL to detect the libssl version.
+RUN apt-get update && apt-get install -y --no-install-recommends openssl \
+    && rm -rf /var/lib/apt/lists/*
 COPY package.json package-lock.json prisma.config.ts ./
 COPY prisma ./prisma
 RUN npm ci
